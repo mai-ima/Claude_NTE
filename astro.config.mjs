@@ -7,16 +7,15 @@ import icon from 'astro-icon';
 import pagefind from 'astro-pagefind';
 
 // --- Deploy configuration ---------------------------------------------------
-// Primary target: GitHub Pages (project site -> served under /claude_nte).
-// `SITE_URL` / `SITE_BASE` can be overridden by the environment so the same
-// build also works elsewhere (e.g. Vercel with SITE_BASE="/").
-const SITE_URL = process.env.SITE_URL ?? 'https://mai-ima.github.io';
-const SITE_BASE = process.env.SITE_BASE ?? '/claude_nte';
+// Deploy target: Vercel (static). Astro is auto-detected; `dist/` is served
+// from the domain root, so the base path must be "/". No adapter is required
+// for a static build — adding one would only complicate the output.
+const SITE_URL = 'https://claude-nte.vercel.app';
 
 // https://astro.build/config
 export default defineConfig({
   site: SITE_URL,
-  base: SITE_BASE,
+  base: '/',
   trailingSlash: 'always',
   output: 'static',
   build: { format: 'directory' },
