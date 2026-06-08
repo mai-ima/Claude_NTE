@@ -123,12 +123,12 @@ export const ELEMENT_RING = ['Cosmos', 'Anima', 'Incantation', 'Chaos', 'Psyche'
 
 /** 隣接ペアのDuo反応（英語名／日本語名は攻略サイト由来・要原典確認） */
 export const DUO_REACTIONS = [
-  { a: 'Cosmos', b: 'Anima', name: 'Blossom', ja: '創生' },
-  { a: 'Anima', b: 'Incantation', name: 'Hexed', ja: '覆紋' },
-  { a: 'Incantation', b: 'Chaos', name: 'Scorch', ja: '濁燃' },
-  { a: 'Chaos', b: 'Psyche', name: 'Nova', ja: '暗星' },
-  { a: 'Psyche', b: 'Lakshana', name: 'Stain', ja: '浸染' },
-  { a: 'Lakshana', b: 'Cosmos', name: 'Remora', ja: '延滞' },
+  { a: 'Cosmos', b: 'Anima', name: 'Blossom', ja: '創生', effect: 'AoEの追撃を発生' },
+  { a: 'Anima', b: 'Incantation', name: 'Hexed', ja: '覆紋', effect: '記録ダメージを一括解放' },
+  { a: 'Incantation', b: 'Chaos', name: 'Scorch', ja: '濁燃', effect: '継続ダメージ(DoT)' },
+  { a: 'Chaos', b: 'Psyche', name: 'Nova', ja: '暗星', effect: '遅延爆発(メンタル)' },
+  { a: 'Psyche', b: 'Lakshana', name: 'Stain', ja: '浸染', effect: '被ダメージ増加' },
+  { a: 'Lakshana', b: 'Cosmos', name: 'Remora', ja: '延滞', effect: '対象をマーク・鈍化' },
 ];
 
 /** ある属性が隣接で起こせる反応（相手属性＋反応名）を返す */

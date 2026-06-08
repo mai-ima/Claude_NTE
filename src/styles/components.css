@@ -1152,6 +1152,28 @@
   border-radius: var(--radius);
 }
 
+/* ツール内などの素のデータテーブル */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.data-table th,
+.data-table td {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  text-align: left;
+  vertical-align: middle;
+}
+.data-table th {
+  background: var(--surface-2);
+  font-weight: 700;
+  white-space: nowrap;
+}
+.data-table tbody tr:nth-child(odd) td {
+  background: color-mix(in srgb, var(--surface-2) 40%, transparent);
+}
+
 /* Pagefind UI のテーマ連携 */
 :root {
   --pagefind-ui-primary: var(--accent);

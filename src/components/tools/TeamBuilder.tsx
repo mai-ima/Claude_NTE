@@ -5,6 +5,7 @@
  * - 編成は端末内(localStorage)に保存。
  */
 import { useStore } from './useStore';
+import { HBars } from './chart';
 
 export interface TeamChar {
   id: string;
@@ -99,8 +100,16 @@ export default function TeamBuilder({ characters }: { characters: TeamChar[] }) 
             </div>
           )}
         </div>
-        <div class="text-sm">
-          ロール構成: アタッカー {roleCount('DPS')} ・ サバイバル {roleCount('Survival')} ・ バフ {roleCount('Buff')}
+        <div>
+          <p class="muted text-sm mt-0" style={{ marginBottom: '4px' }}>ロール構成</p>
+          <HBars
+            max={4}
+            items={[
+              { label: 'アタッカー', value: roleCount('DPS'), color: '#ef4444' },
+              { label: 'サバイバル', value: roleCount('Survival'), color: '#22c55e' },
+              { label: 'バフ', value: roleCount('Buff'), color: '#3b82f6' },
+            ]}
+          />
         </div>
         {warnings.length > 0 && (
           <ul class="text-sm" style={{ margin: 0, paddingLeft: '1.1em', color: 'var(--warning)' }}>
