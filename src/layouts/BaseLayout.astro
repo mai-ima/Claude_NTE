@@ -35,7 +35,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <link rel="canonical" href={canonical} />
     <link rel="icon" href={withBase('favicon.svg')} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={withBase('icons/icon-192.png')} />
-    <link rel="manifest" href={withBase('manifest.webmanifest')} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
@@ -116,16 +115,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     </div>
 
     <script>
-      // Service Worker 登録（PWA: オフライン/インストール）。base を考慮。
-      import { withBase } from '../lib/path';
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register(withBase('sw.js')).catch(() => {
-            /* 登録失敗（非対応/http以外）でもサイトは通常通り動作 */
-          });
-        });
-      }
-
       // モバイルドロワーの開閉
       const openBtn = document.querySelector('[data-drawer-open]');
       const drawer = document.getElementById('app-drawer');

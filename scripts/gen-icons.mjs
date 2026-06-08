@@ -1,5 +1,5 @@
-// PWA アイコンを生成するスクリプト（オリジナルのNTEモノグラム）。
-// 使い方: node scripts/gen-icons.mjs
+// タッチアイコン（ホーム画面ブックマーク用）を生成するスクリプト。
+// オリジナルの「NTE」モノグラム。使い方: node scripts/gen-icons.mjs
 import sharp from 'sharp';
 import { mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
@@ -10,23 +10,11 @@ const outDir = join(root, 'public', 'icons');
 
 const ACCENT = '#3b6ef0';
 
-/** 通常アイコン（角丸・中央にNTE） */
 function squareSvg(size) {
   const r = Math.round(size * 0.22);
   const fs = Math.round(size * 0.32);
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
     <rect width="${size}" height="${size}" rx="${r}" fill="${ACCENT}"/>
-    <text x="50%" y="52%" text-anchor="middle" dominant-baseline="central"
-      font-family="'Hiragino Sans','Noto Sans JP',system-ui,sans-serif"
-      font-size="${fs}" font-weight="800" letter-spacing="1" fill="#ffffff">NTE</text>
-  </svg>`;
-}
-
-/** マスカブル（安全領域内に収めるため余白を多めに、全面を塗りつぶし） */
-function maskableSvg(size) {
-  const fs = Math.round(size * 0.24);
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
-    <rect width="${size}" height="${size}" fill="${ACCENT}"/>
     <text x="50%" y="52%" text-anchor="middle" dominant-baseline="central"
       font-family="'Hiragino Sans','Noto Sans JP',system-ui,sans-serif"
       font-size="${fs}" font-weight="800" letter-spacing="1" fill="#ffffff">NTE</text>
@@ -40,6 +28,4 @@ async function render(svg, file) {
 
 await mkdir(outDir, { recursive: true });
 await render(squareSvg(192), 'icon-192.png');
-await render(squareSvg(512), 'icon-512.png');
-await render(maskableSvg(512), 'icon-maskable.png');
 console.log('done');

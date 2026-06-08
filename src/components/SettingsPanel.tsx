@@ -1,4 +1,4 @@
-/** 設定パネル: テーマ選択・データのエクスポート/インポート/初期化・PWAインストール。 */
+/** 設定パネル: テーマ選択・データのエクスポート/インポート/初期化。 */
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { THEMES, getStoredTheme, setTheme, applyTheme, type Theme } from '../lib/theme';
 import { exportAll, importAll, clearAll } from '../lib/store';
@@ -8,17 +8,10 @@ type Msg = { kind: 'ok' | 'err'; text: string } | null;
 export default function SettingsPanel() {
   const [theme, setThemeState] = useState<Theme>('minimal');
   const [msg, setMsg] = useState<Msg>(null);
-  const [installEvt, setInstallEvt] = useState<any>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setThemeState(getStoredTheme());
-    const onPrompt = (e: Event) => {
-      e.preventDefault();
-      setInstallEvt(e);
-    };
-    window.addEventListener('beforeinstallprompt', onPrompt);
-    return () => window.removeEventListener('beforeinstallprompt', onPrompt);
   }, []);
 
   function flash(kind: 'ok' | 'err', text: string) {
@@ -67,17 +60,6 @@ export default function SettingsPanel() {
     }
     const n = clearAll();
     flash('ok', `${n} 件のデータを削除しました。`);
-  }
-
-  async function doInstall() {
-    if (!installEvt) return;
-    installEvt.prompt();
-    try {
-      await installEvt.userChoice;
-    } catch {
-      /* noop */
-    }
-    setInstallEvt(null);
   }
 
   return (
@@ -148,25 +130,6 @@ export default function SettingsPanel() {
           <button class="btn btn-danger" type="button" onClick={doClear}>
             データを初期化
           </button>
-        </div>
-      </section>
-
-      <section class="card card-pad">
-        <h2 class="mt-0">アプリとしてインストール</h2>
-        <p class="muted text-sm">
-          ホーム画面に追加すると、アプリのように起動でき、オフラインでも閲覧できます。
-        </p>
-        <div style={{ marginTop: '14px' }}>
-          {installEvt ? (
-            <button class="btn btn-primary" type="button" onClick={doInstall}>
-              ホーム画面に追加
-            </button>
-          ) : (
-            <p class="muted text-sm">
-              ※ この端末ではブラウザのメニュー（「ホーム画面に追加」「アプリをインストール」）から追加できます。
-              既にインストール済み、または非対応の場合はボタンは表示されません。
-            </p>
-          )}
         </div>
       </section>
     </div>

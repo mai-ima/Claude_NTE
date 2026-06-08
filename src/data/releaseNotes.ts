@@ -9,6 +9,18 @@ export interface ReleaseNote {
 
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    version: 'v0.1.1',
+    date: '2026-06-08',
+    title: 'PWA廃止と堅牢化',
+    changes: [
+      'PWA（Service Worker / manifest / @vite-pwa）を完全に廃止。Pagefind索引のプリキャッシュ肥大化によるインストール肥大・初回オフライン化の重さを回避し、純粋な静的サイトに。',
+      'ツールの localStorage フックを、同一ページの複数アイランド間で同期する設計に変更（書き込み競合・上書きを防止。別タブ変更にも追従）。',
+      'MDX内部リンクを相対パスに統一し、base付与のrehypeプラグインを撤去（Astro更新に強い構成へ）。',
+      'Pagefind検索が base 配下（/claude_nte）でも動作することを確認（bundlePath を明示）。',
+      'GitHub Pages へデプロイ。',
+    ],
+  },
+  {
     version: 'v0.1.0',
     date: '2026-06-08',
     title: '初版リリース',

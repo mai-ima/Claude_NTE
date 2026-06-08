@@ -1,15 +1,14 @@
 # NTE 完全攻略wiki + ツール
 
 NTE（ゲーム）に関する攻略・データ・覚え書きをまとめた、自分専用の **wiki + ツール集** です。
-日本語・スマホ優先。4テーマ切替、全文検索、PWA（インストール/オフライン）対応。
+日本語・スマホ優先。4テーマ切替、全文検索対応の静的サイト。
 
 ## 技術スタック
 
 - **[Astro](https://astro.build/)**（静的出力）+ TypeScript
 - **MDX / Markdown** コンテンツコレクション（wiki記事）
 - **[Preact](https://preactjs.com/)** アイランド（各ツール・テーマ切替・個人メモ）
-- **[Pagefind](https://pagefind.app/)** 静的全文検索
-- **[@vite-pwa/astro](https://vite-pwa-org.netlify.app/)** PWA（Workbox）
+- **[Pagefind](https://pagefind.app/)** 静的全文検索（base配下でも `bundlePath` を明示）
 - **astro-icon**（Lucide アイコン）/ **@astrojs/sitemap**
 
 ## セットアップ
@@ -17,18 +16,18 @@ NTE（ゲーム）に関する攻略・データ・覚え書きをまとめた�
 ```bash
 pnpm install          # 依存関係をインストール
 pnpm dev              # 開発サーバ (http://localhost:4321/claude_nte/)
-pnpm build            # 本番ビルド（dist/ に出力。Pagefind索引・PWA・sitemap も生成）
-pnpm preview          # ビルド成果物をローカル配信（PWA/検索の最終確認用）
+pnpm build            # 本番ビルド（dist/ に出力。Pagefind索引・sitemap も生成）
+pnpm preview          # ビルド成果物をローカル配信（検索の最終確認用）
 pnpm check            # 型チェック (astro check)
-node scripts/gen-icons.mjs   # PWAアイコン(public/icons/*.png)を再生成
+node scripts/gen-icons.mjs   # タッチアイコン(public/icons/icon-192.png)を再生成
 ```
 
-> ES モジュール / Service Worker の都合上、`file://` 直開きではなく `pnpm dev` / `pnpm preview` 経由で開いてください。
+> ES モジュールの都合上、`file://` 直開きではなく `pnpm dev` / `pnpm preview` 経由で開いてください。
 
 ## プロジェクト構成
 
 ```
-astro.config.mjs            # サイト設定（base, テーマ, PWA, rehype base-path プラグイン）
+astro.config.mjs            # サイト設定（base, 統合プラグイン）
 src/
   content.config.ts         # wikiコレクションのスキーマ（zod）
   content/wiki/*.md         # wiki記事（フロントマター付き）
@@ -40,7 +39,7 @@ src/
   data/releaseNotes.ts       # 更新履歴
   styles/                    # base / themes / components
 public/                      # favicon / icons / robots
-scripts/gen-icons.mjs        # PWAアイコン生成
+scripts/gen-icons.mjs        # タッチアイコン生成
 ```
 
 ## wiki記事の書き方
@@ -59,7 +58,9 @@ updated: 2026-06-08
 ---
 ```
 
-- 内部リンクは `/wiki/...` のようにルート絶対で書けます（ビルド時に base が自動付与されます）。
+- 内部リンクは**相対パス**で書きます（base に依存せず堅牢）。
+  - wiki記事どうし: `[用語集](../glossary/)`（記事は `/wiki/<slug>/` にあるため `../<slug>/`）
+  - ツールへ: `[確率ツール](../../tools/probability/)`
 - 画像は `src/assets/...` に置き `![代替テキスト](../../assets/...)` で参照（Astroが最適化）。
 
 ### コンテンツの誠実性ルール

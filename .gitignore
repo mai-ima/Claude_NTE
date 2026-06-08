@@ -9,12 +9,6 @@ node_modules/
 .astro/
 .vite/
 
-# pwa generated artifacts (regenerated on build)
-public/sw.js
-public/workbox-*.js
-public/registerSW.js
-dev-dist/
-
 # logs
 npm-debug.log*
 pnpm-debug.log*
