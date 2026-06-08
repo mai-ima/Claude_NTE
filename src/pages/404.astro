@@ -1,0 +1,23 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../lib/path';
+---
+
+<BaseLayout title="ページが見つかりません">
+  <div class="layout">
+    <div class="content">
+      <div class="empty" style="padding-top:80px;">
+        <Icon name="lucide:compass" />
+        <h1>ページが見つかりません</h1>
+        <p class="muted" style="margin:8px 0 20px;">
+          お探しのページは存在しないか、移動した可能性があります。
+        </p>
+        <div class="cluster" style="justify-content:center;">
+          <a class="btn btn-primary" href={withBase('/')}>ホームへ</a>
+          <a class="btn" href={withBase('/wiki/')}>wikiへ</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

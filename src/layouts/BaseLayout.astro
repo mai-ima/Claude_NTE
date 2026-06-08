@@ -1,0 +1,160 @@
+---
+import '../styles/themes.css';
+import '../styles/base.css';
+import '../styles/components.css';
+import { Icon } from 'astro-icon/components';
+import { withBase } from '../lib/path';
+import { PRIMARY_NAV } from '../lib/nav';
+import MobileDrawer from '../components/MobileDrawer.astro';
+import ThemeMenu from '../components/ThemeMenu';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = 'NTE（ゲーム）に関する攻略・情報をまとめた自分専用wiki + 各種ツール。',
+} = Astro.props;
+
+const siteName = 'NTE 完全攻略wiki';
+const fullTitle = title ? `${title} | ${siteName}` : siteName;
+const currentPath = Astro.url.pathname;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+---
+
+<!doctype html>
+<html lang="ja" data-theme="minimal">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#fafafa" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={withBase('favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={withBase('icons/icon-192.png')} />
+    <link rel="manifest" href={withBase('manifest.webmanifest')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content={siteName} />
+    <meta name="generator" content={Astro.generator} />
+
+    {/* テーマを描画前に適用（チラつき防止）。is:inline なのでバンドルされない素のJS */}
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('nte.theme');
+          var valid = ['minimal', 'dark', 'soft', 'auto'];
+          if (!t || valid.indexOf(t) === -1) t = 'minimal';
+          document.documentElement.setAttribute('data-theme', t);
+          var color = { minimal: '#fafafa', dark: '#0f1115', soft: '#faf6f0' }[t];
+          if (t === 'auto') {
+            color = window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? '#0f1115'
+              : '#fafafa';
+          }
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta && color) meta.setAttribute('content', color);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div class="app">
+      <header class="app-header">
+        <button
+          class="btn btn-icon btn-ghost drawer-toggle"
+          type="button"
+          aria-label="メニューを開く"
+          data-drawer-open
+        >
+          <Icon name="lucide:menu" />
+        </button>
+
+        <a class="brand" href={withBase('/')}>
+          <span class="brand-mark">NTE</span>
+          <span>完全攻略wiki</span>
+        </a>
+
+        <div class="header-spacer"></div>
+
+        <nav class="cluster" aria-label="グローバルナビ" style="gap:2px;">
+          {
+            PRIMARY_NAV.filter((n) => n.href !== '/').map((item) => (
+              <a
+                class="nav-link"
+                href={withBase(item.href)}
+                style="padding:8px 10px;"
+                aria-current={currentPath.startsWith(withBase(item.href)) ? 'page' : undefined}
+              >
+                <Icon name={`lucide:${item.icon}`} />
+                <span class="sr-only sm-show">{item.label}</span>
+              </a>
+            ))
+          }
+        </nav>
+
+        <ThemeMenu client:load />
+      </header>
+
+      <MobileDrawer currentPath={currentPath} />
+
+      <main class="app-main">
+        <slot />
+      </main>
+
+      <footer class="app-footer">
+        <p>
+          NTE 完全攻略wiki — 自分専用のNTE攻略・情報まとめ。
+          <br />
+          ゲーム固有の未確認情報には「要確認」を付しています。確定情報は各記事で更新してください。
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      // Service Worker 登録（PWA: オフライン/インストール）。base を考慮。
+      import { withBase } from '../lib/path';
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register(withBase('sw.js')).catch(() => {
+            /* 登録失敗（非対応/http以外）でもサイトは通常通り動作 */
+          });
+        });
+      }
+
+      // モバイルドロワーの開閉
+      const openBtn = document.querySelector('[data-drawer-open]');
+      const drawer = document.getElementById('app-drawer');
+      const closeEls = document.querySelectorAll('[data-drawer-close]');
+      function setOpen(open: boolean) {
+        if (!drawer) return;
+        drawer.classList.toggle('is-open', open);
+        document.body.style.overflow = open ? 'hidden' : '';
+      }
+      openBtn?.addEventListener('click', () => setOpen(true));
+      closeEls.forEach((el) => el.addEventListener('click', () => setOpen(false)));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') setOpen(false);
+      });
+    </script>
+
+    <style>
+      .sm-show {
+        position: static;
+        width: auto;
+        height: auto;
+        clip: auto;
+        margin: 0;
+      }
+      @media (max-width: 640px) {
+        .sm-show {
+          display: none;
+        }
+      }
+    </style>
+  </body>
+</html>

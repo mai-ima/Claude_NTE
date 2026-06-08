@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="NTE">
+  <rect width="64" height="64" rx="14" fill="#3b6ef0" />
+  <text x="32" y="34" text-anchor="middle" dominant-baseline="central"
+    font-family="'Hiragino Sans','Noto Sans JP',system-ui,sans-serif"
+    font-size="22" font-weight="800" letter-spacing="0.5" fill="#ffffff">NTE</text>
+</svg>

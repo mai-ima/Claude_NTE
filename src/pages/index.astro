@@ -1,0 +1,133 @@
+---
+import { getCollection } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../lib/path';
+import { CATEGORIES } from '../lib/nav';
+import { TOOLS } from '../components/tools/registry';
+import { RELEASE_NOTES } from '../data/releaseNotes';
+
+const entries = await getCollection('wiki', ({ data }) => data.draft !== true);
+const usedCats = new Set(entries.map((e) => e.data.category));
+const cats = CATEGORIES.filter((c) => usedCats.has(c.id));
+
+const recent = [...entries]
+  .filter((e) => e.data.updated)
+  .sort((a, b) => (b.data.updated!.getTime() ?? 0) - (a.data.updated!.getTime() ?? 0))
+  .slice(0, 5);
+
+const latest = RELEASE_NOTES[0];
+const countByCat = (id: string) => entries.filter((e) => e.data.category === id).length;
+---
+
+<BaseLayout title="ホーム">
+  <div class="layout">
+    <div class="content">
+      <section class="page-head">
+        <p class="eyebrow">NTE 完全攻略wiki</p>
+        <h1>NTEのすべてを、ここに。</h1>
+        <p class="lead">
+          NTE（ゲーム）に関する攻略・データ・覚え書きをまとめた自分専用wikiと、
+          周回や育成に役立つ各種ツール。
+        </p>
+        <div class="meta-row">
+          <a class="btn btn-primary" href={withBase('/wiki/')}>
+            <Icon name="lucide:library" /> wikiを見る
+          </a>
+          <a class="btn" href={withBase('/tools/')}>
+            <Icon name="lucide:wrench" /> ツール
+          </a>
+        </div>
+      </section>
+
+      <section style="margin-top:8px;">
+        <h2>カテゴリ</h2>
+        <div class="grid grid-cards" style="margin-top:16px;">
+          {
+            cats.map((c) => (
+              <a class="card card-pad card-link" href={withBase(`/wiki/#cat-${encodeURIComponent(c.id)}`)}>
+                <div class="row" style="gap:10px;">
+                  <span class="badge badge-accent" style="height:34px;width:34px;padding:0;border-radius:9px;justify-content:center;">
+                    <Icon name={`lucide:${c.icon}`} style="width:18px;height:18px;" />
+                  </span>
+                  <div>
+                    <div style="font-weight:700;">{c.label}</div>
+                    <div class="muted text-sm">{countByCat(c.id)} 記事</div>
+                  </div>
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      <div class="grid" style="margin-top:40px;grid-template-columns:1fr;gap:32px;">
+        <section>
+          <h2>最近更新した記事</h2>
+          {
+            recent.length > 0 ? (
+              <ul class="list-reset stack" style="margin-top:16px;">
+                {recent.map((e) => (
+                  <li>
+                    <a class="card card-pad card-link" href={withBase(`/wiki/${e.id}/`)}>
+                      <div class="row row-between">
+                        <span style="font-weight:600;">{e.data.title}</span>
+                        <span class="muted text-sm">
+                          {e.data.updated?.toLocaleDateString('ja-JP')}
+                        </span>
+                      </div>
+                      {e.data.description && <p class="muted text-sm" style="margin-top:4px;">{e.data.description}</p>}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="muted" style="margin-top:12px;">記事がまだありません。</p>
+            )
+          }
+        </section>
+
+        <section>
+          <h2>ツール</h2>
+          <div class="grid grid-cards" style="margin-top:16px;">
+            {
+              TOOLS.map((t) => (
+                <a class="card card-pad card-link" href={withBase(`/tools/${t.id}/`)}>
+                  <div class="row" style="gap:10px;align-items:flex-start;">
+                    <Icon name={`lucide:${t.icon}`} style="width:20px;height:20px;color:var(--accent);flex:none;margin-top:2px;" />
+                    <div>
+                      <div style="font-weight:700;">{t.name}</div>
+                      <p class="muted text-sm" style="margin-top:2px;">{t.description}</p>
+                    </div>
+                  </div>
+                </a>
+              ))
+            }
+          </div>
+        </section>
+
+        {
+          latest && (
+            <section>
+              <div class="row row-between">
+                <h2 style="margin:0;">更新履歴</h2>
+                <a class="text-sm" href={withBase('/release-notes/')}>すべて見る</a>
+              </div>
+              <div class="card card-pad" style="margin-top:16px;">
+                <div class="cluster">
+                  <span class="badge badge-accent">{latest.version}</span>
+                  <span class="muted text-sm">{latest.date}・{latest.title}</span>
+                </div>
+                <ul class="text-sm" style="margin-top:10px;padding-left:1.2em;">
+                  {latest.changes.slice(0, 4).map((c) => (
+                    <li>{c}</li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,22 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  status: 'verified' | 'draft';
+}
+const { status } = Astro.props;
+---
+
+{
+  status === 'draft' ? (
+    <span class="badge badge-draft" title="ゲーム固有の未検証情報を含みます。確定情報で更新してください。">
+      <Icon name="lucide:alert-triangle" style="width:14px;height:14px;" />
+      要確認
+    </span>
+  ) : (
+    <span class="badge badge-verified" title="一般的に正しい/出典確認済みの内容です。">
+      <Icon name="lucide:check-circle-2" style="width:14px;height:14px;" />
+      確認済み
+    </span>
+  )
+}

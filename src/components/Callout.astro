@@ -1,0 +1,31 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  type?: 'info' | 'warning' | 'note';
+  title?: string;
+}
+const { type = 'note', title } = Astro.props;
+
+const ICONS = {
+  info: 'lucide:info',
+  warning: 'lucide:alert-triangle',
+  note: 'lucide:sticky-note',
+} as const;
+
+const DEFAULT_TITLE = {
+  info: '補足',
+  warning: '要確認',
+  note: 'メモ',
+} as const;
+
+const cls = type === 'warning' ? 'callout-warning' : type === 'info' ? 'callout-info' : '';
+---
+
+<div class:list={['callout', cls]}>
+  <Icon name={ICONS[type]} />
+  <div>
+    <p class="callout-title">{title ?? DEFAULT_TITLE[type]}</p>
+    <div><slot /></div>
+  </div>
+</div>

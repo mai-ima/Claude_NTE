@@ -1,0 +1,35 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../lib/path';
+import { TOOLS } from '../../components/tools/registry';
+import ToolHost from '../../components/tools/ToolHost';
+
+export async function getStaticPaths() {
+  return TOOLS.map((t) => ({ params: { id: t.id }, props: { tool: t } }));
+}
+
+const { tool } = Astro.props;
+---
+
+<BaseLayout title={tool.name} description={tool.description}>
+  <div class="layout">
+    <div class="content" style="max-width:720px;margin:0 auto;">
+      <nav class="text-sm muted cluster" style="margin-bottom:16px;" aria-label="パンくず">
+        <a href={withBase('/tools/')}>ツール</a>
+        <Icon name="lucide:chevron-right" style="width:14px;height:14px;" />
+        <span>{tool.name}</span>
+      </nav>
+
+      <section class="page-head">
+        <div class="row" style="gap:10px;">
+          <Icon name={`lucide:${tool.icon}`} style="width:26px;height:26px;color:var(--accent);" />
+          <h1 style="margin:0;">{tool.name}</h1>
+        </div>
+        <p class="lead" style="margin-top:8px;">{tool.description}</p>
+      </section>
+
+      <ToolHost client:only="preact" id={tool.id} />
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,109 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import StatusBadge from '../../components/StatusBadge.astro';
+import Toc from '../../components/Toc.astro';
+import PersonalNote from '../../components/PersonalNote';
+import { withBase } from '../../lib/path';
+import { categoryMeta } from '../../lib/nav';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('wiki', ({ data }) => data.draft !== true);
+  // 同カテゴリ内の前後リンク用に整列
+  const sorted = [...entries].sort(
+    (a, b) =>
+      categoryMeta(a.data.category).order - categoryMeta(b.data.category).order ||
+      a.data.order - b.data.order ||
+      a.data.title.localeCompare(b.data.title, 'ja'),
+  );
+  return sorted.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: { entry, prev: sorted[i - 1] ?? null, next: sorted[i + 1] ?? null },
+  }));
+}
+
+const { entry, prev, next } = Astro.props;
+const { Content, headings } = await render(entry);
+const cat = categoryMeta(entry.data.category);
+---
+
+<BaseLayout title={entry.data.title} description={entry.data.description}>
+  <div class="layout has-sidebar">
+    <Sidebar currentId={entry.id} />
+    <div class="content">
+      <nav class="text-sm muted cluster" style="margin-bottom:16px;" aria-label="パンくず">
+        <a href={withBase('/wiki/')}>wiki</a>
+        <Icon name="lucide:chevron-right" style="width:14px;height:14px;" />
+        <a href={withBase(`/wiki/#cat-${encodeURIComponent(cat.id)}`)}>{cat.label}</a>
+      </nav>
+
+      <article data-pagefind-body>
+        <header class="page-head">
+          <p class="eyebrow" data-pagefind-meta="category">{cat.label}</p>
+          <h1>{entry.data.title}</h1>
+          {entry.data.description && <p class="lead">{entry.data.description}</p>}
+          <div class="meta-row">
+            <StatusBadge status={entry.data.status} />
+            {entry.data.updated && (
+              <span class="muted text-sm">更新: {entry.data.updated.toLocaleDateString('ja-JP')}</span>
+            )}
+            {entry.data.tags.map((t) => (
+              <span class="badge" data-pagefind-filter="tag">#{t}</span>
+            ))}
+          </div>
+        </header>
+
+        {entry.data.status === 'draft' && (
+          <div class="callout callout-warning">
+            <Icon name="lucide:alert-triangle" />
+            <div>
+              <p class="callout-title">要確認の下書きです</p>
+              <div class="text-sm">
+                ゲーム固有の数値・仕様には未検証の項目が含まれます。確定情報が分かり次第、
+                この記事（MDXファイル）を更新してください。
+              </div>
+            </div>
+          </div>
+        )}
+
+        <Toc headings={headings} />
+
+        <div class="prose">
+          <Content />
+        </div>
+
+        {entry.data.sources.length > 0 && (
+          <section style="margin-top:32px;">
+            <h2>出典</h2>
+            <ul>
+              {entry.data.sources.map((s) => (
+                <li>
+                  <a href={s.url} target="_blank" rel="noopener noreferrer">{s.label}</a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+      </article>
+
+      <PersonalNote client:visible articleId={entry.id} />
+
+      <nav class="grid" style="margin-top:32px;grid-template-columns:1fr 1fr;gap:12px;" aria-label="前後の記事">
+        {prev ? (
+          <a class="card card-pad card-link" href={withBase(`/wiki/${prev.id}/`)}>
+            <span class="muted text-sm">← 前の記事</span>
+            <div style="font-weight:600;">{prev.data.title}</div>
+          </a>
+        ) : <span />}
+        {next ? (
+          <a class="card card-pad card-link" href={withBase(`/wiki/${next.id}/`)} style="text-align:right;">
+            <span class="muted text-sm">次の記事 →</span>
+            <div style="font-weight:600;">{next.data.title}</div>
+          </a>
+        ) : <span />}
+      </nav>
+    </div>
+  </div>
+</BaseLayout>

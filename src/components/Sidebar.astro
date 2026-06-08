@@ -1,0 +1,56 @@
+---
+import { Icon } from 'astro-icon/components';
+import { getCollection } from 'astro:content';
+import { withBase } from '../lib/path';
+import { CATEGORIES, categoryMeta } from '../lib/nav';
+
+interface Props {
+  currentId?: string;
+}
+const { currentId } = Astro.props;
+
+const entries = await getCollection('wiki', ({ data }) => data.draft !== true);
+
+// カテゴリごとにグループ化し、定義順 → order → タイトル順に整列
+const groups = CATEGORIES.map((cat) => ({
+  ...cat,
+  items: entries
+    .filter((e) => e.data.category === cat.id)
+    .sort((a, b) => a.data.order - b.data.order || a.data.title.localeCompare(b.data.title, 'ja')),
+})).filter((g) => g.items.length > 0);
+
+// 未定義カテゴリの記事も拾う
+const known = new Set(CATEGORIES.map((c) => c.id));
+const others = entries.filter((e) => !known.has(e.data.category));
+if (others.length) {
+  const byCat = new Map<string, typeof others>();
+  for (const e of others) {
+    const arr = byCat.get(e.data.category) ?? [];
+    arr.push(e);
+    byCat.set(e.data.category, arr);
+  }
+  for (const [cat, items] of byCat) {
+    groups.push({ ...categoryMeta(cat), items });
+  }
+}
+---
+
+<aside class="sidebar" aria-label="wikiナビゲーション">
+  {
+    groups.map((group) => (
+      <div class="nav-group" id={`cat-${group.id}`}>
+        <p class="nav-group-title">{group.label}</p>
+        {group.items.map((item) => (
+          <a
+            class:list={['nav-link', { 'is-active': item.id === currentId }]}
+            href={withBase(`/wiki/${item.id}/`)}
+            aria-current={item.id === currentId ? 'page' : undefined}
+          >
+            <Icon name={`lucide:${group.icon}`} />
+            <span>{item.data.title}</span>
+          </a>
+        ))}
+      </div>
+    ))
+  }
+</aside>

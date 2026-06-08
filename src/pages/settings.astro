@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SettingsPanel from '../components/SettingsPanel';
+---
+
+<BaseLayout title="設定">
+  <div class="layout">
+    <div class="content" style="max-width:720px;margin:0 auto;">
+      <section class="page-head">
+        <p class="eyebrow">設定</p>
+        <h1>設定</h1>
+        <p class="lead">テーマの切替、データのバックアップ、アプリのインストール。</p>
+      </section>
+
+      <SettingsPanel client:only="preact" />
+    </div>
+  </div>
+</BaseLayout>

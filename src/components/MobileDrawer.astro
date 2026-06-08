@@ -1,0 +1,64 @@
+---
+import { Icon } from 'astro-icon/components';
+import { getCollection } from 'astro:content';
+import { withBase } from '../lib/path';
+import { PRIMARY_NAV, CATEGORIES } from '../lib/nav';
+
+interface Props {
+  currentPath: string;
+}
+const { currentPath } = Astro.props;
+
+// 記事が存在するカテゴリのみドロワーに表示
+const entries = await getCollection('wiki', ({ data }) => data.draft !== true);
+const usedCats = new Set(entries.map((e) => e.data.category));
+const cats = CATEGORIES.filter((c) => usedCats.has(c.id));
+---
+
+<div class="drawer" id="app-drawer" role="dialog" aria-modal="true" aria-label="ナビゲーション">
+  <button class="drawer-backdrop" type="button" aria-label="閉じる" data-drawer-close></button>
+  <nav class="drawer-panel">
+    <div class="row row-between" style="margin-bottom:12px;">
+      <span class="brand"><span class="brand-mark">NTE</span></span>
+      <button class="btn btn-icon btn-ghost" type="button" aria-label="閉じる" data-drawer-close>
+        <Icon name="lucide:x" />
+      </button>
+    </div>
+
+    <div class="nav-group">
+      {
+        PRIMARY_NAV.map((item) => (
+          <a
+            class="nav-link"
+            href={withBase(item.href)}
+            data-drawer-close
+            aria-current={
+              (item.href === '/'
+                ? currentPath === withBase('/')
+                : currentPath.startsWith(withBase(item.href)))
+                ? 'page'
+                : undefined
+            }
+          >
+            <Icon name={`lucide:${item.icon}`} />
+            <span>{item.label}</span>
+          </a>
+        ))
+      }
+    </div>
+
+    {
+      cats.length > 0 && (
+        <div class="nav-group">
+          <p class="nav-group-title">カテゴリ</p>
+          {cats.map((c) => (
+            <a class="nav-link" href={withBase(`/wiki/#cat-${encodeURIComponent(c.id)}`)} data-drawer-close>
+              <Icon name={`lucide:${c.icon}`} />
+              <span>{c.label}</span>
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </nav>
+</div>

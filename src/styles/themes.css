@@ -1,0 +1,102 @@
+/* =========================================================================
+   テーマ定義（CSSカスタムプロパティ）
+   <html data-theme="minimal | dark | soft | auto"> で切替。
+   auto は prefers-color-scheme に追従して minimal(light) / dark を選ぶ。
+   ========================================================================= */
+
+:root,
+:root[data-theme='minimal'] {
+  color-scheme: light;
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --surface-2: #f4f5f7;
+  --text: #1a1d21;
+  --muted: #6b7280;
+  --border: #e7e8ea;
+  --accent: #3b6ef0;
+  --accent-weak: #eaf0fe;
+  --accent-contrast: #ffffff;
+  --danger: #d04545;
+  --danger-weak: #fbecec;
+  --warning: #b7791f;
+  --warning-weak: #fbf3e0;
+  --success: #2f855a;
+  --radius: 10px;
+  --radius-sm: 7px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 2px rgba(17, 24, 39, 0.06), 0 1px 3px rgba(17, 24, 39, 0.04);
+  --shadow: 0 4px 12px rgba(17, 24, 39, 0.07), 0 1px 3px rgba(17, 24, 39, 0.05);
+  --shadow-lg: 0 16px 40px rgba(17, 24, 39, 0.12);
+  --font: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', system-ui,
+    -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0f1115;
+  --surface: #171a21;
+  --surface-2: #1e222b;
+  --text: #e6e8ec;
+  --muted: #9aa3af;
+  --border: #272b34;
+  --accent: #6c8cff;
+  --accent-weak: #1c2333;
+  --accent-contrast: #0f1115;
+  --danger: #f1707a;
+  --danger-weak: #2a1c1f;
+  --warning: #e0b057;
+  --warning-weak: #2a2417;
+  --success: #5ec98c;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.55);
+}
+
+:root[data-theme='soft'] {
+  color-scheme: light;
+  --bg: #faf6f0;
+  --surface: #fffdf9;
+  --surface-2: #f5ede1;
+  --text: #3a322c;
+  --muted: #8a7d72;
+  --border: #ece2d6;
+  --accent: #c98a5e;
+  --accent-weak: #f6e9dd;
+  --accent-contrast: #ffffff;
+  --danger: #c25b50;
+  --danger-weak: #f7e6e2;
+  --warning: #b07d2f;
+  --warning-weak: #f6ecd8;
+  --success: #6f9e63;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --radius-lg: 20px;
+  --shadow-sm: 0 1px 2px rgba(120, 90, 60, 0.08);
+  --shadow: 0 6px 16px rgba(120, 90, 60, 0.1);
+  --shadow-lg: 0 18px 44px rgba(120, 90, 60, 0.16);
+}
+
+/* auto: OSの配色設定に追従 */
+@media (prefers-color-scheme: dark) {
+  :root[data-theme='auto'] {
+    color-scheme: dark;
+    --bg: #0f1115;
+    --surface: #171a21;
+    --surface-2: #1e222b;
+    --text: #e6e8ec;
+    --muted: #9aa3af;
+    --border: #272b34;
+    --accent: #6c8cff;
+    --accent-weak: #1c2333;
+    --accent-contrast: #0f1115;
+    --danger: #f1707a;
+    --danger-weak: #2a1c1f;
+    --warning: #e0b057;
+    --warning-weak: #2a2417;
+    --success: #5ec98c;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+    --shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.55);
+  }
+}

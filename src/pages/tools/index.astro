@@ -1,0 +1,49 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../lib/path';
+import { TOOLS } from '../../components/tools/registry';
+---
+
+<BaseLayout title="ツール">
+  <div class="layout">
+    <div class="content">
+      <section class="page-head">
+        <p class="eyebrow">ツール</p>
+        <h1>便利ツール</h1>
+        <p class="lead">
+          周回・育成・ガチャ計画に役立つ汎用ツール。入力した数値はすべて端末内に保存されます。
+        </p>
+      </section>
+
+      <div class="grid grid-cards">
+        {
+          TOOLS.map((t) => (
+            <a class="card card-pad card-link" href={withBase(`/tools/${t.id}/`)}>
+              <div class="row" style="gap:12px;align-items:flex-start;">
+                <span class="badge badge-accent" style="height:40px;width:40px;padding:0;border-radius:10px;justify-content:center;">
+                  <Icon name={`lucide:${t.icon}`} style="width:20px;height:20px;" />
+                </span>
+                <div>
+                  <div style="font-weight:700;">{t.name}</div>
+                  <p class="muted text-sm" style="margin-top:4px;">{t.description}</p>
+                </div>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+
+      <div class="callout callout-info" style="margin-top:32px;">
+        <Icon name="lucide:info" />
+        <div>
+          <p class="callout-title">数値について</p>
+          <div class="text-sm">
+            確率や回復速度などゲーム固有の数値は、当wikiでは断定せずユーザー入力としています。
+            ご自身で確認した値を入力してご利用ください。
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

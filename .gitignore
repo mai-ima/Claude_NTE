@@ -1,0 +1,30 @@
+# build output
+dist/
+.vercel/
+
+# dependencies
+node_modules/
+
+# astro / vite
+.astro/
+.vite/
+
+# pwa generated artifacts (regenerated on build)
+public/sw.js
+public/workbox-*.js
+public/registerSW.js
+dev-dist/
+
+# logs
+npm-debug.log*
+pnpm-debug.log*
+*.log
+
+# environment
+.env
+.env.production
+.env.local
+
+# os
+.DS_Store
+Thumbs.db

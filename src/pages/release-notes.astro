@@ -1,0 +1,35 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { RELEASE_NOTES } from '../data/releaseNotes';
+---
+
+<BaseLayout title="更新履歴">
+  <div class="layout">
+    <div class="content" style="max-width:760px;margin:0 auto;">
+      <section class="page-head">
+        <p class="eyebrow">更新履歴</p>
+        <h1>リリースノート</h1>
+        <p class="lead">このサイトの変更履歴です（各バージョンで追記）。</p>
+      </section>
+
+      <div class="stack" style="gap:20px;">
+        {
+          RELEASE_NOTES.map((note) => (
+            <article class="card card-pad">
+              <div class="cluster" style="margin-bottom:10px;">
+                <span class="badge badge-accent">{note.version}</span>
+                <strong>{note.title}</strong>
+                <span class="muted text-sm">{note.date}</span>
+              </div>
+              <ul style="padding-left:1.2em;">
+                {note.changes.map((c) => (
+                  <li>{c}</li>
+                ))}
+              </ul>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</BaseLayout>

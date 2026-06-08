@@ -1,0 +1,27 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+const { headings } = Astro.props;
+// h2/h3 のみ目次に採用
+const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+{
+  items.length > 1 && (
+    <nav class="toc card card-pad" aria-label="目次">
+      <p class="nav-group-title" style="margin-bottom:8px;">目次</p>
+      <ul>
+        {items.map((h) => (
+          <li>
+            <a class:list={[`depth-${h.depth}`]} href={`#${h.slug}`}>
+              {h.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
