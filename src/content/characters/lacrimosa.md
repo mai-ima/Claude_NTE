@@ -1,35 +1,41 @@
 ---
 name: "Lacrimosa"
-nameJa: "ラクリモサ"
+nameJa: "レクイエム"
 rarity: "S"
 element: "Chaos"
 role: "DPS"
-weapon: "Arc: Liquid（「フライパン」と「レッドゼリー」の構え切替）"
+weapon: "弧盤: 液体（2モード切替）"
 faction: "—"
-version: "v1.1 限定（「Fading Reverie」2026/6/3〜6/24）"
+version: "v1.1 限定（2026/6/3〜）"
 tier: "SS"
-description: "高機動のメインDPS。最大10層の「ナイトメア」DoTを維持・更新し、ブレイクと Discord 爆発を狙う。敵の技を模倣する変則性も。"
+cv: "長縄まりあ（要確認）"
+description: "日本版名「レクイエム」。2つの攻撃モードを切り替える闇属性メインアタッカー。継続ダメ「悪夢」を付与し、敵スキルをコピーする。"
 status: "verified"
 updated: 2026-06-08
-tags: ["Chaos", "DPS", "DoT", "ブレイカー"]
+tags: ["闇", "Chaos", "DPS", "DoT", "ブレイカー", "リセマラ"]
 sources:
-  - label: "Prydwen — Lacrimosa"
-    url: "https://www.prydwen.gg/neverness-to-everness/characters/lacrimosa"
-  - label: "Game8 — Lacrimosa"
-    url: "https://game8.co/games/Neverness-to-Everness/archives/598465"
+  - label: "ゲームウィズ — レクイエム"
+    url: "https://gamewith.jp/nte/559773"
+  - label: "Game8 — レクイエム"
+    url: "https://game8.jp/nte/786953"
 ---
 
 ## 概要
 
-**ラクリモサ（Lacrimosa）** は v1.1 で実装された **闇（Chaos）属性の高機動メインDPS**。最大10層の「ナイトメア」継続ダメージ（DoT）を積み・更新し続け、敵をブレイクし、**Discord** バーストを誘発する。敵の戦闘技を模倣してスキルを変化させる変則的なキットを持つ。
+**レクイエム（英名 Lacrimosa）** は v1.1 で実装された **闇（Chaos）属性の高機動メインDPS**。**2つの攻撃モードを切り替え**ながら戦い、継続ダメージ「**悪夢**」を付与・更新し続け、敵をブレイクする。さらに**敵の戦闘技をコピー**して自分のスキルを変化させる変則的なキットを持つ。
 
-> 「ナイトメア」は Lacrimosa 固有のDoTスタック機構であり、エスパーサイクルの反応名ではありません。
+> 「悪夢」はレクイエム固有のDoTスタック機構で、異能連環の反応名ではありません。日本版では英名 Lacrimosa が **「レクイエム」** に変更されています。
 
-## 役割・性能
+## 性能・評価
 
-- **ロール:** メインアタッカー（DoT／ブレイカー）。
-- **属性:** Chaos。**Scorch（Incantation+Chaos）** や **Nova（Chaos+Psyche）**、トリオ **Discord** の中心になれる。
+- Ver.1.1前半の**看板Sランク**で、トップクラスの評価。リセマラ最優先候補のひとり。
+
+## おすすめ編成
+
+- 闇属性として「**濁燃（呪＋闇）**」「**暗星（闇＋魂）**」、ブレイク特化のトリオ「**失諧（Discord）**」で爆発力を出す。
 
 ## 入手
 
-v1.1 リミテッドバナー「Fading Reverie」（2026/6/3〜6/24）で実装。
+v1.1 リミテッドバナー（2026/6/3〜）。
+
+> 声優・実装日の細部は検索ベースのため「要確認」。

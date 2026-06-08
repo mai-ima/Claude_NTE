@@ -1,33 +1,32 @@
 ---
 name: "Haniel"
-nameJa: "ハニエル"
+nameJa: "ハニア"
 rarity: "A"
 element: "Psyche"
 role: "Buff"
-weapon: "Arc: Solid（携帯スピーカー「Hootie」）"
+weapon: "弧盤: 固体（携帯スピーカー「ホーホーちゃん」）"
 faction: "Sterry Express"
 version: "v1.0（無料スターター）"
 tier: "S"
-description: "A級ながらS級評価を保つ屈指のバッファー。スピーカー「Hootie」で味方ATKを上げ、Ensemble効果を連鎖させる。"
+description: "日本版名「ハニア」。A級ながらS級評価の魂属性バッファー。引いてすぐ使える使いやすさが魅力。"
 status: "verified"
 updated: 2026-06-08
-tags: ["Psyche", "Buff", "無料", "支援"]
+tags: ["魂", "Psyche", "Buff", "無料", "支援"]
 sources:
-  - label: "Prydwen — Haniel"
-    url: "https://www.prydwen.gg/neverness-to-everness/characters/haniel"
-  - label: "NTE Wiki — Haniel"
-    url: "https://ntewiki.org/en/characters/haniel/"
+  - label: "Game8 — ハニア"
+    url: "https://game8.jp/nte/782344"
+  - label: "ゲームウィズ — ハニア"
+    url: "https://gamewith.jp/nte/555734"
 ---
 
 ## 概要
 
-**ハニエル（Haniel）** は **魂（Psyche）属性のバッファー（A級）**。携帯スピーカー「Hootie」を設置して味方の攻撃力を上げ、連鎖する「Ensemble」効果を発動しつつ Psyche ダメージも与える。**A級ながら、その汎用性からS級級の評価**を保つ稀有なユニット。
+**ハニア（英名 Haniel）** は **魂（Psyche）属性のバッファー（A級）**。バイレールスキルで携帯スピーカー「**ホーホーちゃん**」を設置し、味方の攻撃力を上げつつ追撃ダメージを与える。**引いてすぐ使える**使いやすさから、A級ながらS級級の評価を保つ。
 
-## 役割・性能
+## おすすめ編成
 
-- **ロール:** バフ／支援。**Nova** 反応の増幅にも寄与。
-- 無料スターターとして多くのアカウントが最初から所持しているとされ、序盤から長く使える。
+- 「**創生（光＋霊）**」「**失諧（Discord）**」パーティに採用。例: ナナリ＋零の創生、[ダフォディール](/characters/daffodill/)＋ハニアの失諧。
 
 ## 入手
 
-v1.0 の無料配布（スターター）。
+v1.0 の無料スターター（多くのアカウントが最初から所持）。

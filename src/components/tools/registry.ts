@@ -27,7 +27,7 @@ export const TOOLS: ToolDef[] = [
   {
     id: 'planner',
     name: '育成・スタミナ計画',
-    description: 'キャラクターピクセルの全回復時刻・周回可能数と、デイリー/ウィークリーのタスク管理。',
+    description: '本性ピクセルの全回復時刻・周回可能数と、デイリー/ウィークリーのタスク管理。',
     icon: 'calendar-check',
     Component: Planner,
   },

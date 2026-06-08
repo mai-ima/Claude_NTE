@@ -4,32 +4,34 @@ nameJa: "ファルディーヤ"
 rarity: "S"
 element: "Psyche"
 role: "Survival"
-weapon: "Arc: —（要確認）"
+weapon: "弧盤: —（要確認）"
 faction: "異象管理局（BAC）ETD-4"
 version: "v1.0（スタンダード恒常）"
 tier: "A"
-description: "ETD-4の謎多きメンバー。被ダメージをチーム全体へ分散し、HPを安定させるサバイバル（耐久）ユニット。"
+cv: "真堂圭（要確認）"
+description: "ETD-4の謎多きメンバー。被ダメージを敵に共有し、チーム全体のHPを底上げ・回復する優秀な耐久補助。"
 status: "verified"
 updated: 2026-06-08
-tags: ["Psyche", "Survival", "耐久"]
+tags: ["魂", "Psyche", "Survival", "耐久"]
 sources:
-  - label: "Prydwen — Fadia"
-    url: "https://www.prydwen.gg/neverness-to-everness/characters/fadia"
-  - label: "GameWith — Fadia"
-    url: "https://gamewith.net/nte/74396"
+  - label: "Game8 — ファルディーヤ"
+    url: "https://game8.jp/nte/782350"
+  - label: "ゲームウィズ — ファルディーヤ"
+    url: "https://gamewith.jp/nte/555729"
+  - label: "AppMedia — ファルディーヤ"
+    url: "https://appmedia.jp/nte/79980958"
 ---
 
 ## 概要
 
-**ファルディーヤ（Fadia）** はBAC・ETD-4の謎めいたメンバーで、**魂（Psyche）属性のサバイバル（耐久）ユニット**。受けるダメージをチーム全体へ分散し、HPを安定させる。**Nova** 反応の増幅役にもなる。
+**ファルディーヤ（Fadia）** はBAC・ETD-4の謎めいたメンバーで、**魂（Psyche）属性の耐久補助**。受けたダメージを敵に共有でき、パッシブでチーム全体の最大HPを上げつつ自己HPを回復する。単体性能も優秀。
 
-## 役割・性能
+## おすすめ編成
 
-- **ロール:** サバイバル（ダメージ分散／HP安定）。
-- **属性:** Psyche。**Nova（Chaos+Psyche）／Stain（Psyche+Lakshana）** に関与。
+- 複数の異能連環を発動できる「**失諧**」編成で、**最大4つの異能連環を同時発動**する構成にも組み込める。
 
 ## 入手
 
 スタンダードボード（恒常プール）。
 
-> Arc種別は出典で確認できず「要確認」。
+> 弧盤種別・声優は「要確認」。

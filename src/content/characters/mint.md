@@ -4,32 +4,27 @@ nameJa: "ミント"
 rarity: "A"
 element: "Anima"
 role: "DPS"
-weapon: "Arc: Liquid"
+weapon: "弧盤: 液体"
 faction: "—"
 version: "v1.0"
 tier: "B"
-description: "霊（Anima）属性のアタッカー（A級）。Blossom 反応の増幅役。"
+description: "霊属性のアタッカー（A級）。1凸で真価を発揮し、スキル連打型のアタッカーになる配布キャラ。"
 status: "draft"
 updated: 2026-06-08
-tags: ["Anima", "DPS"]
+tags: ["霊", "Anima", "DPS"]
 sources:
-  - label: "Mobalytics — characters"
-    url: "https://mobalytics.gg/neverness-to-everness/characters"
-  - label: "zeroluck — characters"
-    url: "https://zeroluck.gg/nte/characters/"
+  - label: "Game8 — ミント"
+    url: "https://game8.jp/nte/782345"
+  - label: "ゲームウィズ — ミント"
+    url: "https://gamewith.jp/nte/555737"
 ---
 
 ## 概要
 
-**ミント（Mint）** は **霊（Anima）属性のアタッカー（A級）**。**Blossom（Cosmos+Anima）** 反応の増幅役として編成に組み込める。
-
-## 役割・性能
-
-- **ロール:** アタッカー（DPS）。
-- **属性:** Anima。
+**ミント（Mint）** は **霊（Anima）属性のアタッカー（A級・配布）**。**1凸で真価を発揮**し、スキルを連打するアタッカーとして機能する。「**創生（光＋霊）**」反応の増幅役。
 
 ## 入手
 
-v1.0 実装。
+v1.0 実装（配布）。
 
-> 背景・キット詳細は出典が乏しく「要確認」。
+> 属性表記は出典により「霊／魂」で揺れがあり「要確認」。

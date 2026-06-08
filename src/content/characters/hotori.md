@@ -4,30 +4,41 @@ nameJa: "潯（ほとり）"
 rarity: "S"
 element: "Cosmos"
 role: "Buff"
-weapon: "Arc: Solid"
+weapon: "弧盤: 固体（推奨「時間外を行く」）"
 faction: "エイボン骨董品店（店主）"
 version: "v1.0（「Misty Tipsy Style」）"
 tier: "S"
-description: "エイボン骨董品店の店主。時間操作を軸にしたバッファーで、戦闘・探索の両方で時を止められる。"
+cv: "伊藤静"
+description: "エイボン骨董品店の店主。時間操作を軸にした光属性のサブアタッカー/支援で、味方スキルを記録して再現する。"
 status: "verified"
 updated: 2026-06-08
-tags: ["Cosmos", "Buff", "サポート"]
+tags: ["光", "Cosmos", "Buff", "サポート", "時間停止"]
 sources:
-  - label: "Prydwen — Hotori"
-    url: "https://www.prydwen.gg/neverness-to-everness/characters/hotori"
-  - label: "Dexerto — Hotori"
-    url: "https://www.dexerto.com/wikis/neverness-to-everness/characters/hotori/"
+  - label: "Game8 — 潯（ほとり）"
+    url: "https://game8.jp/nte/784101"
+  - label: "ゲームウィズ — 潯"
+    url: "https://gamewith.jp/nte/559752"
+  - label: "AppMedia — 潯"
+    url: "https://appmedia.jp/nte/79989172"
 ---
 
 ## 概要
 
-**潯（ほとり／Hotori）** はエイボン骨董品店の店主であり、**光（Cosmos）属性のバッファー（支援）**。キットは時間操作を中心に構成され、戦闘中だけでなくオープンワールド探索でも時を止められる演出を持つ。
+**潯（ほとり／Hotori）** はエイボン骨董品店の店主であり、**光（Cosmos）属性のサブアタッカー／支援**。キットは時間操作を中心に構成され、戦闘中だけでなくオープンワールド探索でも時を止められる。
 
-## 役割・性能
+## プロフィール
 
-- **ロール:** バフ／サポート。味方の火力ウィンドウを作る。
-- **属性:** Cosmos。アタッカーの Blossom / Remora 反応をサポートしやすい。
+- **声優:** 伊藤静
+
+## 性能・スキル
+
+- 自身のスキル発動後に味方のスキルを記録し、EXスキル発動時に**記録したダメージを再現**する。特殊エネルギー「**非閉合式時計**」を持つ。
+- **おすすめ弧盤:** 「時間外を行く」（クリ率上昇が優秀）。代替に「不敵な綿」（EXスキル後に攻撃力上昇）。
+
+## おすすめ編成
+
+- 光属性として「**創生（光＋霊）**」「**延滞（相＋光）**」に関与。アタッカーの火力ウィンドウを作る。
 
 ## 入手
 
-v1.0 の2人目のリミテッドS（バナー「Misty Tipsy Style」）として実装。
+v1.0 のリミテッドS（バナー「Misty Tipsy Style」）。

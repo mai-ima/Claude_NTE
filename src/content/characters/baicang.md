@@ -4,32 +4,34 @@ nameJa: "白蔵（ばいざん）"
 rarity: "S"
 element: "Incantation"
 role: "DPS"
-weapon: "Arc: Bose（第5のArc種別・要確認）"
+weapon: "弧盤: 集合（第5形態・要確認）"
 faction: "異象管理局（BAC）ETD-4 隊長"
 version: "v1.0（スタンダード恒常）"
 tier: "A"
-description: "ETD-4のお調子者隊長。呪（Incantation）属性のアタッカーで、Scorch（DoT）の増幅に強い人気の男性ユニット。"
+cv: "中村悠一（要確認）"
+description: "ETD-4のお調子者隊長。文字を発生させ、EXレール終結時に高火力を出す呪属性の近接メインアタッカー。"
 status: "verified"
 updated: 2026-06-08
-tags: ["Incantation", "DPS", "DoT"]
+tags: ["呪", "Incantation", "DPS"]
 sources:
-  - label: "Fandom — Baicang"
-    url: "https://neverness-to-everness.fandom.com/wiki/Baicang"
-  - label: "Icy Veins — Baicang"
-    url: "https://www.icy-veins.com/neverness-to-everness/baicang-guide-best-builds"
+  - label: "Game8 — 白蔵（ばいざん）"
+    url: "https://game8.jp/nte/782352"
+  - label: "ゲームウィズ — 白蔵"
+    url: "https://gamewith.jp/nte/555727"
+  - label: "AppMedia — 白蔵"
+    url: "https://appmedia.jp/nte/79980955"
 ---
 
 ## 概要
 
-**白蔵（ばいざん／Baicang）** は異象管理局（BAC）の部隊 **ETD-4 の隊長**。気さくでお調子者な性格の人気男性ユニットで、**呪（Incantation）属性のアタッカー**。**Scorch（継続ダメージ）** の増幅に優れる。
+**白蔵（ばいざん／Baicang）** は異象管理局（BAC）の部隊 **ETD-4 の隊長**。気さくでお調子者な人気の男性ユニットで、**呪（Incantation）属性の近接メインアタッカー**。状況に応じて「呪文字」を発生させ、**EXレール終結**時に高火力を出す。3種の呪文字キャラを使い分けて戦う。
 
-## 役割・性能
+## おすすめ編成
 
-- **ロール:** アタッカー（DPS / DoT）。
-- **属性:** Incantation。Scorch / Hexed 編成と好相性。
+- 呪属性として「**覆紋（霊＋呪）**」「**濁燃（呪＋闇）**」を主導。Scorch（DoT）軸と好相性。
 
 ## 入手
 
 スタンダードボード（恒常プール）。
 
-> Arc種別「Bose」は第5のArc名として表記が割れており「要確認」。
+> 弧盤の第5形態名・声優は「要確認」。

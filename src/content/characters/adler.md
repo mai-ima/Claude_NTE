@@ -4,32 +4,27 @@ nameJa: "アドレー"
 rarity: "A"
 element: "Incantation"
 role: "Survival"
-weapon: "Arc: —（要確認）"
+weapon: "弧盤: —（要確認）"
 faction: "—"
 version: "v1.0"
 tier: "A"
-description: "シールドと呪い（Curse）補助、敵デバフを行う Incantation のサバイバル/支援。Scorch 増幅役。"
-status: "draft"
+description: "シールド付与でチーム耐久を高める呪属性サポーター（A級）。シールドは交代後も持続する。"
+status: "verified"
 updated: 2026-06-08
-tags: ["Incantation", "Survival", "シールド"]
+tags: ["呪", "Incantation", "Survival", "シールド"]
 sources:
-  - label: "GameWith — Adler"
-    url: "https://gamewith.net/nte/74389"
-  - label: "Mobalytics — characters"
-    url: "https://mobalytics.gg/neverness-to-everness/characters"
+  - label: "Game8 — アドレー"
+    url: "https://game8.jp/nte/782342"
+  - label: "ゲームウィズ — アドレー"
+    url: "https://gamewith.jp/nte/555736"
+  - label: "AppMedia — アドレー"
+    url: "https://appmedia.jp/nte/79980973"
 ---
 
 ## 概要
 
-**アドレー（Adler）** は **呪（Incantation）属性のサバイバル／支援（A級）**。**シールド付与**、呪い（Curse）ダメージの補助、敵デバフを行い、**Scorch** 反応の増幅役を担う。
-
-## 役割・性能
-
-- **ロール:** サバイバル／支援（シールド・デバフ）。
-- **属性:** Incantation。Scorch / Hexed 編成を支える。
+**アドレー（英名 Adler）** は **呪（Incantation）属性のサポーター（A級）**。**シールド付与**でチームの耐久を高め、シールドは**交代後も持続**する。呪属性として「**濁燃（呪＋闇）**」などの編成を支える。
 
 ## 入手
 
 v1.0 実装。
-
-> 所属・Arc種別など一部は出典が乏しく「要確認」。

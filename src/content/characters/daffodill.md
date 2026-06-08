@@ -4,30 +4,34 @@ nameJa: "ダフォディール"
 rarity: "S"
 element: "Chaos"
 role: "DPS"
-weapon: "Arc: Liquid"
+weapon: "弧盤: 液体"
 faction: "エイボン骨董品店（用心棒）"
 version: "v1.0（スタンダード恒常）"
 tier: "A"
-description: "「すべてを見透かす万華鏡の瞳」を持つ寡黙な用心棒。闇（Chaos）属性のアタッカー。"
+cv: "大原さやか（要確認）"
+description: "ブレイク特化の闇属性アタッカー。控えから登場した瞬間のカウンター爆発力が魅力。"
 status: "verified"
 updated: 2026-06-08
-tags: ["Chaos", "DPS"]
+tags: ["闇", "Chaos", "DPS", "ブレイク"]
 sources:
-  - label: "Prydwen — Daffodil"
-    url: "https://www.prydwen.gg/neverness-to-everness/characters/daffodil"
-  - label: "neverness.gg — Daffodill build"
-    url: "https://neverness.gg/daffodill-nte-build/"
+  - label: "Game8 — ダフォディール"
+    url: "https://game8.jp/nte/782349"
+  - label: "ゲームウィズ — ダフォディール"
+    url: "https://gamewith.jp/nte/555726"
+  - label: "AppMedia — ダフォディール"
+    url: "https://appmedia.jp/nte/79980961"
 ---
 
 ## 概要
 
-**ダフォディール（Daffodill）** はエイボン骨董品店の用心棒。「すべてを見透かす万華鏡の瞳」を持つ寡黙な人物で、照れ屋だが芯に優しさを秘める。眼帯を収集する趣味を持つ。**闇（Chaos）属性のアタッカー**。
+**ダフォディール（Daffodill）** はエイボン骨董品店の用心棒。「すべてを見透かす万華鏡の瞳」を持つ寡黙な人物で、**闇（Chaos）属性のブレイク特化アタッカー**。**控えから登場した瞬間のカウンター爆発力**が魅力で、味方がサポートスキルを発動するたび自身のバイレールスキルが強化される。
 
-## 役割・性能
+## おすすめ編成
 
-- **ロール:** アタッカー（DPS）。
-- **属性:** Chaos。**Scorch / Nova / Discord** 系の反応に絡みやすい。
+- 「**暗星（闇＋魂）**」と「**濁燃（呪＋闇）**」を同時発動し、ブレイク特化のトリオ「**失諧（Discord）**」へ派生させる編成が強力。相方に [ハニア](/characters/haniel/) など。
 
 ## 入手
 
 スタンダードボード（恒常プール）。
+
+> 声優は検索ベースのため「要確認」。

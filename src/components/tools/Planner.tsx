@@ -1,6 +1,6 @@
 /**
  * 育成・スタミナ計画ツール。
- * - キャラクターピクセル（戦闘スタミナ: 既定240 / 6分で1回復）の全回復時刻。
+ * - 本性ピクセル（戦闘スタミナ: 既定240 / 6分で1回復）の全回復時刻。
  * - アノマリーゾーン周回（1回 40 or 80）で「今いくつ回れるか」。
  * - デイリー/ウィークリーのタスク管理（端末内保存）。
  * 既定値は2026/6時点のコミュニティ情報。ゲーム内の最新値で上書きしてください。
@@ -18,7 +18,7 @@ interface Task {
 
 const DEFAULT_TASKS: Task[] = [
   { id: 'd1', text: 'デイリーミッション消化', done: false, cycle: 'daily' },
-  { id: 'd2', text: 'キャラクターピクセルを使い切る', done: false, cycle: 'daily' },
+  { id: 'd2', text: '本性ピクセルを使い切る', done: false, cycle: 'daily' },
   { id: 'd3', text: 'シティスタミナで Fons 稼ぎ', done: false, cycle: 'daily' },
   { id: 'w1', text: 'アノマリーボスの週課報酬を回収', done: false, cycle: 'weekly' },
   { id: 'w2', text: 'シティスタミナを使い切る（週リセット）', done: false, cycle: 'weekly' },

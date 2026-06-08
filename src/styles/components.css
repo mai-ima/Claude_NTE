@@ -406,6 +406,38 @@
 .callout-info .callout-title {
   color: var(--accent);
 }
+.callout-tip {
+  background: color-mix(in srgb, #22c55e 12%, transparent);
+  border-color: color-mix(in srgb, #22c55e 30%, transparent);
+}
+.callout-tip svg,
+.callout-tip .callout-title {
+  color: #16a34a;
+}
+.callout-success {
+  background: color-mix(in srgb, var(--success) 12%, transparent);
+  border-color: color-mix(in srgb, var(--success) 30%, transparent);
+}
+.callout-success svg,
+.callout-success .callout-title {
+  color: var(--success);
+}
+.callout-danger {
+  background: var(--danger-weak);
+  border-color: color-mix(in srgb, var(--danger) 30%, transparent);
+}
+.callout-danger svg,
+.callout-danger .callout-title {
+  color: var(--danger);
+}
+.callout-lore {
+  background: color-mix(in srgb, #8b5cf6 11%, transparent);
+  border-color: color-mix(in srgb, #8b5cf6 28%, transparent);
+}
+.callout-lore svg,
+.callout-lore .callout-title {
+  color: #7c3aed;
+}
 
 /* ---- Page header / breadcrumb ------------------------------------------ */
 .page-head {
@@ -948,6 +980,54 @@
   inset: 0 0 auto 0;
   height: 3px;
   background: var(--el, var(--accent));
+}
+
+/* ---- 分布サマリー（バー） ----------------------------------------------- */
+.dist-grid {
+  display: grid;
+  gap: 6px;
+}
+.dist-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.dist-bar {
+  flex: 1;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+.dist-bar > span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* ---- ヒーロー（トップ） ------------------------------------------------- */
+.hero {
+  position: relative;
+  border-radius: var(--radius);
+  padding: 32px 24px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(90% 120% at 15% 10%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%),
+    radial-gradient(80% 120% at 90% 20%, color-mix(in srgb, #06b6d4 18%, transparent), transparent 55%),
+    var(--surface);
+}
+.hero .eyebrow {
+  color: var(--accent);
+}
+.hero h1 {
+  margin: 6px 0 10px;
+}
+@media (min-width: 760px) {
+  .hero {
+    padding: 44px 36px;
+  }
 }
 
 /* ---- フィルタバー ------------------------------------------------------- */

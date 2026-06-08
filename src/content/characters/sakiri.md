@@ -4,31 +4,38 @@ nameJa: "早霧（さきり）"
 rarity: "S"
 element: "Incantation"
 role: "Buff"
-weapon: "Arc: Gas（魔人槌「キロウマル」）"
+weapon: "弧盤: 気体（魔人槌「キロウマル」）"
 faction: "—"
 version: "v1.0（スタンダード恒常）"
 tier: "S"
-description: "ローンチ唯一のS級ATKバッファー。アルティメット「Feast of Gluttony」で味方の攻撃力を底上げし、引き寄せ・打ち上げ・防御低下も付与。"
+cv: "伊藤美来（要確認）"
+description: "ローンチ唯一のS級攻撃力バッファー。全体攻撃力バフに加え対複数戦に強く、バフ・デバフ両対応。"
 status: "verified"
 updated: 2026-06-08
-tags: ["Incantation", "Buff", "攻撃バフ"]
+tags: ["呪", "Incantation", "Buff", "攻撃バフ"]
 sources:
-  - label: "Game8 — Sakiri"
-    url: "https://game8.co/games/Neverness-to-Everness/archives/597506"
-  - label: "Mobalytics — Sakiri build"
-    url: "https://mobalytics.gg/neverness-to-everness/characters/sakiri-build-guide"
+  - label: "Game8 — 早霧（さきり）"
+    url: "https://game8.jp/nte/782353"
+  - label: "ゲームウィズ — 早霧"
+    url: "https://gamewith.jp/nte/555728"
+  - label: "AppMedia — 早霧"
+    url: "https://appmedia.jp/nte/79980964"
 ---
 
 ## 概要
 
-**早霧（さきり／Sakiri・Sagiri）** は、ローンチ唯一の **S級攻撃力バッファー**。意思を持つ角付きの槌「キロウマル」を振るう **呪（Incantation）属性**。アルティメット「Feast of Gluttony」は自身のATKに応じて味方ATKを上昇させ、引き寄せ・打ち上げ・抑制・防御低下を伴う。
+**早霧（さきり／Sakiri・Sagiri）** は、ローンチ唯一の **S級攻撃力バッファー**。意思を持つ角付きの槌「キロウマル」を振るう **呪（Incantation）属性**。**全体攻撃力バフ**に加えて対複数戦が得意で、バフ・デバフ両対応の汎用サポーター。
 
-## 役割・性能
+## 性能・スキル
 
-- **ロール:** バフ。攻撃力を直接盛れる希少な支援役。
-- **属性:** Incantation。**Scorch（DoT）** や **Hexed** 編成と好相性。
-- ほぼ汎用の攻撃バッファーとして多くの編成に入る。
+- アルティメット「**Feast of Gluttony**」は自身のATKに応じて味方ATKを上昇させ、引き寄せ・打ち上げ・抑制・防御低下を伴う。
+
+## おすすめ編成
+
+- 呪属性として「**覆紋（霊＋呪）**」「**濁燃（呪＋闇）**」編成を支える。ほぼ汎用の攻撃バッファーとして多くの編成に入る。
 
 ## 入手
 
-スタンダードボード（恒常プール）に含まれる。表記は媒体により「Sakiri / Sagiri」。
+スタンダードボード（恒常プール）。
+
+> 声優は検索ベースのため「要確認」。

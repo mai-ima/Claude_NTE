@@ -66,4 +66,4 @@ sources:
 | ハンターレベル | Hunter Level |
 | スカボロー市場 | Scarborough Fair（ガチャ） |
 
-> The Circle / Beyond the Rails / キャラクターピクセル などは日本語公式表記が未確認のため英語表記のままです（**要確認**）。
+> The Circle / Beyond the Rails / 本性ピクセル などは日本語公式表記が未確認のため英語表記のままです（**要確認**）。

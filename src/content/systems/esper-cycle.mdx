@@ -1,0 +1,57 @@
+---
+title: "異能連環（属性と反応）"
+category: "異能連環"
+order: 10
+description: "6属性「光・霊・呪・闇・魂・相」のリングと、隣接で発動する6つのDuo反応＋2つのTrio反応。"
+status: "verified"
+updated: 2026-06-08
+tags: ["属性", "反応", "異能連環"]
+sources:
+  - label: "Game8（日本版）— 属性"
+    url: "https://game8.jp/nte/783376"
+  - label: "神ゲー攻略 — 異能連環"
+    url: "https://kamigame.jp/nte/page/420093072383148552.html"
+  - label: "ゲームウィズ — 異能連環"
+    url: "https://gamewith.jp/nte/552834"
+---
+
+import EsperRing from '../../components/EsperRing.astro';
+import Callout from '../../components/Callout.astro';
+
+## 6属性のリング
+
+NTE（Neverness to Everness）の属性は6種で、**異能連環（いのうれんかん）** と呼ばれる**固定の輪（リング）**として並ぶ。**隣り合う属性どうし**だけが反応を起こせる。
+
+<div style="display:grid;place-items:center;margin:8px 0;">
+  <EsperRing size={240} />
+</div>
+
+> 光（Cosmos）→ 霊（Anima）→ 呪（Incantation）→ 闇（Chaos）→ 魂（Psyche）→ 相（Lakshana）→（光に戻る）
+
+<Callout type="tip" title="相性の考え方">
+「XがYに有利」というジャンケン型ではなく、**隣接で反応が成立する**仕組みです（敵ごとの弱点属性は別途存在）。日本版の属性名は **光・霊・呪・闇・魂・相** の漢字一字。
+</Callout>
+
+## Duo反応（隣接ペア・6種）
+
+| 反応(英) | 反応(日・参考) | 属性ペア | 効果 |
+| --- | --- | --- | --- |
+| **Remora** | 延滞 | 相＋光 | 対象をマーク・鈍化 |
+| **Blossom** | 創生 | 光＋霊 | AoEの追撃を発生 |
+| **Hexed** | 覆紋 | 霊＋呪 | 一定時間ダメージを記録し一括解放 |
+| **Scorch** | 濁燃 | 呪＋闇 | 継続ダメージ（DoT） |
+| **Nova** | 暗星 | 闇＋魂 | 遅延して爆発（メンタル） |
+| **Stain** | 浸染 | 魂＋相 | 被ダメージ増加 |
+
+## Trio反応（2種）
+
+- **Charge**（光＋霊＋相 系）: アルティメットエネルギーを獲得。日本語名は要確認。
+- **Discord ＝「失諧（しっかい）」**（闇＋魂＋呪 系／暗星と濁燃の重複）: 敵のブレイク値を削る。ブレイク特化編成の核。
+
+## 連環値（メーター）
+
+戦闘行動でたまる円形ゲージが **連環値**。通常攻撃で微量、スキルで中量、パリィ/完璧な回避で大きく上昇。満タン時にスワップ反応・サイクルパッシブ・アルティメット（バイレールスキル）を発動できる。
+
+<Callout type="warning" title="要確認">
+日本語のDuo反応名（創生・覆紋・濁燃・暗星・浸染・延滞）は攻略サイト由来。Trioの **失諧（Discord）** は確認済み、**Charge** の日本語名は要確認。反応の正確な数値（％・持続秒数）も出典により幅があります。
+</Callout>

@@ -53,6 +53,8 @@ const characters = defineCollection({
       faction: z.string().optional(),
       version: z.string().optional(), // 実装バージョン/バナー
       tier: z.enum(['SS', 'S', 'A', 'B', 'C']).optional(),
+      cv: z.string().optional(), // 声優
+      birthday: z.string().optional(),
       image: image().optional(),
       title: z.string().optional(), // 表示名のオーバーライド（既定は name）
     }),

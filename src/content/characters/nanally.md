@@ -4,35 +4,44 @@ nameJa: "ナナリ"
 rarity: "S"
 element: "Anima"
 role: "DPS"
-weapon: "Arc: Plasma（専用Arc「Ready-Ready」）"
-faction: "エイボン骨董品店"
-version: "v1.0 ローンチ"
+weapon: "弧盤: プラズマ"
+faction: "エイボン骨董品店／コリンスファミリー一代目ボス"
+version: "v1.0 ローンチ（限定）"
 tier: "SS"
-description: "ローンチ最強格と名高い Anima のメインアタッカー。電磁力を操り「アンダーボス」を召喚して連携火力を出す。"
+cv: "竹達彩奈"
+birthday: "8月20日"
+description: "ローンチ最強格の霊属性メインアタッカー。通常攻撃主体で操作が簡単、リセマラ最優先候補。"
 status: "verified"
 updated: 2026-06-08
-tags: ["Anima", "DPS", "メインアタッカー"]
+tags: ["霊", "Anima", "DPS", "メインアタッカー", "リセマラ"]
 sources:
-  - label: "NTE Wiki — Nanally"
-    url: "https://ntewiki.org/en/characters/nanally/"
-  - label: "Icy Veins — Nanally guide"
-    url: "https://www.icy-veins.com/neverness-to-everness/nanally-guide-best-builds"
+  - label: "Game8（日本版）— ナナリ"
+    url: "https://game8.jp/nte/782354"
+  - label: "ゲームウィズ — ナナリ"
+    url: "https://gamewith.jp/nte/555738"
+  - label: "公式ニュース"
+    url: "https://nte.perfectworld.com/jp/article/news/gamenews/20240830/252485.html"
 ---
 
 ## 概要
 
-**ナナリ（Nanally）** はローンチ時点で最高評価を受けることが多い **霊（Anima）属性のメインDPS**。電磁力を操作し、「アンダーボス」を召喚して連携攻撃を繰り出す。探索スキル「リダイレクト」で壁や天井を歩けるのも特徴。
+**ナナリ（Nanally）** は、ローンチ時点で最高評価を受けることが多い **霊（Anima）属性のメインDPS**。橋間地の「コリンスファミリー」一代目ボスにして、エイボン骨董品店にも関わる。**通常攻撃主体で操作難度が低く**、初心者でも火力を出しやすいためリセマラ最優先候補。
 
-## 役割・性能
+## プロフィール
 
-- **ロール:** メインアタッカー（DPS）。高い瞬間火力と継続火力を両立。
-- **属性:** Anima。**Blossom（Cosmos+Anima）** や **Hexed（Anima+Incantation）** の主軸になれる。
-- 新規プレイヤーには「まず Nanally を狙う」と勧める攻略サイトが多い。
+- **声優:** 竹達彩奈　／**誕生日:** 8月20日
+- 電磁力を操り、「アンダーボス」を召喚して連携攻撃を行う。探索スキル「リダイレクト」で壁や天井を歩ける。
 
-## 編成のヒント
+## 性能・スキル
 
-- バッファー（例: Sakiri / Haniel）と、反応相手の属性を添えると火力が伸びる。
+- 異能（バイレールスキル）「**一代目天才――地球逆回転**」。
+- 長押しの溜め通常攻撃「**金針の一撃**」が主力で、攻撃頻度・自己バフ・追撃に優れる。
+
+## おすすめ編成
+
+- 異能連環「**創生（光＋霊）**」編成。**[零（主人公）](/characters/zero/)・[九原](/characters/jiuyuan/)** と好相性。
+- バッファーは [ハニア](/characters/haniel/) / [早霧](/characters/sakiri/) など。
 
 ## 入手
 
-v1.0 のリミテッドバナーで実装。以後の復刻はゲーム内のバナー情報を参照。
+v1.0 のピックアップ（限定）。

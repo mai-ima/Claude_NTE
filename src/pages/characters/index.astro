@@ -18,6 +18,13 @@ const list = [...entries].sort(
 const elements = Object.keys(ELEMENT_META);
 const roles = Object.keys(ROLE_META);
 const rarities = ['S', 'A'];
+
+// 分布サマリー
+const byEl = elements.map((e) => ({ e, n: list.filter((c: any) => c.data.element === e).length }));
+const byRole = roles.map((r) => ({ r, n: list.filter((c: any) => c.data.role === r).length }));
+const maxEl = Math.max(1, ...byEl.map((x) => x.n));
+const sCount = list.filter((c: any) => c.data.rarity === 'S').length;
+const aCount = list.filter((c: any) => c.data.rarity === 'A').length;
 ---
 
 <BaseLayout title="キャラクター一覧">
@@ -31,6 +38,41 @@ const rarities = ['S', 'A'];
           プレイアブルキャラ（エスパー）の属性・ロール・性能。フィルタで絞り込めます（{list.length}体）。
         </p>
       </section>
+
+      <div class="card card-pad" style="margin-bottom:20px;">
+        <div class="row row-between" style="margin-bottom:10px;">
+          <strong>属性・ロール分布</strong>
+          <span class="cluster">
+            <span class="badge badge-rarity-S">S {sCount}</span>
+            <span class="badge badge-rarity-A">A {aCount}</span>
+          </span>
+        </div>
+        <div class="dist-grid">
+          {
+            byEl.map((x) => (
+              <div class="dist-row">
+                <span class="el-badge" style={`--el:${elementMeta(x.e).hue};min-width:54px;justify-content:center;`}>
+                  {elementMeta(x.e).label}
+                </span>
+                <div class="dist-bar">
+                  <span style={`width:${(x.n / maxEl) * 100}%;background:${elementMeta(x.e).hue};`} />
+                </div>
+                <span class="muted text-sm" style="width:1.5em;text-align:right;">{x.n}</span>
+              </div>
+            ))
+          }
+        </div>
+        <div class="cluster" style="margin-top:10px;">
+          {
+            byRole.map((x) => (
+              <span class="badge">
+                <Icon name={`lucide:${roleMeta(x.r).icon}`} style="width:13px;height:13px;" />
+                {roleMeta(x.r).label.replace(/\s*\(.*\)/, '')} {x.n}
+              </span>
+            ))
+          }
+        </div>
+      </div>
 
       <div class="filterbar" id="char-filters" role="group" aria-label="フィルタ">
         <button class="chip is-on" data-filter-all aria-pressed="true">

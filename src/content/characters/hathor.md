@@ -4,29 +4,24 @@ nameJa: "ハソール"
 rarity: "S"
 element: "Lakshana"
 role: "DPS"
-weapon: "Arc: Plasma"
+weapon: "弧盤: プラズマ"
 faction: "エイボン骨董品店"
 version: "v1.0（スタンダード恒常）"
 tier: "A"
-description: "相（Lakshana）属性のアタッカー。Remora 反応を強く後押しできる。"
+description: "相属性のアタッカー。延滞（Remora）反応を強く後押しできる。"
 status: "verified"
 updated: 2026-06-08
-tags: ["Lakshana", "DPS"]
+tags: ["相", "Lakshana", "DPS"]
 sources:
-  - label: "Prydwen — Hathor"
-    url: "https://www.prydwen.gg/neverness-to-everness/characters/hathor"
-  - label: "Game8 — upcoming banners"
-    url: "https://game8.co/games/Neverness-to-Everness/archives/597944"
+  - label: "Game8 — ハソール"
+    url: "https://game8.jp/nte/782351"
+  - label: "AppMedia — ハソール"
+    url: "https://appmedia.jp/nte/79980952"
 ---
 
 ## 概要
 
-**ハソール（Hathor）** は **相（Lakshana）属性のアタッカー**。**Remora（Lakshana+Cosmos）** 反応の増幅に長けるとされる。
-
-## 役割・性能
-
-- **ロール:** アタッカー（DPS）。
-- **属性:** Lakshana。**Remora / Stain** や、トリオ **Charge** に関与できる。
+**ハソール（英名 Hathor）** は **相（Lakshana）属性のアタッカー**。「**延滞（相＋光／Remora）**」「**浸染（魂＋相／Stain）**」やトリオ「**Charge**」に関与できる。
 
 ## 入手
 

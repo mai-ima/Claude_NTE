@@ -4,33 +4,31 @@ nameJa: "九原（じょえん）"
 rarity: "S"
 element: "Anima"
 role: "DPS"
-weapon: "Arc: Solid（要確認）"
+weapon: "弧盤: 固体（二丁拳銃／要確認）"
 faction: "—"
 version: "v1.0（スタンダード恒常）"
 tier: "S"
-description: "Anima のアタッカー。ダメージの多くを付着機構「Lethal Rose Pact」に依存する、オン/オフフィールド両対応の火力役。"
-status: "draft"
+description: "二丁拳銃を扱う霊属性アタッカー。継続ダメージとEXレール終結による高バーストが持ち味。"
+status: "verified"
 updated: 2026-06-08
-tags: ["Anima", "DPS", "付着"]
+tags: ["霊", "Anima", "DPS", "バースト"]
 sources:
-  - label: "Prydwen — Jiuyuan"
-    url: "https://www.prydwen.gg/neverness-to-everness/characters/jiuyuan"
-  - label: "Game8 — Jiuyuan"
-    url: "https://game8.co/games/Neverness-to-Everness/archives/597675"
+  - label: "Game8 — 九原（じょえん）"
+    url: "https://game8.jp/nte/782348"
+  - label: "ゲームウィズ — 九原"
+    url: "https://gamewith.jp/nte/555730"
 ---
 
 ## 概要
 
-**九原（じょえん／Jiuyuan）** は **霊（Anima）属性のアタッカー**。ダメージの多くを付着機構 **「Lethal Rose Pact」** に依存し、オンフィールド／オフフィールドの双方で火力を出せる柔軟性が持ち味。
+**九原（じょえん／Jiuyuan）** は **霊（Anima）属性の二丁拳銃アタッカー**。継続ダメージを撒きつつ、**EXレール終結**で高いバーストを出す。
 
-## 役割・性能
+## おすすめ編成
 
-- **ロール:** アタッカー（DPS）。
-- **属性:** Anima。Blossom / Hexed 反応を起点にできる。
-- 新規には Nanally の次に勧められることが多い。
+- 「**創生（光＋霊）**」編成。**[九原・ナナリ・零（主人公）](/characters/nanally/)** の組み合わせが定番。
 
 ## 入手
 
 スタンダードボード（恒常プール）。
 
-> Arc種別は出典で **Solid / Bose** の表記揺れがあり「要確認」。確定情報はゲーム内で確認してください。
+> 弧盤種別・一部の属性表記は出典で揺れがあり「要確認」。

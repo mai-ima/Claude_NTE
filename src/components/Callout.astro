@@ -2,7 +2,7 @@
 import { Icon } from 'astro-icon/components';
 
 interface Props {
-  type?: 'info' | 'warning' | 'note';
+  type?: 'info' | 'warning' | 'note' | 'tip' | 'success' | 'danger' | 'lore';
   title?: string;
 }
 const { type = 'note', title } = Astro.props;
@@ -11,18 +11,34 @@ const ICONS = {
   info: 'lucide:info',
   warning: 'lucide:alert-triangle',
   note: 'lucide:sticky-note',
+  tip: 'lucide:lightbulb',
+  success: 'lucide:check-circle-2',
+  danger: 'lucide:octagon-alert',
+  lore: 'lucide:book-open',
 } as const;
 
 const DEFAULT_TITLE = {
   info: '補足',
   warning: '要確認',
   note: 'メモ',
+  tip: 'ヒント',
+  success: 'ポイント',
+  danger: '注意',
+  lore: '設定・背景',
 } as const;
 
-const cls = type === 'warning' ? 'callout-warning' : type === 'info' ? 'callout-info' : '';
+const CLS = {
+  info: 'callout-info',
+  warning: 'callout-warning',
+  note: '',
+  tip: 'callout-tip',
+  success: 'callout-success',
+  danger: 'callout-danger',
+  lore: 'callout-lore',
+} as const;
 ---
 
-<div class:list={['callout', cls]}>
+<div class:list={['callout', CLS[type]]}>
   <Icon name={ICONS[type]} />
   <div>
     <p class="callout-title">{title ?? DEFAULT_TITLE[type]}</p>

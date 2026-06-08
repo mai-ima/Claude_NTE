@@ -1,35 +1,33 @@
 ---
 name: "Chiz"
-nameJa: "チズ"
+nameJa: "ちぃちゃん"
 rarity: "S"
 element: "Cosmos"
 role: "DPS"
-weapon: "Arc: Gas（専用Arc「Contemplative Cat」）"
-faction: "ピンクポウズ銀行（ニューホランド、ロビーマネージャー / 社員番号018888）"
-version: "v1.0（無料・Tycoon進行）"
+weapon: "弧盤: 気体"
+faction: "ピンクポウズ銀行（ニューホランド、ロビーマネージャー）"
+version: "v1.0（無料・名声進行）"
 tier: "A"
-description: "最良の無料DPS。通常攻撃で Fons を稼ぎ、「チャート読み」アルティメットでバーストする近〜中距離アタッカー。"
+description: "日本版名「ちぃちゃん」。最良の無料DPS。通常攻撃でファンスを稼ぎ、「金穀」を貯めてバーストする経済効率の高い光属性アタッカー。"
 status: "verified"
 updated: 2026-06-08
-tags: ["Cosmos", "DPS", "無料", "F2P"]
+tags: ["光", "Cosmos", "DPS", "無料", "F2P"]
 sources:
-  - label: "GameWith — Chizを無料で入手"
-    url: "https://gamewith.net/nte/74183"
-  - label: "Icy Veins — free characters"
-    url: "https://www.icy-veins.com/neverness-to-everness/free-characters"
+  - label: "Game8 — ちぃちゃん"
+    url: "https://game8.jp/nte/782428"
+  - label: "ゲームウィズ — ちぃちゃん"
+    url: "https://gamewith.jp/nte/555732"
 ---
 
 ## 概要
 
-**チズ（Chiz）** はピンクポウズ銀行のロビーマネージャーで、**光（Cosmos）属性の近〜中距離アタッカー**。**最良の無料（F2P）DPS** と評価される。通常攻撃で都市通貨 **Fons** を稼ぎ、「チャートを読む」アルティメットで大ダメージを出す。
+**ちぃちゃん（英名 Chiz）** は **光（Cosmos）属性の近〜中距離アタッカー**で、**最良の無料（F2P）DPS** と評価される。通常攻撃で都市通貨 **[ファンス](/items/fons/)** を直接稼ぎつつ、「**金穀**」を貯めて爆発させる、経済効率の高い火力役。
 
 ## 入手（無料）
 
-- Tycoon（資産家）進行で入手。最初の1体は **Tycoon Lv18** 前後、完凸（C6相当）は **Tycoon Lv45** 程度。
-- 専用Arc「Contemplative Cat」も無料で最大精錬まで入手可能とされる。
+- 無料配布。**名声レベル18**で入手、**名声レベル45**まで上げると完凸可能。
+- 専用弧盤も無料で最大精錬まで入手できるとされる。
 
-## 役割・性能
+## おすすめ編成
 
-- **ロール:** アタッカー（DPS）。
-- **属性:** Cosmos。Blossom / Remora 反応の起点。
-- 無課金軸として優秀で、長期的に育てる価値が高い。
+- 光属性として「**創生（光＋霊）**」「**延滞（相＋光）**」に関与。無課金軸の主力として長期的に育てる価値が高い。

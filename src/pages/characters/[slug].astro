@@ -31,7 +31,9 @@ const rows: Row[] = [
   { k: '属性', v: `${em.label}（${em.en}）` },
   { k: 'ロール', v: roleMeta(d.role).label },
 ];
-if (d.weapon) rows.push({ k: '武器(Arc)', v: d.weapon });
+if (d.weapon) rows.push({ k: '武器(弧盤)', v: d.weapon });
+if (d.cv) rows.push({ k: '声優', v: d.cv });
+if (d.birthday) rows.push({ k: '誕生日', v: d.birthday });
 if (d.faction) rows.push({ k: '所属', v: d.faction });
 if (d.version) rows.push({ k: '実装', v: d.version });
 if (d.tier) rows.push({ k: 'ティア(参考)', v: d.tier });

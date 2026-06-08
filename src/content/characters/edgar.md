@@ -4,32 +4,27 @@ nameJa: "エドガー"
 rarity: "A"
 element: "Cosmos"
 role: "Survival"
-weapon: "Arc: —（要確認）"
+weapon: "弧盤: —（要確認）"
 faction: "—"
 version: "v1.0"
 tier: "A"
-description: "HP回復に特化した Cosmos のヒーラー。リダイレクトスキルとアルティメットで回復する。"
-status: "draft"
+description: "HP回復に特化した光属性のヒーラー（A級）。バイレールスキルとEXレール終結で味方を回復する。"
+status: "verified"
 updated: 2026-06-08
-tags: ["Cosmos", "Survival", "ヒーラー"]
+tags: ["光", "Cosmos", "Survival", "ヒーラー"]
 sources:
-  - label: "Prydwen — Edgar"
-    url: "https://www.prydwen.gg/neverness-to-everness/characters/edgar"
-  - label: "GameWith — Edgar"
-    url: "https://gamewith.net/nte/74392"
+  - label: "Game8 — エドガー"
+    url: "https://game8.jp/nte/782343"
+  - label: "ゲームウィズ — エドガー"
+    url: "https://gamewith.jp/nte/555733"
+  - label: "AppMedia — エドガー"
+    url: "https://appmedia.jp/nte/79980982"
 ---
 
 ## 概要
 
-**エドガー（Edgar）** は **光（Cosmos）属性のヒーラー（A級）**。HP回復に特化し、リダイレクトスキルとアルティメットでチームを支える。**Charge**（トリオ）に絡む Cosmos 枠としても機能する。
-
-## 役割・性能
-
-- **ロール:** サバイバル（回復）。
-- **属性:** Cosmos。
+**エドガー（Edgar）** は **光（Cosmos）属性のヒーラー（A級）**。HP回復に特化し、バイレールスキルと**EXレール終結**で味方を回復する。光属性として「**創生（光＋霊）**」や「**延滞（相＋光）**」に関与できる。
 
 ## 入手
 
 v1.0 実装。
-
-> Arc種別・所属は「要確認」。

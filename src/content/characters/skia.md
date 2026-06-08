@@ -3,32 +3,23 @@ name: "Skia"
 rarity: "A"
 element: "Lakshana"
 role: "DPS"
-weapon: "Arc: Gas"
-faction: "BAC（副官・要確認）"
-version: "v1.0"
+weapon: "弧盤: 気体"
+faction: "—"
+version: "v1.0（英語版）"
 tier: "B"
-description: "背の高い寡黙な半狼の獣人。副官を務める Lakshana のアタッカーで、Remora 増幅役。"
+description: "相属性のアタッカー（A級）。日本版での実装・日本語名は未確認。"
 status: "draft"
 updated: 2026-06-08
-tags: ["Lakshana", "DPS"]
+tags: ["相", "Lakshana", "DPS", "要確認"]
 sources:
-  - label: "zeroluck — characters"
+  - label: "zeroluck — characters（英語）"
     url: "https://zeroluck.gg/nte/characters/"
-  - label: "Mobalytics — characters"
+  - label: "Mobalytics — characters（英語）"
     url: "https://mobalytics.gg/neverness-to-everness/characters"
 ---
 
 ## 概要
 
-**Skia** は背の高い寡黙な半狼半人の獣人で、副官を務める **相（Lakshana）属性のアタッカー（A級）**。**Remora** 反応の増幅役。
+**Skia** は英語版で言及される **相（Lakshana）属性のアタッカー（A級）**。半狼半人の獣人で副官を務めるとされる。
 
-## 役割・性能
-
-- **ロール:** アタッカー（DPS）。
-- **属性:** Lakshana。Remora / Stain に関与。
-
-## 入手
-
-v1.0 実装。
-
-> 所属（「Bureau of Animal Control」表記）はBAC関連と思われるが「要確認」。
+> **日本版での実装・日本語名は確認できていません**（日本の攻略サイトに個別ページなし。未実装の可能性）。判明し次第更新します。
