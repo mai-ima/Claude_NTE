@@ -204,11 +204,11 @@ const {
         </div>
 
         {
-          rows.length > 0 && (
-            <aside class="entity-aside">
-              <div class="info-panel">
-                {
-                  heroAvatar ? (
+          (rows.length > 0 || Astro.slots.has('aside')) && (
+            <aside class="entity-aside stack" style="gap:16px;">
+              {(rows.length > 0 || heroAvatar) && (
+                <div class="info-panel">
+                  {heroAvatar ? (
                     <Avatar
                       name={heroAvatar.name}
                       element={heroAvatar.element}
@@ -219,17 +219,18 @@ const {
                     <div class="info-hero">
                       <Icon name={`lucide:${sectionIcon}`} />
                     </div>
-                  )
-                }
-                <div class="info-list">
-                  {rows.map((r) => (
-                    <div class="info-row">
-                      <span class="k">{r.k}</span>
-                      <span class="v">{r.v}</span>
-                    </div>
-                  ))}
+                  )}
+                  <div class="info-list">
+                    {rows.map((r) => (
+                      <div class="info-row">
+                        <span class="k">{r.k}</span>
+                        <span class="v">{r.v}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
+              <slot name="aside" />
             </aside>
           )
         }

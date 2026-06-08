@@ -1,0 +1,78 @@
+---
+/**
+ * 異能連環（属性リング）のSVGビジュアル。
+ * `highlight` を渡すと、その属性と隣接属性（反応相手）を強調表示する。
+ */
+import { ELEMENT_RING, elementMeta, reactionsFor } from '../lib/nav';
+
+interface Props {
+  highlight?: string;
+  size?: number;
+}
+const { highlight, size = 200 } = Astro.props;
+
+const cx = 100;
+const cy = 100;
+const r = 72;
+const nodes = ELEMENT_RING.map((id, i) => {
+  const ang = (-90 + i * 60) * (Math.PI / 180);
+  return { id, x: cx + r * Math.cos(ang), y: cy + r * Math.sin(ang), meta: elementMeta(id) };
+});
+const neighbors = highlight ? reactionsFor(highlight).map((x) => x.partner) : [];
+const isOn = (id: string) => id === highlight;
+const isNb = (id: string) => neighbors.includes(id);
+---
+
+<svg viewBox="0 0 200 200" width={size} height={size} role="img" aria-label="異能連環リング">
+  {/* リング線 */}
+  <circle cx={cx} cy={cy} r={r} fill="none" stroke="var(--border)" stroke-width="2" />
+  {/* 隣接エッジ（強調時は反応辺を色付け） */}
+  {
+    nodes.map((n, i) => {
+      const m = nodes[(i + 1) % nodes.length];
+      const active = highlight && (isOn(n.id) || isOn(m.id));
+      return (
+        <line
+          x1={n.x}
+          y1={n.y}
+          x2={m.x}
+          y2={m.y}
+          stroke={active ? 'var(--accent)' : 'var(--border)'}
+          stroke-width={active ? 3 : 1.5}
+          opacity={active ? 1 : 0.5}
+        />
+      );
+    })
+  }
+  {/* ノード */}
+  {
+    nodes.map((n) => {
+      const on = isOn(n.id);
+      const nb = isNb(n.id);
+      const rad = on ? 20 : nb ? 17 : 14;
+      return (
+        <g>
+          <circle
+            cx={n.x}
+            cy={n.y}
+            r={rad}
+            fill={n.meta.hue}
+            opacity={highlight && !on && !nb ? 0.35 : 1}
+            stroke="#fff"
+            stroke-width={on ? 3 : 1.5}
+          />
+          <text
+            x={n.x}
+            y={n.y + 5}
+            text-anchor="middle"
+            font-size={on ? 16 : 13}
+            font-weight="800"
+            fill="#fff"
+          >
+            {n.meta.label}
+          </text>
+        </g>
+      );
+    })
+  }
+</svg>

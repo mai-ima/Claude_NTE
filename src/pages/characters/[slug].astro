@@ -1,7 +1,8 @@
 ---
 import { render } from 'astro:content';
 import EntityDetail from '../../components/EntityDetail.astro';
-import { sectionByCollection, elementMeta, roleMeta } from '../../lib/nav';
+import EsperRing from '../../components/EsperRing.astro';
+import { sectionByCollection, elementMeta, roleMeta, reactionsFor } from '../../lib/nav';
 import { titleOf, enNameOf, hrefOf, publishedEntries } from '../../lib/content';
 import type { Row, Pill } from '../../components/EntityDetail.astro';
 
@@ -56,4 +57,20 @@ if (d.tier) rows.push({ k: 'ティア(参考)', v: d.tier });
   heroAvatar={{ name: enNameOf(entry), element: d.element, rarity: d.rarity }}
 >
   <Content />
+  <div slot="aside" class="card card-pad">
+    <p style="font-weight:700;margin-bottom:4px;">異能連環での相性</p>
+    <p class="muted text-sm" style="margin-bottom:8px;">
+      {em.label}（{em.en}）と隣接属性の反応
+    </p>
+    <EsperRing highlight={d.element} size={200} />
+    <ul class="text-sm" style="margin-top:8px;padding-left:1.1em;">
+      {
+        reactionsFor(d.element).map((rx) => (
+          <li>
+            {elementMeta(rx.partner).label} とで <strong>{rx.name}</strong>（{rx.ja}）
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </EntityDetail>

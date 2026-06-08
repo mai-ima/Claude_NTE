@@ -118,6 +118,28 @@ export function elementMeta(id: string): ElementMeta {
   return ELEMENT_META[id] ?? { id, label: id, en: id, hue: '#94a3b8' };
 }
 
+/** 異能連環リングの並び順（隣接で反応が成立） */
+export const ELEMENT_RING = ['Cosmos', 'Anima', 'Incantation', 'Chaos', 'Psyche', 'Lakshana'];
+
+/** 隣接ペアのDuo反応（英語名／日本語名は攻略サイト由来・要原典確認） */
+export const DUO_REACTIONS = [
+  { a: 'Cosmos', b: 'Anima', name: 'Blossom', ja: '創生' },
+  { a: 'Anima', b: 'Incantation', name: 'Hexed', ja: '覆紋' },
+  { a: 'Incantation', b: 'Chaos', name: 'Scorch', ja: '濁燃' },
+  { a: 'Chaos', b: 'Psyche', name: 'Nova', ja: '暗星' },
+  { a: 'Psyche', b: 'Lakshana', name: 'Stain', ja: '浸染' },
+  { a: 'Lakshana', b: 'Cosmos', name: 'Remora', ja: '延滞' },
+];
+
+/** ある属性が隣接で起こせる反応（相手属性＋反応名）を返す */
+export function reactionsFor(el: string): { partner: string; name: string; ja: string }[] {
+  return DUO_REACTIONS.filter((r) => r.a === el || r.b === el).map((r) => ({
+    partner: r.a === el ? r.b : r.a,
+    name: r.name,
+    ja: r.ja,
+  }));
+}
+
 export interface RoleMeta {
   id: string;
   label: string;
