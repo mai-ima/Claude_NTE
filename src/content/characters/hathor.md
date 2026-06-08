@@ -1,13 +1,14 @@
 ---
 name: "Hathor"
+nameJa: "ハソール"
 rarity: "S"
 element: "Lakshana"
 role: "DPS"
 weapon: "Arc: Plasma"
-faction: "アイボン古物店"
+faction: "エイボン骨董品店"
 version: "v1.0（スタンダード恒常）"
 tier: "A"
-description: "Lakshana 属性のアタッカー。Remora 反応を強く後押しできる。"
+description: "相（Lakshana）属性のアタッカー。Remora 反応を強く後押しできる。"
 status: "verified"
 updated: 2026-06-08
 tags: ["Lakshana", "DPS"]
@@ -20,7 +21,7 @@ sources:
 
 ## 概要
 
-**Hathor** は **Lakshana 属性のアタッカー**。**Remora（Lakshana+Cosmos）** 反応の増幅に長けるとされる。
+**ハソール（Hathor）** は **相（Lakshana）属性のアタッカー**。**Remora（Lakshana+Cosmos）** 反応の増幅に長けるとされる。
 
 ## 役割・性能
 

@@ -4,7 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Sidebar from '../../components/Sidebar.astro';
 import Avatar from '../../components/Avatar.astro';
 import { ELEMENT_META, ROLE_META, elementMeta, roleMeta } from '../../lib/nav';
-import { publishedEntries, titleOf, hrefOf } from '../../lib/content';
+import { publishedEntries, titleOf, enNameOf, hrefOf } from '../../lib/content';
 
 const entries = await publishedEntries('characters');
 // レア度(S→A) → 属性 → 名前 で整列
@@ -47,7 +47,7 @@ const rarities = ['S', 'A'];
           elements.map((e) => (
             <button class="chip" data-element={e} aria-pressed="false">
               <span class="el-dot" style={`--el:${elementMeta(e).hue}`} />
-              {e}
+              {elementMeta(e).label}
             </button>
           ))
         }
@@ -76,8 +76,11 @@ const rarities = ['S', 'A'];
                 data-role={d.role}
               >
                 <div class="row" style="gap:10px;align-items:center;">
-                  <Avatar name={titleOf(entry)} element={d.element} rarity={d.rarity} size={46} />
-                  <span style="font-weight:800;font-size:1.05rem;">{titleOf(entry)}</span>
+                  <Avatar name={enNameOf(entry)} element={d.element} rarity={d.rarity} size={46} />
+                  <div>
+                    <div style="font-weight:800;font-size:1.02rem;">{titleOf(entry)}</div>
+                    <div class="muted" style="font-size:0.72rem;">{enNameOf(entry)}</div>
+                  </div>
                 </div>
                 <div class="cluster" style="margin-top:10px;">
                   <span class="el-badge" style={`--el:${em.hue}`}>

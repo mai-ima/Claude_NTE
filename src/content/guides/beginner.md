@@ -15,7 +15,7 @@ sources:
 
 ## まずやること
 
-1. **プロローグを進める** — 「Unforeseen Yet Foretold」→「Good Morning, Hethereau」→「Legendary Driver」と進み、基本システムと乗り物を解放。
+1. **プロローグを進める** — 「Unforeseen Yet Foretold」→「Good Morning, Heterocity」→「Legendary Driver」と進み、基本システムと乗り物を解放。
 2. **主人公 Zero を軸に編成** — 無料の Cosmos アタッカー。早期に頼れる主力。
 3. **無料キャラを確保** — A級バッファー **Haniel**（スターター）、F2P最良DPS **Chiz**（Tycoon進行）。
 4. **デイリーを欠かさない** — デイリーミッションは Annulith・EXP・素材源。**取り逃すと復旧不可**。

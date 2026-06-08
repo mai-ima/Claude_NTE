@@ -7,7 +7,7 @@ weapon: "Arc: Plasma"
 faction: "—"
 version: "v1.0"
 tier: "B"
-description: "Psyche 属性のアタッカー（A級）。"
+description: "魂（Psyche）属性のアタッカー（A級）。"
 status: "draft"
 updated: 2026-06-08
 tags: ["Psyche", "DPS"]
@@ -20,7 +20,7 @@ sources:
 
 ## 概要
 
-**Aurelia** は **Psyche 属性のアタッカー（A級）**。**Nova（Chaos+Psyche）／Stain（Psyche+Lakshana）** 反応に関与できる。
+**Aurelia** は **魂（Psyche）属性のアタッカー（A級）**。**Nova（Chaos+Psyche）／Stain（Psyche+Lakshana）** 反応に関与できる。
 
 ## 役割・性能
 

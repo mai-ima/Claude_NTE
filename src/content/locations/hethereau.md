@@ -1,5 +1,5 @@
 ---
-title: "ヘゼルロー（Hethereau）"
+title: "ヘテロシティ（Heterocity）"
 type: "city"
 order: 10
 description: "本作の舞台となる現代都市。超常的なアノマリーと日常が共存する。マップ南側に位置。"
@@ -9,24 +9,26 @@ tags: ["都市", "舞台"]
 sources:
   - label: "Wikipedia — Neverness to Everness"
     url: "https://en.wikipedia.org/wiki/Neverness_to_Everness"
-  - label: "Game8 — Map"
-    url: "https://game8.co/games/Neverness-to-Everness/archives/597306"
+  - label: "4Gamer（日本版）"
+    url: "https://www.4gamer.net/games/817/G081722/20260421013/"
+  - label: "ゲームウィズ — マップ"
+    url: "https://gamewith.jp/nte/555348"
 ---
 
 ## 概要
 
-**ヘゼルロー（Hethereau）** は、超常現象「**アノマリー**」と都市生活が共存する現代の架空都市。本作の主要な舞台で、島の南側に位置する。ロード無しでシームレスに探索でき、徒歩・乗り物で移動する。
+**ヘテロシティ（Heterocity）** は、超常現象「**異象（アノマリー）**」と都市生活が共存する現代の架空都市。本作の主要な舞台で、島の南側に位置する。ロード無しでシームレスに探索でき、徒歩・乗り物で移動する。
 
-## 4つの区
+## 主なエリア
 
 本土は大きく **4区** に分かれる。
 
-- [Unheard Shores（沿岸の癒し）](/locations/unheard-shores/)
-- [Bridge Crossings（橋の街）](/locations/bridge-crossings/)
-- [Miguel District（山辺の景勝）](/locations/miguel-district/)
-- [New Herland District（金融街）](/locations/new-herland-district/)
+- [未聞浦（未聞浦）](/locations/unheard-shores/) — 沿岸の癒し
+- [橋間地（橋間地）](/locations/bridge-crossings/) — エイボン骨董品店の所在地
+- [ミゲル区（ミゲル区）](/locations/miguel-district/) — 山辺の景勝
+- [ニューホランド（ニューホランド）](/locations/new-herland-district/) — 金融街
 
-加えて v1.1 で [サンワード島](/locations/sunward-island/) が追加された。
+このほか「絵空町」などのエリアがあり、v1.1 で [ヒナタ島（Sunward Island）](/locations/sunward-island/) が追加された。
 
 ## 探索
 

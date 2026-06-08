@@ -1,5 +1,5 @@
 ---
-title: "Warp Pieces"
+title: "ワープ系（Warp Pieces）"
 type: "currency"
 usedFor: "重複保護・交換"
 order: 40
@@ -14,4 +14,4 @@ sources:
 
 ## 概要
 
-**Warp Pieces** は、すでに所持しているキャラ（レゾネーター）や Arc を引いたときに**自動的に付与される**重複保護通貨。交換に利用できる。
+**ワープ系（Warp Pieces）** は、すでに所持しているキャラ（レゾネーター）や Arc を引いたときに**自動的に付与される**重複保護通貨。交換に利用できる。

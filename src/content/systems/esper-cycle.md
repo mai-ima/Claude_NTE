@@ -1,44 +1,46 @@
 ---
-title: "エスパーサイクル（属性と反応）"
-category: "エスパーサイクル"
+title: "異能連環（属性と反応）"
+category: "異能連環"
 order: 10
-description: "6属性のリングと、隣接で発動する6つのDuo反応＋2つのTrio反応。"
+description: "6属性「光・霊・呪・闇・魂・相」のリングと、隣接で発動する6つのDuo反応＋2つのTrio反応。"
 status: "verified"
 updated: 2026-06-08
-tags: ["属性", "反応", "エスパーサイクル"]
+tags: ["属性", "反応", "異能連環"]
 sources:
-  - label: "Icy Veins — Esper Cycles"
-    url: "https://www.icy-veins.com/neverness-to-everness/esper-cycles"
-  - label: "zeroluck — Esper Cycles"
+  - label: "Game8（日本版）— 属性"
+    url: "https://game8.jp/nte/783376"
+  - label: "神ゲー攻略 — 異能連環"
+    url: "https://kamigame.jp/nte/page/420093072383148552.html"
+  - label: "zeroluck — Esper Cycles（英語）"
     url: "https://zeroluck.gg/nte/esper-cycles/"
 ---
 
 ## 6属性のリング
 
-NTEの属性は6種で、**固定の輪（リング）**として並ぶ。**隣り合う属性どうし**だけが反応を起こせる。
+NTE（Neverness to Everness）の属性は6種で、**異能連環（いのうれんかん）** と呼ばれる**固定の輪（リング）**として並ぶ。**隣り合う属性どうし**だけが反応を起こせる。
 
-> Cosmos → Anima → Incantation → Chaos → Psyche → Lakshana →（Cosmos に戻る）
+> 光（Cosmos）→ 霊（Anima）→ 呪（Incantation）→ 闇（Chaos）→ 魂（Psyche）→ 相（Lakshana）→（光に戻る）
 
-これは「XがYに有利」というジャンケン型の相性表ではなく、**隣接で反応が成立する**仕組み（敵ごとの弱点属性は別途存在）。
+これは「XがYに有利」というジャンケン型の相性表ではなく、**隣接で反応が成立する**仕組み（敵ごとの弱点属性は別途存在）。日本版の属性名は **光・霊・呪・闇・魂・相** の漢字一字。
 
 ## Duo反応（隣接ペア・6種）
 
-| 反応 | 属性ペア | 効果 |
-| --- | --- | --- |
-| **Remora** | Lakshana + Cosmos | 対象をマーク・鈍化 |
-| **Blossom** | Cosmos + Anima | AoEの追撃を発生 |
-| **Hexed** | Anima + Incantation | 一定時間ダメージを記録し一括解放 |
-| **Scorch** | Incantation + Chaos | 継続ダメージ（DoT） |
-| **Nova** | Chaos + Psyche | 遅延して爆発（メンタル） |
-| **Stain** | Psyche + Lakshana | 被ダメージ増加 |
+| 反応(英) | 反応(日・参考) | 属性ペア | 効果 |
+| --- | --- | --- | --- |
+| **Remora** | 延滞 | 相＋光 | 対象をマーク・鈍化 |
+| **Blossom** | 創生 | 光＋霊 | AoEの追撃を発生 |
+| **Hexed** | 覆紋 | 霊＋呪 | 一定時間ダメージを記録し一括解放 |
+| **Scorch** | 濁燃 | 呪＋闇 | 継続ダメージ（DoT） |
+| **Nova** | 暗星 | 闇＋魂 | 遅延して爆発（メンタル） |
+| **Stain** | 浸染 | 魂＋相 | 被ダメージ増加 |
 
 ## Trio反応（2種）
 
-- **Charge**（Cosmos + Anima + Lakshana 系）: アルティメットエネルギーを獲得。
-- **Discord**（Chaos + Psyche + Incantation 系／Nova と Scorch の重複）: 敵のブレイク値を削る。
+- **Charge**（光＋霊＋相 系）: アルティメットエネルギーを獲得。
+- **Discord**（闇＋魂＋呪 系／Nova と Scorch の重複）: 敵のブレイク値を削る。
 
-## エスパーサイクルメーター
+## 連環値（メーター）
 
-戦闘行動でたまる円形ゲージ。通常攻撃で微量、スキルで中量、パリィ/完璧な回避で大きく上昇。満タン時にスワップ反応・サイクルパッシブ・アルティメットを発動できる。
+戦闘行動でたまる円形ゲージが **連環値**。通常攻撃で微量、スキルで中量、パリィ/完璧な回避で大きく上昇。満タン時にスワップ反応・サイクルパッシブ・アルティメットを発動できる。
 
-> 反応の正確な数値（％・持続秒数）は出典により幅があり「要確認」。
+> 日本語の反応名（創生・覆紋・濁燃・暗星・浸染・延滞）は攻略サイト由来で**要原典確認**。反応の正確な数値（％・持続秒数）も出典により幅があり「要確認」。

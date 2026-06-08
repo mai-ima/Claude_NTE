@@ -1,14 +1,14 @@
 ---
 name: "Daffodill"
-nameJa: "ダフォディル"
+nameJa: "ダフォディール"
 rarity: "S"
 element: "Chaos"
 role: "DPS"
 weapon: "Arc: Liquid"
-faction: "アイボン古物店（用心棒）"
+faction: "エイボン骨董品店（用心棒）"
 version: "v1.0（スタンダード恒常）"
 tier: "A"
-description: "「すべてを見透かす万華鏡の瞳」を持つ寡黙な用心棒。Chaos 属性のアタッカー。"
+description: "「すべてを見透かす万華鏡の瞳」を持つ寡黙な用心棒。闇（Chaos）属性のアタッカー。"
 status: "verified"
 updated: 2026-06-08
 tags: ["Chaos", "DPS"]
@@ -21,7 +21,7 @@ sources:
 
 ## 概要
 
-**Daffodill（Daffodil 表記もあり）** はアイボン古物店の用心棒。「すべてを見透かす万華鏡の瞳」を持つ寡黙な人物で、照れ屋だが芯に優しさを秘める。眼帯を収集する趣味を持つ。**Chaos 属性のアタッカー**。
+**ダフォディール（Daffodill）** はエイボン骨董品店の用心棒。「すべてを見透かす万華鏡の瞳」を持つ寡黙な人物で、照れ屋だが芯に優しさを秘める。眼帯を収集する趣味を持つ。**闇（Chaos）属性のアタッカー**。
 
 ## 役割・性能
 

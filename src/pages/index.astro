@@ -6,7 +6,7 @@ import { SECTIONS, elementMeta, roleMeta } from '../lib/nav';
 import { TOOLS } from '../components/tools/registry';
 import Avatar from '../components/Avatar.astro';
 import { RELEASE_NOTES } from '../data/releaseNotes';
-import { loadNavSections, recentEntries, publishedEntries, titleOf, hrefOf } from '../lib/content';
+import { loadNavSections, recentEntries, publishedEntries, titleOf, enNameOf, hrefOf } from '../lib/content';
 
 const sections = await loadNavSections();
 const countOf = (c: string) => sections.find((s) => s.collection === c)?.items.length ?? 0;
@@ -87,7 +87,7 @@ const latest = RELEASE_NOTES[0];
                     style={`--el:${em.hue}`}
                   >
                     <div class="row" style="gap:10px;align-items:center;">
-                      <Avatar name={titleOf(entry)} element={d.element} rarity={d.rarity} size={42} />
+                      <Avatar name={enNameOf(entry)} element={d.element} rarity={d.rarity} size={42} />
                       <span style="font-weight:800;">{titleOf(entry)}</span>
                     </div>
                     <div class="cluster" style="margin-top:10px;">

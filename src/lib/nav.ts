@@ -42,7 +42,7 @@ export const SECTIONS: SectionMeta[] = [
     href: '/locations/',
     label: 'ロケーション',
     icon: 'map',
-    blurb: '都市ヘゼルロー各区・島・アノマリーゾーンなどの地理。',
+    blurb: '都市ヘテロシティ各区・島・アノマリーゾーンなどの地理。',
   },
   {
     collection: 'enemies',
@@ -93,23 +93,29 @@ export const BOTTOM_NAV = [
 
 export interface ElementMeta {
   id: string;
-  label: string;
+  label: string; // 日本版公式の属性名（漢字1字）
+  en: string; // 英語表記
   /** テーマ非依存の識別色（CSS変数 --el-* を使う） */
   hue: string;
 }
 
-/** 属性メタ。色は雰囲気の識別用（出典の配色に厳密一致ではない）。 */
+/**
+ * 属性メタ。日本版の公式属性名「光・霊・呪・闇・魂・相」を表示に使う。
+ * frontmatter のキーは英語（Cosmos 等）のまま保持し、表示のみ日本語化する。
+ * 異能連環リング順: 光→霊→呪→闇→魂→相→（光へ）。色は識別用。
+ * 出典: Game8(JP) https://game8.jp/nte/783376 / ゲームウィズ https://gamewith.jp/nte/552269
+ */
 export const ELEMENT_META: Record<string, ElementMeta> = {
-  Cosmos: { id: 'Cosmos', label: 'Cosmos', hue: '#6366f1' },
-  Anima: { id: 'Anima', label: 'Anima', hue: '#10b981' },
-  Incantation: { id: 'Incantation', label: 'Incantation', hue: '#f59e0b' },
-  Chaos: { id: 'Chaos', label: 'Chaos', hue: '#a855f7' },
-  Psyche: { id: 'Psyche', label: 'Psyche', hue: '#ec4899' },
-  Lakshana: { id: 'Lakshana', label: 'Lakshana', hue: '#06b6d4' },
+  Cosmos: { id: 'Cosmos', label: '光', en: 'Cosmos', hue: '#f5a623' },
+  Anima: { id: 'Anima', label: '霊', en: 'Anima', hue: '#10b981' },
+  Incantation: { id: 'Incantation', label: '呪', en: 'Incantation', hue: '#a855f7' },
+  Chaos: { id: 'Chaos', label: '闇', en: 'Chaos', hue: '#475569' },
+  Psyche: { id: 'Psyche', label: '魂', en: 'Psyche', hue: '#ec4899' },
+  Lakshana: { id: 'Lakshana', label: '相', en: 'Lakshana', hue: '#06b6d4' },
 };
 
 export function elementMeta(id: string): ElementMeta {
-  return ELEMENT_META[id] ?? { id, label: id, hue: '#94a3b8' };
+  return ELEMENT_META[id] ?? { id, label: id, en: id, hue: '#94a3b8' };
 }
 
 export interface RoleMeta {

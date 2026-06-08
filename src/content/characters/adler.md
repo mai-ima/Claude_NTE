@@ -1,5 +1,6 @@
 ---
 name: "Adler"
+nameJa: "アドレー"
 rarity: "A"
 element: "Incantation"
 role: "Survival"
@@ -20,7 +21,7 @@ sources:
 
 ## 概要
 
-**Adler** は **Incantation 属性のサバイバル／支援（A級）**。**シールド付与**、呪い（Curse）ダメージの補助、敵デバフを行い、**Scorch** 反応の増幅役を担う。
+**アドレー（Adler）** は **呪（Incantation）属性のサバイバル／支援（A級）**。**シールド付与**、呪い（Curse）ダメージの補助、敵デバフを行い、**Scorch** 反応の増幅役を担う。
 
 ## 役割・性能
 

@@ -1,8 +1,8 @@
 ---
 import { render } from 'astro:content';
 import EntityDetail from '../../components/EntityDetail.astro';
-import { sectionByCollection } from '../../lib/nav';
-import { titleOf, hrefOf, publishedEntries } from '../../lib/content';
+import { sectionByCollection, elementMeta, roleMeta } from '../../lib/nav';
+import { titleOf, enNameOf, hrefOf, publishedEntries } from '../../lib/content';
 import type { Row, Pill } from '../../components/EntityDetail.astro';
 
 export async function getStaticPaths() {
@@ -23,10 +23,12 @@ const pills: Pill[] = [
   { kind: 'element', value: d.element },
   { kind: 'role', value: d.role },
 ];
+const em = elementMeta(d.element);
 const rows: Row[] = [
+  { k: '英語名', v: enNameOf(entry) },
   { k: 'レア度', v: `${d.rarity}-Class` },
-  { k: '属性', v: d.element },
-  { k: 'ロール', v: d.role },
+  { k: '属性', v: `${em.label}（${em.en}）` },
+  { k: 'ロール', v: roleMeta(d.role).label },
 ];
 if (d.weapon) rows.push({ k: '武器(Arc)', v: d.weapon });
 if (d.faction) rows.push({ k: '所属', v: d.faction });
@@ -51,7 +53,7 @@ if (d.tier) rows.push({ k: 'ティア(参考)', v: d.tier });
   headings={headings}
   prev={prev ? { href: hrefOf('characters', prev.id), title: titleOf(prev) } : null}
   next={next ? { href: hrefOf('characters', next.id), title: titleOf(next) } : null}
-  heroAvatar={{ name: titleOf(entry), element: d.element, rarity: d.rarity }}
+  heroAvatar={{ name: enNameOf(entry), element: d.element, rarity: d.rarity }}
 >
   <Content />
 </EntityDetail>

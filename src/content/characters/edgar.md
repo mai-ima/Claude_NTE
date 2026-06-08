@@ -1,5 +1,6 @@
 ---
 name: "Edgar"
+nameJa: "エドガー"
 rarity: "A"
 element: "Cosmos"
 role: "Survival"
@@ -20,7 +21,7 @@ sources:
 
 ## 概要
 
-**Edgar** は **Cosmos 属性のヒーラー（A級）**。HP回復に特化し、リダイレクトスキルとアルティメットでチームを支える。**Charge**（トリオ）に絡む Cosmos 枠としても機能する。
+**エドガー（Edgar）** は **光（Cosmos）属性のヒーラー（A級）**。HP回復に特化し、リダイレクトスキルとアルティメットでチームを支える。**Charge**（トリオ）に絡む Cosmos 枠としても機能する。
 
 ## 役割・性能
 

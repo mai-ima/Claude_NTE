@@ -1,14 +1,14 @@
 ---
-title: "Bridge Crossings"
+title: "橋間地（Bridge Crossings）"
 type: "district"
-region: "ヘゼルロー"
+region: "ヘテロシティ"
 order: 30
-description: "アーケードや電話ボックスなどのランドマークを擁する区。アイボン古物店の所在地。"
+description: "アーケードや電話ボックスなどのランドマークを擁する区。エイボン骨董品店の所在地。"
 status: "verified"
 updated: 2026-06-08
-tags: ["区", "アイボン"]
+tags: ["区", "エイボン"]
 sources:
-  - label: "GameWith — Bridge Crossings Map"
+  - label: "GameWith — 橋間地 Map"
     url: "https://gamewith.net/nte/74213"
   - label: "sickempire — NTE"
     url: "https://sickempire.com/games/neverness-to-everness/"
@@ -16,6 +16,6 @@ sources:
 
 ## 概要
 
-**Bridge Crossings** は、アーケードや電話ボックスといったランドマークが点在する区。主人公が拠点とする**アイボン古物店（Eibon）**があるエリアとされる。
+**橋間地** は、アーケードや電話ボックスといったランドマークが点在する区。主人公が拠点とする**エイボン骨董品店（Eibon）**があるエリアとされる。
 
-> アイボンはアノマリーハンターのクルーの拠点。詳細は[ストーリー](/story/)へ。
+> エイボンは異象ハンターのクルーの拠点。詳細は[ストーリー](/story/)へ。

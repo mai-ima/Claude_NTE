@@ -1,22 +1,22 @@
 ---
-title: "Miguel District"
+title: "ミゲル区（Miguel District）"
 type: "district"
-region: "ヘゼルロー"
+region: "ヘテロシティ"
 order: 40
 description: "山辺の風光明媚な区。最高峰のランドマーク「Skytower」やCaltrop Lake、Noetic Bridge商店街がある。"
 status: "verified"
 updated: 2026-06-08
 tags: ["区", "ランドマーク"]
 sources:
-  - label: "GameWith — Miguel District Map"
+  - label: "GameWith — ミゲル区 Map"
     url: "https://gamewith.net/nte/74210"
-  - label: "thegameswiki — Miguel District"
+  - label: "thegameswiki — ミゲル区"
     url: "https://thegameswiki.com/nte/wiki/miguel-district"
 ---
 
 ## 概要
 
-**Miguel District** は山辺に広がる風光明媚な区。市内最高のランドマーク **Hethereau Skytower**、**Caltrop Lake**、ショッピング街 **Noetic Bridge** などを擁する。
+**ミゲル区** は山辺に広がる風光明媚な区。市内最高のランドマーク **Heterocity Skytower**、**Caltrop Lake**、ショッピング街 **Noetic Bridge** などを擁する。
 
 ## 見どころ
 

@@ -1,5 +1,5 @@
 ---
-title: "Riftcrystal"
+title: "リフトクリスタル（Riftcrystal）"
 type: "currency"
 usedFor: "課金専用・スキン購入"
 order: 20
@@ -14,4 +14,4 @@ sources:
 
 ## 概要
 
-**Riftcrystal** は課金専用の最上位通貨。**Annulith に 1:1** で変換できるほか、コスメティックショップ（衣装・プレミアムグライダー・限定バンドル）に直接使う。これらは Annulith では買えない。
+**リフトクリスタル（Riftcrystal）** は課金専用の最上位通貨。**Annulith に 1:1** で変換できるほか、コスメティックショップ（衣装・プレミアムグライダー・限定バンドル）に直接使う。これらは Annulith では買えない。

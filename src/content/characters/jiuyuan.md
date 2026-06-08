@@ -1,5 +1,6 @@
 ---
 name: "Jiuyuan"
+nameJa: "九原（じょえん）"
 rarity: "S"
 element: "Anima"
 role: "DPS"
@@ -20,7 +21,7 @@ sources:
 
 ## 概要
 
-**Jiuyuan** は **Anima 属性のアタッカー**。ダメージの多くを付着機構 **「Lethal Rose Pact」** に依存し、オンフィールド／オフフィールドの双方で火力を出せる柔軟性が持ち味。
+**九原（じょえん／Jiuyuan）** は **霊（Anima）属性のアタッカー**。ダメージの多くを付着機構 **「Lethal Rose Pact」** に依存し、オンフィールド／オフフィールドの双方で火力を出せる柔軟性が持ち味。
 
 ## 役割・性能
 

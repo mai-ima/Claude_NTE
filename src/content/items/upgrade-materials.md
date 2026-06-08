@@ -3,7 +3,7 @@ title: "育成素材（EXP・凸素材）"
 type: "material"
 usedFor: "レベル上げ・凸"
 order: 10
-description: "EXPの Hunter Guides、コストの Beetle Coins、Arc素材、エスパー能力素材、Cartridges など。"
+description: "EXPの Hunter Guides、コストの 甲虫コイン、Arc素材、エスパー能力素材、Cartridges など。"
 status: "verified"
 updated: 2026-06-08
 tags: ["素材", "育成"]
@@ -18,8 +18,8 @@ sources:
 
 | 素材 | 用途 |
 | --- | --- |
-| **Hunter Guides** | キャラのEXP（レベル上げ） |
-| **Beetle Coins** | 各種コスト（汎用通貨） |
+| **ハンターガイド（Hunter Guides）** | キャラのEXP（レベル上げ） |
+| **甲虫コイン（甲虫コイン）** | 各種コスト（汎用通貨） |
 | **Arc素材** | 武器(Arc)の強化 |
 | **エスパー能力素材** | スキル強化 |
 | **Cartridges** | 装備系の強化 |

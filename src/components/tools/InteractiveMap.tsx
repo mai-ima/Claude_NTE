@@ -109,10 +109,10 @@ export default function InteractiveMap() {
   );
 }
 
-/** オリジナルの簡易区画図（ヘゼルロー4区＋サンワード島の概念図） */
+/** オリジナルの簡易区画図（ヘテロシティ4区＋ヒナタ島の概念図） */
 function Schematic() {
   return (
-    <svg viewBox="0 0 400 300" role="img" aria-label="ヘゼルロー概略図">
+    <svg viewBox="0 0 400 300" role="img" aria-label="ヘテロシティ概略図">
       <rect x="0" y="0" width="400" height="300" fill="var(--surface-2)" />
       {/* 海 */}
       <rect x="0" y="0" width="400" height="300" fill="color-mix(in srgb, var(--accent) 6%, transparent)" />
@@ -125,12 +125,12 @@ function Schematic() {
         {/* 島 */}
         <circle cx="358" cy="225" r="30" fill="color-mix(in srgb, #06b6d4 18%, var(--surface))" />
       </g>
-      <g fill="var(--text)" font-size="11" font-weight="700" text-anchor="middle" font-family="sans-serif">
-        <text x="100" y="88">Unheard Shores</text>
-        <text x="290" y="88">New Herland</text>
-        <text x="100" y="218">Miguel District</text>
-        <text x="260" y="218">Bridge Xing</text>
-        <text x="358" y="228" font-size="9">Sunward</text>
+      <g fill="var(--text)" font-size="12" font-weight="700" text-anchor="middle" font-family="sans-serif">
+        <text x="100" y="88">未聞浦</text>
+        <text x="290" y="88">ニューホランド</text>
+        <text x="100" y="218">ミゲル区</text>
+        <text x="260" y="218">橋間地</text>
+        <text x="358" y="226" font-size="10">ヒナタ島</text>
       </g>
     </svg>
   );

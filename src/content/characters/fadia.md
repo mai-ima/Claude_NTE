@@ -1,10 +1,11 @@
 ---
 name: "Fadia"
+nameJa: "ファルディーヤ"
 rarity: "S"
 element: "Psyche"
 role: "Survival"
 weapon: "Arc: —（要確認）"
-faction: "アノマリー対策局（BAC）ETD-4"
+faction: "異象管理局（BAC）ETD-4"
 version: "v1.0（スタンダード恒常）"
 tier: "A"
 description: "ETD-4の謎多きメンバー。被ダメージをチーム全体へ分散し、HPを安定させるサバイバル（耐久）ユニット。"
@@ -20,7 +21,7 @@ sources:
 
 ## 概要
 
-**Fadia** はBAC・ETD-4の謎めいたメンバーで、**Psyche 属性のサバイバル（耐久）ユニット**。受けるダメージをチーム全体へ分散し、HPを安定させる。**Nova** 反応の増幅役にもなる。
+**ファルディーヤ（Fadia）** はBAC・ETD-4の謎めいたメンバーで、**魂（Psyche）属性のサバイバル（耐久）ユニット**。受けるダメージをチーム全体へ分散し、HPを安定させる。**Nova** 反応の増幅役にもなる。
 
 ## 役割・性能
 

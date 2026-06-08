@@ -1,5 +1,6 @@
 ---
 name: "Haniel"
+nameJa: "ハニエル"
 rarity: "A"
 element: "Psyche"
 role: "Buff"
@@ -20,7 +21,7 @@ sources:
 
 ## 概要
 
-**Haniel** は **Psyche 属性のバッファー（A級）**。携帯スピーカー「Hootie」を設置して味方の攻撃力を上げ、連鎖する「Ensemble」効果を発動しつつ Psyche ダメージも与える。**A級ながら、その汎用性からS級級の評価**を保つ稀有なユニット。
+**ハニエル（Haniel）** は **魂（Psyche）属性のバッファー（A級）**。携帯スピーカー「Hootie」を設置して味方の攻撃力を上げ、連鎖する「Ensemble」効果を発動しつつ Psyche ダメージも与える。**A級ながら、その汎用性からS級級の評価**を保つ稀有なユニット。
 
 ## 役割・性能
 

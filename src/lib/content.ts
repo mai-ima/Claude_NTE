@@ -7,10 +7,16 @@ type AnyEntry = CollectionEntry<
   'characters' | 'locations' | 'enemies' | 'systems' | 'story' | 'items' | 'guides'
 >;
 
-/** エントリの表示タイトル（characters は name、他は title） */
+/** エントリの表示タイトル（日本版名称を優先: nameJa → title → name） */
 export function titleOf(entry: AnyEntry): string {
   const d = entry.data as Record<string, unknown>;
-  return (d.title as string) || (d.name as string) || entry.id;
+  return (d.nameJa as string) || (d.title as string) || (d.name as string) || entry.id;
+}
+
+/** 英語名（avatar のイニシャルや併記用）。characters のみ */
+export function enNameOf(entry: AnyEntry): string {
+  const d = entry.data as Record<string, unknown>;
+  return (d.name as string) || (d.title as string) || entry.id;
 }
 
 /** コレクション内リンク */

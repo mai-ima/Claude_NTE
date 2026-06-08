@@ -1,6 +1,6 @@
 ---
 name: "Sakiri"
-nameJa: "サキリ（サギリ）"
+nameJa: "早霧（さきり）"
 rarity: "S"
 element: "Incantation"
 role: "Buff"
@@ -21,7 +21,7 @@ sources:
 
 ## 概要
 
-**Sakiri（サギリ表記もあり・同一キャラ）** は、ローンチ唯一の **S級攻撃力バッファー**。意思を持つ角付きの槌「キロウマル」を振るう **Incantation 属性**。アルティメット「Feast of Gluttony」は自身のATKに応じて味方ATKを上昇させ、引き寄せ・打ち上げ・抑制・防御低下を伴う。
+**早霧（さきり／Sakiri・Sagiri）** は、ローンチ唯一の **S級攻撃力バッファー**。意思を持つ角付きの槌「キロウマル」を振るう **呪（Incantation）属性**。アルティメット「Feast of Gluttony」は自身のATKに応じて味方ATKを上昇させ、引き寄せ・打ち上げ・抑制・防御低下を伴う。
 
 ## 役割・性能
 
