@@ -19,14 +19,16 @@ sources:
 
 ### ワールドボス
 
-- Serenetti（弱点: **Incantation**）/ Swallowtail（弱点: **Anima**）/ Black Tome / Headless Rider / Beat King / Sea Prisoner / Nestbound Bird
+- [Serenetti](/enemies/serenetti/)（弱点: **呪/Incantation**）
+- [Swallowtail](/enemies/swallowtail/)（弱点: **霊/Anima**）
+- [Black Tome](/enemies/black-tome/) / [Headless Rider](/enemies/headless-rider/) / [Beat King](/enemies/beat-king/) / [Sea Prisoner](/enemies/sea-prisoner/) / [Nestbound Bird](/enemies/nestbound-bird/)
 
 ### ストーリーボス
 
-- Film - MANISH / Imaginadough / Mammon / Tomato Devil
+- [Film - MANISH](/enemies/film-manish/) / [Imaginadough](/enemies/imaginadough/) / [Mammon](/enemies/mammon/) / [Tomato Devil](/enemies/tomato-devil/)
 
 ### アノマリー巡礼
 
-- Morphix / The Never-ending Arachne
+- [Morphix](/enemies/morphix/) / [The Never-ending Arachne](/enemies/never-ending-arachne/)
 
 > 一覧は約13体（ワールド7・ストーリー4・巡礼2）とする出典あり。個別の弱点・出現地は順次確認して追記します（**要確認**）。

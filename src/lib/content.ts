@@ -30,6 +30,8 @@ export interface NavItem {
   href: string;
   /** characters の属性色など（任意） */
   el?: string;
+  /** characters のレア度（任意） */
+  rarity?: string;
 }
 
 export interface NavSection {
@@ -91,6 +93,7 @@ export async function loadNavSections(): Promise<NavSection[]> {
         title: titleOf(e),
         href: hrefOf(s.collection, e.id),
         el: (e.data as Record<string, unknown>).element as string | undefined,
+        rarity: (e.data as Record<string, unknown>).rarity as string | undefined,
       })),
     });
   }

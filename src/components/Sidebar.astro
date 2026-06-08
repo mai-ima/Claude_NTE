@@ -34,7 +34,12 @@ const sections = await loadNavSections();
               ) : (
                 <Icon name={`lucide:${section.icon}`} />
               )}
-              <span>{item.title}</span>
+              <span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{item.title}</span>
+              {item.rarity && (
+                <span class:list={['badge', `badge-rarity-${item.rarity}`]} style="height:16px;padding:0 6px;font-size:0.62rem;">
+                  {item.rarity}
+                </span>
+              )}
             </a>
           ))}
         </div>
