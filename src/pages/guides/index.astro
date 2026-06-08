@@ -1,0 +1,14 @@
+---
+import EntityList from '../../components/EntityList.astro';
+import { sectionByCollection } from '../../lib/nav';
+const s = sectionByCollection('guides')!;
+---
+<EntityList
+  collection="guides"
+  title="攻略ガイド"
+  eyebrow="ガイド"
+  lead="初心者の進め方・リセマラ・ガチャ戦略・ティアリストの考え方など。"
+  icon={s.icon}
+  groupField="category"
+  groupOrder={['スタート', 'ガチャ', '育成', 'エンドコンテンツ']}
+/>

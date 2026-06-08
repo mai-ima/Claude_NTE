@@ -1,0 +1,239 @@
+---
+/**
+ * エンティティ詳細ページの共通レイアウト。
+ * 各コレクションの [slug].astro から、型付きデータを `rows`/`pills` に整形して渡す。
+ * 本文（MDX）は default slot で受け取る。
+ */
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Sidebar from './Sidebar.astro';
+import StatusBadge from './StatusBadge.astro';
+import Toc from './Toc.astro';
+import Avatar from './Avatar.astro';
+import PersonalNote from './PersonalNote';
+import { withBase } from '../lib/path';
+import { elementMeta, roleMeta } from '../lib/nav';
+
+export interface Pill {
+  kind: 'element' | 'role' | 'rarity' | 'plain';
+  value: string;
+}
+export interface Row {
+  k: string;
+  v: string;
+}
+interface LinkRef {
+  href: string;
+  title: string;
+}
+
+interface Props {
+  collection: string;
+  currentId: string;
+  sectionLabel: string;
+  sectionHref: string;
+  sectionIcon: string;
+  title: string;
+  lead?: string;
+  pills?: Pill[];
+  rows?: Row[];
+  status: 'verified' | 'draft';
+  updated?: Date;
+  tags?: string[];
+  sources?: { label: string; url: string }[];
+  headings: { depth: number; slug: string; text: string }[];
+  prev?: LinkRef | null;
+  next?: LinkRef | null;
+  spoilerNote?: boolean;
+  /** キャラ等で属性色アバターを情報パネル上部に出す */
+  heroAvatar?: { name: string; element: string; rarity?: string };
+}
+
+const {
+  collection,
+  currentId,
+  sectionLabel,
+  sectionHref,
+  sectionIcon,
+  title,
+  lead,
+  pills = [],
+  rows = [],
+  status,
+  updated,
+  tags = [],
+  sources = [],
+  headings,
+  prev,
+  next,
+  spoilerNote = false,
+  heroAvatar,
+} = Astro.props;
+---
+
+<BaseLayout title={title} description={lead}>
+  <div class="layout has-sidebar">
+    <Sidebar currentCollection={collection} currentId={currentId} />
+    <div class="content">
+      <nav class="text-sm muted cluster" style="margin-bottom:16px;" aria-label="パンくず">
+        <a href={withBase('/')}>ホーム</a>
+        <Icon name="lucide:chevron-right" style="width:14px;height:14px;" />
+        <a href={withBase(sectionHref)}>{sectionLabel}</a>
+      </nav>
+
+      <div class="entity-grid">
+        <div style="min-width:0;">
+          <article data-pagefind-body>
+            <header class="page-head" style="margin-bottom:16px;">
+              <p class="eyebrow" data-pagefind-meta="category">{sectionLabel}</p>
+              <h1>{title}</h1>
+              {lead && <p class="lead">{lead}</p>}
+              {
+                pills.length > 0 && (
+                  <div class="meta-row">
+                    {pills.map((p) =>
+                      p.kind === 'element' ? (
+                        <span class="el-badge" style={`--el:${elementMeta(p.value).hue}`}>
+                          <span class="el-dot" />
+                          {elementMeta(p.value).label}
+                        </span>
+                      ) : p.kind === 'rarity' ? (
+                        <span class:list={['badge', `badge-rarity-${p.value}`]}>{p.value}-Class</span>
+                      ) : p.kind === 'role' ? (
+                        <span class="badge badge-accent">
+                          <Icon name={`lucide:${roleMeta(p.value).icon}`} style="width:13px;height:13px;" />
+                          {roleMeta(p.value).label}
+                        </span>
+                      ) : (
+                        <span class="badge">{p.value}</span>
+                      ),
+                    )}
+                  </div>
+                )
+              }
+              <div class="meta-row">
+                <StatusBadge status={status} />
+                {updated && (
+                  <span class="muted text-sm">更新: {updated.toLocaleDateString('ja-JP')}</span>
+                )}
+                {tags.map((t) => (
+                  <span class="badge" data-pagefind-filter="tag">#{t}</span>
+                ))}
+              </div>
+            </header>
+
+            {
+              status === 'draft' && (
+                <div class="callout callout-warning">
+                  <Icon name="lucide:alert-triangle" />
+                  <div>
+                    <p class="callout-title">要確認の下書き</p>
+                    <div class="text-sm">
+                      未検証の数値・仕様を含みます。出典で裏が取れ次第、この記事を更新してください。
+                    </div>
+                  </div>
+                </div>
+              )
+            }
+            {
+              spoilerNote && (
+                <div class="callout callout-info">
+                  <Icon name="lucide:eye-off" />
+                  <div>
+                    <p class="callout-title">ネタバレ注意</p>
+                    <div class="text-sm">
+                      この記事は物語の核心に触れます。重要な内容は折りたたみ（タップで表示）にしています。
+                    </div>
+                  </div>
+                </div>
+              )
+            }
+
+            <Toc headings={headings} />
+
+            <div class="prose">
+              <slot />
+            </div>
+
+            {
+              sources.length > 0 && (
+                <section style="margin-top:32px;">
+                  <h2>出典</h2>
+                  <ul>
+                    {sources.map((s) => (
+                      <li>
+                        <a href={s.url} target="_blank" rel="noopener noreferrer">
+                          {s.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )
+            }
+          </article>
+
+          <PersonalNote client:visible articleId={`${collection}.${currentId}`} />
+
+          <nav
+            class="grid"
+            style="margin-top:32px;grid-template-columns:1fr 1fr;gap:12px;"
+            aria-label="前後の記事"
+          >
+            {
+              prev ? (
+                <a class="card card-pad card-link" href={prev.href}>
+                  <span class="muted text-sm">← 前</span>
+                  <div style="font-weight:600;">{prev.title}</div>
+                </a>
+              ) : (
+                <span />
+              )
+            }
+            {
+              next ? (
+                <a class="card card-pad card-link" href={next.href} style="text-align:right;">
+                  <span class="muted text-sm">次 →</span>
+                  <div style="font-weight:600;">{next.title}</div>
+                </a>
+              ) : (
+                <span />
+              )
+            }
+          </nav>
+        </div>
+
+        {
+          rows.length > 0 && (
+            <aside class="entity-aside">
+              <div class="info-panel">
+                {
+                  heroAvatar ? (
+                    <Avatar
+                      name={heroAvatar.name}
+                      element={heroAvatar.element}
+                      rarity={heroAvatar.rarity}
+                      block
+                    />
+                  ) : (
+                    <div class="info-hero">
+                      <Icon name={`lucide:${sectionIcon}`} />
+                    </div>
+                  )
+                }
+                <div class="info-list">
+                  {rows.map((r) => (
+                    <div class="info-row">
+                      <span class="k">{r.k}</span>
+                      <span class="v">{r.v}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </aside>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</BaseLayout>

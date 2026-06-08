@@ -1,0 +1,49 @@
+---
+import { render } from 'astro:content';
+import EntityDetail from '../../components/EntityDetail.astro';
+import { sectionByCollection } from '../../lib/nav';
+import { titleOf, hrefOf, publishedEntries } from '../../lib/content';
+import type { Row, Pill } from '../../components/EntityDetail.astro';
+
+const TYPE_JA: Record<string, string> = {
+  anomaly: 'アノマリー', boss: 'ボス', elite: 'エリート', mob: '雑魚',
+};
+
+export async function getStaticPaths() {
+  const sorted = await publishedEntries('enemies');
+  return sorted.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: { entry, prev: sorted[i - 1] ?? null, next: sorted[i + 1] ?? null },
+  }));
+}
+const { entry, prev, next } = Astro.props;
+const { Content, headings } = await render(entry as any);
+const d = entry.data as any;
+const section = sectionByCollection('enemies')!;
+const pills: Pill[] = [];
+if (d.weakness) pills.push({ kind: 'element', value: d.weakness });
+const rows: Row[] = [{ k: '種別', v: TYPE_JA[d.type] ?? d.type }];
+if (d.element) rows.push({ k: '属性', v: d.element });
+if (d.weakness) rows.push({ k: '弱点', v: d.weakness });
+if (d.location) rows.push({ k: '出現', v: d.location });
+---
+<EntityDetail
+  collection="enemies"
+  currentId={entry.id}
+  sectionLabel={section.label}
+  sectionHref={section.href}
+  sectionIcon={section.icon}
+  title={titleOf(entry)}
+  lead={d.description}
+  pills={pills}
+  rows={rows}
+  status={d.status}
+  updated={d.updated}
+  tags={d.tags}
+  sources={d.sources}
+  headings={headings}
+  prev={prev ? { href: hrefOf('enemies', prev.id), title: titleOf(prev) } : null}
+  next={next ? { href: hrefOf('enemies', next.id), title: titleOf(next) } : null}
+>
+  <Content />
+</EntityDetail>

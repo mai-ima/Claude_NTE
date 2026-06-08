@@ -1,0 +1,134 @@
+---
+/** 汎用の一覧ページ本体（characters 以外）。frontmatter の任意フィールドでグルーピング可能。 */
+import { Icon } from 'astro-icon/components';
+import Search from 'astro-pagefind/components/Search';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Sidebar from './Sidebar.astro';
+import StatusBadge from './StatusBadge.astro';
+import { elementMeta } from '../lib/nav';
+import { publishedEntries, titleOf, hrefOf } from '../lib/content';
+
+interface Props {
+  collection: string;
+  title: string;
+  eyebrow: string;
+  lead: string;
+  icon: string;
+  /** グルーピングに使うフロントマターのキー（例: 'category' / 'type' / 'arc'） */
+  groupField?: string;
+  /** グループ表示順（キー）。未指定は出現順 */
+  groupOrder?: string[];
+  /** グループキー→表示ラベルの変換（英語enum等を日本語にする） */
+  groupLabels?: Record<string, string>;
+  /** 検索ボックスを表示するか */
+  search?: boolean;
+}
+const {
+  collection,
+  title,
+  eyebrow,
+  lead,
+  icon,
+  groupField,
+  groupOrder = [],
+  groupLabels = {},
+  search = true,
+} = Astro.props;
+
+const entries = await publishedEntries(collection);
+
+type Item = (typeof entries)[number];
+const groups: { label: string; items: Item[] }[] = [];
+if (groupField) {
+  const map = new Map<string, Item[]>();
+  for (const e of entries) {
+    const key = String((e.data as Record<string, unknown>)[groupField] ?? 'その他');
+    (map.get(key) ?? map.set(key, []).get(key)!).push(e);
+  }
+  const keys = [...map.keys()].sort((a, b) => {
+    const ia = groupOrder.indexOf(a);
+    const ib = groupOrder.indexOf(b);
+    return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib) || a.localeCompare(b, 'ja');
+  });
+  for (const k of keys) groups.push({ label: k, items: map.get(k)! });
+} else {
+  groups.push({ label: '', items: entries });
+}
+---
+
+<BaseLayout title={title}>
+  <div class="layout has-sidebar">
+    <Sidebar currentCollection={collection} />
+    <div class="content">
+      <section class="page-head">
+        <p class="eyebrow">{eyebrow}</p>
+        <h1>{title}</h1>
+        <p class="lead">{lead}</p>
+      </section>
+
+      {
+        search && (
+          <div class="card card-pad" style="margin-bottom:32px;">
+            <Search id="search" className="pagefind-ui" uiOptions={{ showImages: false, excerptLength: 15 }} />
+          </div>
+        )
+      }
+
+      {
+        groups.map((group) => (
+          <section style="margin-bottom:36px;">
+            {group.label && (
+              <div class="row" style="gap:8px;margin-bottom:14px;">
+                <Icon name={`lucide:${icon}`} style="width:20px;height:20px;color:var(--accent);" />
+                <h2 style="margin:0;">{groupLabels[group.label] ?? group.label}</h2>
+                <span class="badge">{group.items.length}</span>
+              </div>
+            )}
+            <div class="grid grid-cards">
+              {group.items.map((item) => {
+                const d: any = item.data;
+                const el = d.element ? elementMeta(d.element) : null;
+                return (
+                  <a
+                    class="card card-pad card-link"
+                    href={hrefOf(collection, item.id)}
+                    style={el ? `--el:${el.hue}` : undefined}
+                  >
+                    <div class="row row-between" style="align-items:flex-start;gap:8px;">
+                      <span style="font-weight:700;">{titleOf(item)}</span>
+                      <StatusBadge status={d.status} />
+                    </div>
+                    {d.description && (
+                      <p class="muted text-sm" style="margin-top:6px;">
+                        {d.description}
+                      </p>
+                    )}
+                    <div class="cluster" style="margin-top:10px;">
+                      {el && (
+                        <span class="el-badge" style={`--el:${el.hue}`}>
+                          <span class="el-dot" />
+                          {el.label}
+                        </span>
+                      )}
+                      {d.weakness && <span class="badge">弱点: {d.weakness}</span>}
+                      {d.usedFor && <span class="badge">{d.usedFor}</span>}
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
+          </section>
+        ))
+      }
+
+      {
+        entries.length === 0 && (
+          <div class="empty">
+            <Icon name="lucide:file-question" />
+            <p>まだ記事がありません。</p>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,164 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import Avatar from '../../components/Avatar.astro';
+import { ELEMENT_META, ROLE_META, elementMeta, roleMeta } from '../../lib/nav';
+import { publishedEntries, titleOf, hrefOf } from '../../lib/content';
+
+const entries = await publishedEntries('characters');
+// レア度(S→A) → 属性 → 名前 で整列
+const RAR = { S: 0, A: 1 } as Record<string, number>;
+const list = [...entries].sort(
+  (a: any, b: any) =>
+    (RAR[a.data.rarity] ?? 9) - (RAR[b.data.rarity] ?? 9) ||
+    titleOf(a).localeCompare(titleOf(b), 'ja'),
+);
+
+const elements = Object.keys(ELEMENT_META);
+const roles = Object.keys(ROLE_META);
+const rarities = ['S', 'A'];
+---
+
+<BaseLayout title="キャラクター一覧">
+  <div class="layout has-sidebar">
+    <Sidebar currentCollection="characters" />
+    <div class="content">
+      <section class="page-head">
+        <p class="eyebrow">キャラクター</p>
+        <h1>エスパー一覧</h1>
+        <p class="lead">
+          プレイアブルキャラ（エスパー）の属性・ロール・性能。フィルタで絞り込めます（{list.length}体）。
+        </p>
+      </section>
+
+      <div class="filterbar" id="char-filters" role="group" aria-label="フィルタ">
+        <button class="chip is-on" data-filter-all aria-pressed="true">
+          <Icon name="lucide:list" style="width:15px;height:15px;" />すべて
+        </button>
+        {
+          rarities.map((r) => (
+            <button class="chip" data-rarity={r} aria-pressed="false">
+              {r}-Class
+            </button>
+          ))
+        }
+        {
+          elements.map((e) => (
+            <button class="chip" data-element={e} aria-pressed="false">
+              <span class="el-dot" style={`--el:${elementMeta(e).hue}`} />
+              {e}
+            </button>
+          ))
+        }
+        {
+          roles.map((r) => (
+            <button class="chip" data-role={r} aria-pressed="false">
+              <Icon name={`lucide:${roleMeta(r).icon}`} style="width:14px;height:14px;" />
+              {roleMeta(r).label.replace(/\s*\(.*\)/, '')}
+            </button>
+          ))
+        }
+      </div>
+
+      <div class="grid grid-cards" id="char-grid">
+        {
+          list.map((entry: any) => {
+            const d = entry.data;
+            const em = elementMeta(d.element);
+            return (
+              <a
+                class="card card-pad card-link char-card"
+                href={hrefOf('characters', entry.id)}
+                style={`--el:${em.hue}`}
+                data-rarity={d.rarity}
+                data-element={d.element}
+                data-role={d.role}
+              >
+                <div class="row" style="gap:10px;align-items:center;">
+                  <Avatar name={titleOf(entry)} element={d.element} rarity={d.rarity} size={46} />
+                  <span style="font-weight:800;font-size:1.05rem;">{titleOf(entry)}</span>
+                </div>
+                <div class="cluster" style="margin-top:10px;">
+                  <span class="el-badge" style={`--el:${em.hue}`}>
+                    <span class="el-dot" />
+                    {em.label}
+                  </span>
+                  <span class="badge">
+                    <Icon name={`lucide:${roleMeta(d.role).icon}`} style="width:13px;height:13px;" />
+                    {roleMeta(d.role).label.replace(/\s*\(.*\)/, '')}
+                  </span>
+                </div>
+                {d.description && (
+                  <p class="muted text-sm" style="margin-top:10px;">
+                    {d.description}
+                  </p>
+                )}
+              </a>
+            );
+          })
+        }
+      </div>
+
+      <p class="empty" id="char-empty" hidden>条件に合うキャラがいません。</p>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  // キャラ一覧のクライアントフィルタ（属性/ロール/レア度の AND 絞り込み）
+  const bar = document.getElementById('char-filters');
+  const grid = document.getElementById('char-grid');
+  const empty = document.getElementById('char-empty');
+  if (bar && grid) {
+    const active = { rarity: new Set<string>(), element: new Set<string>(), role: new Set<string>() };
+
+    function apply() {
+      let shown = 0;
+      grid!.querySelectorAll<HTMLElement>('.char-card').forEach((card) => {
+        const okR = active.rarity.size === 0 || active.rarity.has(card.dataset.rarity || '');
+        const okE = active.element.size === 0 || active.element.has(card.dataset.element || '');
+        const okRole = active.role.size === 0 || active.role.has(card.dataset.role || '');
+        const show = okR && okE && okRole;
+        card.style.display = show ? '' : 'none';
+        if (show) shown++;
+      });
+      if (empty) (empty as HTMLElement).hidden = shown !== 0;
+      const noFilter = !active.rarity.size && !active.element.size && !active.role.size;
+      bar!.querySelector('[data-filter-all]')?.classList.toggle('is-on', noFilter);
+      bar!.querySelector('[data-filter-all]')?.setAttribute('aria-pressed', String(noFilter));
+    }
+
+    bar.addEventListener('click', (ev) => {
+      const btn = (ev.target as HTMLElement).closest('button');
+      if (!btn) return;
+      if (btn.hasAttribute('data-filter-all')) {
+        active.rarity.clear();
+        active.element.clear();
+        active.role.clear();
+        bar.querySelectorAll('.chip').forEach((c) => {
+          c.classList.remove('is-on');
+          c.setAttribute('aria-pressed', 'false');
+        });
+        apply();
+        return;
+      }
+      const map: Record<string, Set<string>> = {
+        rarity: active.rarity,
+        element: active.element,
+        role: active.role,
+      };
+      for (const key of ['rarity', 'element', 'role'] as const) {
+        const val = btn.dataset[key];
+        if (val) {
+          if (map[key].has(val)) map[key].delete(val);
+          else map[key].add(val);
+          const on = map[key].has(val);
+          btn.classList.toggle('is-on', on);
+          btn.setAttribute('aria-pressed', String(on));
+        }
+      }
+      apply();
+    });
+  }
+</script>

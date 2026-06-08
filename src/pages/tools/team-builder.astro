@@ -1,0 +1,40 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../lib/path';
+import { elementMeta } from '../../lib/nav';
+import { publishedEntries, titleOf } from '../../lib/content';
+import TeamBuilder from '../../components/tools/TeamBuilder';
+
+const chars = await publishedEntries('characters');
+const data = chars.map((c: any) => ({
+  id: c.id,
+  name: titleOf(c),
+  element: c.data.element,
+  role: c.data.role,
+  rarity: c.data.rarity,
+  el: elementMeta(c.data.element).hue,
+}));
+---
+
+<BaseLayout title="チームビルダー" description="NTEの4人編成を作り、属性反応とロール構成をチェック">
+  <div class="layout">
+    <div class="content" style="max-width:860px;margin:0 auto;">
+      <nav class="text-sm muted cluster" style="margin-bottom:16px;" aria-label="パンくず">
+        <a href={withBase('/tools/')}>ツール</a>
+        <Icon name="lucide:chevron-right" style="width:14px;height:14px;" />
+        <span>チームビルダー</span>
+      </nav>
+      <section class="page-head">
+        <div class="row" style="gap:10px;">
+          <Icon name="lucide:users-round" style="width:26px;height:26px;color:var(--accent);" />
+          <h1 style="margin:0;">チームビルダー</h1>
+        </div>
+        <p class="lead" style="margin-top:8px;">
+          4人を選ぶと、エスパーサイクルで発動可能な反応とロールの過不足を表示します。
+        </p>
+      </section>
+      <TeamBuilder client:only="preact" characters={data} />
+    </div>
+  </div>
+</BaseLayout>

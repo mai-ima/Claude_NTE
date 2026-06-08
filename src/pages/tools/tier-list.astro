@@ -1,0 +1,41 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../lib/path';
+import { elementMeta } from '../../lib/nav';
+import { publishedEntries, titleOf, hrefOf } from '../../lib/content';
+import TierList from '../../components/tools/TierList';
+
+const chars = await publishedEntries('characters');
+const data = chars.map((c: any) => ({
+  id: c.id,
+  name: titleOf(c),
+  element: c.data.element,
+  rarity: c.data.rarity,
+  tier: c.data.tier,
+  href: hrefOf('characters', c.id),
+  el: elementMeta(c.data.element).hue,
+}));
+---
+
+<BaseLayout title="ティアリスト" description="NTEキャラのティア表（コミュニティ評価・自由に並べ替え可）">
+  <div class="layout">
+    <div class="content" style="max-width:860px;margin:0 auto;">
+      <nav class="text-sm muted cluster" style="margin-bottom:16px;" aria-label="パンくず">
+        <a href={withBase('/tools/')}>ツール</a>
+        <Icon name="lucide:chevron-right" style="width:14px;height:14px;" />
+        <span>ティアリスト</span>
+      </nav>
+      <section class="page-head">
+        <div class="row" style="gap:10px;">
+          <Icon name="lucide:bar-chart-3" style="width:26px;height:26px;color:var(--accent);" />
+          <h1 style="margin:0;">ティアリスト</h1>
+        </div>
+        <p class="lead" style="margin-top:8px;">
+          初期評価はコミュニティの一例（2026年6月時点・変動します）。自分の評価に並べ替えて保存できます。
+        </p>
+      </section>
+      <TierList client:only="preact" characters={data} />
+    </div>
+  </div>
+</BaseLayout>

@@ -3,6 +3,13 @@ import { Icon } from 'astro-icon/components';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { withBase } from '../../lib/path';
 import { TOOLS } from '../../components/tools/registry';
+
+// キャラデータ連携の専用ページ系ツール（registry外）
+const FEATURED = [
+  { href: '/tools/tier-list/', name: 'ティアリスト', description: 'キャラの強さをティアで一覧。自分用に並べ替えて保存。', icon: 'bar-chart-3' },
+  { href: '/tools/team-builder/', name: 'チームビルダー', description: '4人編成の属性反応・ロール構成をチェック。', icon: 'users-round' },
+  { href: '/tools/map/', name: 'インタラクティブ・マップ', description: '概略図にピンを立てて収集・探索を管理。', icon: 'map-pin' },
+];
 ---
 
 <BaseLayout title="ツール">
@@ -16,6 +23,26 @@ import { TOOLS } from '../../components/tools/registry';
         </p>
       </section>
 
+      <h2 style="margin-bottom:16px;">キャラ連携ツール</h2>
+      <div class="grid grid-cards" style="margin-bottom:36px;">
+        {
+          FEATURED.map((t) => (
+            <a class="card card-pad card-link" href={withBase(t.href)}>
+              <div class="row" style="gap:12px;align-items:flex-start;">
+                <span class="badge badge-accent" style="height:40px;width:40px;padding:0;border-radius:10px;justify-content:center;">
+                  <Icon name={`lucide:${t.icon}`} style="width:20px;height:20px;" />
+                </span>
+                <div>
+                  <div style="font-weight:700;">{t.name}</div>
+                  <p class="muted text-sm" style="margin-top:4px;">{t.description}</p>
+                </div>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+
+      <h2 style="margin-bottom:16px;">汎用ツール</h2>
       <div class="grid grid-cards">
         {
           TOOLS.map((t) => (

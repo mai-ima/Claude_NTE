@@ -1,0 +1,24 @@
+---
+/**
+ * ネタバレ折りたたみ。`<details>` ベースなので JS 無しでも開閉できる。
+ * MDX 内で <Spoiler label="第3章の真相"> ... </Spoiler> のように使う。
+ */
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  label?: string;
+  open?: boolean;
+}
+const { label = 'ネタバレを表示', open = false } = Astro.props;
+---
+
+<details class="spoiler" open={open}>
+  <summary class="spoiler-summary">
+    <Icon name="lucide:eye-off" />
+    <span>{label}</span>
+    <span class="spoiler-hint">タップで開閉</span>
+  </summary>
+  <div class="spoiler-body">
+    <slot />
+  </div>
+</details>

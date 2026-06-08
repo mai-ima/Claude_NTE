@@ -1,23 +1,28 @@
 ---
-import { getCollection } from 'astro:content';
 import { Icon } from 'astro-icon/components';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { withBase } from '../lib/path';
-import { CATEGORIES } from '../lib/nav';
+import { SECTIONS, elementMeta, roleMeta } from '../lib/nav';
 import { TOOLS } from '../components/tools/registry';
+import Avatar from '../components/Avatar.astro';
 import { RELEASE_NOTES } from '../data/releaseNotes';
+import { loadNavSections, recentEntries, publishedEntries, titleOf, hrefOf } from '../lib/content';
 
-const entries = await getCollection('wiki', ({ data }) => data.draft !== true);
-const usedCats = new Set(entries.map((e) => e.data.category));
-const cats = CATEGORIES.filter((c) => usedCats.has(c.id));
+const sections = await loadNavSections();
+const countOf = (c: string) => sections.find((s) => s.collection === c)?.items.length ?? 0;
 
-const recent = [...entries]
-  .filter((e) => e.data.updated)
-  .sort((a, b) => (b.data.updated!.getTime() ?? 0) - (a.data.updated!.getTime() ?? 0))
-  .slice(0, 5);
+const recent = await recentEntries(6);
+
+// 注目キャラ: ティアが高い or S-Class を数体
+const chars = await publishedEntries('characters');
+const featured = [...chars]
+  .sort((a: any, b: any) => {
+    const t = { SS: 0, S: 1, A: 2, B: 3, C: 4 } as Record<string, number>;
+    return (t[a.data.tier ?? 'Z'] ?? 9) - (t[b.data.tier ?? 'Z'] ?? 9);
+  })
+  .slice(0, 6);
 
 const latest = RELEASE_NOTES[0];
-const countByCat = (id: string) => entries.filter((e) => e.data.category === id).length;
 ---
 
 <BaseLayout title="ホーム">
@@ -25,14 +30,14 @@ const countByCat = (id: string) => entries.filter((e) => e.data.category === id)
     <div class="content">
       <section class="page-head">
         <p class="eyebrow">NTE 完全攻略wiki</p>
-        <h1>NTEのすべてを、ここに。</h1>
+        <h1>Neverness to Everness を、ここに。</h1>
         <p class="lead">
-          NTE（ゲーム）に関する攻略・データ・覚え書きをまとめた自分専用wikiと、
-          周回や育成に役立つ各種ツール。
+          オープンワールド都市RPG「NTE」の攻略・キャラ・システム・世界観をまとめた非公式ファンwiki。
+          ガチャ天井トラッカーやチームビルダーなどの便利ツールも。
         </p>
         <div class="meta-row">
-          <a class="btn btn-primary" href={withBase('/wiki/')}>
-            <Icon name="lucide:library" /> wikiを見る
+          <a class="btn btn-primary" href={withBase('/characters/')}>
+            <Icon name="lucide:users" /> キャラを見る
           </a>
           <a class="btn" href={withBase('/tools/')}>
             <Icon name="lucide:wrench" /> ツール
@@ -41,25 +46,66 @@ const countByCat = (id: string) => entries.filter((e) => e.data.category === id)
       </section>
 
       <section style="margin-top:8px;">
-        <h2>カテゴリ</h2>
+        <h2>データベース</h2>
         <div class="grid grid-cards" style="margin-top:16px;">
           {
-            cats.map((c) => (
-              <a class="card card-pad card-link" href={withBase(`/wiki/#cat-${encodeURIComponent(c.id)}`)}>
-                <div class="row" style="gap:10px;">
+            SECTIONS.map((s) => (
+              <a class="card card-pad card-link" href={withBase(s.href)}>
+                <div class="row" style="gap:10px;align-items:flex-start;">
                   <span class="badge badge-accent" style="height:34px;width:34px;padding:0;border-radius:9px;justify-content:center;">
-                    <Icon name={`lucide:${c.icon}`} style="width:18px;height:18px;" />
+                    <Icon name={`lucide:${s.icon}`} style="width:18px;height:18px;" />
                   </span>
                   <div>
-                    <div style="font-weight:700;">{c.label}</div>
-                    <div class="muted text-sm">{countByCat(c.id)} 記事</div>
+                    <div style="font-weight:700;">{s.label}</div>
+                    <div class="muted text-sm">{countOf(s.collection)} 記事</div>
                   </div>
                 </div>
+                <p class="muted text-sm" style="margin-top:8px;">{s.blurb}</p>
               </a>
             ))
           }
         </div>
       </section>
+
+      {
+        featured.length > 0 && (
+          <section style="margin-top:40px;">
+            <div class="row row-between">
+              <h2 style="margin:0;">注目のエスパー</h2>
+              <a class="text-sm" href={withBase('/characters/')}>
+                すべて見る
+              </a>
+            </div>
+            <div class="grid grid-cards" style="margin-top:16px;">
+              {featured.map((entry: any) => {
+                const d = entry.data;
+                const em = elementMeta(d.element);
+                return (
+                  <a
+                    class="card card-pad card-link char-card"
+                    href={hrefOf('characters', entry.id)}
+                    style={`--el:${em.hue}`}
+                  >
+                    <div class="row" style="gap:10px;align-items:center;">
+                      <Avatar name={titleOf(entry)} element={d.element} rarity={d.rarity} size={42} />
+                      <span style="font-weight:800;">{titleOf(entry)}</span>
+                    </div>
+                    <div class="cluster" style="margin-top:10px;">
+                      <span class="el-badge" style={`--el:${em.hue}`}>
+                        <span class="el-dot" />
+                        {em.label}
+                      </span>
+                      <span class="badge">
+                        {roleMeta(d.role).label.replace(/\s*\(.*\)/, '')}
+                      </span>
+                    </div>
+                  </a>
+                );
+              })}
+            </div>
+          </section>
+        )
+      }
 
       <div class="grid" style="margin-top:40px;grid-template-columns:1fr;gap:32px;">
         <section>
@@ -69,14 +115,12 @@ const countByCat = (id: string) => entries.filter((e) => e.data.category === id)
               <ul class="list-reset stack" style="margin-top:16px;">
                 {recent.map((e) => (
                   <li>
-                    <a class="card card-pad card-link" href={withBase(`/wiki/${e.id}/`)}>
+                    <a class="card card-pad card-link" href={e.href}>
                       <div class="row row-between">
-                        <span style="font-weight:600;">{e.data.title}</span>
-                        <span class="muted text-sm">
-                          {e.data.updated?.toLocaleDateString('ja-JP')}
-                        </span>
+                        <span style="font-weight:600;">{e.title}</span>
+                        <span class="muted text-sm">{e.updated.toLocaleDateString('ja-JP')}</span>
                       </div>
-                      {e.data.description && <p class="muted text-sm" style="margin-top:4px;">{e.data.description}</p>}
+                      <span class="badge" style="margin-top:6px;">{e.sectionLabel}</span>
                     </a>
                   </li>
                 ))}
@@ -111,12 +155,16 @@ const countByCat = (id: string) => entries.filter((e) => e.data.category === id)
             <section>
               <div class="row row-between">
                 <h2 style="margin:0;">更新履歴</h2>
-                <a class="text-sm" href={withBase('/release-notes/')}>すべて見る</a>
+                <a class="text-sm" href={withBase('/release-notes/')}>
+                  すべて見る
+                </a>
               </div>
               <div class="card card-pad" style="margin-top:16px;">
                 <div class="cluster">
                   <span class="badge badge-accent">{latest.version}</span>
-                  <span class="muted text-sm">{latest.date}・{latest.title}</span>
+                  <span class="muted text-sm">
+                    {latest.date}・{latest.title}
+                  </span>
                 </div>
                 <ul class="text-sm" style="margin-top:10px;padding-left:1.2em;">
                   {latest.changes.slice(0, 4).map((c) => (

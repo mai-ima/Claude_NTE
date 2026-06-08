@@ -1,0 +1,12 @@
+---
+import EntityList from '../../components/EntityList.astro';
+import { sectionByCollection } from '../../lib/nav';
+const s = sectionByCollection('story')!;
+---
+<EntityList
+  collection="story"
+  title="ストーリー"
+  eyebrow="ストーリー"
+  lead="世界観と章ごとのあらすじ。物語の核心（ネタバレ）は各ページで折りたたんでいます。"
+  icon={s.icon}
+/>

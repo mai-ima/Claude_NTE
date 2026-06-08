@@ -1,25 +1,25 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { getCollection } from 'astro:content';
 import { withBase } from '../lib/path';
-import { PRIMARY_NAV, CATEGORIES } from '../lib/nav';
+import { PRIMARY_NAV, SECTIONS } from '../lib/nav';
+import { loadNavSections } from '../lib/content';
 
 interface Props {
   currentPath: string;
 }
 const { currentPath } = Astro.props;
 
-// 記事が存在するカテゴリのみドロワーに表示
-const entries = await getCollection('wiki', ({ data }) => data.draft !== true);
-const usedCats = new Set(entries.map((e) => e.data.category));
-const cats = CATEGORIES.filter((c) => usedCats.has(c.id));
+// 記事が存在するセクションのみ表示
+const sections = await loadNavSections();
+const used = new Set(sections.map((s) => s.collection));
+const navSections = SECTIONS.filter((s) => used.has(s.collection));
 ---
 
 <div class="drawer" id="app-drawer" role="dialog" aria-modal="true" aria-label="ナビゲーション">
   <button class="drawer-backdrop" type="button" aria-label="閉じる" data-drawer-close></button>
   <nav class="drawer-panel">
     <div class="row row-between" style="margin-bottom:12px;">
-      <span class="brand"><span class="brand-mark">NTE</span></span>
+      <span class="brand"><span class="brand-mark">NTE</span><span>攻略wiki</span></span>
       <button class="btn btn-icon btn-ghost" type="button" aria-label="閉じる" data-drawer-close>
         <Icon name="lucide:x" />
       </button>
@@ -48,13 +48,13 @@ const cats = CATEGORIES.filter((c) => usedCats.has(c.id));
     </div>
 
     {
-      cats.length > 0 && (
+      navSections.length > 0 && (
         <div class="nav-group">
-          <p class="nav-group-title">カテゴリ</p>
-          {cats.map((c) => (
-            <a class="nav-link" href={withBase(`/wiki/#cat-${encodeURIComponent(c.id)}`)} data-drawer-close>
-              <Icon name={`lucide:${c.icon}`} />
-              <span>{c.label}</span>
+          <p class="nav-group-title">データベース</p>
+          {navSections.map((s) => (
+            <a class="nav-link" href={withBase(s.href)} data-drawer-close>
+              <Icon name={`lucide:${s.icon}`} />
+              <span>{s.label}</span>
             </a>
           ))}
         </div>

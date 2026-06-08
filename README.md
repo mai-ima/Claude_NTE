@@ -1,25 +1,27 @@
 # NTE 完全攻略wiki + ツール
 
-NTE（ゲーム）に関する攻略・データ・覚え書きをまとめた、自分専用の **wiki + ツール集** です。
-日本語・スマホ優先。4テーマ切替、全文検索対応の静的サイト。
+**NTE（Neverness to Everness）** の攻略・データ・覚え書きをまとめた**非公式ファンwiki + ツール集**です。
+日本語・スマホ優先。4テーマ切替、全文検索対応の静的サイト（Vercel配信）。
+
+> 各記事は Web 調査に基づき**出典を明記**し、未確認の数値・仕様には「要確認」を付しています。
+> ゲーム内画像・地図等の権利はすべて Hotta Studio / Perfect World Games に帰属します（当サイトは公式アートを同梱しません）。
 
 ## 技術スタック
 
 - **[Astro](https://astro.build/)**（静的出力）+ TypeScript
-- **MDX / Markdown** コンテンツコレクション（wiki記事）
+- **MDX / Markdown** 型付きコンテンツコレクション（キャラ/システム/ガイド/ロケーション/敵/アイテム/ストーリー）
 - **[Preact](https://preactjs.com/)** アイランド（各ツール・テーマ切替・個人メモ）
-- **[Pagefind](https://pagefind.app/)** 静的全文検索（base配下でも `bundlePath` を明示）
+- **[Pagefind](https://pagefind.app/)** 静的全文検索
 - **astro-icon**（Lucide アイコン）/ **@astrojs/sitemap**
 
 ## セットアップ
 
 ```bash
 pnpm install          # 依存関係をインストール
-pnpm dev              # 開発サーバ (http://localhost:4321/claude_nte/)
+pnpm dev              # 開発サーバ (http://localhost:4321/)
 pnpm build            # 本番ビルド（dist/ に出力。Pagefind索引・sitemap も生成）
 pnpm preview          # ビルド成果物をローカル配信（検索の最終確認用）
 pnpm check            # 型チェック (astro check)
-node scripts/gen-icons.mjs   # タッチアイコン(public/icons/icon-192.png)を再生成
 ```
 
 > ES モジュールの都合上、`file://` 直開きではなく `pnpm dev` / `pnpm preview` 経由で開いてください。
@@ -27,75 +29,72 @@ node scripts/gen-icons.mjs   # タッチアイコン(public/icons/icon-192.png)�
 ## プロジェクト構成
 
 ```
-astro.config.mjs            # サイト設定（base, 統合プラグイン）
+astro.config.mjs            # サイト設定（base="/", site, 統合プラグイン）
 src/
-  content.config.ts         # wikiコレクションのスキーマ（zod）
-  content/wiki/*.md         # wiki記事（フロントマター付き）
-  layouts/BaseLayout.astro  # 共通レイアウト（ヘッダ/ドロワー/テーマ/SW登録）
-  components/                # Sidebar / Toc / Callout / StatusBadge / ThemeMenu ほか
-  components/tools/          # 各ツール（Preact）+ registry.ts（登録）
-  pages/                     # ルーティング（/ , /wiki , /tools , /settings , /release-notes , 404）
-  lib/                       # path(withBase) / theme / store / nav
+  content.config.ts         # 各コレクションのスキーマ（zod）
+  content/<collection>/*.md  # 記事（characters / systems / guides / locations / enemies / items / story）
+  layouts/BaseLayout.astro  # 共通レイアウト（ヘッダ/ドロワー/下部ナビ/テーマ）
+  components/
+    EntityDetail.astro      # 詳細ページ共通レイアウト（情報パネル＋本文＋出典＋個人メモ）
+    EntityList.astro        # 一覧ページ共通（グルーピング・検索）
+    Avatar.astro            # 属性色のオリジナル生成アバター
+    Spoiler.astro           # ネタバレ折りたたみ（<details>）
+    Sidebar.astro / MobileDrawer.astro / Toc / Callout / StatusBadge / ThemeMenu
+    tools/                  # 各ツール（Preact）+ registry.ts（登録）
+  pages/                     # / , /characters , /systems , /guides , /locations , /enemies ,
+                             #   /items , /story , /tools(+tier-list/team-builder/map) , /settings , /release-notes
+  lib/                       # path(withBase) / theme / store / nav / content（コレクション横断ヘルパ）
   data/releaseNotes.ts       # 更新履歴
   styles/                    # base / themes / components
 public/                      # favicon / icons / robots
-scripts/gen-icons.mjs        # タッチアイコン生成
 ```
 
-## wiki記事の書き方
+## 記事の書き方
 
-`src/content/wiki/` に Markdown を追加するだけで記事が増えます。フロントマター例：
+`src/content/<collection>/` に Markdown/MDX を追加するだけで記事が増えます。コレクションごとにフロントマターが異なります（`src/content.config.ts` 参照）。例（characters）:
 
 ```yaml
 ---
-title: 記事タイトル
-description: 一覧やSEOに使う説明
-category: キャラクター        # src/lib/nav.ts の CATEGORIES と対応
-tags: [タグ1, タグ2]
-status: draft                 # 'verified'（確認済み） | 'draft'（要確認バッジ表示）
-order: 10                     # サイドバー内の並び順
+name: "Nanally"          # キャラ名（他コレクションは title）
+rarity: "S"              # S | A
+element: "Anima"         # Cosmos/Anima/Incantation/Chaos/Psyche/Lakshana
+role: "DPS"              # DPS | Survival | Buff
+weapon: "Arc: Plasma"
+faction: "アイボン古物店"
+version: "v1.0"
+tier: "SS"               # SS|S|A|B|C（ティアリストの初期値）
+description: "一覧やSEOに使う説明"
+status: "verified"        # verified（確認済み） | draft（要確認バッジ）
 updated: 2026-06-08
+sources:
+  - label: "出典名"
+    url: "https://..."
 ---
 ```
 
-- 内部リンクは**相対パス**で書きます（base に依存せず堅牢）。
-  - wiki記事どうし: `[用語集](../glossary/)`（記事は `/wiki/<slug>/` にあるため `../<slug>/`）
-  - ツールへ: `[確率ツール](../../tools/probability/)`
-- 画像は `src/assets/...` に置き `![代替テキスト](../../assets/...)` で参照（Astroが最適化）。
+- 内部リンクは**相対 or `/characters/...` 形式**。base="/" なのでルート絶対パスがそのまま使えます。
+- ネタバレは MDX で `import Spoiler from '../../components/Spoiler.astro'` して `<Spoiler label="…">…</Spoiler>` で折りたたみます（対象は `.mdx`）。
 
 ### コンテンツの誠実性ルール
 
-- **一般的に正しい内容**（確率の数式・リソース管理の原則など）は通常記述（`status: verified`）。
-- **NTE固有の未確認数値**（ステータス・排出率など）は捏造せず、`status: draft` の「要確認」として枠だけ用意しています。確定情報が分かったら該当記事を更新してください。
+- **出典で裏が取れた内容**は `status: verified`、**未確認の数値・仕様**は捏造せず `status: draft`（「要確認」）にします。
+- ティアリスト等の評価は「コミュニティ評価・時点情報・変動あり」を明記。
+- 公式画像・地図は権利配慮で同梱しません。視覚要素は属性色の**オリジナル生成アバター**や概略図で代替します。
 
 ## ツールの追加
 
-`src/components/tools/` に Preact コンポーネントを作り、`registry.ts` に
-`{ id, name, description, icon, Component }` を追加するだけで、ハブと `/tools/[id]/` に反映されます。
+汎用ツールは `src/components/tools/` に Preact コンポーネントを作り、`registry.ts` に
+`{ id, name, description, icon, Component }` を追加すれば `/tools/[id]/` に反映されます。
+キャラデータ連携ツール（ティアリスト/チームビルダー/マップ）は専用ページ（`src/pages/tools/*.astro`）で
+`getCollection('characters')` のデータを props 渡しします。
 
-## テーマ
+## テーマ / データ保存
 
-`minimal`（既定）/ `dark` / `soft` / `auto`（OS連動）。ヘッダー右上または設定ページから切替、選択は localStorage に保存されます。配色は `src/styles/themes.css` の CSS 変数で定義。
+- テーマ: `minimal`（既定）/ `dark` / `soft` / `auto`（OS連動）。`src/styles/themes.css` の CSS 変数で定義。
+- メモ・チェックリスト・ツールの状態・個人メモは **端末内（localStorage）** に保存。設定ページから **エクスポート / インポート / 初期化** が可能です。
 
-## データ保存
+## デプロイ（Vercel）
 
-メモ・チェックリスト・個人メモなどは **端末のブラウザ（localStorage）** に保存されます。
-設定ページから **エクスポート / インポート / 初期化** が可能です（端末間同期はエクスポート経由）。
-
-## デプロイ
-
-### GitHub Pages（既定）
-
-`.github/workflows/deploy.yml` を同梱しています。リポジトリの **Settings → Pages → Build and deployment → Source = GitHub Actions** にすると、`main`（または既定ブランチ）への push で
-`https://mai-ima.github.io/claude_nte/` に公開されます。`astro.config.mjs` の `base` は `/claude_nte`。
-
-### Vercel（将来切替する場合）
-
-Vercel は base が不要（ルート配信）なので、環境変数で切り替えられます：
-
-```
-SITE_BASE = /
-SITE_URL  = https://<your-project>.vercel.app
-```
-
-Framework Preset は Astro（ビルド `astro build`、出力 `dist`）。コード変更は不要です。
+リポジトリを Vercel に接続すると、Framework Preset = **Astro** が自動検出され、`astro build` → `dist/` を
+ルート配信します（アダプタ不要）。`astro.config.mjs` の `base` は `"/"`、`site` は本番URL。
+`main` への push で本番に反映されます。

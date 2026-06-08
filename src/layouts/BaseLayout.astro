@@ -4,7 +4,7 @@ import '../styles/base.css';
 import '../styles/components.css';
 import { Icon } from 'astro-icon/components';
 import { withBase } from '../lib/path';
-import { PRIMARY_NAV } from '../lib/nav';
+import { PRIMARY_NAV, BOTTOM_NAV } from '../lib/nav';
 import MobileDrawer from '../components/MobileDrawer.astro';
 import ThemeMenu from '../components/ThemeMenu';
 
@@ -15,7 +15,7 @@ interface Props {
 
 const {
   title,
-  description = 'NTE（ゲーム）に関する攻略・情報をまとめた自分専用wiki + 各種ツール。',
+  description = 'NTE（Neverness to Everness）に関する攻略・情報をまとめた非公式ファンwiki + 各種ツール。',
 } = Astro.props;
 
 const siteName = 'NTE 完全攻略wiki';
@@ -107,11 +107,31 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
 
       <footer class="app-footer">
         <p>
-          NTE 完全攻略wiki — 自分専用のNTE攻略・情報まとめ。
+          NTE 完全攻略wiki — 非公式ファンサイト。各記事は出典を明記し、未確認情報には「要確認」を付しています。
           <br />
-          ゲーム固有の未確認情報には「要確認」を付しています。確定情報は各記事で更新してください。
+          ゲーム内画像・地図等の権利はすべて Hotta Studio / Perfect World Games に帰属します。
         </p>
       </footer>
+
+      <nav class="bottom-nav" aria-label="モバイルナビ">
+        {
+          BOTTOM_NAV.map((item) => (
+            <a
+              href={withBase(item.href)}
+              aria-current={
+                (item.href === '/'
+                  ? currentPath === withBase('/')
+                  : currentPath.startsWith(withBase(item.href)))
+                  ? 'page'
+                  : undefined
+              }
+            >
+              <Icon name={`lucide:${item.icon}`} />
+              <span>{item.label}</span>
+            </a>
+          ))
+        }
+      </nav>
     </div>
 
     <script>

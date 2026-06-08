@@ -1,0 +1,44 @@
+---
+import { render } from 'astro:content';
+import EntityDetail from '../../components/EntityDetail.astro';
+import { sectionByCollection } from '../../lib/nav';
+import { titleOf, hrefOf, publishedEntries } from '../../lib/content';
+import type { Row } from '../../components/EntityDetail.astro';
+
+const TYPE_JA: Record<string, string> = {
+  currency: '通貨・ダイス', material: '育成素材', consumable: '消費アイテム', gear: '装備',
+};
+
+export async function getStaticPaths() {
+  const sorted = await publishedEntries('items');
+  return sorted.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: { entry, prev: sorted[i - 1] ?? null, next: sorted[i + 1] ?? null },
+  }));
+}
+const { entry, prev, next } = Astro.props;
+const { Content, headings } = await render(entry as any);
+const d = entry.data as any;
+const section = sectionByCollection('items')!;
+const rows: Row[] = [{ k: '種別', v: TYPE_JA[d.type] ?? d.type }];
+if (d.usedFor) rows.push({ k: '用途', v: d.usedFor });
+---
+<EntityDetail
+  collection="items"
+  currentId={entry.id}
+  sectionLabel={section.label}
+  sectionHref={section.href}
+  sectionIcon={section.icon}
+  title={titleOf(entry)}
+  lead={d.description}
+  rows={rows}
+  status={d.status}
+  updated={d.updated}
+  tags={d.tags}
+  sources={d.sources}
+  headings={headings}
+  prev={prev ? { href: hrefOf('items', prev.id), title: titleOf(prev) } : null}
+  next={next ? { href: hrefOf('items', next.id), title: titleOf(next) } : null}
+>
+  <Content />
+</EntityDetail>

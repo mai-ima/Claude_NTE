@@ -5,6 +5,8 @@ import Checklist from './Checklist';
 import Timer from './Timer';
 import Probability from './Probability';
 import Stamina from './Stamina';
+import GachaPity from './GachaPity';
+import Planner from './Planner';
 
 export interface ToolDef {
   id: string;
@@ -15,6 +17,20 @@ export interface ToolDef {
 }
 
 export const TOOLS: ToolDef[] = [
+  {
+    id: 'gacha-pity',
+    name: 'ガチャ天井トラッカー',
+    description: 'Scarborough Fair の天井（ソフト70/ハード90・すり抜け無し）を管理。確定まで・必要Annulithを表示。',
+    icon: 'dice-6',
+    Component: GachaPity,
+  },
+  {
+    id: 'planner',
+    name: '育成・スタミナ計画',
+    description: 'キャラクターピクセルの全回復時刻・周回可能数と、デイリー/ウィークリーのタスク管理。',
+    icon: 'calendar-check',
+    Component: Planner,
+  },
   {
     id: 'checklist',
     name: 'チェックリスト / 進行管理',

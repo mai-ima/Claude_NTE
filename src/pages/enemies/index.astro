@@ -1,0 +1,12 @@
+---
+import EntityList from '../../components/EntityList.astro';
+import { sectionByCollection } from '../../lib/nav';
+const s = sectionByCollection('enemies')!;
+---
+<EntityList
+  collection="enemies"
+  title="敵・アノマリー"
+  eyebrow="敵・アノマリー"
+  lead="ワールドボス・ストーリーボス・アノマリーと、その弱点属性。"
+  icon={s.icon}
+/>

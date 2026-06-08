@@ -1,0 +1,28 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../lib/path';
+import InteractiveMap from '../../components/tools/InteractiveMap';
+---
+
+<BaseLayout title="インタラクティブ・マップ" description="自分用のマップにピンを立てて収集・探索を管理">
+  <div class="layout">
+    <div class="content" style="max-width:860px;margin:0 auto;">
+      <nav class="text-sm muted cluster" style="margin-bottom:16px;" aria-label="パンくず">
+        <a href={withBase('/tools/')}>ツール</a>
+        <Icon name="lucide:chevron-right" style="width:14px;height:14px;" />
+        <span>マップ</span>
+      </nav>
+      <section class="page-head">
+        <div class="row" style="gap:10px;">
+          <Icon name="lucide:map-pin" style="width:26px;height:26px;color:var(--accent);" />
+          <h1 style="margin:0;">インタラクティブ・マップ</h1>
+        </div>
+        <p class="lead" style="margin-top:8px;">
+          概略図にピンを立てて、宝箱・アノマリー・収集物の進捗を自分用に管理できます。
+        </p>
+      </section>
+      <InteractiveMap client:only="preact" />
+    </div>
+  </div>
+</BaseLayout>

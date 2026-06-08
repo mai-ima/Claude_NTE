@@ -1,0 +1,31 @@
+---
+/**
+ * オリジナル生成アバター（著作権配慮のため公式アートは使わない）。
+ * 属性色のグラデーション＋頭文字＋レア度で、各キャラを視覚的に識別する。
+ */
+import { elementMeta } from '../lib/nav';
+
+interface Props {
+  name: string;
+  element: string;
+  rarity?: string;
+  /** 表示サイズ（px） */
+  size?: number;
+  block?: boolean; // info-hero 用に全幅表示
+}
+const { name, element, rarity, size = 48, block = false } = Astro.props;
+const hue = elementMeta(element).hue;
+// 頭文字（英字優先、無ければ先頭1文字）
+const initial = (name.match(/[A-Za-z]/)?.[0] ?? name.charAt(0)).toUpperCase();
+---
+
+<div
+  class:list={['avatar', { 'avatar-block': block }]}
+  style={`--el:${hue};${block ? '' : `width:${size}px;height:${size}px;`}`}
+  aria-hidden="true"
+>
+  <span class="avatar-initial" style={block ? 'font-size:3.2rem;' : `font-size:${Math.round(size * 0.42)}px;`}>
+    {initial}
+  </span>
+  {rarity && <span class:list={['avatar-rarity', `rarity-${rarity}`]}>{rarity}</span>}
+</div>

@@ -1,0 +1,12 @@
+---
+import EntityList from '../../components/EntityList.astro';
+import { sectionByCollection } from '../../lib/nav';
+const s = sectionByCollection('locations')!;
+---
+<EntityList
+  collection="locations"
+  title="ロケーション"
+  eyebrow="ロケーション"
+  lead="都市ヘゼルローの各区・サンワード島・アノマリーゾーンなどの地理と見どころ。"
+  icon={s.icon}
+/>

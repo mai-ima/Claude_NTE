@@ -19,8 +19,9 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  height: 56px;
-  padding: 0 16px;
+  height: calc(56px + env(safe-area-inset-top, 0px));
+  padding: env(safe-area-inset-top, 0px) max(16px, env(safe-area-inset-right, 0px)) 0
+    max(16px, env(safe-area-inset-left, 0px));
   background: color-mix(in srgb, var(--surface) 88%, transparent);
   backdrop-filter: saturate(160%) blur(10px);
   border-bottom: 1px solid var(--border);
@@ -626,6 +627,449 @@
   background: var(--border);
   border: 0;
   margin: 20px 0;
+}
+
+/* =========================================================================
+   追加: iPhone 最適化 / 下部ナビ / スポイラー / エンティティUI / ティア / マップ
+   ========================================================================= */
+
+/* ---- iPhone セーフエリア & タップ領域 ----------------------------------- */
+@media (max-width: 959px) {
+  /* 固定下部ナビ分の余白を確保 */
+  .app {
+    padding-bottom: calc(58px + env(safe-area-inset-bottom, 0px));
+  }
+  .content {
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  /* タップ領域を 44px 以上に */
+  .nav-link {
+    min-height: 44px;
+  }
+}
+/* iOS の慣性スクロール */
+.sidebar,
+.drawer-panel,
+.prose pre,
+.table-scroll {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ---- モバイル下部ナビ --------------------------------------------------- */
+.bottom-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 45;
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  height: calc(58px + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: saturate(160%) blur(10px);
+  border-top: 1px solid var(--border);
+}
+@media (min-width: 960px) {
+  .bottom-nav {
+    display: none;
+  }
+}
+.bottom-nav a {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  color: var(--muted);
+  font-size: 0.66rem;
+  font-weight: 600;
+}
+.bottom-nav a:hover {
+  text-decoration: none;
+}
+.bottom-nav a[aria-current='page'] {
+  color: var(--accent);
+}
+.bottom-nav svg {
+  width: 21px;
+  height: 21px;
+}
+
+/* ---- グローバルサイドバー（セクション折りたたみ） ----------------------- */
+.sidebar .nav-section > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+.sidebar .nav-section > summary::-webkit-details-marker {
+  display: none;
+}
+.sidebar .nav-section > summary:hover {
+  background: var(--surface-2);
+}
+.sidebar .nav-section > summary .chev {
+  margin-left: auto;
+  transition: transform 0.15s ease;
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+}
+.sidebar .nav-section[open] > summary .chev {
+  transform: rotate(90deg);
+}
+.sidebar .nav-section .nav-link {
+  font-size: 0.88rem;
+  padding-left: 32px;
+}
+.sidebar .nav-sub {
+  margin: 2px 0 8px;
+}
+
+/* ---- スポイラー --------------------------------------------------------- */
+.spoiler {
+  margin: 18px 0;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--border));
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface-2);
+}
+.spoiler-summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  font-weight: 700;
+  color: var(--accent);
+  user-select: none;
+}
+.spoiler-summary::-webkit-details-marker {
+  display: none;
+}
+.spoiler-summary svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+.spoiler-hint {
+  margin-left: auto;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+.spoiler[open] .spoiler-summary {
+  border-bottom: 1px solid var(--border);
+}
+.spoiler[open] .spoiler-summary svg {
+  /* 開いたら「見える」アイコン的な色変化のみ（差し替えはJS無しなので色で表現） */
+  color: var(--accent);
+}
+.spoiler-body {
+  padding: 4px 16px 14px;
+}
+.spoiler-body > :first-child {
+  margin-top: 12px;
+}
+
+/* ---- エンティティ詳細レイアウト ----------------------------------------- */
+.entity-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+@media (min-width: 760px) {
+  .entity-grid {
+    grid-template-columns: minmax(0, 1fr) 280px;
+    align-items: start;
+  }
+  .entity-grid .entity-aside {
+    position: sticky;
+    top: 80px;
+  }
+}
+.info-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+}
+.info-panel .info-hero {
+  aspect-ratio: 16 / 10;
+  background: var(--surface-2);
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+}
+.info-panel .info-hero svg {
+  width: 40px;
+  height: 40px;
+  opacity: 0.5;
+}
+.info-list {
+  display: flex;
+  flex-direction: column;
+}
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+}
+.info-row + .info-row {
+  border-top: 1px solid var(--border);
+}
+.info-row .k {
+  color: var(--muted);
+  flex: none;
+}
+.info-row .v {
+  font-weight: 600;
+  text-align: right;
+}
+
+/* ---- オリジナル生成アバター -------------------------------------------- */
+.avatar {
+  position: relative;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: radial-gradient(
+      120% 120% at 30% 20%,
+      color-mix(in srgb, var(--el, var(--accent)) 55%, #fff) 0%,
+      var(--el, var(--accent)) 55%,
+      color-mix(in srgb, var(--el, var(--accent)) 70%, #000) 100%
+    );
+  color: #fff;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+.avatar::after {
+  /* 斜めの光沢 */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), transparent 45%);
+}
+.avatar-block {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 0;
+}
+.avatar-initial {
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  z-index: 1;
+}
+.avatar-rarity {
+  position: absolute;
+  top: 3px;
+  right: 4px;
+  z-index: 2;
+  font-size: 0.6rem;
+  font-weight: 900;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+}
+.avatar-block .avatar-rarity {
+  top: 8px;
+  right: 10px;
+  font-size: 0.78rem;
+  padding: 2px 9px;
+}
+
+/* ---- 属性 / レア度 / ロール バッジ -------------------------------------- */
+.el-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 22px;
+  padding: 0 9px;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--el, #94a3b8);
+  background: color-mix(in srgb, var(--el, #94a3b8) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--el, #94a3b8) 35%, transparent);
+}
+.el-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--el, #94a3b8);
+  flex: none;
+}
+.rarity {
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+.rarity-S {
+  color: #d98a00;
+}
+.rarity-A {
+  color: #7c5cff;
+}
+.badge-rarity-S {
+  background: color-mix(in srgb, #f5a623 16%, transparent);
+  color: #b8770a;
+  border-color: color-mix(in srgb, #f5a623 40%, transparent);
+}
+.badge-rarity-A {
+  background: color-mix(in srgb, #7c5cff 14%, transparent);
+  color: #6a45ff;
+  border-color: color-mix(in srgb, #7c5cff 38%, transparent);
+}
+
+/* キャラカード上部の属性アクセント帯 */
+.char-card {
+  position: relative;
+  overflow: hidden;
+}
+.char-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--el, var(--accent));
+}
+
+/* ---- フィルタバー ------------------------------------------------------- */
+.filterbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+}
+.chip:hover {
+  background: var(--surface-2);
+}
+.chip[aria-pressed='true'],
+.chip.is-on {
+  background: var(--accent-weak);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  color: var(--accent);
+}
+
+/* ---- ティアリスト ------------------------------------------------------- */
+.tier-row {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+}
+.tier-row + .tier-row {
+  margin-top: 10px;
+}
+.tier-label {
+  display: grid;
+  place-items: center;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #fff;
+}
+.tier-pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px;
+  min-height: 56px;
+  align-content: flex-start;
+}
+.tier-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px 5px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: grab;
+}
+.tier-chip .el-dot {
+  width: 8px;
+  height: 8px;
+}
+
+/* ---- インタラクティブマップ -------------------------------------------- */
+.map-wrap {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface-2);
+  touch-action: pan-x pan-y;
+}
+.map-wrap svg,
+.map-wrap img {
+  width: 100%;
+  display: block;
+}
+.map-pin {
+  position: absolute;
+  transform: translate(-50%, -100%);
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  color: #fff;
+  background: var(--accent);
+  border: 2px solid #fff;
+  border-radius: 50% 50% 50% 0;
+  rotate: -45deg;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+}
+.map-pin svg {
+  rotate: 45deg;
+  width: 14px;
+  height: 14px;
+}
+.map-pin.done {
+  background: var(--success);
+  opacity: 0.75;
+}
+
+/* ---- 横スクロールするテーブル ------------------------------------------ */
+.table-scroll {
+  overflow-x: auto;
+  border-radius: var(--radius);
 }
 
 /* Pagefind UI のテーマ連携 */
