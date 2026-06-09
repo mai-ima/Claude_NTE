@@ -4,7 +4,7 @@ import { withBase } from './path';
 import { SECTIONS } from './nav';
 
 type AnyEntry = CollectionEntry<
-  'characters' | 'locations' | 'enemies' | 'systems' | 'story' | 'items' | 'guides'
+  'characters' | 'locations' | 'enemies' | 'systems' | 'story' | 'items' | 'guides' | 'events'
 >;
 
 /** エントリの表示タイトル（日本版名称を優先: nameJa → title → name） */
@@ -98,4 +98,58 @@ export async function loadNavSections(): Promise<NavSection[]> {
     });
   }
   return out;
+}
+
+// --- events（ガチャ/イベントの開催状況） --------------------------------------
+
+export type EventPhase = 'current' | 'upcoming' | 'ended';
+
+export interface EventInfo {
+  id: string;
+  title: string;
+  href: string;
+  kind: 'banner' | 'weapon-banner' | 'event';
+  featured: string[];
+  version?: string;
+  start?: Date;
+  end?: Date;
+  phase: EventPhase;
+  /** 開催中なら終了まで、予定なら開始までの残り日数（端数切り上げ） */
+  daysLeft?: number;
+}
+
+const DAY = 86_400_000;
+const ceilDays = (from: Date, to: Date) => Math.max(0, Math.ceil((to.getTime() - from.getTime()) / DAY));
+
+/** 全 events を開催状況付きで取得（current → upcoming → ended の順、各内は終了/開始が近い順）。 */
+export async function loadEvents(now: Date = new Date()): Promise<EventInfo[]> {
+  const entries = await publishedEntries('events');
+  const infos: EventInfo[] = entries.map((e) => {
+    const d = e.data as Record<string, unknown>;
+    const start = d.start as Date | undefined;
+    const end = d.end as Date | undefined;
+    let phase: EventPhase = 'current';
+    if (start && now < start) phase = 'upcoming';
+    else if (end && now > end) phase = 'ended';
+    const daysLeft =
+      phase === 'current' && end ? ceilDays(now, end) : phase === 'upcoming' && start ? ceilDays(now, start) : undefined;
+    return {
+      id: e.id,
+      title: titleOf(e),
+      href: hrefOf('events', e.id),
+      kind: (d.kind as EventInfo['kind']) ?? 'event',
+      featured: (d.featured as string[]) ?? [],
+      version: d.version as string | undefined,
+      start,
+      end,
+      phase,
+      daysLeft,
+    };
+  });
+  const rank: Record<EventPhase, number> = { current: 0, upcoming: 1, ended: 2 };
+  return infos.sort((a, b) => {
+    if (rank[a.phase] !== rank[b.phase]) return rank[a.phase] - rank[b.phase];
+    if (a.phase === 'ended') return (b.end?.getTime() ?? 0) - (a.end?.getTime() ?? 0); // 新しく終わった順
+    return (a.daysLeft ?? 9999) - (b.daysLeft ?? 9999); // 締切/開始が近い順
+  });
 }

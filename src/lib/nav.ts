@@ -17,6 +17,13 @@ export interface SectionMeta {
 /** エンティティ系コレクションのセクション（表示順） */
 export const SECTIONS: SectionMeta[] = [
   {
+    collection: 'events',
+    href: '/events/',
+    label: 'ガチャ/イベント',
+    icon: 'calendar-clock',
+    blurb: '開催中・予定のピックアップガチャと期間限定イベント。',
+  },
+  {
     collection: 'characters',
     href: '/characters/',
     label: 'キャラクター',
@@ -74,6 +81,7 @@ export function sectionByCollection(collection: string): SectionMeta | undefined
 /** 主要なグローバルナビ（ヘッダーアイコン＋ドロワー） */
 export const PRIMARY_NAV = [
   { label: 'ホーム', href: '/', icon: 'home' },
+  { label: 'ガチャ/イベント', href: '/events/', icon: 'calendar-clock' },
   { label: 'キャラ', href: '/characters/', icon: 'users' },
   { label: 'ツール', href: '/tools/', icon: 'wrench' },
   { label: 'ティア表', href: '/tools/tier-list/', icon: 'bar-chart-3' },

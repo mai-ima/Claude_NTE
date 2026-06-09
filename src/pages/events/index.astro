@@ -1,0 +1,91 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import StatusBadge from '../../components/StatusBadge.astro';
+import { loadEvents, type EventPhase } from '../../lib/content';
+
+const events = await loadEvents();
+
+const KIND_LABEL: Record<string, string> = {
+  banner: 'ピックアップ',
+  'weapon-banner': '武器ガチャ',
+  event: 'イベント',
+};
+const PHASES: { id: EventPhase; label: string; icon: string }[] = [
+  { id: 'current', label: '開催中', icon: 'radio' },
+  { id: 'upcoming', label: '開催予定', icon: 'clock' },
+  { id: 'ended', label: '終了', icon: 'archive' },
+];
+const fmt = (x?: Date) => (x ? x.toLocaleDateString('ja-JP', { month: 'numeric', day: 'numeric' }) : '—');
+const groups = PHASES.map((p) => ({ ...p, items: events.filter((e) => e.phase === p.id) })).filter(
+  (g) => g.items.length > 0,
+);
+---
+
+<BaseLayout
+  title="ガチャ / イベント"
+  description="NTE で現在開催中・予定のピックアップガチャと期間限定イベントの一覧。終了までの残り日数つき。"
+>
+  <div class="layout has-sidebar">
+    <Sidebar currentCollection="events" />
+    <div class="content">
+      <section class="page-head">
+        <p class="eyebrow">ガチャ/イベント</p>
+        <h1>開催中・予定のガチャ / イベント</h1>
+        <p class="lead">
+          現在のピックアップと期間限定イベントを開催状況ごとに表示します（{
+            new Date().toLocaleDateString('ja-JP')
+          } 時点・終了時刻は JST）。
+        </p>
+      </section>
+
+      {
+        groups.map((group) => (
+          <section style="margin-bottom:36px;">
+            <div class="row" style="gap:8px;margin-bottom:14px;">
+              <Icon name={`lucide:${group.icon}`} style="width:20px;height:20px;color:var(--accent);" />
+              <h2 style="margin:0;">{group.label}</h2>
+              <span class="badge">{group.items.length}</span>
+            </div>
+            <div class="grid grid-cards">
+              {group.items.map((e) => (
+                <a class="card card-pad card-link" href={e.href}>
+                  <div class="row row-between" style="align-items:flex-start;gap:8px;">
+                    <span style="font-weight:700;">{e.title}</span>
+                    {e.phase === 'current' && e.daysLeft !== undefined ? (
+                      <span class="badge badge-accent">あと{e.daysLeft}日</span>
+                    ) : e.phase === 'upcoming' && e.daysLeft !== undefined ? (
+                      <span class="badge">{e.daysLeft}日後</span>
+                    ) : (
+                      <StatusBadge status="verified" />
+                    )}
+                  </div>
+                  <div class="cluster" style="margin-top:10px;">
+                    <span class="badge badge-accent">{KIND_LABEL[e.kind] ?? e.kind}</span>
+                    {e.version && <span class="badge">{e.version}</span>}
+                    {e.featured.map((f) => (
+                      <span class="badge">{f}</span>
+                    ))}
+                  </div>
+                  <p class="muted text-sm" style="margin-top:8px;">
+                    {fmt(e.start)} 〜 {e.end ? fmt(e.end) : '未定'}
+                  </p>
+                </a>
+              ))}
+            </div>
+          </section>
+        ))
+      }
+
+      {
+        groups.length === 0 && (
+          <div class="empty">
+            <Icon name="lucide:calendar-off" />
+            <p>現在登録されているイベントはありません。</p>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</BaseLayout>

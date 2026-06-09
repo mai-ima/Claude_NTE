@@ -131,4 +131,24 @@ const guides = defineCollection({
     }),
 });
 
-export const collections = { characters, locations, enemies, systems, story, items, guides };
+/**
+ * events: 現在開催中/予定のガチャ（ピックアップ）・期間限定イベント。
+ * 開催状況（current/upcoming/ended）は start/end と現在日時から算出するため
+ * frontmatter には持たせない（status は通常どおり verified/draft）。
+ */
+const events = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/events' }),
+  schema: ({ image }) =>
+    z.object({
+      ...base,
+      title: z.string(),
+      kind: z.enum(['banner', 'weapon-banner', 'event']).default('event'),
+      featured: z.array(z.string()).default([]), // 注目キャラ/弧盤などの表示名
+      start: z.coerce.date().optional(),
+      end: z.coerce.date().optional(),
+      version: z.string().optional(), // 実装バージョン（例: v1.1）
+      image: image().optional(),
+    }),
+});
+
+export const collections = { characters, locations, enemies, systems, story, items, guides, events };
