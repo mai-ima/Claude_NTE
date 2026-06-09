@@ -1,20 +1,19 @@
 ---
-title: "Headless Rider"
+title: "デュラハン（Headless Rider）"
 type: "boss"
+location: "未聞浦（環状道路Z42付近）"
 order: 51
-description: "ワールドボスの一体（首なしの騎手）"
+description: "未聞浦に出現するワールドボス。撃破で青い炎のバイクが入手できるとされる。"
 status: "draft"
 updated: 2026-06-08
 tags: ["ボス", "ワールドボス"]
 sources:
-  - label: "zeroluck — bosses（英語）"
-    url: "https://zeroluck.gg/nte/bosses/"
-  - label: "Game8 — Boss List（英語）"
-    url: "https://game8.co/games/Neverness-to-Everness/archives/594529"
+  - label: "ゲームウィズ — デュラハン"
+    url: "https://gamewith.jp/nte/555543"
 ---
 
 ## 概要
 
-**Headless Rider** はワールドボスの一体（首なしの騎手）。出典で名称は確認できるが、**弱点属性・出現地・攻略の詳細は未確認**。判明し次第このページを更新する。
+**デュラハン（英名 Headless Rider）** は未聞浦（環状道路Z42付近）に出現するワールドボス。撃破報酬として**青い炎のバイク**が入手できるとされる。
 
-> 日本語公式名・弱点は要確認。確定情報はゲーム内・公式で確認してください。
+> 弱点属性は未確認。判明し次第更新します。

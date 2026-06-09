@@ -19,16 +19,22 @@ sources:
 
 ### ワールドボス
 
-- [Serenetti](/enemies/serenetti/)（弱点: **呪/Incantation**）
-- [Swallowtail](/enemies/swallowtail/)（弱点: **霊/Anima**）
-- [Black Tome](/enemies/black-tome/) / [Headless Rider](/enemies/headless-rider/) / [Beat King](/enemies/beat-king/) / [Sea Prisoner](/enemies/sea-prisoner/) / [Nestbound Bird](/enemies/nestbound-bird/)
+| 日本語名 | 英名 | 弱点 | 出現 |
+| --- | --- | --- | --- |
+| [セレニティ](/enemies/serenetti/) | Serenetti | **呪** | 未聞浦 |
+| [斑蝶](/enemies/swallowtail/) | Swallowtail | **霊** | ニューホランド |
+| [魔の書](/enemies/black-tome/) | Black Tome | **光** | ニューホランド |
+| [音ゲー魔王](/enemies/beat-king/) | Beat King | **魂** | 絵空町 |
+| [巣囚鳥](/enemies/nestbound-bird/) | Nestbound Bird | 要確認 | ニューホランド |
+| [デュラハン](/enemies/headless-rider/) | Headless Rider | 要確認 | 未聞浦 |
+| [シープリズン](/enemies/sea-prisoner/) | Sea Prisoner | 要確認 | — |
 
-### ストーリーボス
+### ストーリー/その他ボス
 
-- [Film - MANISH](/enemies/film-manish/) / [Imaginadough](/enemies/imaginadough/) / [Mammon](/enemies/mammon/) / [Tomato Devil](/enemies/tomato-devil/)
+- [Film - MANISH](/enemies/film-manish/) / [Imaginadough](/enemies/imaginadough/) / [Mammon](/enemies/mammon/) / [Tomato Devil](/enemies/tomato-devil/)（日本語名・弱点は要確認）
 
 ### アノマリー巡礼
 
-- [Morphix](/enemies/morphix/) / [The Never-ending Arachne](/enemies/never-ending-arachne/)
+- [Morphix](/enemies/morphix/) / [踊りだせアラクネ](/enemies/never-ending-arachne/)（弱点は要確認）
 
 > 一覧は約13体（ワールド7・ストーリー4・巡礼2）とする出典あり。個別の弱点・出現地は順次確認して追記します（**要確認**）。

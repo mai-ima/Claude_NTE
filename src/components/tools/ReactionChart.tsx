@@ -86,8 +86,8 @@ export default function ReactionChart() {
         <div>
           <p class="callout-title">トリオ反応</p>
           <div class="text-sm">
-            <strong>Charge</strong>（光＋霊＋相）＝アルティメットエネルギー獲得。
-            <strong>失諧 / Discord</strong>（闇＋魂＋呪）＝ブレイク値を削る。
+            <strong>充蓄（Charge）</strong>（光＋霊＋相）＝アルティメットエネルギー獲得。
+            <strong>失諧（Discord）</strong>（闇＋魂＋呪）＝ブレイク値を削る。
           </div>
         </div>
       </div>

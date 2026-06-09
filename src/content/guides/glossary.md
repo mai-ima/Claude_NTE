@@ -64,6 +64,8 @@ sources:
 | エスパー（異能者） | Esper |
 | 異象ハンター | Anomaly Hunter |
 | ハンターレベル | Hunter Level |
+| 本性ピクセル | Character Pixels（戦闘スタミナ） |
 | スカボロー市場 | Scarborough Fair（ガチャ） |
+| 充蓄 / 失諧 | Charge / Discord（トリオ反応） |
 
-> The Circle / Beyond the Rails / 本性ピクセル などは日本語公式表記が未確認のため英語表記のままです（**要確認**）。
+> **The Circle / Beyond the Rails** は日本語公式表記が未確認のため英語表記のままです（**要確認**）。

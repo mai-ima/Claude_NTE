@@ -9,7 +9,7 @@ faction: "—"
 version: "v1.0"
 tier: "B"
 description: "霊属性のアタッカー（A級）。1凸で真価を発揮し、スキル連打型のアタッカーになる配布キャラ。"
-status: "draft"
+status: "verified"
 updated: 2026-06-08
 tags: ["霊", "Anima", "DPS"]
 sources:
@@ -27,4 +27,4 @@ sources:
 
 v1.0 実装（配布）。
 
-> 属性表記は出典により「霊／魂」で揺れがあり「要確認」。
+> 属性は霊（Anima）で確認済み（Game8日本版）。

@@ -1,20 +1,22 @@
 ---
-title: "Beat King"
+title: "音ゲー魔王（Beat King）"
 type: "boss"
+weakness: "Psyche"
+location: "絵空町"
 order: 52
-description: "ワールドボスの一体"
-status: "draft"
+description: "絵空町のワールドボス。戦闘中に音ゲー風のギミックがある。弱点は魂(Psyche)。"
+status: "verified"
 updated: 2026-06-08
-tags: ["ボス", "ワールドボス"]
+tags: ["ボス", "ワールドボス", "魂"]
 sources:
-  - label: "zeroluck — bosses（英語）"
-    url: "https://zeroluck.gg/nte/bosses/"
-  - label: "Game8 — Boss List（英語）"
-    url: "https://game8.co/games/Neverness-to-Everness/archives/594529"
+  - label: "ゲームウィズ — 音ゲー魔王"
+    url: "https://gamewith.jp/nte/555648"
 ---
 
 ## 概要
 
-**Beat King** はワールドボスの一体。出典で名称は確認できるが、**弱点属性・出現地・攻略の詳細は未確認**。判明し次第このページを更新する。
+**音ゲー魔王（おとげまおう／英名 Beat King）** は絵空町に出現するワールドボス。戦闘中に**音ゲー風のギミック**が発生する。**弱点は 魂（Psyche）**。
 
-> 日本語公式名・弱点は要確認。確定情報はゲーム内・公式で確認してください。
+## 攻略の要点
+
+- **魂属性アタッカー**（例: アウレリア）を活かしつつ、ギミックに対応する。

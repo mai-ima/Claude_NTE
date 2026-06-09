@@ -28,5 +28,9 @@ sources:
 
 ボスごとに弱点属性がある。確認済みの例:
 
-- [Serenetti](/enemies/serenetti/) — **Incantation** に弱い。
-- [Swallowtail](/enemies/swallowtail/) — **Anima** に弱い。
+- [セレニティ（Serenetti）](/enemies/serenetti/) — **呪（Incantation）**
+- [斑蝶（Swallowtail）](/enemies/swallowtail/) — **霊（Anima）**
+- [魔の書（Black Tome）](/enemies/black-tome/) — **光（Cosmos）**
+- [音ゲー魔王（Beat King）](/enemies/beat-king/) — **魂（Psyche）**
+
+詳しくは[ボス一覧](/enemies/world-bosses/)を参照。

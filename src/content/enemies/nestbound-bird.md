@@ -1,20 +1,19 @@
 ---
-title: "Nestbound Bird"
+title: "巣囚鳥（Nestbound Bird）"
 type: "boss"
+location: "ニューホランド"
 order: 54
-description: "ワールドボスの一体（鳥型）"
+description: "ニューホランドのワールドボス。攻撃力が非常に高く、特に近接攻撃は数発でキャラを落とすほど。"
 status: "draft"
 updated: 2026-06-08
 tags: ["ボス", "ワールドボス"]
 sources:
-  - label: "zeroluck — bosses（英語）"
-    url: "https://zeroluck.gg/nte/bosses/"
-  - label: "Game8 — Boss List（英語）"
-    url: "https://game8.co/games/Neverness-to-Everness/archives/594529"
+  - label: "ゲームウィズ — 巣囚鳥"
+    url: "https://gamewith.jp/nte/555596"
 ---
 
 ## 概要
 
-**Nestbound Bird** はワールドボスの一体（鳥型）。出典で名称は確認できるが、**弱点属性・出現地・攻略の詳細は未確認**。判明し次第このページを更新する。
+**巣囚鳥（すしゅうちょう／英名 Nestbound Bird）** はニューホランドに出現するワールドボス。**攻撃力が非常に高く**、特に近接攻撃は数発でキャラを撃破するほど。回避を徹底する。
 
-> 日本語公式名・弱点は要確認。確定情報はゲーム内・公式で確認してください。
+> 弱点属性は未確認。判明し次第更新します。
