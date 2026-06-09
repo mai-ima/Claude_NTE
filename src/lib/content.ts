@@ -59,6 +59,58 @@ export interface RecentEntry {
   updated: Date;
 }
 
+// --- backlinks（記事間の被リンク） ------------------------------------------
+
+interface IndexedEntry {
+  collection: string;
+  id: string;
+  title: string;
+  href: string;
+  sectionLabel: string;
+  body: string;
+}
+let _entryIndex: IndexedEntry[] | null = null;
+
+/** 全公開エントリの本文インデックス（ビルド中キャッシュ） */
+async function entryIndex(): Promise<IndexedEntry[]> {
+  if (_entryIndex) return _entryIndex;
+  const idx: IndexedEntry[] = [];
+  for (const s of SECTIONS) {
+    for (const e of await publishedEntries(s.collection)) {
+      idx.push({
+        collection: s.collection,
+        id: e.id,
+        title: titleOf(e),
+        href: hrefOf(s.collection, e.id),
+        sectionLabel: s.label,
+        body: ((e as { body?: string }).body ?? '') as string,
+      });
+    }
+  }
+  _entryIndex = idx;
+  return idx;
+}
+
+export interface Backlink {
+  title: string;
+  href: string;
+  sectionLabel: string;
+}
+
+/** 指定エントリへ本文からリンクしている他記事（被リンク）を返す。 */
+export async function backlinksFor(collection: string, id: string): Promise<Backlink[]> {
+  const idx = await entryIndex();
+  // コンテンツの内部リンクは絶対パス記法 `](/coll/id/)`
+  const needles = [`/${collection}/${id}/`, `/${collection}/${id})`];
+  return idx
+    .filter(
+      (e) =>
+        !(e.collection === collection && e.id === id) &&
+        needles.some((n) => e.body.includes(n)),
+    )
+    .map(({ title, href, sectionLabel }) => ({ title, href, sectionLabel }));
+}
+
 /** 全コレクション横断で「最近更新した記事」を取得 */
 export async function recentEntries(limit = 6): Promise<RecentEntry[]> {
   const all: RecentEntry[] = [];

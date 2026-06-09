@@ -9,6 +9,18 @@ export interface ReleaseNote {
 
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    version: 'v0.2.7',
+    date: '2026-06-09',
+    title: 'ライブ運営導線・被リンク・SEO強化',
+    changes: [
+      '「ガチャ/イベント」セクションを新設。Ver.1.1 の開催中/予定（永き夢の目覚め・還らざる路・カオス6/24・暗黒レーシング・十三日目の目覚め）を出典付きで掲載し、開催状況と残り日数を自動算出。',
+      'トップページに「現在のピックアップ/開催中」バンドを追加（締切までの残り日数つき）。',
+      '各記事末に「関連記事（このページを参照しているページ）」＝被リンクを自動表示し、回遊性を向上。',
+      'SEO/SNS強化: 記事ページに og:type=article・Twitterカード・JSON-LD（Article/BreadcrumbList/WebSite）・article:modified_time を出力。',
+      '設定パネルのトースト通知が連続表示で早く消えるタイマーバグを修正。',
+    ],
+  },
+  {
     version: 'v0.2.6',
     date: '2026-06-09',
     title: '正式版データで残りの「要確認」を確定',
