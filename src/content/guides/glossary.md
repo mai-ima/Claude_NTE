@@ -67,5 +67,8 @@ sources:
 | 本性ピクセル | Character Pixels（戦闘スタミナ） |
 | スカボロー市場 | Scarborough Fair（ガチャ） |
 | 充蓄 / 失諧 | Charge / Discord（トリオ反応） |
+| 軌道外領域 | Beyond the Rails（高難度エンド） |
+| ザ・サークル | The Circle（組織） |
+| サークル懸賞 | Circle Bounty（バトルパス） |
 
-> **The Circle / Beyond the Rails** は日本語公式表記が未確認のため英語表記のままです（**要確認**）。
+> 日本版の主要用語はおおむね確定しました。版で変動する数値（凸素材量・排出率等）は引き続きゲーム内での確認を推奨します。

@@ -1,20 +1,20 @@
 ---
-title: "Morphix"
+title: "モルフィクス（Morphix）"
 type: "boss"
+weakness: "Cosmos"
+location: "異象狩り（「月光質屋」クリア後）"
 order: 70
-description: "異象巡礼のボス"
-status: "draft"
-updated: 2026-06-08
-tags: ["ボス", "巡礼"]
+description: "巡礼/異象狩りのボス。弱点は光(Cosmos)。"
+status: "verified"
+updated: 2026-06-09
+tags: ["ボス", "boss"]
 sources:
-  - label: "zeroluck — bosses（英語）"
-    url: "https://zeroluck.gg/nte/bosses/"
-  - label: "Game8 — Boss List（英語）"
-    url: "https://game8.co/games/Neverness-to-Everness/archives/594529"
+  - label: "ゲームウィズ — ボス攻略まとめ"
+    url: "https://gamewith.jp/nte/555902"
+  - label: "神ゲー攻略 — ボス攻略と解放条件"
+    url: "https://kamigame.jp/nte/page/422006965359612205.html"
 ---
 
 ## 概要
 
-**Morphix** は異象巡礼のボス。出典で名称は確認できるが、**弱点属性・出現地・攻略の詳細は未確認**。判明し次第このページを更新する。
-
-> 日本語公式名・弱点は要確認。確定情報はゲーム内・公式で確認してください。
+**モルフィクス（Morphix）** は異象狩りで周回できるボス。**弱点は 光（Cosmos）**。異象依頼「月光質屋」クリア後に解放される。

@@ -110,7 +110,11 @@ if (groupField) {
                           {el.label}
                         </span>
                       )}
-                      {d.weakness && <span class="badge">弱点: {d.weakness}</span>}
+                      {d.weakness && d.weakness !== '—' && (
+                        <span class="el-badge" style={`--el:${elementMeta(d.weakness).hue}`}>
+                          弱点 {elementMeta(d.weakness).label}
+                        </span>
+                      )}
                       {d.usedFor && <span class="badge">{d.usedFor}</span>}
                     </div>
                   </a>

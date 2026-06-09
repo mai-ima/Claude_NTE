@@ -1,17 +1,17 @@
 ---
-title: "育成素材（EXP・凸素材）"
+title: "育成素材（EXP・突破素材）"
 type: "material"
-usedFor: "レベル上げ・凸"
+usedFor: "レベル上げ・凸・突破"
 order: 10
-description: "EXPの Hunter Guides、コストの 甲虫コイン、Arc素材、エスパー能力素材、Cartridges など。"
+description: "ハンターガイド(EXP)、甲虫コイン、弧盤の突破素材「シアターチップ」「数字記号」など。"
 status: "verified"
-updated: 2026-06-08
+updated: 2026-06-09
 tags: ["素材", "育成"]
 sources:
-  - label: "Gamerant — Character Pixels"
-    url: "https://gamerant.com/neverness-to-everness-nte-how-consume-use-character-pixels/"
-  - label: "neverness.gg — materials"
-    url: "https://neverness.gg/materials/"
+  - label: "神ゲー攻略 — 育成優先度"
+    url: "https://kamigame.jp/nte/page/420839855845556886.html"
+  - label: "ゲームウィズ（日本版）— アイテム"
+    url: "https://gamewith.jp/nte/557835"
 ---
 
 ## 主な素材
@@ -19,11 +19,21 @@ sources:
 | 素材 | 用途 |
 | --- | --- |
 | **ハンターガイド（Hunter Guides）** | キャラのEXP（レベル上げ） |
-| **甲虫コイン（甲虫コイン）** | 各種コスト（汎用通貨） |
-| **Arc素材** | 武器(Arc)の強化 |
+| **甲虫コイン** | 各種コスト（汎用通貨） |
+| **弧盤素材** | 弧盤（武器）の強化 |
 | **エスパー能力素材** | スキル強化 |
-| **Cartridges** | 装備系の強化 |
 
-多くは[アノマリーゾーン](/locations/anomaly-zones/)で**本性ピクセル**を消費して周回入手する。凸には**固有のボスドロップ**も必要。
+## 弧盤の突破素材
 
-> 各キャラの必要素材セットは版で変わるため、詳細はゲーム内で確認（**要確認**）。
+弧盤をレベル20・30・40・50…の節目で**上限解放（突破）**する際に使う専用素材:
+
+- **シアターチップ**（入門 / マスター / コレクター）
+- **数字記号**（ぼやけた / 未解明の / 歪んだ）
+
+これらは **本性ピクセル**を消費して「バブル缶工場」「フディニの奇術劇」等の[異象界](/locations/anomaly-zones/)で集め、**大量の甲虫コイン**と併せて使う。
+
+## 凸（限界突破）
+
+- キャラの凸（共鳴）は**同キャラの「心」が計6個**、弧盤の凸（ミキシング）は**同名4本**が必要。詳しくは[育成と進行](/systems/progression/)。
+
+> 各キャラ/弧盤ごとの必要数の内訳は版で変わるため、最新はゲーム内で確認してください。

@@ -1,7 +1,7 @@
 ---
 import { render } from 'astro:content';
 import EntityDetail from '../../components/EntityDetail.astro';
-import { sectionByCollection } from '../../lib/nav';
+import { sectionByCollection, elementMeta } from '../../lib/nav';
 import { titleOf, hrefOf, publishedEntries } from '../../lib/content';
 import type { Row, Pill } from '../../components/EntityDetail.astro';
 
@@ -20,12 +20,13 @@ const { entry, prev, next } = Astro.props;
 const { Content, headings } = await render(entry as any);
 const d = entry.data as any;
 const section = sectionByCollection('enemies')!;
+const hasWeak = d.weakness && d.weakness !== '—';
 const pills: Pill[] = [];
-if (d.weakness) pills.push({ kind: 'element', value: d.weakness });
+if (hasWeak) pills.push({ kind: 'plain', value: `弱点 ${elementMeta(d.weakness).label}（${elementMeta(d.weakness).en}）` });
 const rows: Row[] = [{ k: '種別', v: TYPE_JA[d.type] ?? d.type }];
-if (d.element) rows.push({ k: '属性', v: d.element });
-if (d.weakness) rows.push({ k: '弱点', v: d.weakness });
-if (d.location) rows.push({ k: '出現', v: d.location });
+if (d.element) rows.push({ k: '属性', v: `${elementMeta(d.element).label}（${d.element}）` });
+if (hasWeak) rows.push({ k: '弱点', v: `${elementMeta(d.weakness).label}（${elementMeta(d.weakness).en}）` });
+if (d.location && d.location !== '—') rows.push({ k: '出現', v: d.location });
 ---
 <EntityDetail
   collection="enemies"

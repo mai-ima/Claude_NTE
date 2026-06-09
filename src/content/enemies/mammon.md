@@ -1,20 +1,20 @@
 ---
-title: "Mammon"
+title: "マモン（Mammon）"
 type: "boss"
+weakness: "Lakshana"
+location: "—"
 order: 62
-description: "ストーリーに登場するボス"
-status: "draft"
-updated: 2026-06-08
-tags: ["ボス", "ストーリーボス"]
+description: "ストーリーボス。弱点は相(Lakshana)。"
+status: "verified"
+updated: 2026-06-09
+tags: ["ボス", "boss"]
 sources:
-  - label: "zeroluck — bosses（英語）"
-    url: "https://zeroluck.gg/nte/bosses/"
-  - label: "Game8 — Boss List（英語）"
-    url: "https://game8.co/games/Neverness-to-Everness/archives/594529"
+  - label: "ゲームウィズ — ボス攻略まとめ"
+    url: "https://gamewith.jp/nte/555902"
+  - label: "神ゲー攻略 — ボス攻略と解放条件"
+    url: "https://kamigame.jp/nte/page/422006965359612205.html"
 ---
 
 ## 概要
 
-**Mammon** はストーリーに登場するボス。出典で名称は確認できるが、**弱点属性・出現地・攻略の詳細は未確認**。判明し次第このページを更新する。
-
-> 日本語公式名・弱点は要確認。確定情報はゲーム内・公式で確認してください。
+**マモン（Mammon）** はストーリーボス。**弱点は 相（Lakshana）**。ハソールや九原を軸とした相属性編成で「延滞」を狙うのがセオリー。

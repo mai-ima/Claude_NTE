@@ -1,23 +1,19 @@
 ---
-title: "ボス一覧（ワールド/ストーリー/巡礼）"
+title: "ボス一覧（弱点早見表）"
 type: "boss"
 order: 40
-description: "確認されているボスの一覧。弱点が未確認のものは要確認。"
-status: "draft"
-updated: 2026-06-08
-tags: ["ボス", "一覧"]
+description: "ワールド/ストーリー/巡礼ボスの日本語名と弱点属性の早見表。"
+status: "verified"
+updated: 2026-06-09
+tags: ["ボス", "一覧", "弱点"]
 sources:
-  - label: "zeroluck — bosses"
-    url: "https://zeroluck.gg/nte/bosses/"
-  - label: "Game8 — Boss List"
-    url: "https://game8.co/games/Neverness-to-Everness/archives/594529"
+  - label: "ゲームウィズ — ボス攻略まとめ"
+    url: "https://gamewith.jp/nte/555902"
+  - label: "神ゲー攻略 — ボス攻略と解放条件"
+    url: "https://kamigame.jp/nte/page/422006965359612205.html"
 ---
 
-## ボス一覧
-
-出典で挙げられているボス（弱点が未確認のものは「要確認」）。
-
-### ワールドボス
+## ワールドボス
 
 | 日本語名 | 英名 | 弱点 | 出現 |
 | --- | --- | --- | --- |
@@ -25,16 +21,24 @@ sources:
 | [斑蝶](/enemies/swallowtail/) | Swallowtail | **霊** | ニューホランド |
 | [魔の書](/enemies/black-tome/) | Black Tome | **光** | ニューホランド |
 | [音ゲー魔王](/enemies/beat-king/) | Beat King | **魂** | 絵空町 |
-| [巣囚鳥](/enemies/nestbound-bird/) | Nestbound Bird | 要確認 | ニューホランド |
-| [デュラハン](/enemies/headless-rider/) | Headless Rider | 要確認 | 未聞浦 |
-| [シープリズン](/enemies/sea-prisoner/) | Sea Prisoner | 要確認 | — |
+| [巣囚鳥](/enemies/nestbound-bird/) | Nestbound Bird | **光**（霊も可） | ニューホランド |
+| [デュラハン](/enemies/headless-rider/) | Headless Rider | **光** | 未聞浦 |
+| [シープリズン](/enemies/sea-prisoner/) | Sea Prisoner | **魂** | — |
 
-### ストーリー/その他ボス
+## ストーリー／異象狩りボス
 
-- [Film - MANISH](/enemies/film-manish/) / [Imaginadough](/enemies/imaginadough/) / [Mammon](/enemies/mammon/) / [Tomato Devil](/enemies/tomato-devil/)（日本語名・弱点は要確認）
+| 日本語名 | 英名 | 弱点 | 備考 |
+| --- | --- | --- | --- |
+| [フィルム・マニッシュ](/enemies/film-manish/) | Film-MANISH | **魂** | ナナリの暗星が有効 |
+| [イマジナドゥ](/enemies/imaginadough/) | Imaginadough | **闇** | ダフォディール推奨 |
+| [マモン](/enemies/mammon/) | Mammon | **相** | ハソール/九原で延滞 |
+| [トマトデビル](/enemies/tomato-devil/) | Tomato Devil | **闇**（後半 **呪**） | 番外編ボス |
+| [モルフィクス](/enemies/morphix/) | Morphix | **光** | 「月光質屋」後に解放 |
 
-### アノマリー巡礼
+## アノマリー巡礼
 
-- [Morphix](/enemies/morphix/) / [踊りだせアラクネ](/enemies/never-ending-arachne/)（弱点は要確認）
+| 日本語名 | 英名 | 弱点 |
+| --- | --- | --- |
+| [踊りだせアラクネ](/enemies/never-ending-arachne/) | The Never-ending Arachne | **闇** |
 
-> 一覧は約13体（ワールド7・ストーリー4・巡礼2）とする出典あり。個別の弱点・出現地は順次確認して追記します（**要確認**）。
+> 弱点属性で攻めると敵のブレイクゲージを効率よく削れます。詳しくは各ボスの個別ページへ。

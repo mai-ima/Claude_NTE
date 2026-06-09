@@ -1,20 +1,20 @@
 ---
-title: "Tomato Devil"
+title: "トマトデビル（Tomato Devil）"
 type: "boss"
+weakness: "Chaos"
+location: "—"
 order: 63
-description: "ストーリーに登場するボス（トマト型）"
-status: "draft"
-updated: 2026-06-08
-tags: ["ボス", "ストーリーボス"]
+description: "番外編で戦うボス。弱点は闇(Chaos)。後半は呪(Incantation)弱点も追加。"
+status: "verified"
+updated: 2026-06-09
+tags: ["ボス", "boss"]
 sources:
-  - label: "zeroluck — bosses（英語）"
-    url: "https://zeroluck.gg/nte/bosses/"
-  - label: "Game8 — Boss List（英語）"
-    url: "https://game8.co/games/Neverness-to-Everness/archives/594529"
+  - label: "ゲームウィズ — ボス攻略まとめ"
+    url: "https://gamewith.jp/nte/555902"
+  - label: "神ゲー攻略 — ボス攻略と解放条件"
+    url: "https://kamigame.jp/nte/page/422006965359612205.html"
 ---
 
 ## 概要
 
-**Tomato Devil** はストーリーに登場するボス（トマト型）。出典で名称は確認できるが、**弱点属性・出現地・攻略の詳細は未確認**。判明し次第このページを更新する。
-
-> 日本語公式名・弱点は要確認。確定情報はゲーム内・公式で確認してください。
+**トマトデビル（Tomato Devil）** は番外編「実録！トマトゼリー暴走現場」などで戦うボス。**弱点は 闇（Chaos）**。後半ステージでは **呪（Incantation）** 弱点も追加され、白蔵が刺さる。

@@ -1,19 +1,20 @@
 ---
 title: "デュラハン（Headless Rider）"
 type: "boss"
+weakness: "Cosmos"
 location: "未聞浦（環状道路Z42付近）"
 order: 51
-description: "未聞浦に出現するワールドボス。撃破で青い炎のバイクが入手できるとされる。"
-status: "draft"
-updated: 2026-06-08
-tags: ["ボス", "ワールドボス"]
+description: "ワールドボス。バイクで暴走する。弱点は光(Cosmos)。撃破で青い炎のバイク入手。"
+status: "verified"
+updated: 2026-06-09
+tags: ["ボス", "boss"]
 sources:
-  - label: "ゲームウィズ — デュラハン"
-    url: "https://gamewith.jp/nte/555543"
+  - label: "ゲームウィズ — ボス攻略まとめ"
+    url: "https://gamewith.jp/nte/555902"
+  - label: "神ゲー攻略 — ボス攻略と解放条件"
+    url: "https://kamigame.jp/nte/page/422006965359612205.html"
 ---
 
 ## 概要
 
-**デュラハン（英名 Headless Rider）** は未聞浦（環状道路Z42付近）に出現するワールドボス。撃破報酬として**青い炎のバイク**が入手できるとされる。
-
-> 弱点属性は未確認。判明し次第更新します。
+**デュラハン（Headless Rider）** は未聞浦（環状道路Z42付近）に出現するワールドボス。バイクで暴走する。**弱点は 光（Cosmos）** でブレイクダウンを狙う。撃破報酬として青い炎のバイクが入手できる。

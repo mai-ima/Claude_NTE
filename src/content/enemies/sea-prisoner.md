@@ -1,18 +1,20 @@
 ---
 title: "シープリズン（Sea Prisoner）"
 type: "boss"
+weakness: "Psyche"
+location: "—"
 order: 53
-description: "海に関わるワールドボス。"
-status: "draft"
-updated: 2026-06-08
-tags: ["ボス", "ワールドボス"]
+description: "ワールドボス。弱点は魂(Psyche)。"
+status: "verified"
+updated: 2026-06-09
+tags: ["ボス", "boss"]
 sources:
   - label: "ゲームウィズ — ボス攻略まとめ"
     url: "https://gamewith.jp/nte/555902"
+  - label: "神ゲー攻略 — ボス攻略と解放条件"
+    url: "https://kamigame.jp/nte/page/422006965359612205.html"
 ---
 
 ## 概要
 
-**シープリズン（英名 Sea Prisoner）** はワールドボスの一体。
-
-> 弱点属性・出現地の詳細は未確認。判明し次第更新します。
+**シープリズン（Sea Prisoner）** はワールドボス。**弱点は 魂（Psyche）**。ファルディーヤなどの魂属性シールド・サポートを混ぜた編成が推奨。

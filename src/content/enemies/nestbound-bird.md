@@ -1,19 +1,20 @@
 ---
 title: "巣囚鳥（Nestbound Bird）"
 type: "boss"
+weakness: "Cosmos"
 location: "ニューホランド"
 order: 54
-description: "ニューホランドのワールドボス。攻撃力が非常に高く、特に近接攻撃は数発でキャラを落とすほど。"
-status: "draft"
-updated: 2026-06-08
-tags: ["ボス", "ワールドボス"]
+description: "ワールドボス。攻撃力が非常に高い。弱点は光(Cosmos)（霊も有効）。"
+status: "verified"
+updated: 2026-06-09
+tags: ["ボス", "boss"]
 sources:
-  - label: "ゲームウィズ — 巣囚鳥"
-    url: "https://gamewith.jp/nte/555596"
+  - label: "ゲームウィズ — ボス攻略まとめ"
+    url: "https://gamewith.jp/nte/555902"
+  - label: "神ゲー攻略 — ボス攻略と解放条件"
+    url: "https://kamigame.jp/nte/page/422006965359612205.html"
 ---
 
 ## 概要
 
-**巣囚鳥（すしゅうちょう／英名 Nestbound Bird）** はニューホランドに出現するワールドボス。**攻撃力が非常に高く**、特に近接攻撃は数発でキャラを撃破するほど。回避を徹底する。
-
-> 弱点属性は未確認。判明し次第更新します。
+**巣囚鳥（すしゅうちょう／Nestbound Bird）** はニューホランドのワールドボス。**攻撃力が非常に高く**近接は数発で撃破されるため回避を徹底する。**弱点は 光（Cosmos）**（霊も有効）。主人公「異能者・零」の光属性がブレイクに最適。
