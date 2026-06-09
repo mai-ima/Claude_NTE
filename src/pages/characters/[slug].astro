@@ -24,6 +24,7 @@ const pills: Pill[] = [
   { kind: 'element', value: d.element },
   { kind: 'role', value: d.role },
 ];
+if (d.tier) pills.push({ kind: 'tier', value: d.tier });
 const em = elementMeta(d.element);
 const rows: Row[] = [
   { k: '英語名', v: enNameOf(entry) },

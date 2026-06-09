@@ -15,7 +15,7 @@ import { withBase } from '../lib/path';
 import { elementMeta, roleMeta } from '../lib/nav';
 
 export interface Pill {
-  kind: 'element' | 'role' | 'rarity' | 'plain';
+  kind: 'element' | 'role' | 'rarity' | 'tier' | 'plain';
   value: string;
 }
 export interface Row {
@@ -103,6 +103,11 @@ const {
                         <span class="badge badge-accent">
                           <Icon name={`lucide:${roleMeta(p.value).icon}`} style="width:13px;height:13px;" />
                           {roleMeta(p.value).label}
+                        </span>
+                      ) : p.kind === 'tier' ? (
+                        <span class="cluster" style="gap:5px;">
+                          <span class="muted text-sm">ティア</span>
+                          <span class:list={['tier-badge', `tier-${p.value}`]}>{p.value}</span>
                         </span>
                       ) : (
                         <span class="badge">{p.value}</span>

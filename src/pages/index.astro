@@ -10,6 +10,7 @@ import { loadNavSections, recentEntries, publishedEntries, titleOf, enNameOf, hr
 
 const sections = await loadNavSections();
 const countOf = (c: string) => sections.find((s) => s.collection === c)?.items.length ?? 0;
+const totalArticles = sections.reduce((sum, s) => sum + s.items.length, 0);
 
 const recent = await recentEntries(6);
 
@@ -42,6 +43,12 @@ const latest = RELEASE_NOTES[0];
           <a class="btn" href={withBase('/tools/')}>
             <Icon name="lucide:wrench" /> ツール
           </a>
+        </div>
+        <div class="stat-band">
+          <div class="stat"><span class="stat-num">{countOf('characters')}</span><span class="stat-label">キャラ</span></div>
+          <div class="stat"><span class="stat-num">{totalArticles}</span><span class="stat-label">記事</span></div>
+          <div class="stat"><span class="stat-num">{TOOLS.length + 3}</span><span class="stat-label">ツール</span></div>
+          <div class="stat"><span class="stat-num">6</span><span class="stat-label">属性</span></div>
         </div>
       </section>
 

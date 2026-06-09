@@ -937,9 +937,10 @@
   border-radius: 999px;
   font-size: 0.74rem;
   font-weight: 700;
-  color: var(--el, #94a3b8);
-  background: color-mix(in srgb, var(--el, #94a3b8) 14%, transparent);
-  border: 1px solid color-mix(in srgb, var(--el, #94a3b8) 35%, transparent);
+  /* テーマ非依存で読めるよう、属性色をテーマの文字色と混ぜる */
+  color: color-mix(in srgb, var(--el, #94a3b8) 68%, var(--text));
+  background: color-mix(in srgb, var(--el, #94a3b8) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--el, #94a3b8) 38%, transparent);
 }
 .el-dot {
   width: 9px;
@@ -959,14 +960,85 @@
   color: #7c5cff;
 }
 .badge-rarity-S {
-  background: color-mix(in srgb, #f5a623 16%, transparent);
-  color: #b8770a;
-  border-color: color-mix(in srgb, #f5a623 40%, transparent);
+  background: color-mix(in srgb, #f5a623 18%, transparent);
+  color: color-mix(in srgb, #f5a623 72%, var(--text));
+  border-color: color-mix(in srgb, #f5a623 45%, transparent);
 }
 .badge-rarity-A {
-  background: color-mix(in srgb, #7c5cff 14%, transparent);
-  color: #6a45ff;
-  border-color: color-mix(in srgb, #7c5cff 38%, transparent);
+  background: color-mix(in srgb, #7c5cff 16%, transparent);
+  color: color-mix(in srgb, #7c5cff 72%, var(--text));
+  border-color: color-mix(in srgb, #7c5cff 42%, transparent);
+}
+
+/* ティアバッジ（SS/S/A/B/C を色分け） */
+.tier-badge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 26px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 6px;
+  font-weight: 900;
+  font-size: 0.78rem;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+.tier-SS { background: #ff4d4f; }
+.tier-S { background: #ff9800; }
+.tier-A { background: #fbc02d; color: #3a2c00; }
+.tier-B { background: #8bc34a; color: #1c2b0a; }
+.tier-C { background: #03a9f4; }
+
+/* ホームの数値バンド */
+.stat-band {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+  max-width: 460px;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 6px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.stat-num {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+.stat-label {
+  font-size: 0.74rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+/* キャラカードの補足情報（武器・声優） */
+.char-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+.char-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.char-meta svg {
+  width: 13px;
+  height: 13px;
+  opacity: 0.7;
 }
 
 /* キャラカード上部の属性アクセント帯 */
