@@ -8,20 +8,71 @@ import { PRIMARY_NAV, BOTTOM_NAV } from '../lib/nav';
 import MobileDrawer from '../components/MobileDrawer.astro';
 import ThemeMenu from '../components/ThemeMenu';
 
+interface Crumb {
+  name: string;
+  href: string;
+}
 interface Props {
   title?: string;
   description?: string;
+  /** 'article' を渡すとコンテンツ記事として OG/JSON-LD を出力 */
+  ogType?: 'website' | 'article';
+  /** 記事の最終更新日（article のとき article:modified_time / JSON-LD に反映） */
+  modified?: Date;
+  /** パンくず（BreadcrumbList JSON-LD 用）。先頭にホームを含めなくてよい */
+  breadcrumbs?: Crumb[];
 }
 
 const {
   title,
   description = 'NTE（Neverness to Everness）に関する攻略・情報をまとめた非公式ファンwiki + 各種ツール。',
+  ogType = 'website',
+  modified,
+  breadcrumbs = [],
 } = Astro.props;
 
 const siteName = 'NTE 完全攻略wiki';
 const fullTitle = title ? `${title} | ${siteName}` : siteName;
 const currentPath = Astro.url.pathname;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(withBase('icons/icon-192.png'), Astro.site).href;
+const homeUrl = new URL(withBase('/'), Astro.site).href;
+
+// --- 構造化データ (JSON-LD) ---
+const ldGraph: Record<string, unknown>[] = [
+  {
+    '@type': 'WebSite',
+    '@id': `${homeUrl}#website`,
+    url: homeUrl,
+    name: siteName,
+    description,
+    inLanguage: 'ja',
+  },
+];
+if (ogType === 'article') {
+  ldGraph.push({
+    '@type': 'Article',
+    headline: title ?? siteName,
+    description,
+    inLanguage: 'ja',
+    mainEntityOfPage: canonical,
+    isPartOf: { '@id': `${homeUrl}#website` },
+    ...(modified ? { dateModified: modified.toISOString() } : {}),
+  });
+}
+const crumbItems = [{ name: 'ホーム', href: withBase('/') }, ...breadcrumbs];
+if (crumbItems.length > 1) {
+  ldGraph.push({
+    '@type': 'BreadcrumbList',
+    itemListElement: crumbItems.map((c, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: c.name,
+      item: new URL(c.href, Astro.site).href,
+    })),
+  });
+}
+const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGraph });
 ---
 
 <!doctype html>
@@ -35,11 +86,22 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <link rel="canonical" href={canonical} />
     <link rel="icon" href={withBase('favicon.svg')} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={withBase('icons/icon-192.png')} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:site_name" content={siteName} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="ja_JP" />
+    {ogType === 'article' && modified && (
+      <meta property="article:modified_time" content={modified.toISOString()} />
+    )}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <meta name="generator" content={Astro.generator} />
+    <script type="application/ld+json" set:html={jsonLd} is:inline />
 
     {/* テーマを描画前に適用（チラつき防止）。is:inline なのでバンドルされない素のJS */}
     <script is:inline>

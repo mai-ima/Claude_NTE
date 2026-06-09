@@ -71,7 +71,16 @@ const {
 } = Astro.props;
 ---
 
-<BaseLayout title={title} description={lead}>
+<BaseLayout
+  title={title}
+  description={lead}
+  ogType="article"
+  modified={updated}
+  breadcrumbs={[
+    { name: sectionLabel, href: withBase(sectionHref) },
+    { name: title, href: withBase(`/${collection}/${currentId}/`) },
+  ]}
+>
   <div class="layout has-sidebar">
     <Sidebar currentCollection={collection} currentId={currentId} />
     <div class="content">
