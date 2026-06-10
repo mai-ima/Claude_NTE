@@ -23,3 +23,24 @@ export function isActive(currentPath: string, target: string): boolean {
   if (tgt === withBase('/').replace(/\/$/, '')) return cur === tgt;
   return cur === tgt || cur.startsWith(`${tgt}/`);
 }
+
+/**
+ * ナビ群の中で「現在ページに最も適合する1件」の href を返す。
+ * 例: /tools/ と /tools/tier-list/ が両方あるとき、/tools/tier-list/ 閲覧時は
+ * 後者だけを active にする（最長一致）。一致なしは null。
+ */
+export function activeHref(currentPath: string, hrefs: string[]): string | null {
+  const cur = currentPath.replace(/\/$/, '');
+  const home = withBase('/').replace(/\/$/, '');
+  let best: string | null = null;
+  let bestLen = -1;
+  for (const href of hrefs) {
+    const tgt = withBase(href).replace(/\/$/, '');
+    const match = tgt === home ? cur === home : cur === tgt || cur.startsWith(`${tgt}/`);
+    if (match && tgt.length > bestLen) {
+      best = href;
+      bestLen = tgt.length;
+    }
+  }
+  return best;
+}

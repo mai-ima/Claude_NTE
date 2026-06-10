@@ -13,6 +13,6 @@ sources:
     url: "https://gamewith.jp/nte/555348"
 ---
 
-**ハンカク街** は[橋間地](/locations/bridge-crossings/)にある街区。アーケードなどのランドマークが集まり、主人公の拠点[骨董品屋エイボン](/shops/eibon-antique/)もこのエリア周辺にある。
+**ハンカク街** は[橋間地](/locations/bridge-crossings/)にある街区。アーケードなどのランドマークが集まり、主人公の拠点[エイボン骨董品店](/shops/eibon-antique/)もこのエリア周辺にある。
 
 > 街区の正確な範囲はゲーム内マップで確認。区全体は [橋間地](/locations/bridge-crossings/) を参照。

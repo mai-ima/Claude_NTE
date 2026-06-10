@@ -6,7 +6,7 @@ version: "v1.1"
 start: 2026-06-24
 order: 30
 description: "Ver.1.1後半（6/24〜）に実装予定の新Sランク「カオス」のピックアップ。"
-status: "verified"
+status: "draft"
 updated: 2026-06-09
 tags: ["ガチャ", "限定", "カオス", "v1.1", "予定"]
 sources:

@@ -3,7 +3,7 @@ import '../styles/themes.css';
 import '../styles/base.css';
 import '../styles/components.css';
 import { Icon } from 'astro-icon/components';
-import { withBase } from '../lib/path';
+import { withBase, activeHref } from '../lib/path';
 import { PRIMARY_NAV, BOTTOM_NAV } from '../lib/nav';
 import MobileDrawer from '../components/MobileDrawer.astro';
 import ThemeMenu from '../components/ThemeMenu';
@@ -34,6 +34,9 @@ const {
 const siteName = 'NTE 完全攻略wiki';
 const fullTitle = title ? `${title} | ${siteName}` : siteName;
 const currentPath = Astro.url.pathname;
+// ナビは「最長一致の1件だけ」を現在ページ扱いにする（/tools と /tools/tier-list の二重ハイライト防止）
+const primaryActive = activeHref(currentPath, PRIMARY_NAV.map((n) => n.href));
+const bottomActive = activeHref(currentPath, BOTTOM_NAV.map((n) => n.href));
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(withBase('icons/icon-192.png'), Astro.site).href;
 const homeUrl = new URL(withBase('/'), Astro.site).href;
@@ -72,7 +75,11 @@ if (crumbItems.length > 1) {
     })),
   });
 }
-const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGraph });
+// `<` をエスケープして、タイトル等に </script> が含まれても HTML が壊れないようにする
+const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGraph }).replace(
+  /</g,
+  '\\u003c',
+);
 ---
 
 <!doctype html>
@@ -149,7 +156,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
                 class="nav-link"
                 href={withBase(item.href)}
                 style="padding:8px 10px;"
-                aria-current={currentPath.startsWith(withBase(item.href)) ? 'page' : undefined}
+                aria-current={item.href === primaryActive ? 'page' : undefined}
               >
                 <Icon name={`lucide:${item.icon}`} />
                 <span class="sr-only sm-show">{item.label}</span>
@@ -180,13 +187,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
           BOTTOM_NAV.map((item) => (
             <a
               href={withBase(item.href)}
-              aria-current={
-                (item.href === '/'
-                  ? currentPath === withBase('/')
-                  : currentPath.startsWith(withBase(item.href)))
-                  ? 'page'
-                  : undefined
-              }
+              aria-current={item.href === bottomActive ? 'page' : undefined}
             >
               <Icon name={`lucide:${item.icon}`} />
               <span>{item.label}</span>

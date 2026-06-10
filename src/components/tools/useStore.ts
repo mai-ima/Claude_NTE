@@ -25,11 +25,18 @@ export function useStore<T>(name: string, initial: T): [T, (v: Updater<T>) => vo
     // 同一ページの他アイランドからの更新通知
     const onSync = (e: Event) => {
       const detail = (e as CustomEvent).detail as { key: string; value: unknown };
-      if (detail?.key === name) setValue(detail.value as T);
+      if (detail?.key === name) {
+        valueRef.current = detail.value as T;
+        setValue(detail.value as T);
+      }
     };
     // 別タブ（同一オリジン）からの更新
     const onStorage = (e: StorageEvent) => {
-      if (e.key === `${STORE_PREFIX}${name}`) setValue(load<T>(name, initial));
+      if (e.key === `${STORE_PREFIX}${name}`) {
+        const next = load<T>(name, initial);
+        valueRef.current = next;
+        setValue(next);
+      }
     };
 
     window.addEventListener(SYNC_EVENT, onSync);

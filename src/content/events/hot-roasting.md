@@ -7,7 +7,7 @@ start: 2026-06-03
 end: 2026-07-08
 order: 40
 description: "ゲーム内SNS「ベーグル」でジャムポイントを稼ぐ期間限定ミッション。報酬に円石など。"
-status: "verified"
+status: "draft"
 updated: 2026-06-09
 tags: ["イベント", "ベーグル", "v1.1"]
 sources:

@@ -22,7 +22,8 @@ const KIND_LABEL: Record<string, string> = {
   'weapon-banner': '武器（弧盤）ガチャ',
   event: '期間限定イベント',
 };
-const fmt = (x?: Date) => (x ? x.toLocaleDateString('ja-JP', { month: 'long', day: 'numeric' }) : '—');
+const fmt = (x?: Date) =>
+  x ? x.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Tokyo' }) : '—';
 
 const rows: Row[] = [];
 rows.push({ k: '種別', v: KIND_LABEL[d.kind] ?? d.kind });

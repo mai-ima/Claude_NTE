@@ -41,6 +41,8 @@ function nextWeeklyReset(now: number): Date {
 
 export default function Planner() {
   const [cur, setCur] = useStore<number>('tool.planner.pixels', 0);
+  // 現在値を入力した時刻。これを基準に経過分から現在量を推定する（表示が時間でズレないように）。
+  const [curAt, setCurAt] = useStore<number>('tool.planner.pixelsAt', 0);
   const [max, setMax] = useState(240);
   const [perMin, setPerMin] = useState(6);
   const [runCost, setRunCost] = useState(40);
@@ -55,11 +57,20 @@ export default function Planner() {
     return () => clearInterval(id);
   }, []);
 
-  const c = Math.max(0, Math.floor(cur));
+  /** 現在値をセットし、推定の基準時刻も今に更新する */
+  const setCurNow = (v: number) => {
+    setCur(v);
+    setCurAt(Date.now());
+  };
+
+  const entered = Math.max(0, Math.floor(cur));
   const m = Math.max(0, Math.floor(max));
+  // 入力時刻からの経過分でピクセルを進めた「現在の推定量」。基準時刻が無ければ静的に扱う。
+  const regened = perMin > 0 && curAt > 0 ? Math.floor((now - curAt) / (perMin * 60_000)) : 0;
+  const c = Math.min(m, entered + Math.max(0, regened));
   const remaining = Math.max(0, m - c);
   const minutesToFull = perMin > 0 ? remaining * perMin : Infinity;
-  const eta = isFinite(minutesToFull) ? new Date(now + minutesToFull * 60_000) : null;
+  const eta = isFinite(minutesToFull) && remaining > 0 ? new Date(now + minutesToFull * 60_000) : null;
   const runsNow = runCost > 0 ? Math.floor(c / runCost) : 0;
   const pixelPct = m > 0 ? Math.min(100, Math.round((c / m) * 100)) : 0;
 
@@ -70,8 +81,9 @@ export default function Planner() {
 
   const fmt = (min: number) => {
     if (!isFinite(min)) return '—';
-    const h = Math.floor(min / 60);
-    const mm = Math.round(min % 60);
+    const total = Math.round(min);
+    const h = Math.floor(total / 60);
+    const mm = total % 60;
     return h === 0 ? `${mm}分` : `${h}時間${mm}分`;
   };
 
@@ -108,7 +120,7 @@ export default function Planner() {
         <div class="row" style={{ gap: '8px', flexWrap: 'wrap' }}>
           <label class="field" style={{ flex: '1 1 80px', marginBottom: 0 }}>
             <span class="text-sm">現在値</span>
-            <input class="input" type="number" min={0} value={cur} onInput={(e) => setCur(Number((e.target as HTMLInputElement).value) || 0)} />
+            <input class="input" type="number" min={0} value={cur} onInput={(e) => setCurNow(Number((e.target as HTMLInputElement).value) || 0)} />
           </label>
           <label class="field" style={{ flex: '1 1 80px', marginBottom: 0 }}>
             <span class="text-sm">最大</span>
@@ -156,7 +168,7 @@ export default function Planner() {
         <div class="row" style={{ gap: '8px' }}>
           <input class="input" placeholder="タスクを追加" value={newTask}
             onInput={(e) => setNewTask((e.target as HTMLInputElement).value)}
-            onKeyDown={(e) => e.key === 'Enter' && add('daily')} />
+            onKeyDown={(e) => e.key === 'Enter' && !(e as any).isComposing && add('daily')} />
           <button class="btn btn-sm" type="button" onClick={() => add('daily')}>日課に</button>
           <button class="btn btn-sm" type="button" onClick={() => add('weekly')}>週課に</button>
         </div>

@@ -14,9 +14,10 @@ const totalArticles = sections.reduce((sum, s) => sum + s.items.length, 0);
 
 const recent = await recentEntries(6);
 
-// 現在のライブ運営（開催中＋直近の予定）を上部に出す
+// 現在のライブ運営（開催中＋直近の予定）を上部に出す。
+// 静的ビルドの焼き付き対策として候補を多めに描画し、表示はクライアントで再判定して最大4件に絞る。
 const allEvents = await loadEvents();
-const liveEvents = allEvents.filter((e) => e.phase === 'current' || e.phase === 'upcoming').slice(0, 4);
+const liveEvents = allEvents.filter((e) => e.phase === 'current' || e.phase === 'upcoming').slice(0, 8);
 const KIND_LABEL: Record<string, string> = {
   banner: 'ピックアップ',
   'weapon-banner': '武器ガチャ',
@@ -63,7 +64,7 @@ const latest = RELEASE_NOTES[0];
 
       {
         liveEvents.length > 0 && (
-          <section style="margin-top:8px;">
+          <section style="margin-top:8px;" data-live-section hidden>
             <div class="row row-between">
               <h2 style="margin:0;">
                 <Icon name="lucide:radio" style="width:20px;height:20px;color:var(--accent);vertical-align:-3px;" />{' '}
@@ -73,20 +74,24 @@ const latest = RELEASE_NOTES[0];
                 すべて見る
               </a>
             </div>
-            <div class="grid grid-cards" style="margin-top:16px;">
+            <div class="grid grid-cards" style="margin-top:16px;" data-live-list>
               {liveEvents.map((e) => (
-                <a class="card card-pad card-link" href={e.href}>
+                <a
+                  class="card card-pad card-link live-event"
+                  href={e.href}
+                  data-start-ms={e.startMs ?? ''}
+                  data-end-ms={e.endMs ?? ''}
+                  hidden
+                >
                   <div class="row row-between" style="align-items:flex-start;gap:8px;">
                     <span style="font-weight:700;">{e.title}</span>
-                    {e.daysLeft !== undefined ? (
-                      e.phase === 'current' ? (
-                        <span class="badge badge-accent">あと{e.daysLeft}日</span>
-                      ) : (
-                        <span class="badge">{e.daysLeft}日後</span>
-                      )
-                    ) : (
-                      e.phase === 'current' && <span class="badge">常設</span>
-                    )}
+                    <span class="badge" data-status>
+                      {e.daysLeft !== undefined
+                        ? e.phase === 'current'
+                          ? `あと${e.daysLeft}日`
+                          : `${e.daysLeft}日後`
+                        : '常設'}
+                    </span>
                   </div>
                   <div class="cluster" style="margin-top:8px;">
                     <span class="badge badge-accent">{KIND_LABEL[e.kind] ?? e.kind}</span>
@@ -174,7 +179,7 @@ const latest = RELEASE_NOTES[0];
                     <a class="card card-pad card-link" href={e.href}>
                       <div class="row row-between">
                         <span style="font-weight:600;">{e.title}</span>
-                        <span class="muted text-sm">{e.updated.toLocaleDateString('ja-JP')}</span>
+                        <span class="muted text-sm">{e.updated.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' })}</span>
                       </div>
                       <span class="badge" style="margin-top:6px;">{e.sectionLabel}</span>
                     </a>
@@ -235,3 +240,48 @@ const latest = RELEASE_NOTES[0];
     </div>
   </div>
 </BaseLayout>
+
+<script>
+  // トップの「現在のピックアップ/開催中」バンドを閲覧時刻で再判定（静的焼き付き対策）。
+  // 終了済みは除外、開催中→予定の順に最大4件だけ表示する。
+  (function () {
+    const now = Date.now();
+    const DAY = 86_400_000;
+    const ceilDays = (to: number) => Math.max(0, Math.ceil((to - now) / DAY));
+    const section = document.querySelector<HTMLElement>('[data-live-section]');
+    const list = document.querySelector<HTMLElement>('[data-live-list]');
+    if (!section || !list) return;
+    const cards = Array.from(list.querySelectorAll<HTMLElement>('.live-event'));
+    const live: { el: HTMLElement; rank: number; key: number }[] = [];
+    for (const el of cards) {
+      const sRaw = el.getAttribute('data-start-ms');
+      const eRaw = el.getAttribute('data-end-ms');
+      const startMs = sRaw ? Number(sRaw) : null;
+      const endMs = eRaw ? Number(eRaw) : null;
+      el.hidden = true;
+      if (endMs != null && now >= endMs) continue; // 終了は出さない
+      const badge = el.querySelector<HTMLElement>('[data-status]');
+      if (startMs != null && now < startMs) {
+        const d = ceilDays(startMs);
+        if (badge) {
+          badge.textContent = `${d}日後`;
+          badge.classList.remove('badge-accent');
+        }
+        live.push({ el, rank: 1, key: d });
+      } else {
+        if (badge) {
+          badge.textContent = endMs != null ? `あと${ceilDays(endMs)}日` : '常設';
+          badge.classList.add('badge-accent');
+        }
+        live.push({ el, rank: 0, key: endMs != null ? ceilDays(endMs) : 9999 });
+      }
+    }
+    live.sort((a, b) => a.rank - b.rank || a.key - b.key);
+    const shown = live.slice(0, 4);
+    for (const { el } of shown) {
+      el.hidden = false;
+      list.appendChild(el);
+    }
+    section.hidden = shown.length === 0;
+  })();
+</script>

@@ -1,6 +1,6 @@
 ---
 import { Icon } from 'astro-icon/components';
-import { withBase } from '../lib/path';
+import { withBase, activeHref } from '../lib/path';
 import { PRIMARY_NAV, SECTIONS } from '../lib/nav';
 import { loadNavSections } from '../lib/content';
 
@@ -13,6 +13,10 @@ const { currentPath } = Astro.props;
 const sections = await loadNavSections();
 const used = new Set(sections.map((s) => s.collection));
 const navSections = SECTIONS.filter((s) => used.has(s.collection));
+
+// 最長一致の1件だけを現在ページ扱いに（PRIMARY と DB セクションを合わせて判定）
+const allHrefs = [...PRIMARY_NAV.map((n) => n.href), ...navSections.map((s) => s.href)];
+const drawerActive = activeHref(currentPath, allHrefs);
 ---
 
 <div class="drawer" id="app-drawer" role="dialog" aria-modal="true" aria-label="ナビゲーション">
@@ -32,13 +36,7 @@ const navSections = SECTIONS.filter((s) => used.has(s.collection));
             class="nav-link"
             href={withBase(item.href)}
             data-drawer-close
-            aria-current={
-              (item.href === '/'
-                ? currentPath === withBase('/')
-                : currentPath.startsWith(withBase(item.href)))
-                ? 'page'
-                : undefined
-            }
+            aria-current={item.href === drawerActive ? 'page' : undefined}
           >
             <Icon name={`lucide:${item.icon}`} />
             <span>{item.label}</span>
@@ -52,7 +50,12 @@ const navSections = SECTIONS.filter((s) => used.has(s.collection));
         <div class="nav-group">
           <p class="nav-group-title">データベース</p>
           {navSections.map((s) => (
-            <a class="nav-link" href={withBase(s.href)} data-drawer-close>
+            <a
+              class="nav-link"
+              href={withBase(s.href)}
+              data-drawer-close
+              aria-current={s.href === drawerActive ? 'page' : undefined}
+            >
               <Icon name={`lucide:${s.icon}`} />
               <span>{s.label}</span>
             </a>

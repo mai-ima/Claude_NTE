@@ -50,7 +50,12 @@ export default function Timer() {
     setRemaining(remaining > 0 && remaining < total ? remaining : total);
     setRunning(true);
     if ('Notification' in window && Notification.permission === 'default') {
-      Notification.requestPermission().catch(() => {});
+      // 旧Safari はコールバック型で undefined を返すため Promise.resolve で包む。
+      try {
+        Promise.resolve(Notification.requestPermission()).catch(() => {});
+      } catch {
+        /* noop */
+      }
     }
   }
   function pause() {

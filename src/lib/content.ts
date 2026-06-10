@@ -174,26 +174,45 @@ export interface EventInfo {
   version?: string;
   start?: Date;
   end?: Date;
+  /** 開始の JST 00:00 エポック（ms）。クライアント側の再判定に使う。未設定は null */
+  startMs: number | null;
+  /** 終了日の JST 24:00（＝翌日0時）エポック（ms）。終日まで開催扱い。未設定は null */
+  endMs: number | null;
   phase: EventPhase;
   /** 開催中なら終了まで、予定なら開始までの残り日数（端数切り上げ） */
   daysLeft?: number;
 }
 
 const DAY = 86_400_000;
-const ceilDays = (from: Date, to: Date) => Math.max(0, Math.ceil((to.getTime() - from.getTime()) / DAY));
+const JST = 9 * 3600 * 1000;
+/** coerce.date() が返す UTC 00:00 の YMD を、その日の JST 00:00 エポックに変換 */
+function jstMidnight(d: Date): number {
+  return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()) - JST;
+}
+const ceilDays = (fromMs: number, toMs: number) => Math.max(0, Math.ceil((toMs - fromMs) / DAY));
+
+/** start/end エポックと現在時刻から開催状況・残り日数を算出（サーバ/クライアント共通ロジック） */
+export function phaseOf(
+  nowMs: number,
+  startMs: number | null,
+  endMs: number | null,
+): { phase: EventPhase; daysLeft?: number } {
+  if (startMs != null && nowMs < startMs) return { phase: 'upcoming', daysLeft: ceilDays(nowMs, startMs) };
+  if (endMs != null && nowMs >= endMs) return { phase: 'ended' };
+  return { phase: 'current', daysLeft: endMs != null ? ceilDays(nowMs, endMs) : undefined };
+}
 
 /** 全 events を開催状況付きで取得（current → upcoming → ended の順、各内は終了/開始が近い順）。 */
 export async function loadEvents(now: Date = new Date()): Promise<EventInfo[]> {
+  const nowMs = now.getTime();
   const entries = await publishedEntries('events');
   const infos: EventInfo[] = entries.map((e) => {
     const d = e.data as Record<string, unknown>;
     const start = d.start as Date | undefined;
     const end = d.end as Date | undefined;
-    let phase: EventPhase = 'current';
-    if (start && now < start) phase = 'upcoming';
-    else if (end && now > end) phase = 'ended';
-    const daysLeft =
-      phase === 'current' && end ? ceilDays(now, end) : phase === 'upcoming' && start ? ceilDays(now, start) : undefined;
+    const startMs = start ? jstMidnight(start) : null;
+    const endMs = end ? jstMidnight(end) + DAY : null; // 終了日いっぱい（JST）まで開催扱い
+    const { phase, daysLeft } = phaseOf(nowMs, startMs, endMs);
     return {
       id: e.id,
       title: titleOf(e),
@@ -203,6 +222,8 @@ export async function loadEvents(now: Date = new Date()): Promise<EventInfo[]> {
       version: d.version as string | undefined,
       start,
       end,
+      startMs,
+      endMs,
       phase,
       daysLeft,
     };
@@ -210,7 +231,7 @@ export async function loadEvents(now: Date = new Date()): Promise<EventInfo[]> {
   const rank: Record<EventPhase, number> = { current: 0, upcoming: 1, ended: 2 };
   return infos.sort((a, b) => {
     if (rank[a.phase] !== rank[b.phase]) return rank[a.phase] - rank[b.phase];
-    if (a.phase === 'ended') return (b.end?.getTime() ?? 0) - (a.end?.getTime() ?? 0); // 新しく終わった順
+    if (a.phase === 'ended') return (b.endMs ?? 0) - (a.endMs ?? 0); // 新しく終わった順
     return (a.daysLeft ?? 9999) - (b.daysLeft ?? 9999); // 締切/開始が近い順
   });
 }

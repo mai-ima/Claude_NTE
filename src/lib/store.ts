@@ -16,7 +16,16 @@ export function load<T>(name: string, fallback: T): T {
   try {
     const raw = localStorage.getItem(key(name));
     if (raw == null) return fallback;
-    return JSON.parse(raw) as T;
+    const parsed: unknown = JSON.parse(raw);
+    // 形チェック: 旧スキーマやインポートで形の違う値が入っていても島ごとクラッシュさせない。
+    // オブジェクトは fallback とマージして欠落キーを既定値で補う。
+    if (Array.isArray(fallback)) return Array.isArray(parsed) ? (parsed as T) : fallback;
+    if (fallback !== null && typeof fallback === 'object') {
+      if (parsed === null || typeof parsed !== 'object' || Array.isArray(parsed)) return fallback;
+      return { ...(fallback as object), ...(parsed as object) } as T;
+    }
+    if (typeof parsed !== typeof fallback) return fallback;
+    return parsed as T;
   } catch (err) {
     console.warn(`[store] load failed: ${name}`, err);
     return fallback;
@@ -41,7 +50,12 @@ export function remove(name: string): void {
   }
 }
 
-/** nte.* の全データを集めてエクスポート用オブジェクトにする */
+/**
+ * nte.* の全データを集めてエクスポート用オブジェクトにする。
+ * 値は localStorage の生文字列をそのまま持ち回る（ラウンドトリップ安全）。
+ * JSON.parse して保持すると、インポート時に文字列ストア（個人メモ等）が
+ * 引用符なしで書き戻されて読み込み不能になるため、生表現を崩さない。
+ */
 export function exportAll(): { schemaVersion: number; exportedAt: string; data: Record<string, unknown> } {
   const data: Record<string, unknown> = {};
   try {
@@ -50,11 +64,7 @@ export function exportAll(): { schemaVersion: number; exportedAt: string; data: 
       if (!k || !k.startsWith(STORE_PREFIX)) continue;
       const raw = localStorage.getItem(k);
       if (raw == null) continue;
-      try {
-        data[k] = JSON.parse(raw);
-      } catch {
-        data[k] = raw;
-      }
+      data[k] = raw;
     }
   } catch (err) {
     console.warn('[store] export failed', err);
@@ -80,7 +90,8 @@ export function importAll(json: string): ImportResult {
     typeof parsed !== 'object' ||
     parsed === null ||
     !('data' in parsed) ||
-    typeof (parsed as { data: unknown }).data !== 'object'
+    typeof (parsed as { data: unknown }).data !== 'object' ||
+    (parsed as { data: unknown }).data === null
   ) {
     return { ok: false, imported: 0, error: 'バックアップ形式が正しくありません。' };
   }
@@ -89,6 +100,8 @@ export function importAll(json: string): ImportResult {
   try {
     for (const [k, v] of Object.entries(data)) {
       if (!k.startsWith(STORE_PREFIX)) continue;
+      // exportAll は生文字列を格納する。文字列はそのまま書き戻し、
+      // 旧バックアップ（パース済みの値）が来た場合のみ JSON 文字列化する。
       localStorage.setItem(k, typeof v === 'string' ? v : JSON.stringify(v));
       imported++;
     }

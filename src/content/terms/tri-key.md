@@ -3,16 +3,16 @@ title: "トリプルキー"
 en: "Tri-Key"
 category: "ガチャ・通貨"
 order: 15
-description: "ガチャ関連で使われる交換／鍵アイテム。日本版表記はトリプルキー。"
-status: "draft"
+description: "武器（弧盤）ガチャの抽選に使う専用アイテム。10連単位で引く。"
+status: "verified"
 updated: 2026-06-09
-tags: ["ガチャ", "通貨"]
+tags: ["ガチャ", "通貨", "弧盤"]
 aliases: ["Tri-Key"]
 sources:
   - label: "カノウィキ — 用語集"
     url: "https://wiki.kanotype.net/ja/NTE/%E7%94%A8%E8%AA%9E%E9%9B%86"
 ---
 
-**トリプルキー（Tri-Key）** はガチャ関連で使われる交換系アイテム。日本版での正式な用途・入手量は版で変動するため、最新はゲーム内表示で確認（**要確認**）。
+**トリプルキー（Tri-Key）** は、武器（[弧盤](/terms/arc/)）ガチャの抽選に使う専用アイテム。キャラ用の[サイコロ](/terms/dice/)とは別枠で、**10連単位**で引く。
 
-関連通貨は [円石](/terms/annulith/)・[サイコロ](/terms/dice/) を参照。
+弧盤ガチャの仕組みは [ガチャ仕様](/systems/gacha/)・[弧盤システム](/systems/arc-weapons/) を参照。
