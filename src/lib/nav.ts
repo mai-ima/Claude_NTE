@@ -97,6 +97,7 @@ export const PRIMARY_NAV = [
   { label: 'ホーム', href: '/', icon: 'home' },
   { label: 'ガチャ/イベント', href: '/events/', icon: 'calendar-clock' },
   { label: 'キャラ', href: '/characters/', icon: 'users' },
+  { label: '用語集', href: '/terms/', icon: 'book-a' },
   { label: 'ツール', href: '/tools/', icon: 'wrench' },
   { label: 'ティア表', href: '/tools/tier-list/', icon: 'bar-chart-3' },
   { label: '更新履歴', href: '/release-notes/', icon: 'history' },

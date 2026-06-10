@@ -78,12 +78,15 @@ const latest = RELEASE_NOTES[0];
                 <a class="card card-pad card-link" href={e.href}>
                   <div class="row row-between" style="align-items:flex-start;gap:8px;">
                     <span style="font-weight:700;">{e.title}</span>
-                    {e.daysLeft !== undefined &&
-                      (e.phase === 'current' ? (
+                    {e.daysLeft !== undefined ? (
+                      e.phase === 'current' ? (
                         <span class="badge badge-accent">あと{e.daysLeft}日</span>
                       ) : (
                         <span class="badge">{e.daysLeft}日後</span>
-                      ))}
+                      )
+                    ) : (
+                      e.phase === 'current' && <span class="badge">常設</span>
+                    )}
                   </div>
                   <div class="cluster" style="margin-top:8px;">
                     <span class="badge badge-accent">{KIND_LABEL[e.kind] ?? e.kind}</span>
