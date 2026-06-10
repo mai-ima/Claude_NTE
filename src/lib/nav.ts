@@ -45,11 +45,25 @@ export const SECTIONS: SectionMeta[] = [
     blurb: '初心者・リセマラ・ガチャ戦略・ティア解説など。',
   },
   {
+    collection: 'terms',
+    href: '/terms/',
+    label: '用語集',
+    icon: 'book-a',
+    blurb: 'NTE 固有・難解な用語を1語ずつ意味から解説。',
+  },
+  {
     collection: 'locations',
     href: '/locations/',
     label: 'ロケーション',
     icon: 'map',
     blurb: '都市ヘテロシティ各区・島・アノマリーゾーンなどの地理。',
+  },
+  {
+    collection: 'shops',
+    href: '/shops/',
+    label: '店・商店',
+    icon: 'store',
+    blurb: 'ショップ・交換所・拠点と、その販売/交換ラインナップ。',
   },
   {
     collection: 'enemies',

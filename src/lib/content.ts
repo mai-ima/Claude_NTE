@@ -4,7 +4,16 @@ import { withBase } from './path';
 import { SECTIONS } from './nav';
 
 type AnyEntry = CollectionEntry<
-  'characters' | 'locations' | 'enemies' | 'systems' | 'story' | 'items' | 'guides' | 'events'
+  | 'characters'
+  | 'locations'
+  | 'enemies'
+  | 'systems'
+  | 'story'
+  | 'items'
+  | 'guides'
+  | 'events'
+  | 'shops'
+  | 'terms'
 >;
 
 /** エントリの表示タイトル（日本版名称を優先: nameJa → title → name） */

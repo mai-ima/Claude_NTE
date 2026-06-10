@@ -1,0 +1,14 @@
+---
+import EntityList from '../../components/EntityList.astro';
+import { sectionByCollection } from '../../lib/nav';
+const s = sectionByCollection('terms')!;
+---
+<EntityList
+  collection="terms"
+  title="用語集（NTE 専門用語）"
+  eyebrow="用語集"
+  lead="NTE 内で意味が特殊だったり難解だったりする固有名詞・専門用語を、1語ずつ意味から解説します。早見の対応表は「用語集（日本版↔英語）」ガイドへ。"
+  icon={s.icon}
+  groupField="category"
+  groupOrder={['ガチャ・通貨', '戦闘・連環', '育成', '世界観・組織・地名']}
+/>

@@ -22,3 +22,7 @@ sources:
 
 - **Skytower** — 市内で最も高いランドマーク。
 - **Caltrop Lake** / **Noetic Bridge** — 景勝・商業の中心。
+
+## 地区・スポット
+
+- **[聖トリス大通り](/terms/saint-tris-boulevard/)** — 秋葉原をモチーフにした電気街風の一角。現実のパロディネタが点在する。

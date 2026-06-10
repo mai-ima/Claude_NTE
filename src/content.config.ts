@@ -151,4 +151,49 @@ const events = defineCollection({
     }),
 });
 
-export const collections = { characters, locations, enemies, systems, story, items, guides, events };
+/**
+ * shops: 店・商店・交換所・バトルパスなど「商品を扱う場所」。
+ * 本文に取扱商品（販売/交換ラインナップ）を表で明記する。
+ */
+const shops = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/shops' }),
+  schema: ({ image }) =>
+    z.object({
+      ...base,
+      title: z.string(),
+      type: z.enum(['shop', 'exchange', 'hub', 'pass']).default('shop'),
+      currency: z.string().optional(), // 主に使用する通貨/ポイント
+      unlock: z.string().optional(), // 解放条件
+      image: image().optional(),
+    }),
+});
+
+/**
+ * terms: NTE 固有・難解な用語の専門ページ（1用語=1ページ）。
+ * 既に専用ページがある語は短い定義＋当該ページへのリンクに留める。
+ */
+const terms = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/terms' }),
+  schema: () =>
+    z.object({
+      ...base,
+      title: z.string(), // 見出し語（日本版表記）
+      reading: z.string().optional(), // よみ
+      en: z.string().optional(), // 英語表記
+      category: z.string().default('用語'),
+      aliases: z.array(z.string()).default([]),
+    }),
+});
+
+export const collections = {
+  characters,
+  locations,
+  enemies,
+  systems,
+  story,
+  items,
+  guides,
+  events,
+  shops,
+  terms,
+};

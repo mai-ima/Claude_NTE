@@ -31,5 +31,3 @@ sources:
 ## 同時開催
 
 - 武器ピックアップ「[還らざる路](/events/road-of-no-return/)」（弧盤）。
-</content>
-</invoke>

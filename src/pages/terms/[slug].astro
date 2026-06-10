@@ -1,0 +1,47 @@
+---
+import { render } from 'astro:content';
+import EntityDetail from '../../components/EntityDetail.astro';
+import { sectionByCollection } from '../../lib/nav';
+import { titleOf, hrefOf, publishedEntries } from '../../lib/content';
+import type { Row, Pill } from '../../components/EntityDetail.astro';
+
+export async function getStaticPaths() {
+  const sorted = await publishedEntries('terms');
+  return sorted.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: { entry, prev: sorted[i - 1] ?? null, next: sorted[i + 1] ?? null },
+  }));
+}
+const { entry, prev, next } = Astro.props;
+const { Content, headings } = await render(entry as any);
+const d = entry.data as any;
+const section = sectionByCollection('terms')!;
+
+const rows: Row[] = [];
+rows.push({ k: '分類', v: d.category });
+if (d.reading) rows.push({ k: 'よみ', v: d.reading });
+if (d.en) rows.push({ k: '英語表記', v: d.en });
+if (d.aliases?.length) rows.push({ k: '別名', v: d.aliases.join('・') });
+
+const pills: Pill[] = [{ kind: 'plain', value: d.category }];
+---
+<EntityDetail
+  collection="terms"
+  currentId={entry.id}
+  sectionLabel={section.label}
+  sectionHref={section.href}
+  sectionIcon={section.icon}
+  title={titleOf(entry)}
+  lead={d.description}
+  pills={pills}
+  rows={rows}
+  status={d.status}
+  updated={d.updated}
+  tags={d.tags}
+  sources={d.sources}
+  headings={headings}
+  prev={prev ? { href: hrefOf('terms', prev.id), title: titleOf(prev) } : null}
+  next={next ? { href: hrefOf('terms', next.id), title: titleOf(next) } : null}
+>
+  <Content />
+</EntityDetail>
