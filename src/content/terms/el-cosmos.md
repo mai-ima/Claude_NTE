@@ -4,7 +4,7 @@ reading: "ひかり"
 en: "Cosmos"
 category: "戦闘・連環"
 order: 60
-description: "異能連環の属性リングで霊と相に隣接する属性。霊と合わせて創生、相と合わせて延滞を起こせる。"
+description: "異能連環の6属性のひとつ。リング上で霊と相に隣接し、霊と創生・相と延滞の2反応を起こせる黄色イメージの属性。零やエドガーが該当。"
 status: "verified"
 updated: 2026-06-11
 tags: ["属性", "戦闘"]
@@ -14,15 +14,31 @@ sources:
     url: "https://game8.jp/nte/783376"
 ---
 
-**光（Cosmos）** は NTE の6属性のひとつ。[異能連環](/terms/esper-cycle/)の固定リング **光 → 霊 → 呪 → 闇 → 魂 → 相 →（光へ戻る）** で、**霊と相に隣接**する。隣接属性とだけ反応するルールに従い、光は2種のDuo反応を起こせる。
+**光（Cosmos）** は NTE の6属性のひとつで、[異能連環](/terms/esper-cycle/)の固定リング **光 → 霊 → 呪 → 闇 → 魂 → 相 →（光へ戻る）** の起点に位置する属性。リング上では **[霊（Anima）](/terms/el-anima/) と [相（Lakshana）](/terms/el-lakshana/) に隣接** し、この2属性とだけDuo反応を起こす。色のイメージは黄。
 
-## 詳しく
+## 仕組み
 
-- **起こせるDuo反応**:
-  - [創生（Blossom）](/terms/reaction-blossom/): 霊（Anima）と合わせて成立。範囲（AoE）追撃ダメージ。
-  - [延滞（Remora）](/terms/reaction-remora/): 相（Lakshana）と合わせて成立。対象をマークし鈍化させる。
-- **リング上の隣接**: 片隣が[霊（Anima）](/terms/el-anima/)、もう片隣が[相（Lakshana）](/terms/el-lakshana/)。離れた属性とは反応しない。
-- **実装キャラ例**: [零](/characters/zero/)、[ちぃちゃん](/characters/chiz/)、[エドガー](/characters/edgar/)、潯（要確認）。
-- 光のキャラを軸に、霊または相のキャラを組み合わせてスワップで反応を繋ぐのが基本。
+- 異能連環は「リング上で隣り合う属性だけが反応する」ルールで動く。光の隣は片側が霊、もう片側が相で、離れた呪・闇・魂とは反応しない。
+- 反応はスワップ（操作キャラの切り替え）と[連環値](/terms/renkan-value/)のメーターに連動して発動する。光のキャラの行動に隣接属性の行動を繋ぐことで反応が成立する。
+- 相は本来リングの末尾だが、一周してつながる位置にあるため光の隣として扱われる。光はリングの起点であり、相とともにリングを閉じる端どうしの位置にある。
 
-関連: [異能連環](/terms/esper-cycle/) / [創生](/terms/reaction-blossom/) / [延滞](/terms/reaction-remora/) / [連環値](/terms/renkan-value/)
+## 起こせる反応／成立属性
+
+- [創生（Blossom）](/terms/reaction-blossom/): **光 ＋ [霊（Anima）](/terms/el-anima/)** で成立。範囲（AoE）追撃ダメージ。
+- [延滞（Remora）](/terms/reaction-remora/): **光 ＋ [相（Lakshana）](/terms/el-lakshana/)** で成立。対象をマークし動きを鈍化させる妨害寄りの反応。
+- 反応の具体的な倍率・継続秒数は要確認。
+
+## 使い方・編成
+
+- 光のキャラを軸に、**霊または相のキャラ**を同編成へ入れると反応を起こせる。霊を添えれば殲滅向きの創生、相を添えれば妨害向きの延滞と、狙いで組み分けられる。
+- 創生は範囲火力なので雑魚の群れ・殲滅戦、延滞は妨害なので高難度ボスの立て直しと、場面に応じて相方を選ぶと噛み合う。
+- 3属性目を加えれば[充蓄／失諧](/terms/charge-discord/)のトリオ反応に発展する。光・霊・相をまたぐ編成は反応の選択肢が広い。
+- 実装キャラ例: [零](/characters/zero/)、[ちぃちゃん](/characters/chiz/)、[エドガー](/characters/edgar/)、潯（属性は要確認）。
+
+## 注意点
+
+- 呪・闇・魂のキャラだけを組んでも光は反応に絡めない。必ず隣接属性とのペアを用意する。
+- どちらの反応が出るかは組み合わせる相方の属性で決まる。出したい反応に合わせて編成段階で属性を選ぶ。
+- 各反応の数値・効果時間は未確定のため、火力計算は要確認。
+
+関連: [異能連環](/terms/esper-cycle/) / [霊](/terms/el-anima/) / [相](/terms/el-lakshana/) / [創生](/terms/reaction-blossom/) / [延滞](/terms/reaction-remora/) / [連環値](/terms/renkan-value/)

@@ -4,7 +4,7 @@ reading: "じゅ"
 en: "Incantation"
 category: "戦闘・連環"
 order: 62
-description: "異能連環の属性リングで霊と闇に隣接する属性。霊と合わせて覆紋、闇と合わせて濁燃を起こせる。"
+description: "異能連環の6属性のひとつ。リング上で霊と闇に隣接し、霊と覆紋・闇と濁燃の2反応を起こせる紫色イメージの属性。白蔵やアドレーが該当。"
 status: "verified"
 updated: 2026-06-11
 tags: ["属性", "戦闘"]
@@ -14,15 +14,31 @@ sources:
     url: "https://game8.jp/nte/783376"
 ---
 
-**呪（Incantation）** は NTE の6属性のひとつ。[異能連環](/terms/esper-cycle/)の固定リング **光 → 霊 → 呪 → 闇 → 魂 → 相 →（光へ戻る）** で、**霊と闇に隣接**する。隣接属性とだけ反応するルールに従い、呪は2種のDuo反応を起こせる。
+**呪（Incantation）** は NTE の6属性のひとつで、[異能連環](/terms/esper-cycle/)の固定リング **光 → 霊 → 呪 → 闇 → 魂 → 相 →（光へ戻る）** で3番目に位置する属性。リング上では **[霊（Anima）](/terms/el-anima/) と [闇（Chaos）](/terms/el-chaos/) に隣接** し、この2属性とだけDuo反応を起こす。色のイメージは紫。
 
-## 詳しく
+## 仕組み
 
-- **起こせるDuo反応**:
-  - [覆紋（Hexed）](/terms/reaction-hexed/): 霊（Anima）と合わせて成立。一定時間ダメージを記録し一括解放。
-  - [濁燃（Scorch）](/terms/reaction-scorch/): 闇（Chaos）と合わせて成立。継続ダメージ（DoT）。
-- **リング上の隣接**: 片隣が[霊（Anima）](/terms/el-anima/)、もう片隣が[闇（Chaos）](/terms/el-chaos/)。離れた属性とは反応しない。
-- **実装キャラ例**: [白蔵](/characters/baicang/)、[アドレー](/characters/adler/)、[早霧](/characters/sakiri/)。
-- 呪のキャラを軸に、霊または闇のキャラを組み合わせてスワップで反応を繋ぐのが基本。
+- 異能連環は「リング上で隣り合う属性だけが反応する」ルールで動く。呪の隣は片側が霊、もう片側が闇で、離れた光・魂・相とは反応しない。
+- 反応はスワップ（操作キャラの切り替え）と[連環値](/terms/renkan-value/)のメーターに連動して発動する。呪のキャラの行動に隣接属性の行動を繋ぐことで反応が成立する。
+- 呪は霊（記録蓄積の覆紋）と闇（継続ダメージの濁燃）の橋渡し役で、火力を溜めて吐き出すバースト寄りの組み合わせに絡みやすい位置にある。
 
-関連: [異能連環](/terms/esper-cycle/) / [覆紋](/terms/reaction-hexed/) / [濁燃](/terms/reaction-scorch/) / [連環値](/terms/renkan-value/)
+## 起こせる反応／成立属性
+
+- [覆紋（Hexed）](/terms/reaction-hexed/): **呪 ＋ [霊（Anima）](/terms/el-anima/)** で成立。一定時間ダメージを記録し、まとめて一括解放する。
+- [濁燃（Scorch）](/terms/reaction-scorch/): **呪 ＋ [闇（Chaos）](/terms/el-chaos/)** で成立。継続ダメージ（DoT）でじわじわ削る。
+- 反応の具体的な倍率・継続秒数は要確認。
+
+## 使い方・編成
+
+- 呪のキャラを軸に、**霊または闇のキャラ**を同編成へ入れると反応を起こせる。霊を添えれば記録一括解放型の覆紋、闇を添えれば継続火力の濁燃と、狙いで組み分けられる。
+- 覆紋は記録期間に火力を集中させるほど解放が伸び、濁燃はDoTを維持しながら他反応を重ねると効率的。耐久の高いボス戦では濁燃、瞬間火力を集約したい場面では覆紋が噛み合う。
+- 3属性目を加えれば[充蓄／失諧](/terms/charge-discord/)のトリオ反応に発展する。
+- 実装キャラ例: [白蔵](/characters/baicang/)、[アドレー](/characters/adler/)、[早霧](/characters/sakiri/)。
+
+## 注意点
+
+- 光・魂・相のキャラだけを組んでも呪は反応に絡めない。必ず隣接属性とのペアを用意する。
+- どちらの反応が出るかは組み合わせる相方の属性で決まる。出したい反応に合わせて編成段階で属性を選ぶ。
+- 各反応の数値・効果時間は未確定のため、火力計算は要確認。
+
+関連: [異能連環](/terms/esper-cycle/) / [霊](/terms/el-anima/) / [闇](/terms/el-chaos/) / [覆紋](/terms/reaction-hexed/) / [濁燃](/terms/reaction-scorch/) / [連環値](/terms/renkan-value/)

@@ -18,8 +18,9 @@ sources:
 ## 詳しく
 
 - **所在**: [ヘテロシティ](/terms/hethereau/)の[ミゲル区](/locations/miguel-district/)。山辺の自然豊かな一帯にある。
-- **特徴**: 区を代表する景勝スポットの湖として紹介される。
-- **周辺**: 市内最高のランドマーク[スカイタワー](/terms/skytower/)やショッピング街[ノエティックブリッジ](/terms/noetic-bridge/)とともに区の見どころを構成する。
-- **探索**: 湖畔の景観はフォトモードの撮影スポットになりうる（日本語の正式呼称・周辺施設の詳細はゲーム内マップで要確認）。
+- **特徴**: 区を代表する景勝スポットの湖として紹介され、繁華なエリアとは対照的な落ち着いた景観を持つ。
+- **周辺**: 市内最高のランドマーク[スカイタワー](/terms/skytower/)、ショッピング街[ノエティックブリッジ](/terms/noetic-bridge/)、電気街の[聖トリス大通り](/terms/saint-tris-boulevard/)とともに区の見どころを構成する。
+- **探索**: 湖畔の景観は[フォトモード](/terms/photo-mode/)の撮影スポットになりうる。散策中に[異象](/terms/anomaly/)関連のイベントやサブクエストに出会うこともある。
+- **要確認**: 日本語の正式呼称（「カルトロップ湖」表記の確定）・湖畔の具体的な施設・収集物・関連クエストはゲーム内マップで**要確認**。
 
-関連: [ミゲル区](/locations/miguel-district/) ／ [ヘテロシティ](/terms/hethereau/) ／ [探索](/systems/exploration/)
+関連: [ミゲル区](/locations/miguel-district/) ／ [ヘテロシティ](/terms/hethereau/) ／ [スカイタワー](/terms/skytower/) ／ [探索](/systems/exploration/)
