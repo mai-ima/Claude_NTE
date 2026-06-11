@@ -21,8 +21,13 @@ sources:
 
 - **所在**: [ヘテロシティ](/terms/hethereau/)の[ニューホランド](/locations/new-herland-district/)。高層ビルが立ち並ぶ金融・ビジネスの中枢にある。
 - **関連キャラ**: 光（[Cosmos](/terms/el-cosmos/)）属性の無料DPS[ちぃちゃん](/characters/chiz/)が、この銀行のロビーマネージャーという設定。キャラのバックボーンと結びついたランドマーク。
-- **Pink Paws Heist**: 無料で大量の都市通貨[ファンス](/terms/fons/)を得られる「Pink Paws Heist」に関連する場所とされる。Fons はシティライフ系の用途で使う通貨で、まとまった額を確保できる機会として注目される。
+- **関連コンテンツ**: 無料で大量の都市通貨[ファンス](/terms/fons/)を得られる[Pink Paws Heist](/terms/pink-paws-heist/)に関連する場所・モチーフとされる。
 - **探索**: 金融街のランドマークのひとつ。区の「富の中枢」という性格を象徴する施設。
-- **要確認**: 「Pink Paws Heist」がイベントか常設コンテンツか、その発生・進行条件、Fons の入手量、銀行内部で行える要素はゲーム内で**要確認**。
 
-関連: [ニューホランド](/locations/new-herland-district/) ／ [ちぃちゃん](/characters/chiz/) ／ [ファンス](/terms/fons/) ／ [ヘテロシティ](/terms/hethereau/)
+## 入手
+
+- [ファンス](/terms/fons/)は通常、[シティスタミナ](/systems/stamina/)を使う[ヘテロシティ・ホビー](/terms/heterocity-hobby/)でコツコツ稼ぐソフト通貨。物件・家具・交換所での素材購入などに使う。
+- この銀行に紐づく[Pink Paws Heist](/terms/pink-paws-heist/)は、その[ファンス](/terms/fons/)を**まとまった量で入手できる手段**として注目される。Fons が不足しがちなときの補給先になる。
+- 「Pink Paws Heist」がイベントか常設か、発生・進行条件、Fons の入手量、繰り返し可否はゲーム内で**要確認**。
+
+関連: [ニューホランド](/locations/new-herland-district/) ／ [ちぃちゃん](/characters/chiz/) ／ [Pink Paws Heist](/terms/pink-paws-heist/) ／ [ファンス](/terms/fons/) ／ [ヘテロシティ](/terms/hethereau/)
