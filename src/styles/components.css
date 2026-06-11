@@ -1328,3 +1328,157 @@ body {
     height: 22px;
   }
 }
+
+/* =========================================================================
+   設定パネル（テーマ / 新UI / データ）
+   ========================================================================= */
+.settings .setting-card {
+  border-radius: var(--radius);
+}
+.settings h2 {
+  font-size: 1.15rem;
+}
+.setting-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+/* トースト通知 */
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow, 0 6px 24px rgba(0, 0, 0, 0.08));
+  font-size: 0.92rem;
+}
+.toast > span:first-child {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #fff;
+  flex: none;
+}
+.toast-ok > span:first-child {
+  background: #10b981;
+}
+.toast-err > span:first-child {
+  background: var(--danger, #ef4444);
+}
+
+/* BETA ピル */
+.beta-pill {
+  display: inline-block;
+  vertical-align: 1px;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #6366f1, #a855f7);
+  color: #fff;
+  margin-left: 6px;
+}
+
+/* UI 切替（2択の大ボタン） */
+.ui-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+@media (max-width: 520px) {
+  .ui-switch {
+    grid-template-columns: 1fr;
+  }
+}
+.ui-switch-opt {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+  padding: 14px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    transform 0.06s ease;
+}
+.ui-switch-opt:hover {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+}
+.ui-switch-opt:active {
+  transform: translateY(1px);
+}
+.ui-switch-opt.is-active {
+  border-color: var(--accent);
+  background: var(--accent-weak);
+}
+.ui-switch-title {
+  font-weight: 700;
+}
+
+/* テーマ選択 */
+.theme-grid {
+  display: grid;
+  gap: 8px;
+}
+.theme-opt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+.theme-opt:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+.theme-opt.is-active {
+  border-color: var(--accent);
+  background: var(--accent-weak);
+}
+.theme-opt input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.theme-swatch {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  border: 1px solid var(--border);
+  flex: none;
+}
+.sw-minimal {
+  background: linear-gradient(135deg, #fafafa 50%, #111827 50%);
+}
+.sw-dark {
+  background: linear-gradient(135deg, #0f1115 50%, #6366f1 50%);
+}
+.sw-soft {
+  background: linear-gradient(135deg, #faf6f0 50%, #d97706 50%);
+}
+.sw-auto {
+  background: linear-gradient(135deg, #fafafa 50%, #0f1115 50%);
+}
+.theme-opt .check {
+  color: var(--accent);
+  font-weight: 800;
+  flex: none;
+}

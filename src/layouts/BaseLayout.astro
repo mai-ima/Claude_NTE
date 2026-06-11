@@ -2,6 +2,7 @@
 import '../styles/themes.css';
 import '../styles/base.css';
 import '../styles/components.css';
+import '../styles/beta.css';
 import { Icon } from 'astro-icon/components';
 import { withBase, activeHref } from '../lib/path';
 import { PRIMARY_NAV, BOTTOM_NAV } from '../lib/nav';
@@ -110,7 +111,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
     <meta name="generator" content={Astro.generator} />
     <script type="application/ld+json" set:html={jsonLd} is:inline />
 
-    {/* テーマを描画前に適用（チラつき防止）。is:inline なのでバンドルされない素のJS */}
+    {/* テーマ＆UIモードを描画前に適用（チラつき防止）。is:inline なのでバンドルされない素のJS */}
     <script is:inline>
       (function () {
         try {
@@ -126,6 +127,8 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
           }
           var meta = document.querySelector('meta[name="theme-color"]');
           if (meta && color) meta.setAttribute('content', color);
+          var ui = localStorage.getItem('nte.ui');
+          document.documentElement.setAttribute('data-ui', ui === 'beta' ? 'beta' : 'classic');
         } catch (e) {}
       })();
     </script>

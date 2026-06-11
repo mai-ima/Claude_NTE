@@ -1,0 +1,197 @@
+/* =========================================================================
+   新UI（ベータ） — <html data-ui="beta"> のときだけ適用。
+   配色テーマ(data-theme)の上に重ねる「質感・余白・動き」のレイヤー。
+   どのテーマでも崩れないよう、既存のCSS変数を活かして上書きする。
+   ========================================================================= */
+
+html[data-ui='beta'] {
+  --radius: 14px;
+  --radius-sm: 10px;
+  --radius-lg: 22px;
+  /* グラデーション用のアクセント2色目 */
+  --accent-2: color-mix(in srgb, var(--accent) 60%, #a855f7);
+  --beta-grad: linear-gradient(120deg, var(--accent), var(--accent-2));
+  scroll-behavior: smooth;
+}
+
+/* 背景に極薄のグラデーションを敷く */
+html[data-ui='beta'] body {
+  background:
+    radial-gradient(1200px 600px at 100% -10%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 60%),
+    radial-gradient(900px 500px at -10% 0%, color-mix(in srgb, var(--accent-2) 8%, transparent), transparent 55%),
+    var(--bg);
+  background-attachment: fixed;
+}
+
+/* なめらかな遷移をサイト全体に */
+html[data-ui='beta'] .card,
+html[data-ui='beta'] .btn,
+html[data-ui='beta'] .badge,
+html[data-ui='beta'] .nav-link,
+html[data-ui='beta'] .el-badge {
+  transition:
+    transform 0.16s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+/* ---- ヘッダー ---- */
+html[data-ui='beta'] .app-header {
+  background: color-mix(in srgb, var(--surface) 72%, transparent);
+  backdrop-filter: saturate(180%) blur(14px);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 16%, var(--border));
+}
+html[data-ui='beta'] .brand-mark {
+  background: var(--beta-grad);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--accent) 40%, transparent);
+}
+html[data-ui='beta'] .brand span:last-child {
+  background: var(--beta-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---- カード ---- */
+html[data-ui='beta'] .card {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+html[data-ui='beta'] .card-link:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+/* DBグリッド等の主要カードに上端のアクセントライン */
+html[data-ui='beta'] .grid-cards > .card-link {
+  position: relative;
+  overflow: hidden;
+}
+html[data-ui='beta'] .grid-cards > .card-link::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--beta-grad);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+html[data-ui='beta'] .grid-cards > .card-link:hover::before {
+  opacity: 1;
+}
+
+/* ---- ボタン ---- */
+html[data-ui='beta'] .btn {
+  border-radius: 999px;
+}
+html[data-ui='beta'] .btn-primary {
+  background: var(--beta-grad);
+  border-color: transparent;
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 32%, transparent);
+}
+html[data-ui='beta'] .btn-primary:hover {
+  filter: brightness(1.05);
+}
+html[data-ui='beta'] .btn-icon {
+  border-radius: 12px;
+}
+
+/* ---- 見出し ---- */
+html[data-ui='beta'] .page-head h1,
+html[data-ui='beta'] .hero h1 {
+  letter-spacing: 0.005em;
+}
+html[data-ui='beta'] .prose h2 {
+  position: relative;
+  padding-left: 14px;
+}
+html[data-ui='beta'] .prose h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.15em;
+  bottom: 0.15em;
+  width: 4px;
+  border-radius: 999px;
+  background: var(--beta-grad);
+}
+
+/* ---- バッジ / ピル ---- */
+html[data-ui='beta'] .badge {
+  border-radius: 999px;
+}
+html[data-ui='beta'] .badge-accent {
+  background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+}
+
+/* ---- 統計バンド（トップ） ---- */
+html[data-ui='beta'] .stat-band {
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(120deg, color-mix(in srgb, var(--accent) 10%, transparent), color-mix(in srgb, var(--accent-2) 10%, transparent)),
+    var(--surface);
+}
+html[data-ui='beta'] .stat-num {
+  background: var(--beta-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---- サイドバー現在地 ---- */
+html[data-ui='beta'] .nav-link[aria-current='page'] {
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+}
+
+/* ---- 下部ナビ（フローティングのピル） ---- */
+@media (max-width: 959px) {
+  html[data-ui='beta'] .bottom-nav {
+    left: 12px;
+    right: 12px;
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    height: 60px;
+    padding-bottom: 0;
+    border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
+    border-radius: 20px;
+    background: color-mix(in srgb, var(--surface) 80%, transparent);
+    backdrop-filter: saturate(180%) blur(16px);
+    box-shadow: var(--shadow-lg);
+  }
+  html[data-ui='beta'] .bottom-nav a[aria-current='page'] {
+    color: var(--accent);
+  }
+  html[data-ui='beta'] .bottom-nav a[aria-current='page'] svg {
+    filter: drop-shadow(0 4px 8px color-mix(in srgb, var(--accent) 45%, transparent));
+  }
+  /* フローティング分の余白を確保 */
+  html[data-ui='beta'] .app-main {
+    padding-bottom: 8px;
+  }
+}
+
+/* ---- リンクのアニメ下線（本文） ---- */
+html[data-ui='beta'] .prose a {
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-size: 0% 1.5px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  text-decoration: none;
+  transition: background-size 0.2s ease;
+}
+html[data-ui='beta'] .prose a:hover {
+  background-size: 100% 1.5px;
+}
+
+/* ---- 設定の BETA ピルを少し主張 ---- */
+html[data-ui='beta'] .beta-pill {
+  box-shadow: 0 2px 8px color-mix(in srgb, #6366f1 45%, transparent);
+}
+
+/* モーション抑制設定を尊重 */
+@media (prefers-reduced-motion: reduce) {
+  html[data-ui='beta'] .card-link:hover {
+    transform: none;
+  }
+}
