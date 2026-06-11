@@ -1,7 +1,8 @@
 /* =========================================================================
    新UI（ベータ） — <html data-ui="beta"> のときだけ適用。
    配色テーマ(data-theme)の上に重ねる「質感・余白・動き」のレイヤー。
-   どのテーマでも崩れないよう、既存のCSS変数を活かして上書きする。
+   どの配色テーマ(minimal/dark/soft/auto)でも崩れないよう、既存のCSS変数を
+   活かして上書きする。classic（既定）の見た目には一切影響しない。
    ========================================================================= */
 
 html[data-ui='beta'] {
@@ -9,18 +10,47 @@ html[data-ui='beta'] {
   --radius-sm: 10px;
   --radius-lg: 22px;
   /* グラデーション用のアクセント2色目 */
-  --accent-2: color-mix(in srgb, var(--accent) 60%, #a855f7);
+  --accent-2: color-mix(in srgb, var(--accent) 55%, #a855f7);
   --beta-grad: linear-gradient(120deg, var(--accent), var(--accent-2));
+  --beta-grad-soft: linear-gradient(
+    120deg,
+    color-mix(in srgb, var(--accent) 12%, transparent),
+    color-mix(in srgb, var(--accent-2) 12%, transparent)
+  );
   scroll-behavior: smooth;
 }
 
-/* 背景に極薄のグラデーションを敷く */
+/* 背景に極薄のグラデーションを敷く（テーマ色に追従） */
 html[data-ui='beta'] body {
   background:
-    radial-gradient(1200px 600px at 100% -10%, color-mix(in srgb, var(--accent) 9%, transparent), transparent 60%),
-    radial-gradient(900px 500px at -10% 0%, color-mix(in srgb, var(--accent-2) 8%, transparent), transparent 55%),
+    radial-gradient(1200px 620px at 100% -12%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
+    radial-gradient(1000px 560px at -12% -4%, color-mix(in srgb, var(--accent-2) 9%, transparent), transparent 56%),
     var(--bg);
   background-attachment: fixed;
+}
+
+/* スクロールバー（対応ブラウザ） */
+html[data-ui='beta'] * {
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--accent) 40%, var(--border)) transparent;
+}
+html[data-ui='beta'] *::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+html[data-ui='beta'] *::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--accent) 32%, var(--border));
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+html[data-ui='beta'] ::selection {
+  background: color-mix(in srgb, var(--accent) 26%, transparent);
+}
+html[data-ui='beta'] :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 /* なめらかな遷移をサイト全体に */
@@ -28,7 +58,8 @@ html[data-ui='beta'] .card,
 html[data-ui='beta'] .btn,
 html[data-ui='beta'] .badge,
 html[data-ui='beta'] .nav-link,
-html[data-ui='beta'] .el-badge {
+html[data-ui='beta'] .el-badge,
+html[data-ui='beta'] .char-card {
   transition:
     transform 0.16s cubic-bezier(0.2, 0.7, 0.2, 1),
     box-shadow 0.2s ease,
@@ -36,10 +67,10 @@ html[data-ui='beta'] .el-badge {
     background 0.2s ease;
 }
 
-/* ---- ヘッダー ---- */
+/* ===== ヘッダー ============================================================ */
 html[data-ui='beta'] .app-header {
-  background: color-mix(in srgb, var(--surface) 72%, transparent);
-  backdrop-filter: saturate(180%) blur(14px);
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  backdrop-filter: saturate(185%) blur(16px);
   border-bottom: 1px solid color-mix(in srgb, var(--accent) 16%, var(--border));
 }
 html[data-ui='beta'] .brand-mark {
@@ -52,8 +83,59 @@ html[data-ui='beta'] .brand span:last-child {
   background-clip: text;
   color: transparent;
 }
+html[data-ui='beta'] .app-header .nav-link[aria-current='page'] {
+  color: var(--accent);
+}
 
-/* ---- カード ---- */
+/* ===== ページ見出し ======================================================= */
+html[data-ui='beta'] .page-head .eyebrow {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--beta-grad-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
+  color: color-mix(in srgb, var(--accent) 75%, var(--text));
+  letter-spacing: 0.04em;
+}
+html[data-ui='beta'] .page-head h1 {
+  letter-spacing: 0.005em;
+}
+
+/* ===== ヒーロー（トップ） ================================================== */
+html[data-ui='beta'] .hero {
+  position: relative;
+  padding: 30px 24px;
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(600px 200px at 10% -20%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%),
+    var(--beta-grad-soft),
+    var(--surface);
+  border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
+  box-shadow: var(--shadow-sm);
+}
+html[data-ui='beta'] .hero h1 {
+  background: linear-gradient(120deg, var(--text), color-mix(in srgb, var(--accent) 80%, var(--text)));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ===== 統計バンド ========================================================= */
+html[data-ui='beta'] .stat-band {
+  border-radius: var(--radius-lg);
+  background:
+    var(--beta-grad-soft),
+    var(--surface);
+  border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
+}
+html[data-ui='beta'] .stat-num {
+  background: var(--beta-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ===== カード ============================================================= */
 html[data-ui='beta'] .card {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
@@ -63,45 +145,55 @@ html[data-ui='beta'] .card-link:hover {
   box-shadow: var(--shadow-lg);
   border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
 }
-/* DBグリッド等の主要カードに上端のアクセントライン */
+/* グリッドの主要カードに上端アクセントライン */
 html[data-ui='beta'] .grid-cards > .card-link {
   position: relative;
   overflow: hidden;
 }
-html[data-ui='beta'] .grid-cards > .card-link::before {
+html[data-ui='beta'] .grid-cards > .card-link::after {
   content: '';
   position: absolute;
   inset: 0 0 auto 0;
   height: 3px;
   background: var(--beta-grad);
-  opacity: 0;
-  transition: opacity 0.2s ease;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
 }
-html[data-ui='beta'] .grid-cards > .card-link:hover::before {
-  opacity: 1;
-}
-
-/* ---- ボタン ---- */
-html[data-ui='beta'] .btn {
-  border-radius: 999px;
-}
-html[data-ui='beta'] .btn-primary {
-  background: var(--beta-grad);
-  border-color: transparent;
-  box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 32%, transparent);
-}
-html[data-ui='beta'] .btn-primary:hover {
-  filter: brightness(1.05);
-}
-html[data-ui='beta'] .btn-icon {
-  border-radius: 12px;
+html[data-ui='beta'] .grid-cards > .card-link:hover::after {
+  transform: scaleX(1);
 }
 
-/* ---- 見出し ---- */
-html[data-ui='beta'] .page-head h1,
-html[data-ui='beta'] .hero h1 {
-  letter-spacing: 0.005em;
+/* キャラカード：属性色のグロー＆左アクセント */
+html[data-ui='beta'] .char-card {
+  border-left: 3px solid color-mix(in srgb, var(--el, var(--accent)) 75%, transparent);
 }
+html[data-ui='beta'] .char-card:hover {
+  box-shadow:
+    var(--shadow-lg),
+    0 0 0 1px color-mix(in srgb, var(--el, var(--accent)) 45%, transparent);
+}
+
+/* ===== 詳細ページ：情報パネル(infobox) ==================================== */
+html[data-ui='beta'] .info-panel {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+html[data-ui='beta'] .info-panel .info-hero {
+  background: var(--beta-grad-soft);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
+}
+/* 目次をレール風に */
+html[data-ui='beta'] .toc {
+  border-left: 2px solid color-mix(in srgb, var(--accent) 22%, var(--border));
+  padding-left: 12px;
+}
+html[data-ui='beta'] .toc a:hover {
+  color: var(--accent);
+}
+
+/* 本文見出しにアクセントバー */
 html[data-ui='beta'] .prose h2 {
   position: relative;
   padding-left: 14px;
@@ -116,62 +208,7 @@ html[data-ui='beta'] .prose h2::before {
   border-radius: 999px;
   background: var(--beta-grad);
 }
-
-/* ---- バッジ / ピル ---- */
-html[data-ui='beta'] .badge {
-  border-radius: 999px;
-}
-html[data-ui='beta'] .badge-accent {
-  background: color-mix(in srgb, var(--accent) 14%, var(--surface));
-  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
-}
-
-/* ---- 統計バンド（トップ） ---- */
-html[data-ui='beta'] .stat-band {
-  border-radius: var(--radius-lg);
-  background:
-    linear-gradient(120deg, color-mix(in srgb, var(--accent) 10%, transparent), color-mix(in srgb, var(--accent-2) 10%, transparent)),
-    var(--surface);
-}
-html[data-ui='beta'] .stat-num {
-  background: var(--beta-grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* ---- サイドバー現在地 ---- */
-html[data-ui='beta'] .nav-link[aria-current='page'] {
-  background: color-mix(in srgb, var(--accent) 14%, transparent);
-}
-
-/* ---- 下部ナビ（フローティングのピル） ---- */
-@media (max-width: 959px) {
-  html[data-ui='beta'] .bottom-nav {
-    left: 12px;
-    right: 12px;
-    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
-    height: 60px;
-    padding-bottom: 0;
-    border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
-    border-radius: 20px;
-    background: color-mix(in srgb, var(--surface) 80%, transparent);
-    backdrop-filter: saturate(180%) blur(16px);
-    box-shadow: var(--shadow-lg);
-  }
-  html[data-ui='beta'] .bottom-nav a[aria-current='page'] {
-    color: var(--accent);
-  }
-  html[data-ui='beta'] .bottom-nav a[aria-current='page'] svg {
-    filter: drop-shadow(0 4px 8px color-mix(in srgb, var(--accent) 45%, transparent));
-  }
-  /* フローティング分の余白を確保 */
-  html[data-ui='beta'] .app-main {
-    padding-bottom: 8px;
-  }
-}
-
-/* ---- リンクのアニメ下線（本文） ---- */
+/* 本文リンクのアニメ下線 */
 html[data-ui='beta'] .prose a {
   background-image: linear-gradient(var(--accent), var(--accent));
   background-size: 0% 1.5px;
@@ -183,15 +220,146 @@ html[data-ui='beta'] .prose a {
 html[data-ui='beta'] .prose a:hover {
   background-size: 100% 1.5px;
 }
+/* 本文テーブルをカード風に */
+html[data-ui='beta'] .prose table {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+}
+html[data-ui='beta'] .prose th {
+  background: var(--beta-grad-soft);
+}
+html[data-ui='beta'] .prose tbody tr:nth-child(even) td {
+  background: color-mix(in srgb, var(--surface-2) 50%, transparent);
+}
+html[data-ui='beta'] .prose blockquote {
+  border-left: 3px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
 
-/* ---- 設定の BETA ピルを少し主張 ---- */
+/* ===== ボタン ============================================================= */
+html[data-ui='beta'] .btn {
+  border-radius: 999px;
+}
+html[data-ui='beta'] .btn-primary {
+  background: var(--beta-grad);
+  border-color: transparent;
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+html[data-ui='beta'] .btn-primary:hover {
+  filter: brightness(1.06);
+}
+html[data-ui='beta'] .btn-icon {
+  border-radius: 12px;
+}
+
+/* ===== バッジ / 属性バッジ ================================================ */
+html[data-ui='beta'] .badge {
+  border-radius: 999px;
+}
+html[data-ui='beta'] .badge-accent {
+  background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+}
+html[data-ui='beta'] .el-badge {
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--el, var(--accent)) 30%, transparent);
+}
+
+/* ===== ツール群 =========================================================== */
+html[data-ui='beta'] .tool .tool-result,
+html[data-ui='beta'] .tool .card {
+  border-radius: var(--radius-lg);
+}
+html[data-ui='beta'] .tool .big {
+  background: var(--beta-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+html[data-ui='beta'] .tool .progress {
+  border-radius: 999px;
+  overflow: hidden;
+}
+html[data-ui='beta'] .tool .progress > span {
+  background: var(--beta-grad);
+}
+html[data-ui='beta'] .input:focus,
+html[data-ui='beta'] .textarea:focus,
+html[data-ui='beta'] .select:focus {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+/* ===== サイドバー / ドロワー ============================================== */
+html[data-ui='beta'] .nav-link[aria-current='page'] {
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+html[data-ui='beta'] .nav-group-title {
+  color: color-mix(in srgb, var(--accent) 60%, var(--muted));
+}
+
+/* ===== 下部ナビ（フローティングのピル） ================================== */
+@media (max-width: 959px) {
+  html[data-ui='beta'] .bottom-nav {
+    left: 12px;
+    right: 12px;
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    height: 60px;
+    padding-bottom: 0;
+    border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
+    border-radius: 20px;
+    background: color-mix(in srgb, var(--surface) 80%, transparent);
+    backdrop-filter: saturate(185%) blur(16px);
+    box-shadow: var(--shadow-lg);
+  }
+  html[data-ui='beta'] .bottom-nav a[aria-current='page'] {
+    color: var(--accent);
+  }
+  html[data-ui='beta'] .bottom-nav a[aria-current='page'] svg {
+    filter: drop-shadow(0 4px 8px color-mix(in srgb, var(--accent) 45%, transparent));
+  }
+}
+
+/* ===== 設定の BETA ピルを少し主張 ======================================== */
 html[data-ui='beta'] .beta-pill {
   box-shadow: 0 2px 8px color-mix(in srgb, #6366f1 45%, transparent);
 }
 
-/* モーション抑制設定を尊重 */
+/* ===== 入場アニメ（モーション許可時のみ） ================================ */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-ui='beta'] .content > section,
+  html[data-ui='beta'] .content > .page-head {
+    animation: beta-rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  html[data-ui='beta'] .content > section:nth-of-type(2) {
+    animation-delay: 0.04s;
+  }
+  html[data-ui='beta'] .content > section:nth-of-type(3) {
+    animation-delay: 0.08s;
+  }
+  html[data-ui='beta'] .content > section:nth-of-type(4) {
+    animation-delay: 0.12s;
+  }
+  @keyframes beta-rise {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* ===== モーション抑制設定を尊重 ========================================== */
 @media (prefers-reduced-motion: reduce) {
-  html[data-ui='beta'] .card-link:hover {
+  html[data-ui='beta'] .card-link:hover,
+  html[data-ui='beta'] .char-card:hover {
     transform: none;
   }
 }
