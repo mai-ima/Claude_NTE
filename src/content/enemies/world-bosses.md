@@ -29,9 +29,9 @@ sources:
 
 | 日本語名 | 英名 | 弱点 | 備考 |
 | --- | --- | --- | --- |
-| [フィルム・マニッシュ](/enemies/film-manish/) | Film-MANISH | **魂** | ナナリの暗星が有効 |
-| [イマジナドゥ](/enemies/imaginadough/) | Imaginadough | **闇** | ダフォディール推奨 |
-| [マモン](/enemies/mammon/) | Mammon | **相** | ハソール/九原で延滞 |
+| [フィルム・マニッシュ](/enemies/film-manish/) | Film-MANISH | **魂** | 暗星（闇＋魂）が有効 |
+| [イマジナドゥ](/enemies/imaginadough/) | Imaginadough | **闇** | ダフォディール（闇）推奨 |
+| [マモン](/enemies/mammon/) | Mammon | **相** | ハソール（相）で延滞（相＋光） |
 | [トマトデビル](/enemies/tomato-devil/) | Tomato Devil | **闇**（後半 **呪**） | 番外編ボス |
 | [モルフィクス](/enemies/morphix/) | Morphix | **光** | 「月光質屋」後に解放 |
 

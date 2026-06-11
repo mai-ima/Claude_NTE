@@ -13,6 +13,7 @@ import Avatar from './Avatar.astro';
 import PersonalNote from './PersonalNote';
 import { withBase } from '../lib/path';
 import { elementMeta, roleMeta } from '../lib/nav';
+import { backlinksFor } from '../lib/content';
 
 export interface Pill {
   kind: 'element' | 'role' | 'rarity' | 'tier' | 'plain';
@@ -47,6 +48,10 @@ interface Props {
   spoilerNote?: boolean;
   /** キャラ等で属性色アバターを情報パネル上部に出す */
   heroAvatar?: { name: string; element: string; rarity?: string };
+  /** 関連項目（同カテゴリの兄弟など）。Wikipedia的な回遊用 */
+  related?: LinkRef[];
+  /** related セクションの見出し（既定: 関連項目） */
+  relatedLabel?: string;
 }
 
 const {
@@ -68,10 +73,24 @@ const {
   next,
   spoilerNote = false,
   heroAvatar,
+  related = [],
+  relatedLabel = '関連項目',
 } = Astro.props;
+
+// このページを本文から参照している記事（被リンク）
+const backlinks = await backlinksFor(collection, currentId);
 ---
 
-<BaseLayout title={title} description={lead}>
+<BaseLayout
+  title={title}
+  description={lead}
+  ogType="article"
+  modified={updated}
+  breadcrumbs={[
+    { name: sectionLabel, href: withBase(sectionHref) },
+    { name: title, href: withBase(`/${collection}/${currentId}/`) },
+  ]}
+>
   <div class="layout has-sidebar">
     <Sidebar currentCollection={collection} currentId={currentId} />
     <div class="content">
@@ -119,7 +138,7 @@ const {
               <div class="meta-row">
                 <StatusBadge status={status} />
                 {updated && (
-                  <span class="muted text-sm">更新: {updated.toLocaleDateString('ja-JP')}</span>
+                  <span class="muted text-sm">更新: {updated.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' })}</span>
                 )}
                 {tags.map((t) => (
                   <span class="badge" data-pagefind-filter="tag">#{t}</span>
@@ -159,6 +178,38 @@ const {
             <div class="prose">
               <slot />
             </div>
+
+            {
+              backlinks.length > 0 && (
+                <section style="margin-top:32px;">
+                  <h2>関連記事</h2>
+                  <p class="muted text-sm" style="margin-top:-6px;">このページを参照しているページ。</p>
+                  <div class="cluster" style="margin-top:10px;">
+                    {backlinks.map((b) => (
+                      <a class="badge badge-accent" href={b.href} style="text-decoration:none;">
+                        {b.title}
+                        <span class="muted" style="margin-left:4px;">· {b.sectionLabel}</span>
+                      </a>
+                    ))}
+                  </div>
+                </section>
+              )
+            }
+
+            {
+              related.length > 0 && (
+                <section style="margin-top:32px;">
+                  <h2>{relatedLabel}</h2>
+                  <div class="cluster" style="margin-top:10px;">
+                    {related.map((r) => (
+                      <a class="badge" href={r.href} style="text-decoration:none;">
+                        {r.title}
+                      </a>
+                    ))}
+                  </div>
+                </section>
+              )
+            }
 
             {
               sources.length > 0 && (

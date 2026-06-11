@@ -29,16 +29,17 @@ const DEFAULT: PityState = {
 export default function GachaPity() {
   const [s, set] = useStore<PityState>('tool.gachaPity', DEFAULT);
 
-  const pity = Math.min(Math.max(0, s.pity), s.hardAt);
+  const hardAt = Math.max(1, Math.floor(s.hardAt) || 1); // 0/空入力でも壊さない
+  const pity = Math.min(Math.max(0, s.pity), hardAt);
   const inSoft = pity >= s.softAt;
   const toSoft = Math.max(0, s.softAt - pity);
-  const toHard = Math.max(0, s.hardAt - pity);
+  const toHard = Math.max(0, hardAt - pity);
   const curRate = inSoft ? s.softRate : s.baseRate;
   const diceToHard = toHard;
   const annulithToHard = diceToHard * s.annulithPerDie;
 
   const addPulls = (n: number) =>
-    set((p) => ({ ...p, pity: Math.min(s.hardAt, Math.max(0, p.pity + n)) }));
+    set((p) => ({ ...p, pity: Math.min(Math.max(1, Math.floor(p.hardAt) || 1), Math.max(0, p.pity + n)) }));
 
   const gotS = () =>
     set((p) => ({
@@ -52,7 +53,7 @@ export default function GachaPity() {
   const num = (k: keyof PityState, v: string) =>
     set((p) => ({ ...p, [k]: Number(v) || 0 }) as PityState);
 
-  const pct = Math.round((pity / s.hardAt) * 100);
+  const pct = Math.min(100, Math.round((pity / hardAt) * 100));
 
   return (
     <div class="tool">
@@ -61,7 +62,7 @@ export default function GachaPity() {
           <div>
             <p class="muted text-sm mt-0">現在の天井カウント（最後のS以降）</p>
             <p class="big">
-              {pity} <span style={{ fontSize: '1rem', color: 'var(--muted)' }}>/ {s.hardAt}</span>
+              {pity} <span style={{ fontSize: '1rem', color: 'var(--muted)' }}>/ {hardAt}</span>
             </p>
           </div>
           <div style={{ textAlign: 'right' }}>
@@ -150,7 +151,7 @@ export default function GachaPity() {
           </div>
           <ul class="list-reset stack" style={{ gap: '4px' }}>
             {s.history.map((h, i) => (
-              <li class="row row-between text-sm" key={i} style={{ padding: '4px 0', borderBottom: '1px solid var(--border)' }}>
+              <li class="row row-between text-sm" key={`${h.at}-${i}`} style={{ padding: '4px 0', borderBottom: '1px solid var(--border)' }}>
                 <span class="muted">{new Date(h.at).toLocaleString('ja-JP', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
                 <span>
                   <strong>{h.pity}</strong> 連で入手

@@ -17,6 +17,13 @@ export interface SectionMeta {
 /** エンティティ系コレクションのセクション（表示順） */
 export const SECTIONS: SectionMeta[] = [
   {
+    collection: 'events',
+    href: '/events/',
+    label: 'ガチャ/イベント',
+    icon: 'calendar-clock',
+    blurb: '開催中・予定のピックアップガチャと期間限定イベント。',
+  },
+  {
     collection: 'characters',
     href: '/characters/',
     label: 'キャラクター',
@@ -38,11 +45,25 @@ export const SECTIONS: SectionMeta[] = [
     blurb: '初心者・リセマラ・ガチャ戦略・ティア解説など。',
   },
   {
+    collection: 'terms',
+    href: '/terms/',
+    label: '用語集',
+    icon: 'book-a',
+    blurb: 'NTE 固有・難解な用語を1語ずつ意味から解説。',
+  },
+  {
     collection: 'locations',
     href: '/locations/',
     label: 'ロケーション',
     icon: 'map',
     blurb: '都市ヘテロシティ各区・島・アノマリーゾーンなどの地理。',
+  },
+  {
+    collection: 'shops',
+    href: '/shops/',
+    label: '店・商店',
+    icon: 'store',
+    blurb: 'ショップ・交換所・拠点と、その販売/交換ラインナップ。',
   },
   {
     collection: 'enemies',
@@ -74,7 +95,9 @@ export function sectionByCollection(collection: string): SectionMeta | undefined
 /** 主要なグローバルナビ（ヘッダーアイコン＋ドロワー） */
 export const PRIMARY_NAV = [
   { label: 'ホーム', href: '/', icon: 'home' },
+  { label: 'ガチャ/イベント', href: '/events/', icon: 'calendar-clock' },
   { label: 'キャラ', href: '/characters/', icon: 'users' },
+  { label: '用語集', href: '/terms/', icon: 'book-a' },
   { label: 'ツール', href: '/tools/', icon: 'wrench' },
   { label: 'ティア表', href: '/tools/tier-list/', icon: 'bar-chart-3' },
   { label: '更新履歴', href: '/release-notes/', icon: 'history' },

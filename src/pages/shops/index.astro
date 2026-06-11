@@ -1,0 +1,15 @@
+---
+import EntityList from '../../components/EntityList.astro';
+import { sectionByCollection } from '../../lib/nav';
+const s = sectionByCollection('shops')!;
+---
+<EntityList
+  collection="shops"
+  title="店・商店・交換所"
+  eyebrow="店・商店"
+  lead="ショップ・各種交換所・拠点と、それぞれの販売／交換ラインナップ（取扱商品）をまとめます。"
+  icon={s.icon}
+  groupField="type"
+  groupOrder={['hub', 'shop', 'exchange', 'pass']}
+  groupLabels={{ hub: '拠点・施設', shop: 'ショップ', exchange: '交換所', pass: 'バトルパス' }}
+/>

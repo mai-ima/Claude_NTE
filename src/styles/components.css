@@ -1256,3 +1256,75 @@
   --pagefind-ui-border-radius: var(--radius-sm);
   --pagefind-ui-font: var(--font);
 }
+
+/* =========================================================================
+   iPhone / モバイル最適化
+   ========================================================================= */
+
+html {
+  /* タップ時のグレーのハイライトを消す（iOS Safari） */
+  -webkit-tap-highlight-color: transparent;
+  /* 目次などのアンカー移動でstickyヘッダーに見出しが隠れないように */
+  scroll-padding-top: calc(72px + env(safe-area-inset-top, 0px));
+}
+
+body {
+  /* 横方向のはみ出しと、引っ張りすぎのバウンドを抑える */
+  overflow-x: hidden;
+  overscroll-behavior-y: none;
+}
+
+/* iOSは入力欄のフォントが16px未満だとフォーカス時に自動ズームする。
+   スマホ幅ではフォーム要素を16pxにしてズームを防止。 */
+@media (max-width: 768px) {
+  .input,
+  .textarea,
+  .select {
+    font-size: 16px;
+  }
+}
+
+/* 多列の表（用語ページ等）はスマホでも崩れず横スクロールできるように */
+.prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* スクロール領域を慣性スクロール化 */
+.drawer-panel,
+.sidebar,
+.toc,
+.table-scroll,
+.prose pre {
+  -webkit-overflow-scrolling: touch;
+}
+.drawer {
+  overscroll-behavior: contain;
+}
+
+/* タッチ端末ではタップ領域を Apple 推奨の44px以上に拡大 */
+@media (pointer: coarse) {
+  .btn {
+    height: 44px;
+  }
+  .btn-sm {
+    height: 38px;
+  }
+  .btn-icon {
+    width: 44px;
+    height: 44px;
+  }
+  .bottom-nav a {
+    min-height: 52px;
+  }
+  .nav-link {
+    min-height: 44px;
+  }
+  /* チェックボックス等の小さな操作子も押しやすく */
+  .check-item input[type='checkbox'] {
+    width: 22px;
+    height: 22px;
+  }
+}

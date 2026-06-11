@@ -116,6 +116,10 @@ if (groupField) {
                         </span>
                       )}
                       {d.usedFor && <span class="badge">{d.usedFor}</span>}
+                      {d.en && <span class="badge">{d.en}</span>}
+                      {d.reading && <span class="badge">よみ: {d.reading}</span>}
+                      {d.currency && <span class="badge badge-accent">{d.currency}</span>}
+                      {d.unlock && <span class="badge">解放: {d.unlock}</span>}
                     </div>
                   </a>
                 );

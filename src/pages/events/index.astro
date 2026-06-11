@@ -1,0 +1,164 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import { loadEvents, type EventPhase } from '../../lib/content';
+
+const events = await loadEvents();
+
+const KIND_LABEL: Record<string, string> = {
+  banner: 'ピックアップ',
+  'weapon-banner': '武器ガチャ',
+  event: 'イベント',
+};
+const PHASES: { id: EventPhase; label: string; icon: string }[] = [
+  { id: 'current', label: '開催中', icon: 'radio' },
+  { id: 'upcoming', label: '開催予定', icon: 'clock' },
+  { id: 'ended', label: '終了', icon: 'archive' },
+];
+const fmt = (x?: Date) =>
+  x ? x.toLocaleDateString('ja-JP', { month: 'numeric', day: 'numeric', timeZone: 'Asia/Tokyo' }) : '—';
+// 初期表示はサーバのスナップショット。実際の開催状況はクライアントで再判定する（静的サイトの焼き付き対策）。
+const groups = PHASES.map((p) => ({ ...p, items: events.filter((e) => e.phase === p.id) }));
+---
+
+<BaseLayout
+  title="ガチャ / イベント"
+  description="NTE で現在開催中・予定のピックアップガチャと期間限定イベントの一覧。終了までの残り日数つき。"
+>
+  <div class="layout has-sidebar">
+    <Sidebar currentCollection="events" />
+    <div class="content">
+      <section class="page-head">
+        <p class="eyebrow">ガチャ/イベント</p>
+        <h1>開催中・予定のガチャ / イベント</h1>
+        <p class="lead">
+          現在のピックアップと期間限定イベントを開催状況ごとに表示します（<span data-today>{
+            new Date().toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' })
+          }</span> 時点・終了時刻は JST）。
+        </p>
+      </section>
+
+      {
+        groups.map((group) => (
+          <section style="margin-bottom:36px;" data-phase-section={group.id} hidden={group.items.length === 0}>
+            <div class="row" style="gap:8px;margin-bottom:14px;">
+              <Icon name={`lucide:${group.icon}`} style="width:20px;height:20px;color:var(--accent);" />
+              <h2 style="margin:0;">{group.label}</h2>
+              <span class="badge" data-phase-count>{group.items.length}</span>
+            </div>
+            <div class="grid grid-cards" data-phase-list={group.id}>
+              {group.items.map((e) => (
+                <a
+                  class="card card-pad card-link event-card"
+                  href={e.href}
+                  data-start-ms={e.startMs ?? ''}
+                  data-end-ms={e.endMs ?? ''}
+                >
+                  <div class="row row-between" style="align-items:flex-start;gap:8px;">
+                    <span style="font-weight:700;">{e.title}</span>
+                    <span class="badge js-status" data-status>
+                      {e.phase === 'current' && e.daysLeft !== undefined
+                        ? `あと${e.daysLeft}日`
+                        : e.phase === 'upcoming' && e.daysLeft !== undefined
+                          ? `${e.daysLeft}日後`
+                          : e.phase === 'ended'
+                            ? '終了'
+                            : '常設'}
+                    </span>
+                  </div>
+                  <div class="cluster" style="margin-top:10px;">
+                    <span class="badge badge-accent">{KIND_LABEL[e.kind] ?? e.kind}</span>
+                    {e.version && <span class="badge">{e.version}</span>}
+                    {e.featured.map((f) => (
+                      <span class="badge">{f}</span>
+                    ))}
+                  </div>
+                  <p class="muted text-sm" style="margin-top:8px;">
+                    {fmt(e.start)} 〜 {e.end ? fmt(e.end) : '未定'}
+                  </p>
+                </a>
+              ))}
+            </div>
+          </section>
+        ))
+      }
+
+      <div class="empty" data-empty hidden>
+        <Icon name="lucide:calendar-off" />
+        <p>現在登録されているイベントはありません。</p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  // 静的ビルドに焼き付いた開催状況を、閲覧時刻で再判定してカードを正しいセクションへ振り分ける。
+  function recompute() {
+    const now = Date.now();
+    const DAY = 86_400_000;
+    const lists: Record<string, HTMLElement | null> = {
+      current: document.querySelector('[data-phase-list="current"]'),
+      upcoming: document.querySelector('[data-phase-list="upcoming"]'),
+      ended: document.querySelector('[data-phase-list="ended"]'),
+    };
+    const ceilDays = (to: number) => Math.max(0, Math.ceil((to - now) / DAY));
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('.event-card'));
+    // 並び替え用に phase ごとに集約
+    const buckets: Record<string, { el: HTMLElement; key: number }[]> = { current: [], upcoming: [], ended: [] };
+    for (const el of cards) {
+      const sRaw = el.getAttribute('data-start-ms');
+      const eRaw = el.getAttribute('data-end-ms');
+      const startMs = sRaw ? Number(sRaw) : null;
+      const endMs = eRaw ? Number(eRaw) : null;
+      let phase: 'current' | 'upcoming' | 'ended' = 'current';
+      let label = '常設';
+      let sortKey = 9999;
+      if (startMs != null && now < startMs) {
+        phase = 'upcoming';
+        const d = ceilDays(startMs);
+        label = `${d}日後`;
+        sortKey = d;
+      } else if (endMs != null && now >= endMs) {
+        phase = 'ended';
+        label = '終了';
+        sortKey = -(endMs ?? 0); // 新しく終わった順
+      } else {
+        phase = 'current';
+        if (endMs != null) {
+          const d = ceilDays(endMs);
+          label = `あと${d}日`;
+          sortKey = d;
+        } else {
+          label = '常設';
+          sortKey = 9999;
+        }
+      }
+      const badge = el.querySelector<HTMLElement>('[data-status]');
+      if (badge) {
+        badge.textContent = label;
+        badge.classList.toggle('badge-accent', phase !== 'ended');
+        badge.style.opacity = phase === 'ended' ? '0.65' : '';
+      }
+      buckets[phase].push({ el, key: sortKey });
+    }
+    let totalVisible = 0;
+    for (const phase of ['current', 'upcoming', 'ended'] as const) {
+      const list = lists[phase];
+      const section = document.querySelector<HTMLElement>(`[data-phase-section="${phase}"]`);
+      if (!list || !section) continue;
+      const items = buckets[phase].sort((a, b) => a.key - b.key);
+      for (const { el } of items) list.appendChild(el); // 正しいセクションへ移動＋並び替え
+      const count = items.length;
+      const countEl = section.querySelector('[data-phase-count]');
+      if (countEl) countEl.textContent = String(count);
+      section.hidden = count === 0;
+      totalVisible += count;
+    }
+    const empty = document.querySelector<HTMLElement>('[data-empty]');
+    if (empty) empty.hidden = totalVisible > 0;
+    const today = document.querySelector('[data-today]');
+    if (today) today.textContent = new Date().toLocaleDateString('ja-JP');
+  }
+  recompute();
+</script>

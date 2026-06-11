@@ -9,14 +9,19 @@ export default function SettingsPanel() {
   const [theme, setThemeState] = useState<Theme>('minimal');
   const [msg, setMsg] = useState<Msg>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+  const flashTimer = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     setThemeState(getStoredTheme());
+    return () => {
+      if (flashTimer.current !== undefined) window.clearTimeout(flashTimer.current);
+    };
   }, []);
 
   function flash(kind: 'ok' | 'err', text: string) {
+    if (flashTimer.current !== undefined) window.clearTimeout(flashTimer.current);
     setMsg({ kind, text });
-    window.setTimeout(() => setMsg(null), 4000);
+    flashTimer.current = window.setTimeout(() => setMsg(null), 4000);
   }
 
   function choose(t: Theme) {

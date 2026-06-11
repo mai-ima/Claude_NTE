@@ -25,6 +25,7 @@ export default function InteractiveMap() {
   const [adding, setAdding] = useState(false);
   const [cat, setCat] = useState(CATS[0]);
   const [hideDone, setHideDone] = useState(false);
+  const [imgError, setImgError] = useState(false);
   const wrapRef = useRef<HTMLDivElement>(null);
 
   const onMapClick = (e: MouseEvent) => {
@@ -39,6 +40,23 @@ export default function InteractiveMap() {
   const toggle = (id: string) => setPins((p) => p.map((x) => (x.id === id ? { ...x, done: !x.done } : x)));
   const remove = (id: string) => {
     if (confirm('このピンを削除しますか？')) setPins((p) => p.filter((x) => x.id !== id));
+  };
+
+  // 長押し（モバイル/デスクトップ共通）で削除。発火したらタップのトグルは抑止する。
+  const pressTimer = useRef<number | null>(null);
+  const longPressed = useRef(false);
+  const startPress = (id: string) => {
+    longPressed.current = false;
+    pressTimer.current = window.setTimeout(() => {
+      longPressed.current = true;
+      remove(id);
+    }, 550);
+  };
+  const cancelPress = () => {
+    if (pressTimer.current != null) {
+      clearTimeout(pressTimer.current);
+      pressTimer.current = null;
+    }
   };
 
   const visible = pins.filter((p) => !hideDone || !p.done);
@@ -62,8 +80,8 @@ export default function InteractiveMap() {
       </div>
 
       <div class="map-wrap" ref={wrapRef} onClick={onMapClick} style={{ cursor: adding ? 'crosshair' : 'default' }}>
-        {imgUrl ? (
-          <img src={imgUrl} alt="ユーザー設定の地図" onError={(e) => ((e.target as HTMLImageElement).style.display = 'none')} />
+        {imgUrl && !imgError ? (
+          <img src={imgUrl} alt="ユーザー設定の地図" onError={() => setImgError(true)} />
         ) : (
           <Schematic />
         )}
@@ -76,12 +94,19 @@ export default function InteractiveMap() {
             title={`${p.cat}${p.label ? ' / ' + p.label : ''}`}
             onClick={(e) => {
               e.stopPropagation();
+              if (longPressed.current) {
+                longPressed.current = false;
+                return; // 長押し削除直後のクリックは無視
+              }
               toggle(p.id);
             }}
-            onDblClick={(e) => {
+            onPointerDown={(e) => {
               e.stopPropagation();
-              remove(p.id);
+              startPress(p.id);
             }}
+            onPointerUp={cancelPress}
+            onPointerLeave={cancelPress}
+            onContextMenu={(e) => e.preventDefault()}
           >
             <span aria-hidden="true">{p.done ? '✓' : '●'}</span>
           </button>
@@ -89,13 +114,13 @@ export default function InteractiveMap() {
       </div>
 
       <p class="hint">
-        ピンを<strong>タップで完了/未完了</strong>、<strong>ダブルタップで削除</strong>。区画図はオリジナルの概略図です（公式地図は権利配慮で非同梱）。
+        ピンを<strong>タップで完了/未完了</strong>、<strong>長押しで削除</strong>。区画図はオリジナルの概略図です（公式地図は権利配慮で非同梱）。
       </p>
 
       <details>
         <summary class="text-sm muted" style={{ cursor: 'pointer' }}>自分用の地図画像を背景にする（URL）</summary>
         <div class="field" style={{ marginTop: '8px' }}>
-          <input class="input" placeholder="https://… の画像URL" value={imgUrl} onInput={(e) => setImgUrl((e.target as HTMLInputElement).value)} />
+          <input class="input" placeholder="https://… の画像URL" value={imgUrl} onInput={(e) => { setImgError(false); setImgUrl((e.target as HTMLInputElement).value); }} />
           <span class="hint">画像URLのみ保存します（画像データ自体は保存しません）。空にすると概略図に戻ります。</span>
         </div>
       </details>

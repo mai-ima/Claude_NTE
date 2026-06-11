@@ -1,0 +1,55 @@
+---
+import { render } from 'astro:content';
+import EntityDetail from '../../components/EntityDetail.astro';
+import { sectionByCollection } from '../../lib/nav';
+import { titleOf, hrefOf, publishedEntries } from '../../lib/content';
+import type { Row, Pill } from '../../components/EntityDetail.astro';
+
+export async function getStaticPaths() {
+  const sorted = await publishedEntries('events');
+  return sorted.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: { entry, prev: sorted[i - 1] ?? null, next: sorted[i + 1] ?? null },
+  }));
+}
+const { entry, prev, next } = Astro.props;
+const { Content, headings } = await render(entry as any);
+const d = entry.data as any;
+const section = sectionByCollection('events')!;
+
+const KIND_LABEL: Record<string, string> = {
+  banner: 'ピックアップガチャ',
+  'weapon-banner': '武器（弧盤）ガチャ',
+  event: '期間限定イベント',
+};
+const fmt = (x?: Date) =>
+  x ? x.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Tokyo' }) : '—';
+
+const rows: Row[] = [];
+rows.push({ k: '種別', v: KIND_LABEL[d.kind] ?? d.kind });
+if (d.version) rows.push({ k: 'バージョン', v: d.version });
+if (d.start || d.end) rows.push({ k: '開催期間', v: `${fmt(d.start)} 〜 ${d.end ? fmt(d.end) : '未定'}` });
+if (d.featured?.length) rows.push({ k: '注目', v: d.featured.join('・') });
+
+const pills: Pill[] = [{ kind: 'plain', value: KIND_LABEL[d.kind] ?? d.kind }];
+---
+<EntityDetail
+  collection="events"
+  currentId={entry.id}
+  sectionLabel={section.label}
+  sectionHref={section.href}
+  sectionIcon={section.icon}
+  title={titleOf(entry)}
+  lead={d.description}
+  pills={pills}
+  rows={rows}
+  status={d.status}
+  updated={d.updated}
+  tags={d.tags}
+  sources={d.sources}
+  headings={headings}
+  prev={prev ? { href: hrefOf('events', prev.id), title: titleOf(prev) } : null}
+  next={next ? { href: hrefOf('events', next.id), title: titleOf(next) } : null}
+>
+  <Content />
+</EntityDetail>

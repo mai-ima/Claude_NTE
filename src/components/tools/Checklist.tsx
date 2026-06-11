@@ -40,7 +40,7 @@ export default function Checklist() {
           placeholder="項目を追加（例: デイリー消化）"
           value={draft}
           onInput={(e) => setDraft((e.target as HTMLInputElement).value)}
-          onKeyDown={(e) => e.key === 'Enter' && add()}
+          onKeyDown={(e) => e.key === 'Enter' && !(e as any).isComposing && add()}
         />
         <button class="btn btn-primary" type="button" onClick={add} disabled={!draft.trim()}>
           追加

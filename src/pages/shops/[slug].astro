@@ -1,0 +1,52 @@
+---
+import { render } from 'astro:content';
+import EntityDetail from '../../components/EntityDetail.astro';
+import { sectionByCollection } from '../../lib/nav';
+import { titleOf, hrefOf, publishedEntries } from '../../lib/content';
+import type { Row, Pill } from '../../components/EntityDetail.astro';
+
+export async function getStaticPaths() {
+  const sorted = await publishedEntries('shops');
+  return sorted.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: { entry, prev: sorted[i - 1] ?? null, next: sorted[i + 1] ?? null },
+  }));
+}
+const { entry, prev, next } = Astro.props;
+const { Content, headings } = await render(entry as any);
+const d = entry.data as any;
+const section = sectionByCollection('shops')!;
+
+const TYPE_LABEL: Record<string, string> = {
+  hub: '拠点・施設',
+  shop: 'ショップ',
+  exchange: '交換所',
+  pass: 'バトルパス',
+};
+const rows: Row[] = [];
+rows.push({ k: '種別', v: TYPE_LABEL[d.type] ?? d.type });
+if (d.currency) rows.push({ k: '使用通貨', v: d.currency });
+if (d.unlock) rows.push({ k: '解放条件', v: d.unlock });
+
+const pills: Pill[] = [{ kind: 'plain', value: TYPE_LABEL[d.type] ?? d.type }];
+---
+<EntityDetail
+  collection="shops"
+  currentId={entry.id}
+  sectionLabel={section.label}
+  sectionHref={section.href}
+  sectionIcon={section.icon}
+  title={titleOf(entry)}
+  lead={d.description}
+  pills={pills}
+  rows={rows}
+  status={d.status}
+  updated={d.updated}
+  tags={d.tags}
+  sources={d.sources}
+  headings={headings}
+  prev={prev ? { href: hrefOf('shops', prev.id), title: titleOf(prev) } : null}
+  next={next ? { href: hrefOf('shops', next.id), title: titleOf(next) } : null}
+>
+  <Content />
+</EntityDetail>
