@@ -48,6 +48,10 @@ interface Props {
   spoilerNote?: boolean;
   /** キャラ等で属性色アバターを情報パネル上部に出す */
   heroAvatar?: { name: string; element: string; rarity?: string };
+  /** 関連項目（同カテゴリの兄弟など）。Wikipedia的な回遊用 */
+  related?: LinkRef[];
+  /** related セクションの見出し（既定: 関連項目） */
+  relatedLabel?: string;
 }
 
 const {
@@ -69,6 +73,8 @@ const {
   next,
   spoilerNote = false,
   heroAvatar,
+  related = [],
+  relatedLabel = '関連項目',
 } = Astro.props;
 
 // このページを本文から参照している記事（被リンク）
@@ -183,6 +189,21 @@ const backlinks = await backlinksFor(collection, currentId);
                       <a class="badge badge-accent" href={b.href} style="text-decoration:none;">
                         {b.title}
                         <span class="muted" style="margin-left:4px;">· {b.sectionLabel}</span>
+                      </a>
+                    ))}
+                  </div>
+                </section>
+              )
+            }
+
+            {
+              related.length > 0 && (
+                <section style="margin-top:32px;">
+                  <h2>{relatedLabel}</h2>
+                  <div class="cluster" style="margin-top:10px;">
+                    {related.map((r) => (
+                      <a class="badge" href={r.href} style="text-decoration:none;">
+                        {r.title}
                       </a>
                     ))}
                   </div>
