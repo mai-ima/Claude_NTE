@@ -5,6 +5,7 @@ import Checklist from './Checklist';
 import Timer from './Timer';
 import GachaPity from './GachaPity';
 import GachaOdds from './GachaOdds';
+import GachaBudget from './GachaBudget';
 import ReactionChart from './ReactionChart';
 import Planner from './Planner';
 
@@ -30,6 +31,13 @@ export const TOOLS: ToolDef[] = [
     description: 'n連までに注目Sを引ける累積確率を折れ線グラフで可視化。期待連数・必要円石・到達ライン表付き。',
     icon: 'trending-up',
     Component: GachaOdds,
+  },
+  {
+    id: 'gacha-budget',
+    name: 'ガチャ予算プランナー',
+    description: '目標連数・現在の天井・所持円石/サイコロ・1日の収入から、必要円石・不足分・到達日数・課金目安を計算。',
+    icon: 'piggy-bank',
+    Component: GachaBudget,
   },
   {
     id: 'reaction-chart',
