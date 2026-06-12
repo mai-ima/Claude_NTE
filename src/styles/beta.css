@@ -1,81 +1,158 @@
 /* =========================================================================
    新UI（ベータ） — <html data-ui="beta"> のときだけ適用。
-   配色テーマ(data-theme)の上に重ねる「質感・余白・動き」のレイヤー。
+   コンセプト「Aurora Glass」: 配色テーマ(data-theme)の上に重ねる、
+   フロストガラス＋オーロラグラデーション＋ネオングローの大胆な体験レイヤー。
    どの配色テーマ(minimal/dark/soft/auto)でも崩れないよう、既存のCSS変数を
    活かして上書きする。classic（既定）の見た目には一切影響しない。
+   レイアウト幾何はほぼ維持し、質感・余白・タイポ・動き・装飾を大幅に強化する。
    ========================================================================= */
 
 html[data-ui='beta'] {
-  --radius: 14px;
-  --radius-sm: 10px;
-  --radius-lg: 22px;
-  /* グラデーション用のアクセント2色目 */
-  --accent-2: color-mix(in srgb, var(--accent) 55%, #a855f7);
-  --beta-grad: linear-gradient(120deg, var(--accent), var(--accent-2));
+  /* やや大きめの角丸でソフトな印象に */
+  --radius: 16px;
+  --radius-sm: 11px;
+  --radius-lg: 26px;
+
+  /* オーロラ3色（テーマのアクセントから生成） */
+  --accent-2: color-mix(in srgb, var(--accent) 50%, #a855f7);
+  --accent-3: color-mix(in srgb, var(--accent) 45%, #22d3ee);
+  --beta-grad: linear-gradient(120deg, var(--accent), var(--accent-2) 55%, var(--accent-3));
   --beta-grad-soft: linear-gradient(
     120deg,
-    color-mix(in srgb, var(--accent) 12%, transparent),
-    color-mix(in srgb, var(--accent-2) 12%, transparent)
+    color-mix(in srgb, var(--accent) 16%, transparent),
+    color-mix(in srgb, var(--accent-2) 14%, transparent) 55%,
+    color-mix(in srgb, var(--accent-3) 14%, transparent)
   );
+  /* ネオングロー */
+  --beta-glow: 0 10px 34px color-mix(in srgb, var(--accent) 30%, transparent);
+  --beta-glow-strong: 0 18px 50px color-mix(in srgb, var(--accent) 42%, transparent);
+  /* ガラス面 */
+  --glass: color-mix(in srgb, var(--surface) 72%, transparent);
+  --glass-strong: color-mix(in srgb, var(--surface) 86%, transparent);
+
   scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--accent) 45%, var(--border)) transparent;
 }
 
-/* 背景に極薄のグラデーションを敷く（テーマ色に追従） */
+/* ===== オーロラ背景（明確に見える・ゆっくり漂う） ======================= */
 html[data-ui='beta'] body {
+  position: relative;
   background:
-    radial-gradient(1200px 620px at 100% -12%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
-    radial-gradient(1000px 560px at -12% -4%, color-mix(in srgb, var(--accent-2) 9%, transparent), transparent 56%),
+    radial-gradient(1100px 680px at 88% -10%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
+    radial-gradient(960px 620px at -10% 2%, color-mix(in srgb, var(--accent-2) 15%, transparent), transparent 58%),
+    radial-gradient(820px 600px at 50% 108%, color-mix(in srgb, var(--accent-3) 13%, transparent), transparent 60%),
     var(--bg);
   background-attachment: fixed;
 }
-
-/* スクロールバー（対応ブラウザ） */
-html[data-ui='beta'] * {
-  scrollbar-width: thin;
-  scrollbar-color: color-mix(in srgb, var(--accent) 40%, var(--border)) transparent;
+/* さらに上層に大きく動くオーロラのにじみ（モーション許可時のみ動かす） */
+html[data-ui='beta'] body::before {
+  content: '';
+  position: fixed;
+  inset: -25% -10% auto -10%;
+  height: 70vh;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(closest-side, color-mix(in srgb, var(--accent) 24%, transparent), transparent 70%),
+    radial-gradient(closest-side, color-mix(in srgb, var(--accent-3) 20%, transparent), transparent 70%);
+  background-size: 55% 100%, 50% 100%;
+  background-position: 8% 0, 92% 12%;
+  background-repeat: no-repeat;
+  filter: blur(36px) saturate(135%);
+  opacity: 0.85;
 }
+
+/* ===== スクロールバー ==================================================== */
 html[data-ui='beta'] *::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 11px;
+  height: 11px;
 }
 html[data-ui='beta'] *::-webkit-scrollbar-thumb {
-  background: color-mix(in srgb, var(--accent) 32%, var(--border));
+  background: color-mix(in srgb, var(--accent) 36%, var(--border));
   border-radius: 999px;
-  border: 2px solid transparent;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+html[data-ui='beta'] *::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--accent) 55%, var(--border));
   background-clip: padding-box;
 }
 
 html[data-ui='beta'] ::selection {
-  background: color-mix(in srgb, var(--accent) 26%, transparent);
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
 }
 html[data-ui='beta'] :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 
-/* なめらかな遷移をサイト全体に */
+/* ===== なめらかな遷移 ==================================================== */
 html[data-ui='beta'] .card,
 html[data-ui='beta'] .btn,
 html[data-ui='beta'] .badge,
 html[data-ui='beta'] .nav-link,
 html[data-ui='beta'] .el-badge,
-html[data-ui='beta'] .char-card {
+html[data-ui='beta'] .char-card,
+html[data-ui='beta'] .stat,
+html[data-ui='beta'] .info-panel {
   transition:
-    transform 0.16s cubic-bezier(0.2, 0.7, 0.2, 1),
-    box-shadow 0.2s ease,
-    border-color 0.2s ease,
-    background 0.2s ease;
+    transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.25s ease,
+    border-color 0.25s ease,
+    background 0.25s ease;
 }
 
-/* ===== ヘッダー ============================================================ */
+/* ===== タイポグラフィ（より大胆に） ===================================== */
+html[data-ui='beta'] h1 {
+  font-size: clamp(1.85rem, 1.3rem + 2.4vw, 2.7rem);
+  letter-spacing: -0.015em;
+  font-weight: 800;
+}
+html[data-ui='beta'] h2 {
+  font-size: clamp(1.45rem, 1.15rem + 1.3vw, 1.95rem);
+  letter-spacing: -0.01em;
+}
+html[data-ui='beta'] .content {
+  padding-top: 28px;
+}
+
+/* ===== ヘッダー（背の高いガラス＋オーロラのヘアライン） ================= */
 html[data-ui='beta'] .app-header {
-  background: color-mix(in srgb, var(--surface) 70%, transparent);
-  backdrop-filter: saturate(185%) blur(16px);
-  border-bottom: 1px solid color-mix(in srgb, var(--accent) 16%, var(--border));
+  height: calc(64px + env(safe-area-inset-top, 0px));
+  background: var(--glass);
+  backdrop-filter: saturate(190%) blur(20px);
+  -webkit-backdrop-filter: saturate(190%) blur(20px);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  box-shadow: 0 6px 24px -16px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+html[data-ui='beta'] .app-header::after {
+  /* 下端にオーロラのヘアライン */
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--beta-grad);
+  opacity: 0.7;
+}
+/* ヘッダーを高くした分、サイドバーの吸着位置を合わせる */
+@media (min-width: 960px) {
+  html[data-ui='beta'] .sidebar {
+    top: 84px;
+    max-height: calc(100dvh - 100px);
+  }
 }
 html[data-ui='beta'] .brand-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
   background: var(--beta-grad);
-  box-shadow: 0 4px 14px color-mix(in srgb, var(--accent) 40%, transparent);
+  box-shadow: var(--beta-glow), inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+html[data-ui='beta'] .brand {
+  font-size: 1.05rem;
 }
 html[data-ui='beta'] .brand span:last-child {
   background: var(--beta-grad);
@@ -83,74 +160,109 @@ html[data-ui='beta'] .brand span:last-child {
   background-clip: text;
   color: transparent;
 }
+html[data-ui='beta'] .app-header .nav-link {
+  border-radius: 999px;
+}
 html[data-ui='beta'] .app-header .nav-link[aria-current='page'] {
   color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
 }
 
-/* ===== ページ見出し ======================================================= */
+/* ===== ページ見出し（大きなピル＋グラデ見出し） ======================== */
+html[data-ui='beta'] .page-head {
+  margin-bottom: 30px;
+}
 html[data-ui='beta'] .page-head .eyebrow {
   display: inline-block;
-  padding: 3px 10px;
+  padding: 5px 14px;
   border-radius: 999px;
+  font-size: 0.74rem;
   background: var(--beta-grad-soft);
-  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
-  color: color-mix(in srgb, var(--accent) 75%, var(--text));
-  letter-spacing: 0.04em;
+  border: 1px solid color-mix(in srgb, var(--accent) 24%, var(--border));
+  color: color-mix(in srgb, var(--accent) 80%, var(--text));
+  letter-spacing: 0.06em;
+  box-shadow: var(--beta-glow);
 }
 html[data-ui='beta'] .page-head h1 {
-  letter-spacing: 0.005em;
-}
-
-/* ===== ヒーロー（トップ） ================================================== */
-html[data-ui='beta'] .hero {
-  position: relative;
-  padding: 30px 24px;
-  border-radius: var(--radius-lg);
-  background:
-    radial-gradient(600px 200px at 10% -20%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%),
-    var(--beta-grad-soft),
-    var(--surface);
-  border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
-  box-shadow: var(--shadow-sm);
-}
-html[data-ui='beta'] .hero h1 {
-  background: linear-gradient(120deg, var(--text), color-mix(in srgb, var(--accent) 80%, var(--text)));
+  margin: 12px 0 10px;
+  background: linear-gradient(115deg, var(--text), color-mix(in srgb, var(--accent) 85%, var(--text)));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
+html[data-ui='beta'] .page-head .lead {
+  font-size: 1.08rem;
+}
 
-/* ===== 統計バンド ========================================================= */
-html[data-ui='beta'] .stat-band {
+/* ===== ヒーロー（トップ） ================================================ */
+html[data-ui='beta'] .hero {
+  padding: 40px 28px;
   border-radius: var(--radius-lg);
   background:
+    radial-gradient(680px 240px at 8% -30%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%),
+    radial-gradient(560px 220px at 100% 0%, color-mix(in srgb, var(--accent-3) 20%, transparent), transparent 65%),
     var(--beta-grad-soft),
-    var(--surface);
-  border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
+    var(--glass-strong);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  box-shadow: var(--beta-glow);
 }
-html[data-ui='beta'] .stat-num {
+@media (min-width: 760px) {
+  html[data-ui='beta'] .hero {
+    padding: 56px 44px;
+  }
+}
+html[data-ui='beta'] .hero h1 {
   background: var(--beta-grad);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-/* ===== カード ============================================================= */
-html[data-ui='beta'] .card {
-  border-radius: var(--radius-lg);
+/* ===== 統計バンド（浮くガラスタイル＋大きなグラデ数字） ================ */
+html[data-ui='beta'] .stat {
+  border-radius: var(--radius);
+  background: var(--glass);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
   box-shadow: var(--shadow-sm);
 }
-html[data-ui='beta'] .card-link:hover {
+html[data-ui='beta'] .stat:hover {
   transform: translateY(-3px);
-  box-shadow: var(--shadow-lg);
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+  box-shadow: var(--beta-glow);
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
 }
-/* グリッドの主要カードに上端アクセントライン */
-html[data-ui='beta'] .grid-cards > .card-link {
+html[data-ui='beta'] .stat-num {
+  font-size: 1.85rem;
+  background: var(--beta-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ===== カード（ガラス＋グラデ枠＋強いホバー） ========================== */
+html[data-ui='beta'] .card {
+  border-radius: var(--radius-lg);
+  background: var(--glass-strong);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border: 1px solid color-mix(in srgb, var(--accent) 10%, var(--border));
+  box-shadow: var(--shadow-sm);
+}
+html[data-ui='beta'] .card-link {
   position: relative;
   overflow: hidden;
 }
-html[data-ui='beta'] .grid-cards > .card-link::after {
+html[data-ui='beta'] .card-link:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--beta-glow-strong);
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+}
+/* 上端のオーロラライン（ホバーで伸びる） */
+html[data-ui='beta'] .grid-cards > .card-link::after,
+html[data-ui='beta'] .grid > .card-link::after {
   content: '';
   position: absolute;
   inset: 0 0 auto 0;
@@ -158,121 +270,201 @@ html[data-ui='beta'] .grid-cards > .card-link::after {
   background: var(--beta-grad);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.25s ease;
+  transition: transform 0.3s ease;
 }
-html[data-ui='beta'] .grid-cards > .card-link:hover::after {
+html[data-ui='beta'] .grid-cards > .card-link:hover::after,
+html[data-ui='beta'] .grid > .card-link:hover::after {
   transform: scaleX(1);
 }
+/* ホバー時に走る斜めの光沢 */
+html[data-ui='beta'] .card-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    color-mix(in srgb, var(--accent) 14%, transparent),
+    transparent
+  );
+  transition: left 0.6s ease;
+  pointer-events: none;
+}
+html[data-ui='beta'] .card-link:hover::before {
+  left: 130%;
+}
 
-/* キャラカード：属性色のグロー＆左アクセント */
+/* キャラカード：属性色の太い左帯＋上帯＋属性グロー */
 html[data-ui='beta'] .char-card {
-  border-left: 3px solid color-mix(in srgb, var(--el, var(--accent)) 75%, transparent);
+  border-left: 4px solid color-mix(in srgb, var(--el, var(--accent)) 80%, transparent);
+}
+html[data-ui='beta'] .char-card::before {
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--el, var(--accent)),
+    color-mix(in srgb, var(--el, var(--accent)) 40%, transparent)
+  );
 }
 html[data-ui='beta'] .char-card:hover {
   box-shadow:
-    var(--shadow-lg),
-    0 0 0 1px color-mix(in srgb, var(--el, var(--accent)) 45%, transparent);
+    var(--beta-glow-strong),
+    0 0 0 1px color-mix(in srgb, var(--el, var(--accent)) 55%, transparent);
+}
+html[data-ui='beta'] .char-card :is(.avatar, [class*='avatar']) {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--el, var(--accent)) 60%, transparent),
+    0 6px 18px color-mix(in srgb, var(--el, var(--accent)) 35%, transparent);
 }
 
-/* ===== 詳細ページ：情報パネル(infobox) ==================================== */
+/* ===== 詳細ページ：情報パネル(infobox) ================================== */
 html[data-ui='beta'] .info-panel {
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: var(--shadow);
+  background: var(--glass-strong);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
+  box-shadow: var(--beta-glow);
 }
 html[data-ui='beta'] .info-panel .info-hero {
-  background: var(--beta-grad-soft);
-  border-bottom: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
+  background:
+    radial-gradient(120% 120% at 30% 10%, color-mix(in srgb, var(--el, var(--accent)) 32%, transparent), transparent 70%),
+    var(--beta-grad-soft);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 16%, var(--border));
 }
-/* 目次をレール風に */
+html[data-ui='beta'] .info-row .v {
+  color: color-mix(in srgb, var(--text) 92%, var(--accent));
+}
+
+/* 目次をレール風に＋現在地のドット */
 html[data-ui='beta'] .toc {
-  border-left: 2px solid color-mix(in srgb, var(--accent) 22%, var(--border));
-  padding-left: 12px;
+  border-left: 2px solid color-mix(in srgb, var(--accent) 24%, var(--border));
+  padding-left: 14px;
+}
+html[data-ui='beta'] .toc a {
+  border-radius: 8px;
+  transition: color 0.2s ease, background 0.2s ease;
 }
 html[data-ui='beta'] .toc a:hover {
   color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
 }
 
-/* 本文見出しにアクセントバー */
+/* ===== 本文(prose) ====================================================== */
 html[data-ui='beta'] .prose h2 {
   position: relative;
-  padding-left: 14px;
+  padding-left: 16px;
+  border-bottom-color: color-mix(in srgb, var(--accent) 18%, var(--border));
 }
 html[data-ui='beta'] .prose h2::before {
   content: '';
   position: absolute;
   left: 0;
-  top: 0.15em;
-  bottom: 0.15em;
-  width: 4px;
+  top: 0.12em;
+  bottom: 0.32em;
+  width: 5px;
   border-radius: 999px;
   background: var(--beta-grad);
 }
-/* 本文リンクのアニメ下線 */
-html[data-ui='beta'] .prose a {
+html[data-ui='beta'] .prose a:not(.auto-term) {
   background-image: linear-gradient(var(--accent), var(--accent));
-  background-size: 0% 1.5px;
+  background-size: 0% 2px;
   background-position: 0 100%;
   background-repeat: no-repeat;
   text-decoration: none;
   transition: background-size 0.2s ease;
 }
-html[data-ui='beta'] .prose a:hover {
-  background-size: 100% 1.5px;
+html[data-ui='beta'] .prose a:not(.auto-term):hover {
+  background-size: 100% 2px;
+}
+/* 自動用語リンクは点線下線でそれと分かるように */
+html[data-ui='beta'] .prose a.auto-term {
+  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  text-underline-offset: 3px;
+}
+html[data-ui='beta'] .prose a.auto-term:hover {
+  text-decoration-color: var(--accent);
 }
 /* 本文テーブルをカード風に */
 html[data-ui='beta'] .prose table {
-  border: 1px solid var(--border);
+  border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
   border-radius: var(--radius-sm);
   border-collapse: separate;
   border-spacing: 0;
   overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 html[data-ui='beta'] .prose th {
   background: var(--beta-grad-soft);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
 }
 html[data-ui='beta'] .prose tbody tr:nth-child(even) td {
-  background: color-mix(in srgb, var(--surface-2) 50%, transparent);
+  background: color-mix(in srgb, var(--surface-2) 55%, transparent);
 }
 html[data-ui='beta'] .prose blockquote {
-  border-left: 3px solid var(--accent);
-  background: color-mix(in srgb, var(--accent) 6%, transparent);
+  border-left: 4px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 }
+html[data-ui='beta'] .prose code:not(pre code) {
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface-2));
+  border-radius: 6px;
+}
+html[data-ui='beta'] .prose pre {
+  border-radius: var(--radius-sm);
+  border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 6%, transparent);
+}
 
-/* ===== ボタン ============================================================= */
+/* ===== ボタン（ピル＋グラデ＋グロー） ================================== */
 html[data-ui='beta'] .btn {
   border-radius: 999px;
 }
 html[data-ui='beta'] .btn-primary {
   background: var(--beta-grad);
   border-color: transparent;
-  box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 30%, transparent);
+  color: #fff;
+  box-shadow: var(--beta-glow);
 }
 html[data-ui='beta'] .btn-primary:hover {
-  filter: brightness(1.06);
+  filter: brightness(1.07);
+  box-shadow: var(--beta-glow-strong);
 }
 html[data-ui='beta'] .btn-icon {
-  border-radius: 12px;
+  border-radius: 13px;
 }
 
-/* ===== バッジ / 属性バッジ ================================================ */
+/* ===== バッジ / 属性バッジ ============================================= */
 html[data-ui='beta'] .badge {
   border-radius: 999px;
 }
 html[data-ui='beta'] .badge-accent {
-  background: color-mix(in srgb, var(--accent) 14%, var(--surface));
-  border-color: color-mix(in srgb, var(--accent) 30%, var(--border));
+  background: color-mix(in srgb, var(--accent) 16%, var(--surface));
+  border-color: color-mix(in srgb, var(--accent) 32%, var(--border));
+  font-weight: 700;
 }
 html[data-ui='beta'] .el-badge {
   border-radius: 999px;
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--el, var(--accent)) 30%, transparent);
+  background: color-mix(in srgb, var(--el, var(--accent)) 18%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--el, var(--accent)) 38%, transparent),
+    0 2px 8px color-mix(in srgb, var(--el, var(--accent)) 22%, transparent);
 }
 
-/* ===== ツール群 =========================================================== */
+/* ===== ツール群 ======================================================== */
 html[data-ui='beta'] .tool .tool-result,
 html[data-ui='beta'] .tool .card {
   border-radius: var(--radius-lg);
+}
+html[data-ui='beta'] .tool .tool-result {
+  background:
+    var(--beta-grad-soft),
+    var(--glass-strong);
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+  box-shadow: var(--beta-glow);
 }
 html[data-ui='beta'] .tool .big {
   background: var(--beta-grad);
@@ -287,67 +479,138 @@ html[data-ui='beta'] .tool .progress {
 html[data-ui='beta'] .tool .progress > span {
   background: var(--beta-grad);
 }
+html[data-ui='beta'] .input,
+html[data-ui='beta'] .textarea,
+html[data-ui='beta'] .select {
+  border-radius: var(--radius-sm);
+}
 html[data-ui='beta'] .input:focus,
 html[data-ui='beta'] .textarea:focus,
 html[data-ui='beta'] .select:focus {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 24%, transparent);
 }
 
-/* ===== サイドバー / ドロワー ============================================== */
-html[data-ui='beta'] .nav-link[aria-current='page'] {
-  background: color-mix(in srgb, var(--accent) 14%, transparent);
-  box-shadow: inset 2px 0 0 var(--accent);
+/* ===== サイドバー / ナビ（ピル化＋アクティブのグラデ帯） =============== */
+html[data-ui='beta'] .sidebar .nav-link,
+html[data-ui='beta'] .drawer-panel .nav-link {
+  border-radius: 999px;
+  padding: 9px 14px;
+}
+html[data-ui='beta'] .nav-link:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+html[data-ui='beta'] .nav-link[aria-current='page'],
+html[data-ui='beta'] .nav-link.is-active {
+  background: var(--beta-grad-soft);
+  color: var(--accent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 30%, var(--border));
 }
 html[data-ui='beta'] .nav-group-title {
-  color: color-mix(in srgb, var(--accent) 60%, var(--muted));
+  color: color-mix(in srgb, var(--accent) 62%, var(--muted));
+  position: relative;
 }
 
-/* ===== 下部ナビ（フローティングのピル） ================================== */
+/* ===== 下部ナビ（フローティングのピル） ============================== */
 @media (max-width: 959px) {
   html[data-ui='beta'] .bottom-nav {
     left: 12px;
     right: 12px;
-    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
-    height: 60px;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    height: 62px;
     padding-bottom: 0;
-    border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
-    border-radius: 20px;
-    background: color-mix(in srgb, var(--surface) 80%, transparent);
-    backdrop-filter: saturate(185%) blur(16px);
-    box-shadow: var(--shadow-lg);
+    border: 1px solid color-mix(in srgb, var(--accent) 16%, var(--border));
+    border-radius: 22px;
+    background: var(--glass-strong);
+    backdrop-filter: saturate(190%) blur(20px);
+    -webkit-backdrop-filter: saturate(190%) blur(20px);
+    box-shadow: var(--beta-glow-strong);
   }
   html[data-ui='beta'] .bottom-nav a[aria-current='page'] {
     color: var(--accent);
   }
   html[data-ui='beta'] .bottom-nav a[aria-current='page'] svg {
-    filter: drop-shadow(0 4px 8px color-mix(in srgb, var(--accent) 45%, transparent));
+    filter: drop-shadow(0 4px 10px color-mix(in srgb, var(--accent) 50%, transparent));
   }
 }
 
-/* ===== 設定の BETA ピルを少し主張 ======================================== */
+/* ===== 設定の各種強調 ================================================== */
 html[data-ui='beta'] .beta-pill {
-  box-shadow: 0 2px 8px color-mix(in srgb, #6366f1 45%, transparent);
+  box-shadow: 0 2px 10px color-mix(in srgb, #6366f1 50%, transparent);
+}
+html[data-ui='beta'] .ui-switch-opt.is-active,
+html[data-ui='beta'] .theme-opt.is-active {
+  border-color: transparent;
+  box-shadow: 0 0 0 2px var(--accent), var(--beta-glow);
+}
+html[data-ui='beta'] .pagefind-ui input {
+  border-radius: 999px !important;
+}
+html[data-ui='beta'] .pagefind-ui input:focus {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 24%, transparent) !important;
 }
 
-/* ===== 入場アニメ（モーション許可時のみ） ================================ */
+/* 関連項目・被リンクのチップにホバーの浮き */
+html[data-ui='beta'] section .cluster > .badge:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+  box-shadow: var(--shadow-sm);
+}
+
+/* セクション見出しの装飾下線（トップ等の h2） */
+html[data-ui='beta'] .content > section > h2:first-child,
+html[data-ui='beta'] .content > .grid > section > h2:first-child {
+  display: inline-block;
+  padding-bottom: 3px;
+  background: var(--beta-grad) left bottom / 44px 3px no-repeat;
+  border-radius: 2px;
+}
+
+/* ===== 動き（モーション許可時のみ） =================================== */
 @media (prefers-reduced-motion: no-preference) {
+  /* オーロラ背景がゆっくり漂う */
+  html[data-ui='beta'] body::before {
+    animation: beta-aurora 22s ease-in-out infinite alternate;
+  }
+  @keyframes beta-aurora {
+    from {
+      transform: translate3d(-4%, -2%, 0) rotate(-1deg) scale(1.05);
+    }
+    to {
+      transform: translate3d(5%, 3%, 0) rotate(1.5deg) scale(1.12);
+    }
+  }
+  /* ヘッダーのオーロラヘアラインがゆっくり流れる */
+  html[data-ui='beta'] .app-header::after {
+    background-size: 200% 100%;
+    animation: beta-flow 8s linear infinite;
+  }
+  @keyframes beta-flow {
+    to {
+      background-position: 200% 0;
+    }
+  }
+  /* セクションの入場アニメ */
   html[data-ui='beta'] .content > section,
   html[data-ui='beta'] .content > .page-head {
-    animation: beta-rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+    animation: beta-rise 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   }
   html[data-ui='beta'] .content > section:nth-of-type(2) {
-    animation-delay: 0.04s;
+    animation-delay: 0.05s;
   }
   html[data-ui='beta'] .content > section:nth-of-type(3) {
-    animation-delay: 0.08s;
+    animation-delay: 0.1s;
   }
   html[data-ui='beta'] .content > section:nth-of-type(4) {
-    animation-delay: 0.12s;
+    animation-delay: 0.15s;
+  }
+  html[data-ui='beta'] .content > section:nth-of-type(5) {
+    animation-delay: 0.2s;
   }
   @keyframes beta-rise {
     from {
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(14px);
     }
     to {
       opacity: 1;
@@ -356,56 +619,14 @@ html[data-ui='beta'] .beta-pill {
   }
 }
 
-/* ===== モーション抑制設定を尊重 ========================================== */
+/* ===== モーション抑制設定を尊重 ======================================= */
 @media (prefers-reduced-motion: reduce) {
   html[data-ui='beta'] .card-link:hover,
-  html[data-ui='beta'] .char-card:hover {
+  html[data-ui='beta'] .char-card:hover,
+  html[data-ui='beta'] .stat:hover {
     transform: none;
   }
-}
-
-/* ===== 細部調整（追加） =================================================== */
-/* 関連項目・被リンクのチップにホバーの浮き */
-html[data-ui='beta'] section .cluster > .badge:hover {
-  transform: translateY(-1px);
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
-}
-
-/* 設定の UI 切替・テーマ選択のアクティブを強調 */
-html[data-ui='beta'] .ui-switch-opt.is-active,
-html[data-ui='beta'] .theme-opt.is-active {
-  border-color: transparent;
-  box-shadow: 0 0 0 2px var(--accent), var(--shadow-sm);
-}
-
-/* Pagefind 検索ボックスにアクセント */
-html[data-ui='beta'] .pagefind-ui input {
-  border-radius: 999px !important;
-}
-html[data-ui='beta'] .pagefind-ui input:focus {
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent) !important;
-}
-
-/* 注目エスパー：アバターを属性色でリング状にグロー */
-html[data-ui='beta'] .char-card :is(.avatar, [class*='avatar']) {
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--el, var(--accent)) 55%, transparent);
-}
-
-/* コード/キーボード表記の質感 */
-html[data-ui='beta'] .prose code:not(pre code) {
-  border-color: color-mix(in srgb, var(--accent) 22%, var(--border));
-  background: color-mix(in srgb, var(--accent) 7%, var(--surface-2));
-}
-
-/* イベントカードの残り日数バッジを少し主張 */
-html[data-ui='beta'] .badge-accent {
-  font-weight: 700;
-}
-
-/* セクション見出しの装飾下線（トップ等の h2） */
-html[data-ui='beta'] .content > section > h2:first-child,
-html[data-ui='beta'] .content > .grid > section > h2:first-child {
-  display: inline-block;
-  padding-bottom: 2px;
-  background: linear-gradient(var(--accent), var(--accent)) left bottom / 36px 2px no-repeat;
+  html[data-ui='beta'] .card-link::before {
+    display: none;
+  }
 }
