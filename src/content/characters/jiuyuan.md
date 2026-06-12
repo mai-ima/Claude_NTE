@@ -11,7 +11,7 @@ version: "v1.0（スタンダード恒常）"
 tier: "S"
 description: "二丁拳銃を扱う霊属性アタッカー。継続ダメージとEXレール終結による高バーストが持ち味。"
 status: "verified"
-updated: 2026-06-08
+updated: 2026-06-11
 tags: ["霊", "Anima", "DPS", "バースト"]
 sources:
   - label: "Game8 — 九原（じょえん）"
@@ -26,7 +26,7 @@ sources:
 
 ## おすすめ編成
 
-- 「**創生（光＋霊）**」編成。**[九原・ナナリ・零（主人公）](/characters/nanally/)** の組み合わせが定番。
+- 「**創生（光＋霊）**」編成。**九原・[ナナリ](/characters/nanally/)・[零（主人公）](/characters/zero/)** の組み合わせが定番。
 
 ## 入手
 

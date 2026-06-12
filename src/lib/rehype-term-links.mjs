@@ -47,7 +47,7 @@ function buildDict() {
     const aliasesLine = (front.match(/^aliases:\s*\[(.*)\]/m) || [])[1] || '';
     const aliases = aliasesLine
       .split(',')
-      .map((s) => s.replace(/["'\s]/g, ''))
+      .map((s) => s.replace(/^\s*["']?/, '').replace(/["']?\s*$/, '').trim())
       .filter(Boolean);
     const phrases = new Set();
     const clean = title
@@ -61,8 +61,10 @@ function buildDict() {
       // 英語別名は3文字以上、日本語は2文字以上を採用（短すぎる/汎用は除外）
       if (p.length < 2) continue;
       if (DENY.has(p)) continue;
-      if (/^[A-Za-z0-9 .!-]+$/.test(p) && p.length < 3) continue;
-      entries.push({ phrase: p, slug, lower: p.toLowerCase() });
+      // ASCII(英数記号)のみのフレーズは、単語境界チェックを要する＆3文字以上に限定
+      const ascii = /^[\x20-\x7e]+$/.test(p);
+      if (ascii && p.replace(/[^A-Za-z0-9]/g, '').length < 3) continue;
+      entries.push({ phrase: p, slug, ascii });
     }
   }
   // 長いフレーズ優先（部分一致の取り違えを防ぐ）
@@ -83,10 +85,15 @@ export default function rehypeTermLinks() {
   };
 }
 
+/** ノードのタグ名（標準hastは tagName、MDX JSX は name） */
+function tagOf(node) {
+  return node.type === 'element' ? node.tagName : node.name || '';
+}
+
 function walk(node, skip, selfSlug, seen) {
-  if (!node || !node.children || !Array.isArray(node.children)) return;
-  const here =
-    skip || (node.type === 'element' && node.tagName && SKIP_TAGS.has(node.tagName));
+  if (!node || !Array.isArray(node.children)) return;
+  const tag = tagOf(node);
+  const here = skip || (tag && SKIP_TAGS.has(tag));
   const children = node.children;
   for (let i = 0; i < children.length; i++) {
     const child = children[i];
@@ -96,16 +103,19 @@ function walk(node, skip, selfSlug, seen) {
         children.splice(i, 1, ...replaced);
         i += replaced.length - 1;
       }
-    } else if (child.type === 'element') {
+    } else if (Array.isArray(child.children)) {
+      // element だけでなく MDX の JSX 要素配下も走査する
       walk(child, here, selfSlug, seen);
     }
   }
 }
 
+const WORD = /[A-Za-z0-9]/;
+
 function linkify(text, selfSlug, seen) {
   let nodes = [{ type: 'text', value: text }];
   let changed = false;
-  for (const { phrase, slug } of DICT) {
+  for (const { phrase, slug, ascii } of DICT) {
     if (slug === selfSlug) continue;
     if (seen.has(phrase)) continue;
     for (let n = 0; n < nodes.length; n++) {
@@ -113,6 +123,12 @@ function linkify(text, selfSlug, seen) {
       if (nd.type !== 'text') continue;
       const idx = nd.value.indexOf(phrase);
       if (idx === -1) continue;
+      // ASCII フレーズは単語の途中に差し込まない（"Arc" が "Arcane" 内にヒットしない）
+      if (ascii) {
+        const prev = nd.value[idx - 1];
+        const next = nd.value[idx + phrase.length];
+        if ((prev && WORD.test(prev)) || (next && WORD.test(next))) continue;
+      }
       const before = nd.value.slice(0, idx);
       const after = nd.value.slice(idx + phrase.length);
       const link = {

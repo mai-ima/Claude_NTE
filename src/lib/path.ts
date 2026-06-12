@@ -16,14 +16,6 @@ export function withBase(path = '/'): string {
   return joined.endsWith('/') ? joined : `${joined}/`;
 }
 
-/** 現在のパスが指定リンクと一致（または配下）するか判定（ナビのactive表示用） */
-export function isActive(currentPath: string, target: string): boolean {
-  const cur = currentPath.replace(/\/$/, '');
-  const tgt = withBase(target).replace(/\/$/, '');
-  if (tgt === withBase('/').replace(/\/$/, '')) return cur === tgt;
-  return cur === tgt || cur.startsWith(`${tgt}/`);
-}
-
 /**
  * ナビ群の中で「現在ページに最も適合する1件」の href を返す。
  * 例: /tools/ と /tools/tier-list/ が両方あるとき、/tools/tier-list/ 閲覧時は

@@ -15,7 +15,7 @@ export default function GachaBudget() {
   const [dice, setDice] = useStore<number>('tool.budget.dice', 0); // 所持サイコロ
   const [perDay, setPerDay] = useStore<number>('tool.budget.perDay', 0); // 1日の円石収入
 
-  const g = Math.max(0, Math.floor(goal));
+  const g = Math.max(1, Math.floor(goal) || 1);
   const p = Math.min(g, Math.max(0, Math.floor(pity)));
   const needPulls = Math.max(0, g - p); // 目標までに必要な連数
   const needDice = needPulls; // 1連=サイコロ1

@@ -158,7 +158,7 @@ const groups = PHASES.map((p) => ({ ...p, items: events.filter((e) => e.phase ==
     const empty = document.querySelector<HTMLElement>('[data-empty]');
     if (empty) empty.hidden = totalVisible > 0;
     const today = document.querySelector('[data-today]');
-    if (today) today.textContent = new Date().toLocaleDateString('ja-JP');
+    if (today) today.textContent = new Date().toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' });
   }
   recompute();
 </script>

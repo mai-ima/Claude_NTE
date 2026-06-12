@@ -516,7 +516,12 @@
   border: 1px solid var(--border);
 }
 .prose table {
+  /* 多列の表はスマホでも崩れず横スクロールできるよう block 化 */
+  display: block;
+  max-width: 100%;
   width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   border-collapse: collapse;
   font-size: 0.92rem;
 }
@@ -679,13 +684,6 @@
   .nav-link {
     min-height: 44px;
   }
-}
-/* iOS の慣性スクロール */
-.sidebar,
-.drawer-panel,
-.prose pre,
-.table-scroll {
-  -webkit-overflow-scrolling: touch;
 }
 
 /* ---- モバイル下部ナビ --------------------------------------------------- */
@@ -1284,15 +1282,7 @@ body {
   }
 }
 
-/* 多列の表（用語ページ等）はスマホでも崩れず横スクロールできるように */
-.prose table {
-  display: block;
-  max-width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* スクロール領域を慣性スクロール化 */
+/* スクロール領域を慣性スクロール化（用語ページの表は .prose table 側で対応済み） */
 .drawer-panel,
 .sidebar,
 .toc,
