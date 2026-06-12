@@ -363,3 +363,49 @@ html[data-ui='beta'] .beta-pill {
     transform: none;
   }
 }
+
+/* ===== 細部調整（追加） =================================================== */
+/* 関連項目・被リンクのチップにホバーの浮き */
+html[data-ui='beta'] section .cluster > .badge:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+
+/* 設定の UI 切替・テーマ選択のアクティブを強調 */
+html[data-ui='beta'] .ui-switch-opt.is-active,
+html[data-ui='beta'] .theme-opt.is-active {
+  border-color: transparent;
+  box-shadow: 0 0 0 2px var(--accent), var(--shadow-sm);
+}
+
+/* Pagefind 検索ボックスにアクセント */
+html[data-ui='beta'] .pagefind-ui input {
+  border-radius: 999px !important;
+}
+html[data-ui='beta'] .pagefind-ui input:focus {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent) !important;
+}
+
+/* 注目エスパー：アバターを属性色でリング状にグロー */
+html[data-ui='beta'] .char-card :is(.avatar, [class*='avatar']) {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--el, var(--accent)) 55%, transparent);
+}
+
+/* コード/キーボード表記の質感 */
+html[data-ui='beta'] .prose code:not(pre code) {
+  border-color: color-mix(in srgb, var(--accent) 22%, var(--border));
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface-2));
+}
+
+/* イベントカードの残り日数バッジを少し主張 */
+html[data-ui='beta'] .badge-accent {
+  font-weight: 700;
+}
+
+/* セクション見出しの装飾下線（トップ等の h2） */
+html[data-ui='beta'] .content > section > h2:first-child,
+html[data-ui='beta'] .content > .grid > section > h2:first-child {
+  display: inline-block;
+  padding-bottom: 2px;
+  background: linear-gradient(var(--accent), var(--accent)) left bottom / 36px 2px no-repeat;
+}
