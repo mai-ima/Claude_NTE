@@ -1,19 +1,33 @@
 /**
  * UIモード（ベータ機能）の定義と適用ロジック。
- * - 'classic': 従来のUI（既定）
- * - 'beta'   : 新デザインUI（ベータ）。html[data-ui='beta'] でスタイルを切り替える。
- * テーマ（配色）とは独立して保存・適用される。
+ * - 'classic'  : 従来のUI（既定）
+ * - 'editorial': 紙の特集記事風（太罫線・ハードシャドウ・活字タイポ）
+ * - 'liquid'   : 本格リキッドグラス（厚い曇りガラス・カプセル形状）
+ * - 'aurora'   : オーロラグラデーション＋グロー
+ * - 'apple'    : Apple HIG 風のクリーンなフラット（仮称）
+ * html[data-ui='<mode>'] でスタイルを切り替える。テーマ（配色）とは独立。
  */
 
-export type UIMode = 'classic' | 'beta';
+export type UIMode = 'classic' | 'editorial' | 'liquid' | 'aurora' | 'apple';
 
 export const UI_KEY = 'nte.ui';
 const DEFAULT_UI: UIMode = 'classic';
 
+export const UI_MODES: { value: UIMode; label: string; hint: string; beta: boolean }[] = [
+  { value: 'classic', label: '従来UI', hint: 'これまでのシンプルな表示', beta: false },
+  { value: 'editorial', label: 'Editorial', hint: '紙の特集記事風。太い罫線とハードシャドウ', beta: true },
+  { value: 'liquid', label: 'Liquid Glass', hint: '本格リキッドグラス。厚い曇りガラスとカプセル', beta: true },
+  { value: 'aurora', label: 'Aurora Glass', hint: 'オーロラグラデーションとグロー', beta: true },
+  { value: 'apple', label: 'Apple（仮称）', hint: 'HIG風のクリーンなフラットデザイン', beta: true },
+];
+
+const VALID: UIMode[] = UI_MODES.map((m) => m.value);
+
 export function getStoredUI(): UIMode {
   try {
-    const v = localStorage.getItem(UI_KEY) as UIMode | null;
-    if (v === 'classic' || v === 'beta') return v;
+    const v = localStorage.getItem(UI_KEY);
+    if (v === 'beta') return 'editorial'; // 旧「新UI(ベータ)」からの移行
+    if (VALID.includes(v as UIMode)) return v as UIMode;
   } catch {
     /* localStorage 不可環境は既定値 */
   }

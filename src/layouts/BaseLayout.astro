@@ -2,7 +2,10 @@
 import '../styles/themes.css';
 import '../styles/base.css';
 import '../styles/components.css';
-import '../styles/beta.css';
+import '../styles/ui-editorial.css';
+import '../styles/ui-liquid.css';
+import '../styles/ui-aurora.css';
+import '../styles/ui-apple.css';
 import { Icon } from 'astro-icon/components';
 import { withBase, activeHref } from '../lib/path';
 import { PRIMARY_NAV, BOTTOM_NAV } from '../lib/nav';
@@ -128,7 +131,10 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
           var meta = document.querySelector('meta[name="theme-color"]');
           if (meta && color) meta.setAttribute('content', color);
           var ui = localStorage.getItem('nte.ui');
-          document.documentElement.setAttribute('data-ui', ui === 'beta' ? 'beta' : 'classic');
+          if (ui === 'beta') ui = 'editorial'; // 旧ベータからの移行
+          var uiValid = ['classic', 'editorial', 'liquid', 'aurora', 'apple'];
+          if (uiValid.indexOf(ui) === -1) ui = 'classic';
+          document.documentElement.setAttribute('data-ui', ui);
         } catch (e) {}
       })();
     </script>

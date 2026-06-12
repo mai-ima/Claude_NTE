@@ -1,0 +1,303 @@
+/* =========================================================================
+   新UI「Apple（仮称）」 — <html data-ui="apple"> のときだけ適用。
+   Apple HIG 風のクリーンなフラットデザイン: システムフォント・ヘアライン
+   罫線・控えめな影・iOS設定アプリ風のグループ化リスト。装飾より階層と
+   余白で見せる。配色テーマの変数から導出し、classic には影響しない。
+   ========================================================================= */
+
+html[data-ui='apple'] {
+  --radius: 14px;
+  --radius-sm: 10px;
+  --radius-lg: 20px;
+  --hairline: 1px solid color-mix(in srgb, var(--text) 12%, transparent);
+  --ap-shadow: 0 1px 3px color-mix(in srgb, var(--text) 8%, transparent);
+}
+
+html[data-ui='apple'] body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Hiragino Sans',
+    'Hiragino Kaku Gothic ProN', 'Noto Sans JP', system-ui, sans-serif;
+  background: color-mix(in srgb, var(--bg) 86%, var(--surface-2));
+  letter-spacing: -0.011em;
+}
+
+/* ===== タイポグラフィ: Large Title ====================================== */
+html[data-ui='apple'] h1 {
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  font-size: clamp(1.8rem, 1.3rem + 2vw, 2.4rem);
+}
+html[data-ui='apple'] h2 {
+  font-weight: 700;
+  letter-spacing: -0.018em;
+}
+
+/* ===== ヘッダー: iOS ナビゲーションバー ================================ */
+html[data-ui='apple'] .app-header {
+  background: color-mix(in srgb, var(--surface) 78%, transparent);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: var(--hairline);
+}
+html[data-ui='apple'] .brand-mark {
+  border-radius: 8px;
+  background: var(--accent);
+}
+html[data-ui='apple'] .brand span:last-child {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+html[data-ui='apple'] .app-header .nav-link {
+  border-radius: 8px;
+  color: var(--accent);
+}
+html[data-ui='apple'] .app-header .nav-link[aria-current='page'] {
+  background: var(--accent-weak);
+}
+
+/* ===== ページ見出し ===================================================== */
+html[data-ui='apple'] .page-head .eyebrow {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--muted);
+}
+html[data-ui='apple'] .page-head h1 {
+  margin: 2px 0 8px;
+}
+
+/* ===== ヒーロー・統計 =================================================== */
+html[data-ui='apple'] .hero {
+  border: none;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--ap-shadow);
+}
+html[data-ui='apple'] .stat {
+  border: none;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--ap-shadow);
+}
+html[data-ui='apple'] .stat-num {
+  font-weight: 700;
+  color: var(--accent);
+}
+html[data-ui='apple'] .stat-label {
+  font-size: 0.72rem;
+}
+
+/* ===== カード: iOS グループ化スタイル ================================== */
+html[data-ui='apple'] .card {
+  border: none;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--ap-shadow);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+html[data-ui='apple'] .card-link:hover {
+  background: color-mix(in srgb, var(--surface) 88%, var(--text));
+  transform: none;
+  box-shadow: var(--ap-shadow);
+}
+html[data-ui='apple'] .card-link:active {
+  background: color-mix(in srgb, var(--surface) 80%, var(--text));
+}
+html[data-ui='apple'] .char-card::before {
+  height: 3px;
+}
+
+/* ===== 詳細ページ: 設定アプリ風リスト ================================== */
+html[data-ui='apple'] .info-panel {
+  border: none;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--ap-shadow);
+  overflow: hidden;
+}
+html[data-ui='apple'] .info-panel .info-hero {
+  border-bottom: var(--hairline);
+}
+html[data-ui='apple'] .info-row {
+  padding: 12px 16px;
+}
+html[data-ui='apple'] .info-row + .info-row {
+  border-top: var(--hairline);
+  margin-left: 16px;
+  padding-left: 0;
+}
+html[data-ui='apple'] .info-row .k {
+  color: var(--text);
+  font-weight: 400;
+}
+html[data-ui='apple'] .info-row .v {
+  font-weight: 400;
+  color: var(--muted);
+}
+html[data-ui='apple'] .toc {
+  border-left: none;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  box-shadow: var(--ap-shadow);
+}
+html[data-ui='apple'] .toc a:hover {
+  color: var(--accent);
+}
+
+/* ===== 本文 ============================================================= */
+html[data-ui='apple'] .prose a {
+  color: var(--accent);
+  text-decoration: none;
+}
+html[data-ui='apple'] .prose a:hover {
+  text-decoration: underline;
+}
+html[data-ui='apple'] .prose h2 {
+  border-bottom: var(--hairline);
+}
+html[data-ui='apple'] .prose table {
+  border: none;
+  border-radius: var(--radius-sm);
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--ap-shadow);
+}
+html[data-ui='apple'] .prose th {
+  background: var(--surface-2);
+  font-weight: 600;
+}
+html[data-ui='apple'] .prose td {
+  border-top: var(--hairline);
+}
+html[data-ui='apple'] .prose blockquote {
+  border-left: 3px solid color-mix(in srgb, var(--text) 20%, transparent);
+  background: var(--surface);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+html[data-ui='apple'] .prose code:not(pre code) {
+  background: var(--surface-2);
+  border: none;
+  border-radius: 5px;
+}
+html[data-ui='apple'] .prose pre {
+  border: none;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--ap-shadow);
+}
+
+/* ===== ボタン: iOS Filled / Tinted ===================================== */
+html[data-ui='apple'] .btn {
+  border: none;
+  border-radius: 999px;
+  background: var(--surface-2);
+  font-weight: 600;
+  transition: opacity 0.15s ease, background 0.15s ease;
+}
+html[data-ui='apple'] .btn:hover {
+  opacity: 0.85;
+}
+html[data-ui='apple'] .btn:active {
+  opacity: 0.7;
+}
+html[data-ui='apple'] .btn-primary {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  box-shadow: none;
+}
+html[data-ui='apple'] .btn-danger {
+  background: var(--danger-weak);
+  color: var(--danger);
+  border: none;
+}
+
+/* ===== バッジ: tinted ================================================== */
+html[data-ui='apple'] .badge {
+  border: none;
+  background: var(--surface-2);
+  font-weight: 600;
+}
+html[data-ui='apple'] .badge-accent {
+  background: var(--accent-weak);
+  color: var(--accent);
+}
+html[data-ui='apple'] .el-badge {
+  border: none;
+}
+
+/* ===== 入力・ツール ===================================================== */
+html[data-ui='apple'] .input,
+html[data-ui='apple'] .textarea,
+html[data-ui='apple'] .select {
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+}
+html[data-ui='apple'] .input:focus,
+html[data-ui='apple'] .textarea:focus,
+html[data-ui='apple'] .select:focus {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+html[data-ui='apple'] .tool .tool-result {
+  border: none;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--ap-shadow);
+}
+html[data-ui='apple'] .tool .big {
+  font-weight: 700;
+  color: var(--accent);
+}
+html[data-ui='apple'] .tool .progress {
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+html[data-ui='apple'] .tool .progress > span {
+  background: var(--accent);
+}
+
+/* ===== サイドバー / 下部ナビ =========================================== */
+html[data-ui='apple'] .nav-group-title {
+  text-transform: none;
+  font-size: 0.78rem;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+html[data-ui='apple'] .sidebar .nav-link,
+html[data-ui='apple'] .drawer-panel .nav-link {
+  border-radius: 10px;
+}
+html[data-ui='apple'] .nav-link[aria-current='page'],
+html[data-ui='apple'] .nav-link.is-active {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-weight: 600;
+}
+@media (max-width: 959px) {
+  html[data-ui='apple'] .bottom-nav {
+    background: color-mix(in srgb, var(--surface) 80%, transparent);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-top: var(--hairline);
+  }
+  html[data-ui='apple'] .bottom-nav a[aria-current='page'] {
+    color: var(--accent);
+  }
+}
+
+/* ===== フッター・設定 =================================================== */
+html[data-ui='apple'] .app-footer {
+  border-top: var(--hairline);
+}
+html[data-ui='apple'] .ui-switch-opt.is-active,
+html[data-ui='apple'] .theme-opt.is-active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+html[data-ui='apple'] .spoiler {
+  border-radius: var(--radius-sm);
+}

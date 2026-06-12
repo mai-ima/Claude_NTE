@@ -1,7 +1,7 @@
 /** 設定パネル: テーマ・新UI(ベータ)・データのエクスポート/インポート/初期化。 */
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { THEMES, getStoredTheme, setTheme, applyTheme, type Theme } from '../lib/theme';
-import { getStoredUI, setUI, applyUI, type UIMode } from '../lib/ui';
+import { getStoredUI, setUI, applyUI, UI_MODES, type UIMode } from '../lib/ui';
 import { exportAll, importAll, clearAll } from '../lib/store';
 
 type Msg = { kind: 'ok' | 'err'; text: string } | null;
@@ -37,7 +37,8 @@ export default function SettingsPanel() {
     setUI(mode);
     setUIState(mode);
     applyUI(mode);
-    flash('ok', mode === 'beta' ? '新UI（ベータ）に切り替えました。' : '従来UIに戻しました。');
+    const m = UI_MODES.find((x) => x.value === mode);
+    flash('ok', mode === 'classic' ? '従来UIに戻しました。' : `新UI「${m?.label}」に切り替えました。`);
   }
 
   function doExport() {
@@ -94,31 +95,25 @@ export default function SettingsPanel() {
               新UI <span class="beta-pill">BETA</span>
             </h2>
             <p class="muted text-sm">
-              作り込んだ新しいデザインを試せます。配色テーマとは別に、全ページのレイアウト・質感を切り替えます。
+              4種類の新デザインを試せます。配色テーマとは別に、全ページのレイアウト・質感を切り替えます。
             </p>
           </div>
         </div>
         <div class="ui-switch" role="radiogroup" aria-label="UIモード">
-          <button
-            type="button"
-            class={`ui-switch-opt ${ui === 'classic' ? 'is-active' : ''}`}
-            aria-pressed={ui === 'classic'}
-            onClick={() => chooseUI('classic')}
-          >
-            <span class="ui-switch-title">従来UI</span>
-            <span class="muted text-sm">これまでのシンプルな表示</span>
-          </button>
-          <button
-            type="button"
-            class={`ui-switch-opt ${ui === 'beta' ? 'is-active' : ''}`}
-            aria-pressed={ui === 'beta'}
-            onClick={() => chooseUI('beta')}
-          >
-            <span class="ui-switch-title">
-              新UI <span class="beta-pill">BETA</span>
-            </span>
-            <span class="muted text-sm">洗練された質感・余白・動き</span>
-          </button>
+          {UI_MODES.map((m) => (
+            <button
+              key={m.value}
+              type="button"
+              class={`ui-switch-opt ${ui === m.value ? 'is-active' : ''}`}
+              aria-pressed={ui === m.value}
+              onClick={() => chooseUI(m.value)}
+            >
+              <span class="ui-switch-title">
+                {m.label} {m.beta && <span class="beta-pill">BETA</span>}
+              </span>
+              <span class="muted text-sm">{m.hint}</span>
+            </button>
+          ))}
         </div>
         <p class="hint" style={{ marginTop: '10px' }}>
           ベータのため一部表示が崩れる場合があります。いつでも従来UIに戻せます。

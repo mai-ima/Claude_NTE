@@ -7,7 +7,7 @@
    レイアウト幾何はほぼ維持し、質感・余白・タイポ・動き・装飾を大幅に強化する。
    ========================================================================= */
 
-html[data-ui='beta'] {
+html[data-ui='aurora'] {
   /* やや大きめの角丸でソフトな印象に */
   --radius: 16px;
   --radius-sm: 11px;
@@ -36,7 +36,7 @@ html[data-ui='beta'] {
 }
 
 /* ===== オーロラ背景（明確に見える・ゆっくり漂う） ======================= */
-html[data-ui='beta'] body {
+html[data-ui='aurora'] body {
   position: relative;
   background:
     radial-gradient(1100px 680px at 88% -10%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%),
@@ -46,7 +46,7 @@ html[data-ui='beta'] body {
   background-attachment: fixed;
 }
 /* さらに上層に大きく動くオーロラのにじみ（モーション許可時のみ動かす） */
-html[data-ui='beta'] body::before {
+html[data-ui='aurora'] body::before {
   content: '';
   position: fixed;
   inset: -25% -10% auto -10%;
@@ -64,38 +64,38 @@ html[data-ui='beta'] body::before {
 }
 
 /* ===== スクロールバー ==================================================== */
-html[data-ui='beta'] *::-webkit-scrollbar {
+html[data-ui='aurora'] *::-webkit-scrollbar {
   width: 11px;
   height: 11px;
 }
-html[data-ui='beta'] *::-webkit-scrollbar-thumb {
+html[data-ui='aurora'] *::-webkit-scrollbar-thumb {
   background: color-mix(in srgb, var(--accent) 36%, var(--border));
   border-radius: 999px;
   border: 3px solid transparent;
   background-clip: padding-box;
 }
-html[data-ui='beta'] *::-webkit-scrollbar-thumb:hover {
+html[data-ui='aurora'] *::-webkit-scrollbar-thumb:hover {
   background: color-mix(in srgb, var(--accent) 55%, var(--border));
   background-clip: padding-box;
 }
 
-html[data-ui='beta'] ::selection {
+html[data-ui='aurora'] ::selection {
   background: color-mix(in srgb, var(--accent) 30%, transparent);
 }
-html[data-ui='beta'] :focus-visible {
+html[data-ui='aurora'] :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 
 /* ===== なめらかな遷移 ==================================================== */
-html[data-ui='beta'] .card,
-html[data-ui='beta'] .btn,
-html[data-ui='beta'] .badge,
-html[data-ui='beta'] .nav-link,
-html[data-ui='beta'] .el-badge,
-html[data-ui='beta'] .char-card,
-html[data-ui='beta'] .stat,
-html[data-ui='beta'] .info-panel {
+html[data-ui='aurora'] .card,
+html[data-ui='aurora'] .btn,
+html[data-ui='aurora'] .badge,
+html[data-ui='aurora'] .nav-link,
+html[data-ui='aurora'] .el-badge,
+html[data-ui='aurora'] .char-card,
+html[data-ui='aurora'] .stat,
+html[data-ui='aurora'] .info-panel {
   transition:
     transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1),
     box-shadow 0.25s ease,
@@ -104,21 +104,21 @@ html[data-ui='beta'] .info-panel {
 }
 
 /* ===== タイポグラフィ（より大胆に） ===================================== */
-html[data-ui='beta'] h1 {
+html[data-ui='aurora'] h1 {
   font-size: clamp(1.85rem, 1.3rem + 2.4vw, 2.7rem);
   letter-spacing: -0.015em;
   font-weight: 800;
 }
-html[data-ui='beta'] h2 {
+html[data-ui='aurora'] h2 {
   font-size: clamp(1.45rem, 1.15rem + 1.3vw, 1.95rem);
   letter-spacing: -0.01em;
 }
-html[data-ui='beta'] .content {
+html[data-ui='aurora'] .content {
   padding-top: 28px;
 }
 
 /* ===== ヘッダー（背の高いガラス＋オーロラのヘアライン） ================= */
-html[data-ui='beta'] .app-header {
+html[data-ui='aurora'] .app-header {
   height: calc(64px + env(safe-area-inset-top, 0px));
   background: var(--glass);
   backdrop-filter: saturate(190%) blur(20px);
@@ -126,7 +126,7 @@ html[data-ui='beta'] .app-header {
   border-bottom: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
   box-shadow: 0 6px 24px -16px color-mix(in srgb, var(--accent) 60%, transparent);
 }
-html[data-ui='beta'] .app-header::after {
+html[data-ui='aurora'] .app-header::after {
   /* 下端にオーロラのヘアライン */
   content: '';
   position: absolute;
@@ -139,40 +139,40 @@ html[data-ui='beta'] .app-header::after {
 }
 /* ヘッダーを高くした分、サイドバーの吸着位置を合わせる */
 @media (min-width: 960px) {
-  html[data-ui='beta'] .sidebar {
+  html[data-ui='aurora'] .sidebar {
     top: 84px;
     max-height: calc(100dvh - 100px);
   }
 }
-html[data-ui='beta'] .brand-mark {
+html[data-ui='aurora'] .brand-mark {
   width: 34px;
   height: 34px;
   border-radius: 11px;
   background: var(--beta-grad);
   box-shadow: var(--beta-glow), inset 0 0 0 1px rgba(255, 255, 255, 0.25);
 }
-html[data-ui='beta'] .brand {
+html[data-ui='aurora'] .brand {
   font-size: 1.05rem;
 }
-html[data-ui='beta'] .brand span:last-child {
+html[data-ui='aurora'] .brand span:last-child {
   background: var(--beta-grad);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
-html[data-ui='beta'] .app-header .nav-link {
+html[data-ui='aurora'] .app-header .nav-link {
   border-radius: 999px;
 }
-html[data-ui='beta'] .app-header .nav-link[aria-current='page'] {
+html[data-ui='aurora'] .app-header .nav-link[aria-current='page'] {
   color: var(--accent);
   background: color-mix(in srgb, var(--accent) 14%, transparent);
 }
 
 /* ===== ページ見出し（大きなピル＋グラデ見出し） ======================== */
-html[data-ui='beta'] .page-head {
+html[data-ui='aurora'] .page-head {
   margin-bottom: 30px;
 }
-html[data-ui='beta'] .page-head .eyebrow {
+html[data-ui='aurora'] .page-head .eyebrow {
   display: inline-block;
   padding: 5px 14px;
   border-radius: 999px;
@@ -183,19 +183,19 @@ html[data-ui='beta'] .page-head .eyebrow {
   letter-spacing: 0.06em;
   box-shadow: var(--beta-glow);
 }
-html[data-ui='beta'] .page-head h1 {
+html[data-ui='aurora'] .page-head h1 {
   margin: 12px 0 10px;
   background: linear-gradient(115deg, var(--text), color-mix(in srgb, var(--accent) 85%, var(--text)));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
-html[data-ui='beta'] .page-head .lead {
+html[data-ui='aurora'] .page-head .lead {
   font-size: 1.08rem;
 }
 
 /* ===== ヒーロー（トップ） ================================================ */
-html[data-ui='beta'] .hero {
+html[data-ui='aurora'] .hero {
   padding: 40px 28px;
   border-radius: var(--radius-lg);
   background:
@@ -209,11 +209,11 @@ html[data-ui='beta'] .hero {
   box-shadow: var(--beta-glow);
 }
 @media (min-width: 760px) {
-  html[data-ui='beta'] .hero {
+  html[data-ui='aurora'] .hero {
     padding: 56px 44px;
   }
 }
-html[data-ui='beta'] .hero h1 {
+html[data-ui='aurora'] .hero h1 {
   background: var(--beta-grad);
   -webkit-background-clip: text;
   background-clip: text;
@@ -221,7 +221,7 @@ html[data-ui='beta'] .hero h1 {
 }
 
 /* ===== 統計バンド（浮くガラスタイル＋大きなグラデ数字） ================ */
-html[data-ui='beta'] .stat {
+html[data-ui='aurora'] .stat {
   border-radius: var(--radius);
   background: var(--glass);
   backdrop-filter: blur(6px);
@@ -229,12 +229,12 @@ html[data-ui='beta'] .stat {
   border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
   box-shadow: var(--shadow-sm);
 }
-html[data-ui='beta'] .stat:hover {
+html[data-ui='aurora'] .stat:hover {
   transform: translateY(-3px);
   box-shadow: var(--beta-glow);
   border-color: color-mix(in srgb, var(--accent) 40%, var(--border));
 }
-html[data-ui='beta'] .stat-num {
+html[data-ui='aurora'] .stat-num {
   font-size: 1.85rem;
   background: var(--beta-grad);
   -webkit-background-clip: text;
@@ -243,7 +243,7 @@ html[data-ui='beta'] .stat-num {
 }
 
 /* ===== カード（ガラス＋グラデ枠＋強いホバー） ========================== */
-html[data-ui='beta'] .card {
+html[data-ui='aurora'] .card {
   border-radius: var(--radius-lg);
   background: var(--glass-strong);
   backdrop-filter: blur(7px);
@@ -251,18 +251,18 @@ html[data-ui='beta'] .card {
   border: 1px solid color-mix(in srgb, var(--accent) 10%, var(--border));
   box-shadow: var(--shadow-sm);
 }
-html[data-ui='beta'] .card-link {
+html[data-ui='aurora'] .card-link {
   position: relative;
   overflow: hidden;
 }
-html[data-ui='beta'] .card-link:hover {
+html[data-ui='aurora'] .card-link:hover {
   transform: translateY(-5px);
   box-shadow: var(--beta-glow-strong);
   border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
 }
 /* 上端のオーロラライン（ホバーで伸びる） */
-html[data-ui='beta'] .grid-cards > .card-link::after,
-html[data-ui='beta'] .grid > .card-link::after {
+html[data-ui='aurora'] .grid-cards > .card-link::after,
+html[data-ui='aurora'] .grid > .card-link::after {
   content: '';
   position: absolute;
   inset: 0 0 auto 0;
@@ -272,12 +272,12 @@ html[data-ui='beta'] .grid > .card-link::after {
   transform-origin: left;
   transition: transform 0.3s ease;
 }
-html[data-ui='beta'] .grid-cards > .card-link:hover::after,
-html[data-ui='beta'] .grid > .card-link:hover::after {
+html[data-ui='aurora'] .grid-cards > .card-link:hover::after,
+html[data-ui='aurora'] .grid > .card-link:hover::after {
   transform: scaleX(1);
 }
 /* ホバー時に走る斜めの光沢 */
-html[data-ui='beta'] .card-link::before {
+html[data-ui='aurora'] .card-link::before {
   content: '';
   position: absolute;
   top: 0;
@@ -293,15 +293,15 @@ html[data-ui='beta'] .card-link::before {
   transition: left 0.6s ease;
   pointer-events: none;
 }
-html[data-ui='beta'] .card-link:hover::before {
+html[data-ui='aurora'] .card-link:hover::before {
   left: 130%;
 }
 
 /* キャラカード：属性色の太い左帯＋上帯＋属性グロー */
-html[data-ui='beta'] .char-card {
+html[data-ui='aurora'] .char-card {
   border-left: 4px solid color-mix(in srgb, var(--el, var(--accent)) 80%, transparent);
 }
-html[data-ui='beta'] .char-card::before {
+html[data-ui='aurora'] .char-card::before {
   height: 4px;
   background: linear-gradient(
     90deg,
@@ -309,18 +309,18 @@ html[data-ui='beta'] .char-card::before {
     color-mix(in srgb, var(--el, var(--accent)) 40%, transparent)
   );
 }
-html[data-ui='beta'] .char-card:hover {
+html[data-ui='aurora'] .char-card:hover {
   box-shadow:
     var(--beta-glow-strong),
     0 0 0 1px color-mix(in srgb, var(--el, var(--accent)) 55%, transparent);
 }
-html[data-ui='beta'] .char-card :is(.avatar, [class*='avatar']) {
+html[data-ui='aurora'] .char-card :is(.avatar, [class*='avatar']) {
   box-shadow: 0 0 0 2px color-mix(in srgb, var(--el, var(--accent)) 60%, transparent),
     0 6px 18px color-mix(in srgb, var(--el, var(--accent)) 35%, transparent);
 }
 
 /* ===== 詳細ページ：情報パネル(infobox) ================================== */
-html[data-ui='beta'] .info-panel {
+html[data-ui='aurora'] .info-panel {
   border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--glass-strong);
@@ -329,37 +329,37 @@ html[data-ui='beta'] .info-panel {
   border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
   box-shadow: var(--beta-glow);
 }
-html[data-ui='beta'] .info-panel .info-hero {
+html[data-ui='aurora'] .info-panel .info-hero {
   background:
     radial-gradient(120% 120% at 30% 10%, color-mix(in srgb, var(--el, var(--accent)) 32%, transparent), transparent 70%),
     var(--beta-grad-soft);
   border-bottom: 1px solid color-mix(in srgb, var(--accent) 16%, var(--border));
 }
-html[data-ui='beta'] .info-row .v {
+html[data-ui='aurora'] .info-row .v {
   color: color-mix(in srgb, var(--text) 92%, var(--accent));
 }
 
 /* 目次をレール風に＋現在地のドット */
-html[data-ui='beta'] .toc {
+html[data-ui='aurora'] .toc {
   border-left: 2px solid color-mix(in srgb, var(--accent) 24%, var(--border));
   padding-left: 14px;
 }
-html[data-ui='beta'] .toc a {
+html[data-ui='aurora'] .toc a {
   border-radius: 8px;
   transition: color 0.2s ease, background 0.2s ease;
 }
-html[data-ui='beta'] .toc a:hover {
+html[data-ui='aurora'] .toc a:hover {
   color: var(--accent);
   background: color-mix(in srgb, var(--accent) 10%, transparent);
 }
 
 /* ===== 本文(prose) ====================================================== */
-html[data-ui='beta'] .prose h2 {
+html[data-ui='aurora'] .prose h2 {
   position: relative;
   padding-left: 16px;
   border-bottom-color: color-mix(in srgb, var(--accent) 18%, var(--border));
 }
-html[data-ui='beta'] .prose h2::before {
+html[data-ui='aurora'] .prose h2::before {
   content: '';
   position: absolute;
   left: 0;
@@ -369,7 +369,7 @@ html[data-ui='beta'] .prose h2::before {
   border-radius: 999px;
   background: var(--beta-grad);
 }
-html[data-ui='beta'] .prose a:not(.auto-term) {
+html[data-ui='aurora'] .prose a:not(.auto-term) {
   background-image: linear-gradient(var(--accent), var(--accent));
   background-size: 0% 2px;
   background-position: 0 100%;
@@ -377,19 +377,19 @@ html[data-ui='beta'] .prose a:not(.auto-term) {
   text-decoration: none;
   transition: background-size 0.2s ease;
 }
-html[data-ui='beta'] .prose a:not(.auto-term):hover {
+html[data-ui='aurora'] .prose a:not(.auto-term):hover {
   background-size: 100% 2px;
 }
 /* 自動用語リンクは点線下線でそれと分かるように */
-html[data-ui='beta'] .prose a.auto-term {
+html[data-ui='aurora'] .prose a.auto-term {
   text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
   text-underline-offset: 3px;
 }
-html[data-ui='beta'] .prose a.auto-term:hover {
+html[data-ui='aurora'] .prose a.auto-term:hover {
   text-decoration-color: var(--accent);
 }
 /* 本文テーブルをカード風に */
-html[data-ui='beta'] .prose table {
+html[data-ui='aurora'] .prose table {
   border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
   border-radius: var(--radius-sm);
   border-collapse: separate;
@@ -397,57 +397,57 @@ html[data-ui='beta'] .prose table {
   overflow: hidden;
   box-shadow: var(--shadow-sm);
 }
-html[data-ui='beta'] .prose th {
+html[data-ui='aurora'] .prose th {
   background: var(--beta-grad-soft);
   border-bottom: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
 }
-html[data-ui='beta'] .prose tbody tr:nth-child(even) td {
+html[data-ui='aurora'] .prose tbody tr:nth-child(even) td {
   background: color-mix(in srgb, var(--surface-2) 55%, transparent);
 }
-html[data-ui='beta'] .prose blockquote {
+html[data-ui='aurora'] .prose blockquote {
   border-left: 4px solid var(--accent);
   background: color-mix(in srgb, var(--accent) 7%, transparent);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 }
-html[data-ui='beta'] .prose code:not(pre code) {
+html[data-ui='aurora'] .prose code:not(pre code) {
   border: 1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
   background: color-mix(in srgb, var(--accent) 8%, var(--surface-2));
   border-radius: 6px;
 }
-html[data-ui='beta'] .prose pre {
+html[data-ui='aurora'] .prose pre {
   border-radius: var(--radius-sm);
   border: 1px solid color-mix(in srgb, var(--accent) 14%, var(--border));
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 6%, transparent);
 }
 
 /* ===== ボタン（ピル＋グラデ＋グロー） ================================== */
-html[data-ui='beta'] .btn {
+html[data-ui='aurora'] .btn {
   border-radius: 999px;
 }
-html[data-ui='beta'] .btn-primary {
+html[data-ui='aurora'] .btn-primary {
   background: var(--beta-grad);
   border-color: transparent;
   color: #fff;
   box-shadow: var(--beta-glow);
 }
-html[data-ui='beta'] .btn-primary:hover {
+html[data-ui='aurora'] .btn-primary:hover {
   filter: brightness(1.07);
   box-shadow: var(--beta-glow-strong);
 }
-html[data-ui='beta'] .btn-icon {
+html[data-ui='aurora'] .btn-icon {
   border-radius: 13px;
 }
 
 /* ===== バッジ / 属性バッジ ============================================= */
-html[data-ui='beta'] .badge {
+html[data-ui='aurora'] .badge {
   border-radius: 999px;
 }
-html[data-ui='beta'] .badge-accent {
+html[data-ui='aurora'] .badge-accent {
   background: color-mix(in srgb, var(--accent) 16%, var(--surface));
   border-color: color-mix(in srgb, var(--accent) 32%, var(--border));
   font-weight: 700;
 }
-html[data-ui='beta'] .el-badge {
+html[data-ui='aurora'] .el-badge {
   border-radius: 999px;
   background: color-mix(in srgb, var(--el, var(--accent)) 18%, transparent);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--el, var(--accent)) 38%, transparent),
@@ -455,65 +455,65 @@ html[data-ui='beta'] .el-badge {
 }
 
 /* ===== ツール群 ======================================================== */
-html[data-ui='beta'] .tool .tool-result,
-html[data-ui='beta'] .tool .card {
+html[data-ui='aurora'] .tool .tool-result,
+html[data-ui='aurora'] .tool .card {
   border-radius: var(--radius-lg);
 }
-html[data-ui='beta'] .tool .tool-result {
+html[data-ui='aurora'] .tool .tool-result {
   background:
     var(--beta-grad-soft),
     var(--glass-strong);
   border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
   box-shadow: var(--beta-glow);
 }
-html[data-ui='beta'] .tool .big {
+html[data-ui='aurora'] .tool .big {
   background: var(--beta-grad);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
-html[data-ui='beta'] .tool .progress {
+html[data-ui='aurora'] .tool .progress {
   border-radius: 999px;
   overflow: hidden;
 }
-html[data-ui='beta'] .tool .progress > span {
+html[data-ui='aurora'] .tool .progress > span {
   background: var(--beta-grad);
 }
-html[data-ui='beta'] .input,
-html[data-ui='beta'] .textarea,
-html[data-ui='beta'] .select {
+html[data-ui='aurora'] .input,
+html[data-ui='aurora'] .textarea,
+html[data-ui='aurora'] .select {
   border-radius: var(--radius-sm);
 }
-html[data-ui='beta'] .input:focus,
-html[data-ui='beta'] .textarea:focus,
-html[data-ui='beta'] .select:focus {
+html[data-ui='aurora'] .input:focus,
+html[data-ui='aurora'] .textarea:focus,
+html[data-ui='aurora'] .select:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 24%, transparent);
 }
 
 /* ===== サイドバー / ナビ（ピル化＋アクティブのグラデ帯） =============== */
-html[data-ui='beta'] .sidebar .nav-link,
-html[data-ui='beta'] .drawer-panel .nav-link {
+html[data-ui='aurora'] .sidebar .nav-link,
+html[data-ui='aurora'] .drawer-panel .nav-link {
   border-radius: 999px;
   padding: 9px 14px;
 }
-html[data-ui='beta'] .nav-link:hover {
+html[data-ui='aurora'] .nav-link:hover {
   background: color-mix(in srgb, var(--accent) 10%, transparent);
 }
-html[data-ui='beta'] .nav-link[aria-current='page'],
-html[data-ui='beta'] .nav-link.is-active {
+html[data-ui='aurora'] .nav-link[aria-current='page'],
+html[data-ui='aurora'] .nav-link.is-active {
   background: var(--beta-grad-soft);
   color: var(--accent);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 30%, var(--border));
 }
-html[data-ui='beta'] .nav-group-title {
+html[data-ui='aurora'] .nav-group-title {
   color: color-mix(in srgb, var(--accent) 62%, var(--muted));
   position: relative;
 }
 
 /* ===== 下部ナビ（フローティングのピル） ============================== */
 @media (max-width: 959px) {
-  html[data-ui='beta'] .bottom-nav {
+  html[data-ui='aurora'] .bottom-nav {
     left: 12px;
     right: 12px;
     bottom: calc(10px + env(safe-area-inset-bottom, 0px));
@@ -526,40 +526,40 @@ html[data-ui='beta'] .nav-group-title {
     -webkit-backdrop-filter: saturate(190%) blur(20px);
     box-shadow: var(--beta-glow-strong);
   }
-  html[data-ui='beta'] .bottom-nav a[aria-current='page'] {
+  html[data-ui='aurora'] .bottom-nav a[aria-current='page'] {
     color: var(--accent);
   }
-  html[data-ui='beta'] .bottom-nav a[aria-current='page'] svg {
+  html[data-ui='aurora'] .bottom-nav a[aria-current='page'] svg {
     filter: drop-shadow(0 4px 10px color-mix(in srgb, var(--accent) 50%, transparent));
   }
 }
 
 /* ===== 設定の各種強調 ================================================== */
-html[data-ui='beta'] .beta-pill {
+html[data-ui='aurora'] .beta-pill {
   box-shadow: 0 2px 10px color-mix(in srgb, #6366f1 50%, transparent);
 }
-html[data-ui='beta'] .ui-switch-opt.is-active,
-html[data-ui='beta'] .theme-opt.is-active {
+html[data-ui='aurora'] .ui-switch-opt.is-active,
+html[data-ui='aurora'] .theme-opt.is-active {
   border-color: transparent;
   box-shadow: 0 0 0 2px var(--accent), var(--beta-glow);
 }
-html[data-ui='beta'] .pagefind-ui input {
+html[data-ui='aurora'] .pagefind-ui input {
   border-radius: 999px !important;
 }
-html[data-ui='beta'] .pagefind-ui input:focus {
+html[data-ui='aurora'] .pagefind-ui input:focus {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 24%, transparent) !important;
 }
 
 /* 関連項目・被リンクのチップにホバーの浮き */
-html[data-ui='beta'] section .cluster > .badge:hover {
+html[data-ui='aurora'] section .cluster > .badge:hover {
   transform: translateY(-2px);
   border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
   box-shadow: var(--shadow-sm);
 }
 
 /* セクション見出しの装飾下線（トップ等の h2） */
-html[data-ui='beta'] .content > section > h2:first-child,
-html[data-ui='beta'] .content > .grid > section > h2:first-child {
+html[data-ui='aurora'] .content > section > h2:first-child,
+html[data-ui='aurora'] .content > .grid > section > h2:first-child {
   display: inline-block;
   padding-bottom: 3px;
   background: var(--beta-grad) left bottom / 44px 3px no-repeat;
@@ -569,7 +569,7 @@ html[data-ui='beta'] .content > .grid > section > h2:first-child {
 /* ===== 動き（モーション許可時のみ） =================================== */
 @media (prefers-reduced-motion: no-preference) {
   /* オーロラ背景がゆっくり漂う */
-  html[data-ui='beta'] body::before {
+  html[data-ui='aurora'] body::before {
     animation: beta-aurora 22s ease-in-out infinite alternate;
   }
   @keyframes beta-aurora {
@@ -581,7 +581,7 @@ html[data-ui='beta'] .content > .grid > section > h2:first-child {
     }
   }
   /* ヘッダーのオーロラヘアラインがゆっくり流れる */
-  html[data-ui='beta'] .app-header::after {
+  html[data-ui='aurora'] .app-header::after {
     background-size: 200% 100%;
     animation: beta-flow 8s linear infinite;
   }
@@ -591,20 +591,20 @@ html[data-ui='beta'] .content > .grid > section > h2:first-child {
     }
   }
   /* セクションの入場アニメ */
-  html[data-ui='beta'] .content > section,
-  html[data-ui='beta'] .content > .page-head {
+  html[data-ui='aurora'] .content > section,
+  html[data-ui='aurora'] .content > .page-head {
     animation: beta-rise 0.55s cubic-bezier(0.2, 0.7, 0.2, 1) both;
   }
-  html[data-ui='beta'] .content > section:nth-of-type(2) {
+  html[data-ui='aurora'] .content > section:nth-of-type(2) {
     animation-delay: 0.05s;
   }
-  html[data-ui='beta'] .content > section:nth-of-type(3) {
+  html[data-ui='aurora'] .content > section:nth-of-type(3) {
     animation-delay: 0.1s;
   }
-  html[data-ui='beta'] .content > section:nth-of-type(4) {
+  html[data-ui='aurora'] .content > section:nth-of-type(4) {
     animation-delay: 0.15s;
   }
-  html[data-ui='beta'] .content > section:nth-of-type(5) {
+  html[data-ui='aurora'] .content > section:nth-of-type(5) {
     animation-delay: 0.2s;
   }
   @keyframes beta-rise {
@@ -621,12 +621,12 @@ html[data-ui='beta'] .content > .grid > section > h2:first-child {
 
 /* ===== モーション抑制設定を尊重 ======================================= */
 @media (prefers-reduced-motion: reduce) {
-  html[data-ui='beta'] .card-link:hover,
-  html[data-ui='beta'] .char-card:hover,
-  html[data-ui='beta'] .stat:hover {
+  html[data-ui='aurora'] .card-link:hover,
+  html[data-ui='aurora'] .char-card:hover,
+  html[data-ui='aurora'] .stat:hover {
     transform: none;
   }
-  html[data-ui='beta'] .card-link::before {
+  html[data-ui='aurora'] .card-link::before {
     display: none;
   }
 }

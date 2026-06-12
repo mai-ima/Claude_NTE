@@ -34,7 +34,7 @@ sources:
 
 ## 注意点
 
-- 組織の方針・内情、指揮系統の詳細、プレイヤーとの距離感はストーリー進行で明らかになる部分が多く、現時点で確証の取れる設定は限られる（**要確認**）。詳細は[ストーリー](/story/)を参照。
-- 「管理する公的組織」という大枠以上の固有設定（人物・内部構造など）は未確定として扱い、創作で補わない。
+- 内部には総務部門や封じ込め部隊などの専門部署があり、高優先度の事件には精鋭部隊 **ETD-4**（隊長は[白蔵](/characters/baicang/)）が投入されるとされる（英語圏wiki由来・**要確認**）。組織の全体像・ネタバレを含む詳細は[勢力と組織](/story/factions/)にまとめた。
+- 「管理する公的組織」という大枠以上の固有設定は未確定の部分が残るため、確定し次第更新する。
 
-関連: [異象](/terms/anomaly/) ／ [異象ハンター](/terms/anomaly-hunter/) ／ [鑑定士](/terms/appraiser/) ／ [ザ・サークル](/terms/the-circle/) ／ [エスパー](/terms/esper/) ／ [異象界](/terms/anomaly-zone/)
+関連: [勢力と組織（詳説）](/story/factions/) ／ [異象](/terms/anomaly/) ／ [異象ハンター](/terms/anomaly-hunter/) ／ [鑑定士](/terms/appraiser/) ／ [ザ・サークル](/terms/the-circle/) ／ [エスパー](/terms/esper/) ／ [異象界](/terms/anomaly-zone/)

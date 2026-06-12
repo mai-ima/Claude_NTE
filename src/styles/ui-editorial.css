@@ -1,0 +1,447 @@
+/* =========================================================================
+   新UI（ベータ） — <html data-ui="beta"> のときだけ適用。
+   コンセプト「Editorial」: 紙の特集記事・ジン(zine)のような、
+   太い罫線・ハードシャドウ・活字的タイポで組む大胆なレイヤー。
+   グラデーション／ガラスぼかし／ネオングローは一切使わない。
+   どの配色テーマ(minimal/dark/soft/auto)でも崩れないよう、色は
+   --text / --accent / --bg から導出する。classic の見た目には影響しない。
+   ========================================================================= */
+
+html[data-ui='editorial'] {
+  /* 角丸をほぼ無くし、判型のようなシャープな紙面に */
+  --radius: 4px;
+  --radius-sm: 2px;
+  --radius-lg: 6px;
+  /* 「インク」= 罫線・ハードシャドウ用の濃色（ダークでは明色になる） */
+  --ink: color-mix(in srgb, var(--text) 85%, var(--bg));
+  --ink-soft: color-mix(in srgb, var(--text) 45%, var(--border));
+  --shadow-hard-sm: 3px 3px 0 var(--ink);
+  --shadow-hard: 5px 5px 0 var(--ink);
+  --shadow-hard-lg: 8px 8px 0 var(--ink);
+}
+
+/* 方眼紙のようなドットグリッド背景（ごく薄く・固定） */
+html[data-ui='editorial'] body {
+  background-color: var(--bg);
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--text) 7%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+}
+
+html[data-ui='editorial'] ::selection {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+html[data-ui='editorial'] :focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 0;
+}
+html[data-ui='editorial'] * {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ink-soft) transparent;
+}
+html[data-ui='editorial'] *::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+html[data-ui='editorial'] *::-webkit-scrollbar-thumb {
+  background: var(--ink-soft);
+  border-radius: 0;
+}
+
+/* 共通トランジション（移動＝紙が浮く動きのみ） */
+html[data-ui='editorial'] .card,
+html[data-ui='editorial'] .btn,
+html[data-ui='editorial'] .nav-link,
+html[data-ui='editorial'] .stat {
+  transition:
+    transform 0.12s ease-out,
+    box-shadow 0.12s ease-out,
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+/* ===== タイポグラフィ（見出しを活字的に強く） ========================== */
+html[data-ui='editorial'] h1 {
+  font-size: clamp(1.9rem, 1.3rem + 2.6vw, 2.8rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+html[data-ui='editorial'] h2 {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+/* ===== ヘッダー（ベタ面＋太罫1本） ===================================== */
+html[data-ui='editorial'] .app-header {
+  background: var(--surface);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom: 2px solid var(--ink);
+}
+html[data-ui='editorial'] .brand-mark {
+  border-radius: 0;
+  background: var(--accent);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+html[data-ui='editorial'] .brand span:last-child {
+  font-weight: 900;
+  letter-spacing: 0.01em;
+}
+html[data-ui='editorial'] .app-header .nav-link {
+  border-radius: 0;
+}
+html[data-ui='editorial'] .app-header .nav-link[aria-current='page'] {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+/* ===== ページ見出し（記事の柱見出し風） ================================ */
+html[data-ui='editorial'] .page-head {
+  margin-bottom: 30px;
+  padding-bottom: 18px;
+  border-bottom: 3px double var(--ink);
+}
+html[data-ui='editorial'] .page-head .eyebrow {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  padding: 4px 10px;
+  border-radius: 0;
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+html[data-ui='editorial'] .page-head h1 {
+  margin: 12px 0 8px;
+}
+html[data-ui='editorial'] .page-head .lead {
+  font-size: 1.04rem;
+}
+
+/* ===== ヒーロー（トップ）：紙面の一面トップ ============================ */
+html[data-ui='editorial'] .hero {
+  border-radius: 0;
+  border: 2px solid var(--ink);
+  background: var(--surface);
+  box-shadow: var(--shadow-hard-lg);
+}
+html[data-ui='editorial'] .hero::after {
+  /* 右上の斜めストライプ（印刷物のアクセント） */
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 140px;
+  height: 10px;
+  background: repeating-linear-gradient(
+    -45deg,
+    var(--accent) 0 8px,
+    transparent 8px 16px
+  );
+}
+html[data-ui='editorial'] .hero .eyebrow {
+  font-family: var(--font-mono);
+  letter-spacing: 0.14em;
+}
+
+/* ===== 統計バンド（数字を大きな活字で） ================================ */
+html[data-ui='editorial'] .stat {
+  border-radius: 0;
+  border: 1.5px solid var(--ink);
+  background: var(--surface);
+  box-shadow: var(--shadow-hard-sm);
+}
+html[data-ui='editorial'] .stat:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-hard);
+}
+html[data-ui='editorial'] .stat-num {
+  font-size: 1.9rem;
+  font-weight: 900;
+  color: var(--accent);
+}
+html[data-ui='editorial'] .stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+}
+
+/* ===== カード（厚紙＋ハードシャドウ） ================================== */
+html[data-ui='editorial'] .card {
+  border-radius: var(--radius);
+  border: 1.5px solid var(--ink);
+  background: var(--surface);
+  box-shadow: var(--shadow-hard-sm);
+}
+html[data-ui='editorial'] .card-link:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-hard-lg);
+  border-color: var(--ink);
+}
+
+/* キャラカード：属性色の帯を太く（classicの3pxを5pxに） */
+html[data-ui='editorial'] .char-card::before {
+  height: 5px;
+}
+html[data-ui='editorial'] .char-card {
+  border-left: 5px solid var(--el, var(--accent));
+}
+html[data-ui='editorial'] .char-card :is(.avatar, [class*='avatar']) {
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* ===== 詳細ページ：情報パネル(infobox) ================================= */
+html[data-ui='editorial'] .info-panel {
+  border-radius: 0;
+  border: 2px solid var(--ink);
+  box-shadow: var(--shadow-hard);
+  background: var(--surface);
+}
+html[data-ui='editorial'] .info-panel .info-hero {
+  border-bottom: 2px solid var(--ink);
+}
+html[data-ui='editorial'] .info-row .k {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.06em;
+}
+html[data-ui='editorial'] .info-row + .info-row {
+  border-top: 1px dashed var(--ink-soft);
+}
+
+/* 目次：欄外の段組み風 */
+html[data-ui='editorial'] .toc {
+  border-left: 3px solid var(--ink);
+  padding-left: 14px;
+}
+html[data-ui='editorial'] .toc a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+/* ===== 本文(prose)：印刷物の組版 ======================================= */
+html[data-ui='editorial'] .prose h2 {
+  border-bottom: 3px solid var(--ink);
+  padding-bottom: 0.25em;
+}
+html[data-ui='editorial'] .prose h2::before {
+  content: '';
+  display: inline-block;
+  width: 0.5em;
+  height: 0.5em;
+  background: var(--accent);
+  margin-right: 10px;
+}
+html[data-ui='editorial'] .prose h3 {
+  padding-left: 12px;
+  border-left: 4px solid var(--ink-soft);
+}
+html[data-ui='editorial'] .prose a {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+html[data-ui='editorial'] .prose a:hover {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  text-decoration: none;
+}
+/* 自動用語リンクは点線で区別 */
+html[data-ui='editorial'] .prose a.auto-term {
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1.5px;
+}
+html[data-ui='editorial'] .prose table {
+  border: 2px solid var(--ink);
+  border-radius: 0;
+}
+html[data-ui='editorial'] .prose th {
+  background: var(--ink);
+  color: var(--bg);
+  letter-spacing: 0.03em;
+}
+html[data-ui='editorial'] .prose tbody tr:nth-child(even) td {
+  background: color-mix(in srgb, var(--surface-2) 60%, transparent);
+}
+html[data-ui='editorial'] .prose blockquote {
+  border-left: 4px solid var(--accent);
+  background: var(--accent-weak);
+  border-radius: 0;
+}
+html[data-ui='editorial'] .prose code:not(pre code) {
+  border: 1px solid var(--ink-soft);
+  background: var(--surface-2);
+  border-radius: 2px;
+}
+html[data-ui='editorial'] .prose pre {
+  border: 1.5px solid var(--ink);
+  border-radius: 0;
+  box-shadow: var(--shadow-hard-sm);
+}
+
+/* ===== ボタン（紙のスタンプ） ========================================== */
+html[data-ui='editorial'] .btn {
+  border-radius: 3px;
+  border: 1.5px solid var(--ink);
+  box-shadow: var(--shadow-hard-sm);
+  font-weight: 700;
+}
+html[data-ui='editorial'] .btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+html[data-ui='editorial'] .btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+html[data-ui='editorial'] .btn-primary {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+html[data-ui='editorial'] .btn-ghost,
+html[data-ui='editorial'] .btn-icon {
+  box-shadow: none;
+  border-color: transparent;
+}
+html[data-ui='editorial'] .btn-icon:hover {
+  border-color: var(--ink);
+  transform: none;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* ===== バッジ：ラベルシール風 ========================================== */
+html[data-ui='editorial'] .badge {
+  border-radius: 2px;
+  border: 1px solid var(--ink-soft);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+}
+html[data-ui='editorial'] .badge-accent {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border-color: var(--ink);
+}
+html[data-ui='editorial'] .el-badge {
+  border-radius: 2px;
+}
+
+/* ===== 入力・ツール ===================================================== */
+html[data-ui='editorial'] .input,
+html[data-ui='editorial'] .textarea,
+html[data-ui='editorial'] .select {
+  border-radius: 2px;
+  border: 1.5px solid var(--ink-soft);
+}
+html[data-ui='editorial'] .input:focus,
+html[data-ui='editorial'] .textarea:focus,
+html[data-ui='editorial'] .select:focus {
+  border-color: var(--accent);
+  box-shadow: 3px 3px 0 var(--accent-weak);
+}
+html[data-ui='editorial'] .tool .tool-result {
+  border: 2px solid var(--ink);
+  border-radius: 0;
+  background: var(--surface);
+  box-shadow: var(--shadow-hard);
+}
+html[data-ui='editorial'] .tool .big {
+  font-weight: 900;
+  color: var(--accent);
+}
+html[data-ui='editorial'] .tool .progress {
+  border-radius: 0;
+  border: 1.5px solid var(--ink);
+  overflow: hidden;
+}
+html[data-ui='editorial'] .tool .progress > span {
+  background: var(--accent);
+}
+
+/* ===== サイドバー / ドロワー =========================================== */
+html[data-ui='editorial'] .nav-group-title {
+  font-family: var(--font-mono);
+  letter-spacing: 0.14em;
+  border-bottom: 1px solid var(--ink-soft);
+  padding-bottom: 4px;
+}
+html[data-ui='editorial'] .sidebar .nav-link,
+html[data-ui='editorial'] .drawer-panel .nav-link {
+  border-radius: 0;
+}
+html[data-ui='editorial'] .nav-link[aria-current='page'],
+html[data-ui='editorial'] .nav-link.is-active {
+  background: var(--ink);
+  color: var(--bg);
+  font-weight: 700;
+}
+html[data-ui='editorial'] .nav-link:hover {
+  background: var(--accent-weak);
+}
+
+/* ===== フッター・下部ナビ ============================================== */
+html[data-ui='editorial'] .app-footer {
+  border-top: 2px solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+}
+@media (max-width: 959px) {
+  html[data-ui='editorial'] .bottom-nav {
+    background: var(--surface);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-top: 2px solid var(--ink);
+  }
+  html[data-ui='editorial'] .bottom-nav a {
+    border-radius: 0;
+  }
+  html[data-ui='editorial'] .bottom-nav a[aria-current='page'] {
+    color: var(--accent);
+    box-shadow: inset 0 3px 0 var(--accent);
+  }
+}
+
+/* ===== ネタバレ折りたたみ・コールアウト ================================ */
+html[data-ui='editorial'] .spoiler {
+  border: 1.5px dashed var(--ink-soft);
+  border-radius: 0;
+}
+html[data-ui='editorial'] .callout {
+  border-radius: 0;
+  border-width: 1.5px;
+}
+
+/* ===== 設定・検索 ======================================================= */
+html[data-ui='editorial'] .ui-switch-opt.is-active,
+html[data-ui='editorial'] .theme-opt.is-active {
+  border-color: var(--ink);
+  box-shadow: var(--shadow-hard-sm);
+}
+html[data-ui='editorial'] .pagefind-ui input {
+  border-radius: 2px !important;
+  border: 1.5px solid var(--ink) !important;
+}
+
+/* セクション見出しの下線（トップ等の h2） */
+html[data-ui='editorial'] .content > section > h2:first-child,
+html[data-ui='editorial'] .content > .grid > section > h2:first-child {
+  display: inline-block;
+  padding-bottom: 3px;
+  box-shadow: inset 0 -3px 0 var(--accent);
+}
+
+/* ===== モーション抑制設定を尊重 ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  html[data-ui='editorial'] .card-link:hover,
+  html[data-ui='editorial'] .stat:hover,
+  html[data-ui='editorial'] .btn:hover,
+  html[data-ui='editorial'] .btn:active {
+    transform: none;
+  }
+}

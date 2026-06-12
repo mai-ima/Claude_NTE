@@ -1,0 +1,324 @@
+/* =========================================================================
+   新UI「Liquid Glass」 — <html data-ui="liquid"> のときだけ適用。
+   iOS/visionOS 系の本格リキッドグラス: 厚い曇りガラス・上端のスペキュラ
+   ハイライト・浮遊するカプセル形状。配色テーマの変数から導出し、
+   minimal/dark/soft/auto すべてで成立させる。classic には影響しない。
+   ========================================================================= */
+
+html[data-ui='liquid'] {
+  --radius: 22px;
+  --radius-sm: 14px;
+  --radius-lg: 28px;
+  /* ガラス面（厚め）と縁のスペキュラ */
+  --lq-surface: color-mix(in srgb, var(--surface) 58%, transparent);
+  --lq-surface-thick: color-mix(in srgb, var(--surface) 76%, transparent);
+  --lq-blur: saturate(180%) blur(24px);
+  --lq-edge:
+    inset 0 1px 0 color-mix(in srgb, #fff 38%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, #fff 14%, transparent);
+  --lq-shadow: 0 10px 36px color-mix(in srgb, var(--text) 16%, transparent);
+  --lq-shadow-lg: 0 18px 56px color-mix(in srgb, var(--text) 22%, transparent);
+}
+
+/* 壁紙: アクセント由来のやわらかな色面（ガラスの透けを見せるため必須） */
+html[data-ui='liquid'] body {
+  background:
+    radial-gradient(900px 600px at 85% -8%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 60%),
+    radial-gradient(800px 560px at -8% 30%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 58%),
+    radial-gradient(700px 500px at 60% 110%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
+}
+
+html[data-ui='liquid'] ::selection {
+  background: color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+/* 共通トランジション */
+html[data-ui='liquid'] .card,
+html[data-ui='liquid'] .btn,
+html[data-ui='liquid'] .nav-link,
+html[data-ui='liquid'] .stat {
+  transition:
+    transform 0.22s cubic-bezier(0.32, 0.72, 0, 1),
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+/* ===== ヘッダー: 浮遊するガラスのカプセル ============================== */
+html[data-ui='liquid'] .app-header {
+  top: 8px;
+  margin: 8px 10px 0;
+  border-radius: 999px;
+  border: none;
+  background: var(--lq-surface);
+  backdrop-filter: var(--lq-blur);
+  -webkit-backdrop-filter: var(--lq-blur);
+  box-shadow: var(--lq-edge), var(--lq-shadow);
+}
+html[data-ui='liquid'] .brand-mark {
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 45%, transparent);
+}
+html[data-ui='liquid'] .app-header .nav-link {
+  border-radius: 999px;
+}
+html[data-ui='liquid'] .app-header .nav-link[aria-current='page'] {
+  background: var(--lq-surface-thick);
+  color: var(--accent);
+  box-shadow: var(--lq-edge);
+}
+/* ヘッダー浮遊分、サイドバーの吸着位置を下げる */
+@media (min-width: 960px) {
+  html[data-ui='liquid'] .sidebar {
+    top: 86px;
+    max-height: calc(100dvh - 102px);
+  }
+}
+
+/* ===== 見出し =========================================================== */
+html[data-ui='liquid'] h1 {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+html[data-ui='liquid'] .page-head .eyebrow {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: var(--lq-surface);
+  backdrop-filter: var(--lq-blur);
+  -webkit-backdrop-filter: var(--lq-blur);
+  box-shadow: var(--lq-edge);
+  color: var(--accent);
+}
+html[data-ui='liquid'] .page-head h1 {
+  margin-top: 10px;
+}
+
+/* ===== ヒーロー・統計 =================================================== */
+html[data-ui='liquid'] .hero {
+  border-radius: var(--radius-lg);
+  border: none;
+  background:
+    radial-gradient(600px 220px at 12% -20%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 70%),
+    var(--lq-surface);
+  backdrop-filter: var(--lq-blur);
+  -webkit-backdrop-filter: var(--lq-blur);
+  box-shadow: var(--lq-edge), var(--lq-shadow-lg);
+}
+html[data-ui='liquid'] .stat {
+  border: none;
+  border-radius: var(--radius);
+  background: var(--lq-surface);
+  backdrop-filter: var(--lq-blur);
+  -webkit-backdrop-filter: var(--lq-blur);
+  box-shadow: var(--lq-edge), var(--shadow-sm);
+}
+html[data-ui='liquid'] .stat:hover {
+  transform: scale(1.04);
+  box-shadow: var(--lq-edge), var(--lq-shadow);
+}
+html[data-ui='liquid'] .stat-num {
+  color: var(--accent);
+}
+
+/* ===== カード: 厚いガラス ============================================== */
+html[data-ui='liquid'] .card {
+  border-radius: var(--radius);
+  border: none;
+  background: var(--lq-surface-thick);
+  backdrop-filter: var(--lq-blur);
+  -webkit-backdrop-filter: var(--lq-blur);
+  box-shadow: var(--lq-edge), var(--shadow-sm);
+}
+html[data-ui='liquid'] .card-link:hover {
+  transform: scale(1.02);
+  box-shadow: var(--lq-edge), var(--lq-shadow-lg);
+}
+html[data-ui='liquid'] .char-card {
+  border-left: none;
+}
+html[data-ui='liquid'] .char-card::before {
+  height: 4px;
+  border-radius: 999px;
+  inset: 10px 14px auto 14px;
+}
+html[data-ui='liquid'] .char-card :is(.avatar, [class*='avatar']) {
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 40%, transparent),
+    0 4px 14px color-mix(in srgb, var(--el, var(--accent)) 30%, transparent);
+}
+
+/* ===== 詳細ページ ======================================================= */
+html[data-ui='liquid'] .info-panel {
+  border: none;
+  border-radius: var(--radius);
+  background: var(--lq-surface-thick);
+  backdrop-filter: var(--lq-blur);
+  -webkit-backdrop-filter: var(--lq-blur);
+  box-shadow: var(--lq-edge), var(--lq-shadow);
+  overflow: hidden;
+}
+html[data-ui='liquid'] .info-panel .info-hero {
+  border-bottom: 1px solid color-mix(in srgb, #fff 14%, transparent);
+}
+html[data-ui='liquid'] .info-row + .info-row {
+  border-top: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
+}
+html[data-ui='liquid'] .toc {
+  border-left: none;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--lq-surface);
+  backdrop-filter: var(--lq-blur);
+  -webkit-backdrop-filter: var(--lq-blur);
+  box-shadow: var(--lq-edge);
+}
+
+/* ===== 本文 ============================================================= */
+html[data-ui='liquid'] .prose table {
+  border: none;
+  border-radius: var(--radius-sm);
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  background: var(--lq-surface-thick);
+  box-shadow: var(--lq-edge);
+}
+html[data-ui='liquid'] .prose th {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+html[data-ui='liquid'] .prose blockquote {
+  border-left: none;
+  border-radius: var(--radius-sm);
+  background: var(--lq-surface);
+  box-shadow: var(--lq-edge);
+}
+html[data-ui='liquid'] .prose pre {
+  border-radius: var(--radius-sm);
+  box-shadow: var(--lq-edge);
+}
+
+/* ===== ボタン・入力: カプセル ========================================== */
+html[data-ui='liquid'] .btn {
+  border-radius: 999px;
+  border: none;
+  background: var(--lq-surface-thick);
+  backdrop-filter: var(--lq-blur);
+  -webkit-backdrop-filter: var(--lq-blur);
+  box-shadow: var(--lq-edge), var(--shadow-sm);
+}
+html[data-ui='liquid'] .btn:hover {
+  transform: scale(1.04);
+}
+html[data-ui='liquid'] .btn:active {
+  transform: scale(0.97);
+}
+html[data-ui='liquid'] .btn-primary {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 40%, transparent),
+    0 6px 20px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+html[data-ui='liquid'] .input,
+html[data-ui='liquid'] .textarea,
+html[data-ui='liquid'] .select {
+  border-radius: 999px;
+  border: none;
+  background: var(--lq-surface-thick);
+  box-shadow: var(--lq-edge);
+}
+html[data-ui='liquid'] .textarea {
+  border-radius: var(--radius-sm);
+}
+html[data-ui='liquid'] .input:focus,
+html[data-ui='liquid'] .textarea:focus,
+html[data-ui='liquid'] .select:focus {
+  box-shadow: var(--lq-edge), 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+html[data-ui='liquid'] .badge {
+  border: none;
+  background: var(--lq-surface-thick);
+  box-shadow: var(--lq-edge);
+}
+html[data-ui='liquid'] .badge-accent {
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  color: var(--accent);
+}
+
+/* ===== ツール =========================================================== */
+html[data-ui='liquid'] .tool .tool-result {
+  border: none;
+  border-radius: var(--radius);
+  background: var(--lq-surface);
+  backdrop-filter: var(--lq-blur);
+  -webkit-backdrop-filter: var(--lq-blur);
+  box-shadow: var(--lq-edge), var(--lq-shadow);
+}
+html[data-ui='liquid'] .tool .big {
+  color: var(--accent);
+}
+html[data-ui='liquid'] .tool .progress {
+  border-radius: 999px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--text) 10%, transparent);
+}
+html[data-ui='liquid'] .tool .progress > span {
+  background: var(--accent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 40%, transparent);
+}
+
+/* ===== サイドバー / 下部ナビ =========================================== */
+html[data-ui='liquid'] .sidebar .nav-link,
+html[data-ui='liquid'] .drawer-panel .nav-link {
+  border-radius: 999px;
+}
+html[data-ui='liquid'] .nav-link[aria-current='page'],
+html[data-ui='liquid'] .nav-link.is-active {
+  background: var(--lq-surface-thick);
+  color: var(--accent);
+  box-shadow: var(--lq-edge);
+}
+html[data-ui='liquid'] .drawer-panel {
+  background: var(--lq-surface-thick);
+  backdrop-filter: var(--lq-blur);
+  -webkit-backdrop-filter: var(--lq-blur);
+}
+@media (max-width: 959px) {
+  html[data-ui='liquid'] .bottom-nav {
+    left: 14px;
+    right: 14px;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    height: 62px;
+    padding-bottom: 0;
+    border: none;
+    border-radius: 999px;
+    background: var(--lq-surface);
+    backdrop-filter: var(--lq-blur);
+    -webkit-backdrop-filter: var(--lq-blur);
+    box-shadow: var(--lq-edge), var(--lq-shadow-lg);
+  }
+  html[data-ui='liquid'] .bottom-nav a[aria-current='page'] {
+    color: var(--accent);
+  }
+}
+
+/* ===== 設定・検索 ======================================================= */
+html[data-ui='liquid'] .ui-switch-opt.is-active,
+html[data-ui='liquid'] .theme-opt.is-active {
+  border-color: transparent;
+  box-shadow: var(--lq-edge), 0 0 0 2px var(--accent);
+}
+html[data-ui='liquid'] .pagefind-ui input {
+  border-radius: 999px !important;
+}
+
+/* ===== モーション抑制 =================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html[data-ui='liquid'] .card-link:hover,
+  html[data-ui='liquid'] .stat:hover,
+  html[data-ui='liquid'] .btn:hover,
+  html[data-ui='liquid'] .btn:active {
+    transform: none;
+  }
+}
