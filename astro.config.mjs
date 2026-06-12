@@ -5,6 +5,7 @@ import preact from '@astrojs/preact';
 import sitemap from '@astrojs/sitemap';
 import icon from 'astro-icon';
 import pagefind from 'astro-pagefind';
+import rehypeTermLinks from './src/lib/rehype-term-links.mjs';
 
 // --- Deploy configuration ---------------------------------------------------
 // Deploy target: Vercel (static). Astro is auto-detected; `dist/` is served
@@ -19,6 +20,8 @@ export default defineConfig({
   trailingSlash: 'always',
   output: 'static',
   build: { format: 'directory' },
+  // 本文中の用語を、その用語ページへ自動リンク（Wikipedia風の青リンク化）。
+  markdown: { rehypePlugins: [rehypeTermLinks] },
   // 注: Markdown/MDX 内部リンクは「相対リンク」で記述しているため base 付与の
   // 変換プラグインは不要（Astro のバージョン更新にも壊れにくい）。
   integrations: [preact({ compat: true }), mdx(), icon(), pagefind(), sitemap()],
