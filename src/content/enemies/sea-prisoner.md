@@ -37,4 +37,4 @@ sources:
 
 ## 攻略のコツ
 
-- [魂（Psyche）](/terms/el-psyche/)で弱点を突く。[ファディア](/characters/fadia/)などの魂属性サポート（回復・支援）を混ぜた継戦編成が安定する。
+- [魂（Psyche）](/terms/el-psyche/)で弱点を突く。[ファルディーヤ](/characters/fadia/)などの魂属性サポート（回復・支援）を混ぜた継戦編成が安定する。

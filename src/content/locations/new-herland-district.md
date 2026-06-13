@@ -20,7 +20,7 @@ sources:
 
 ## 地区・スポット
 
-- **[ピンクポウズ銀行](/terms/pink-paws-bank/)** — 区を代表する銀行。[ちぃちゃん](/characters/chiz/)が所属し、[強盗イベント（Pink Paws Heist）](/terms/pink-paws-heist/)の舞台にもなる。
+- **[にくきゅう銀行](/terms/pink-paws-bank/)** — 区を代表する銀行。[ちぃちゃん](/characters/chiz/)が所属し、[強盗イベント（にくきゅう大強盗）](/terms/pink-paws-heist/)の舞台にもなる。
 
 ## 出現ボス（ワールドボス）
 
