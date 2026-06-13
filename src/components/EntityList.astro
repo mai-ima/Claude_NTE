@@ -1,5 +1,5 @@
 ---
-/** 汎用の一覧ページ本体（characters 以外）。frontmatter の任意フィールドでグルーピング可能。 */
+/** 汎用の一覧ページ本体（characters 以外）。frontmatter の任意フィールドでグルーピング＋絞り込み可能。 */
 import { Icon } from 'astro-icon/components';
 import Search from 'astro-pagefind/components/Search';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -20,6 +20,10 @@ interface Props {
   groupOrder?: string[];
   /** グループキー→表示ラベルの変換（英語enum等を日本語にする） */
   groupLabels?: Record<string, string>;
+  /** 絞り込みに使うフロントマターのキー（例: 'weakness' / 'type' / 'region'）。指定時にチップ絞り込みを表示 */
+  filterField?: string;
+  /** 絞り込み値→表示ラベルの変換 */
+  filterLabels?: Record<string, string>;
   /** 検索ボックスを表示するか */
   search?: boolean;
 }
@@ -32,6 +36,8 @@ const {
   groupField,
   groupOrder = [],
   groupLabels = {},
+  filterField,
+  filterLabels = {},
   search = true,
 } = Astro.props;
 
@@ -54,6 +60,25 @@ if (groupField) {
 } else {
   groups.push({ label: '', items: entries });
 }
+
+// --- 絞り込み（ファセット）の値を収集 -------------------------------------
+const fieldIsElement = filterField === 'weakness' || filterField === 'element';
+const fval = (e: Item): string => {
+  const v = (e.data as Record<string, unknown>)[filterField ?? ''];
+  return v == null ? '' : String(v);
+};
+const flabel = (v: string): string =>
+  fieldIsElement ? elementMeta(v).label : (filterLabels[v] ?? v);
+let filterValues: string[] = [];
+if (filterField) {
+  const set = new Set<string>();
+  for (const e of entries) {
+    const v = fval(e);
+    if (v && v !== '—') set.add(v);
+  }
+  filterValues = [...set].sort((a, b) => flabel(a).localeCompare(flabel(b), 'ja'));
+}
+const showFilter = !!filterField && filterValues.length > 1;
 ---
 
 <BaseLayout title={title}>
@@ -68,66 +93,91 @@ if (groupField) {
 
       {
         search && (
-          <div class="card card-pad" style="margin-bottom:32px;">
+          <div class="card card-pad" style="margin-bottom:20px;">
             <Search id="search" className="pagefind-ui" uiOptions={{ showImages: false, excerptLength: 15 }} />
           </div>
         )
       }
 
       {
-        groups.map((group) => (
-          <section style="margin-bottom:36px;">
-            {group.label && (
-              <div class="row" style="gap:8px;margin-bottom:14px;">
-                <Icon name={`lucide:${icon}`} style="width:20px;height:20px;color:var(--accent);" />
-                <h2 style="margin:0;">{groupLabels[group.label] ?? group.label}</h2>
-                <span class="badge">{group.items.length}</span>
-              </div>
+        showFilter && (
+          <div class="filterbar" id="facet-filter" role="group" aria-label="絞り込み" style="margin-bottom:28px;">
+            <button class="chip is-on" data-fall aria-pressed="true">
+              すべて
+            </button>
+            {filterValues.map((v) =>
+              fieldIsElement ? (
+                <button class="chip" data-fkey={v} aria-pressed="false" style={`--el:${elementMeta(v).hue}`}>
+                  <span class="el-dot" />
+                  {flabel(v)}
+                </button>
+              ) : (
+                <button class="chip" data-fkey={v} aria-pressed="false">
+                  {flabel(v)}
+                </button>
+              ),
             )}
-            <div class="grid grid-cards">
-              {group.items.map((item) => {
-                const d: any = item.data;
-                const el = d.element ? elementMeta(d.element) : null;
-                return (
-                  <a
-                    class="card card-pad card-link"
-                    href={hrefOf(collection, item.id)}
-                    style={el ? `--el:${el.hue}` : undefined}
-                  >
-                    <div class="row row-between" style="align-items:flex-start;gap:8px;">
-                      <span style="font-weight:700;">{titleOf(item)}</span>
-                      <StatusBadge status={d.status} />
-                    </div>
-                    {d.description && (
-                      <p class="muted text-sm" style="margin-top:6px;">
-                        {d.description}
-                      </p>
-                    )}
-                    <div class="cluster" style="margin-top:10px;">
-                      {el && (
-                        <span class="el-badge" style={`--el:${el.hue}`}>
-                          <span class="el-dot" />
-                          {el.label}
-                        </span>
-                      )}
-                      {d.weakness && d.weakness !== '—' && (
-                        <span class="el-badge" style={`--el:${elementMeta(d.weakness).hue}`}>
-                          弱点 {elementMeta(d.weakness).label}
-                        </span>
-                      )}
-                      {d.usedFor && <span class="badge">{d.usedFor}</span>}
-                      {d.en && <span class="badge">{d.en}</span>}
-                      {d.reading && <span class="badge">よみ: {d.reading}</span>}
-                      {d.currency && <span class="badge badge-accent">{d.currency}</span>}
-                      {d.unlock && <span class="badge">解放: {d.unlock}</span>}
-                    </div>
-                  </a>
-                );
-              })}
-            </div>
-          </section>
-        ))
+          </div>
+        )
       }
+
+      <div data-list-root>
+        {
+          groups.map((group) => (
+            <section style="margin-bottom:36px;" data-group>
+              {group.label && (
+                <div class="row" style="gap:8px;margin-bottom:14px;">
+                  <Icon name={`lucide:${icon}`} style="width:20px;height:20px;color:var(--accent);" />
+                  <h2 style="margin:0;">{groupLabels[group.label] ?? group.label}</h2>
+                  <span class="badge" data-group-count>{group.items.length}</span>
+                </div>
+              )}
+              <div class="grid grid-cards">
+                {group.items.map((item) => {
+                  const d: any = item.data;
+                  const el = d.element ? elementMeta(d.element) : null;
+                  return (
+                    <a
+                      class="card card-pad card-link js-card"
+                      href={hrefOf(collection, item.id)}
+                      data-fval={filterField ? fval(item) : undefined}
+                      style={el ? `--el:${el.hue}` : undefined}
+                    >
+                      <div class="row row-between" style="align-items:flex-start;gap:8px;">
+                        <span style="font-weight:700;">{titleOf(item)}</span>
+                        <StatusBadge status={d.status} />
+                      </div>
+                      {d.description && (
+                        <p class="muted text-sm" style="margin-top:6px;">
+                          {d.description}
+                        </p>
+                      )}
+                      <div class="cluster" style="margin-top:10px;">
+                        {el && (
+                          <span class="el-badge" style={`--el:${el.hue}`}>
+                            <span class="el-dot" />
+                            {el.label}
+                          </span>
+                        )}
+                        {d.weakness && d.weakness !== '—' && (
+                          <span class="el-badge" style={`--el:${elementMeta(d.weakness).hue}`}>
+                            弱点 {elementMeta(d.weakness).label}
+                          </span>
+                        )}
+                        {d.usedFor && <span class="badge">{d.usedFor}</span>}
+                        {d.en && <span class="badge">{d.en}</span>}
+                        {d.reading && <span class="badge">よみ: {d.reading}</span>}
+                        {d.currency && <span class="badge badge-accent">{d.currency}</span>}
+                        {d.unlock && <span class="badge">解放: {d.unlock}</span>}
+                      </div>
+                    </a>
+                  );
+                })}
+              </div>
+            </section>
+          ))
+        }
+      </div>
 
       {
         entries.length === 0 && (
@@ -139,4 +189,44 @@ if (groupField) {
       }
     </div>
   </div>
+
+  {
+    showFilter && (
+      <script is:inline>
+        (function () {
+          var bar = document.getElementById('facet-filter');
+          if (!bar) return;
+          var cards = Array.prototype.slice.call(document.querySelectorAll('.js-card'));
+          var groups = Array.prototype.slice.call(document.querySelectorAll('[data-group]'));
+          var active = '';
+          function apply() {
+            cards.forEach(function (c) {
+              var ok = !active || c.getAttribute('data-fval') === active;
+              c.style.display = ok ? '' : 'none';
+            });
+            groups.forEach(function (g) {
+              var vis = 0;
+              Array.prototype.slice.call(g.querySelectorAll('.js-card')).forEach(function (c) {
+                if (c.style.display !== 'none') vis++;
+              });
+              g.hidden = vis === 0;
+              var cnt = g.querySelector('[data-group-count]');
+              if (cnt) cnt.textContent = String(vis);
+            });
+          }
+          bar.addEventListener('click', function (e) {
+            var btn = e.target.closest('button');
+            if (!btn) return;
+            active = btn.hasAttribute('data-fall') ? '' : (btn.getAttribute('data-fkey') || '');
+            Array.prototype.slice.call(bar.querySelectorAll('button')).forEach(function (b) {
+              var on = b === btn;
+              b.classList.toggle('is-on', on);
+              b.setAttribute('aria-pressed', on ? 'true' : 'false');
+            });
+            apply();
+          });
+        })();
+      </script>
+    )
+  }
 </BaseLayout>

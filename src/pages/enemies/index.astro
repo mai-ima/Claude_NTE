@@ -7,6 +7,10 @@ const s = sectionByCollection('enemies')!;
   collection="enemies"
   title="敵・アノマリー"
   eyebrow="敵・アノマリー"
-  lead="ワールドボス・ストーリーボス・アノマリーと、その弱点属性。"
+  lead="ワールドボス・ストーリーボス・アノマリーと、その弱点属性。下のチップで弱点属性ごとに絞り込めます。"
   icon={s.icon}
+  groupField="type"
+  groupOrder={['boss', 'elite', 'anomaly', 'mob']}
+  groupLabels={{ boss: 'ボス', elite: 'エリート', anomaly: 'アノマリー', mob: '雑魚' }}
+  filterField="weakness"
 />
