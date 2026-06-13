@@ -489,3 +489,10 @@ html[data-ui='liquid'] .filterbar .chip.is-on { background: var(--lq-surface-thi
 html[data-ui='liquid'] .figure img { border: none; border-radius: var(--radius-sm); box-shadow: var(--lq-edge); }
 html[data-ui='liquid'] .drawer-panel { border-right: none; box-shadow: var(--lq-edge), var(--lq-shadow-lg); }
 html[data-ui='liquid'] .empty { border-radius: var(--radius); }
+
+/* ===== v0.6.7 全体見直し ===== */
+html[data-ui='liquid'] .avatar { box-shadow: var(--lq-edge); }
+html[data-ui='liquid'] .ui-switch-opt, html[data-ui='liquid'] .theme-opt { border: none; background: var(--lq-surface-thick); backdrop-filter: var(--lq-blur); -webkit-backdrop-filter: var(--lq-blur); box-shadow: var(--lq-edge); }
+html[data-ui='liquid'] .ui-switch-opt.is-active, html[data-ui='liquid'] .theme-opt.is-active { box-shadow: var(--lq-edge), 0 0 0 2px var(--accent); }
+html[data-ui='liquid'] .toast { border: none; border-radius: var(--radius-sm); background: var(--lq-surface-thick); backdrop-filter: var(--lq-blur); -webkit-backdrop-filter: var(--lq-blur); box-shadow: var(--lq-edge), var(--lq-shadow); }
+html[data-ui='liquid'] .tier-badge { border-radius: 8px; }

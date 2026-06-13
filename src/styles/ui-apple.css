@@ -455,3 +455,9 @@ html[data-ui='apple'] .spoiler { border: none; border-radius: var(--radius-sm); 
 html[data-ui='apple'] .figure img { border: none; border-radius: var(--radius-sm); box-shadow: var(--ap-shadow); }
 html[data-ui='apple'] .drawer-panel { border-right: var(--hairline); }
 html[data-ui='apple'] .empty { border-radius: var(--radius); }
+
+/* ===== v0.6.7 全体見直し ===== */
+html[data-ui='apple'] .avatar { border-radius: var(--radius-sm); }
+html[data-ui='apple'] .ui-switch-opt, html[data-ui='apple'] .theme-opt { border: var(--hairline); border-radius: var(--radius-sm); box-shadow: var(--ap-shadow); }
+html[data-ui='apple'] .ui-switch-opt.is-active, html[data-ui='apple'] .theme-opt.is-active { border-color: var(--accent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent); }
+html[data-ui='apple'] .toast { border: none; border-radius: var(--radius-sm); box-shadow: 0 8px 24px color-mix(in srgb, var(--text) 14%, transparent); }
