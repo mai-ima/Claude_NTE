@@ -1,0 +1,79 @@
+---
+/**
+ * Duo反応の早見図（自作・データ駆動）。
+ * 隣接する2属性の組み合わせと、その反応名・効果を色付きで一覧する。
+ * データは src/lib/nav.ts の DUO_REACTIONS / ELEMENT_META を流用（創作なし）。
+ */
+import { DUO_REACTIONS, elementMeta } from '../lib/nav';
+---
+
+<div class="matchup" role="img" aria-label="Duo反応の早見図">
+  {
+    DUO_REACTIONS.map((rx) => {
+      const a = elementMeta(rx.a);
+      const b = elementMeta(rx.b);
+      return (
+        <div class="matchup-row">
+          <span class="matchup-pair">
+            <span class="el-badge" style={`--el:${a.hue}`}>
+              <span class="el-dot" />
+              {a.label}
+            </span>
+            <span class="matchup-plus">＋</span>
+            <span class="el-badge" style={`--el:${b.hue}`}>
+              <span class="el-dot" />
+              {b.label}
+            </span>
+          </span>
+          <span class="matchup-name">
+            <strong>{rx.ja}</strong>
+            <span class="muted text-sm"> {rx.name}</span>
+          </span>
+          <span class="matchup-effect text-sm">{rx.effect}</span>
+        </div>
+      );
+    })
+  }
+</div>
+
+<style>
+  .matchup {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 14px 0;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .matchup-row {
+    display: grid;
+    grid-template-columns: minmax(0, 150px) minmax(0, 130px) 1fr;
+    align-items: center;
+    gap: 10px;
+  }
+  .matchup-row + .matchup-row {
+    border-top: 1px solid var(--border);
+    padding-top: 8px;
+  }
+  .matchup-pair {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .matchup-plus {
+    color: var(--muted);
+    font-weight: 700;
+  }
+  @media (max-width: 560px) {
+    .matchup-row {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+    .matchup-row + .matchup-row {
+      padding-top: 10px;
+    }
+  }
+</style>

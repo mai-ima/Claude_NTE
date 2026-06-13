@@ -1,0 +1,79 @@
+---
+/**
+ * 異象の危険度等級（Class）の段階図。データ駆動の自作図解。
+ * 公式資料で確認できるのは Class V / VII の2つ。間の等級は要確認として淡色表示する。
+ */
+const RUNGS = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII'];
+const INFO: Record<string, { label: string; desc: string }> = {
+  V: { label: '高危険度', desc: '広域破壊が可能。複数エスパーの連携チーム（緊急対応部隊）の出動を要する' },
+  VII: { label: '最高位（確認済み）', desc: '観測者に致死的。ニューヘリオス級の都市災害に相当' },
+};
+---
+
+<div class="class-chart" role="img" aria-label="異象の危険度等級チャート（Class V と VII が確認済み）">
+  {
+    RUNGS.map((r, i) => {
+      const known = !!INFO[r];
+      const w = 30 + (i / (RUNGS.length - 1)) * 70; // 等級が上がるほどバーを長く
+      return (
+        <div class={`class-row ${known ? 'is-known' : 'is-unknown'}`}>
+          <span class="class-rung">Class {r}</span>
+          <span class="class-bar" style={`width:${w}%`} />
+          <span class="class-note">
+            {known ? (
+              <>
+                <strong>{INFO[r].label}</strong>
+                <span class="muted text-sm"> — {INFO[r].desc}</span>
+              </>
+            ) : (
+              <span class="muted text-sm">要確認</span>
+            )}
+          </span>
+        </div>
+      );
+    })
+  }
+</div>
+
+<style>
+  .class-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 14px 0;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .class-row {
+    display: grid;
+    grid-template-columns: 76px 90px 1fr;
+    align-items: center;
+    gap: 10px;
+  }
+  .class-rung {
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    font-size: 0.86rem;
+  }
+  .class-bar {
+    height: 12px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--danger) 70%, var(--accent));
+  }
+  .class-row.is-unknown .class-bar {
+    background: var(--surface-2);
+    border: 1px dashed var(--border);
+  }
+  .class-row.is-unknown .class-rung {
+    color: var(--muted);
+    font-weight: 600;
+  }
+  @media (max-width: 560px) {
+    .class-row {
+      grid-template-columns: 64px 60px 1fr;
+      gap: 8px;
+    }
+  }
+</style>

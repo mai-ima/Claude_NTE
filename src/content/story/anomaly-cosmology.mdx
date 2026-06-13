@@ -20,6 +20,7 @@ sources:
 
 import Spoiler from '../../components/Spoiler.astro';
 import Callout from '../../components/Callout.astro';
+import AnomalyClassChart from '../../components/AnomalyClassChart.astro';
 
 <Callout type="warning">
 本ページの固有名詞の多くは**日本語の正式表記が未確認**（英語版の名称＋カナで記載）。日本語版本編・公式資料で確定し次第差し替える。
@@ -46,12 +47,9 @@ import Callout from '../../components/Callout.astro';
 
 ## 異象の危険度等級
 
-BAC は異象を**番号制の等級（Class）**で分類し、危険度と必要な対応戦力を見積もる。ローンチ時点の資料で明確に確認できるのは次の2つ:
+BAC は異象を**番号制の等級（Class）**で分類し、危険度と必要な対応戦力を見積もる。ローンチ時点の資料で明確に確認できるのは **Class V** と **Class VII** の2つ:
 
-| 等級 | 説明 |
-| --- | --- |
-| **Class V** | 広域破壊が可能な高危険度。複数エスパーの連携チーム（緊急対応部隊）の出動を要する |
-| **Class VII** | 確認されている最高位。「観測者にとって致死的」とされ、ニューヘリオス級の都市災害に相当 |
+<AnomalyClassChart />
 
 - 中間・下位の等級も存在するとみられるが、定義の詳細は**要確認**。
 - ゲームプレイ上の[異象界](/terms/anomaly-zone/)・[異象依頼](/enemies/anomalies-overview/)の難度表記とは別系統の、**設定上の**分類である点に注意。
