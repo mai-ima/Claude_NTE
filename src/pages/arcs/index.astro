@@ -1,0 +1,16 @@
+---
+import EntityList from '../../components/EntityList.astro';
+import { sectionByCollection } from '../../lib/nav';
+const s = sectionByCollection('arcs')!;
+---
+<EntityList
+  collection="arcs"
+  title="弧盤（武器 / Arc）"
+  eyebrow="武器・弧盤"
+  lead="武器「弧盤」の個別データ。特に無課金で入手できるSランク弧盤と、その入手先をまとめます。弧盤の仕組み（形態・ガチャ・凸）は弧盤システムを参照。"
+  icon={s.icon}
+  groupField="rarity"
+  groupOrder={['S', 'A', 'B']}
+  groupLabels={{ S: 'Sランク', A: 'Aランク', B: 'Bランク' }}
+  filterField="form"
+/>

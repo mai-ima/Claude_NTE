@@ -15,6 +15,7 @@ type AnyEntry = CollectionEntry<
   | 'shops'
   | 'terms'
   | 'vehicles'
+  | 'arcs'
 >;
 
 /** エントリの表示タイトル（日本版名称を優先: nameJa → title → name） */

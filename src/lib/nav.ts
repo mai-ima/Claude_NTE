@@ -73,6 +73,13 @@ export const SECTIONS: SectionMeta[] = [
     blurb: '都市生活で使う乗り物（スクーター/バイク/車）と入手・同乗効果。',
   },
   {
+    collection: 'arcs',
+    href: '/arcs/',
+    label: '弧盤（武器）',
+    icon: 'sword',
+    blurb: '武器「弧盤」の個別データ。無課金で狙えるS弧盤と入手先。',
+  },
+  {
     collection: 'enemies',
     href: '/enemies/',
     label: '敵・アノマリー',

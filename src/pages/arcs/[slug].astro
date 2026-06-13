@@ -1,0 +1,48 @@
+---
+import { render } from 'astro:content';
+import EntityDetail from '../../components/EntityDetail.astro';
+import { sectionByCollection } from '../../lib/nav';
+import { titleOf, hrefOf, publishedEntries } from '../../lib/content';
+import type { Row, Pill } from '../../components/EntityDetail.astro';
+
+export async function getStaticPaths() {
+  const sorted = await publishedEntries('arcs');
+  return sorted.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: { entry, prev: sorted[i - 1] ?? null, next: sorted[i + 1] ?? null },
+  }));
+}
+const { entry, prev, next } = Astro.props;
+const { Content, headings } = await render(entry as any);
+const d = entry.data as any;
+const section = sectionByCollection('arcs')!;
+
+const rows: Row[] = [];
+rows.push({ k: 'レア度', v: `${d.rarity}ランク` });
+if (d.form) rows.push({ k: '物質形態', v: d.form });
+if (d.acquisition) rows.push({ k: '入手方法', v: d.acquisition });
+if (d.free !== undefined) rows.push({ k: '無課金入手', v: d.free ? '可' : '—' });
+if (d.recommendedFor) rows.push({ k: 'おすすめ', v: d.recommendedFor });
+
+const pills: Pill[] = [{ kind: 'rarity', value: d.rarity }];
+---
+<EntityDetail
+  collection="arcs"
+  currentId={entry.id}
+  sectionLabel={section.label}
+  sectionHref={section.href}
+  sectionIcon={section.icon}
+  title={titleOf(entry)}
+  lead={d.description}
+  pills={pills}
+  rows={rows}
+  status={d.status}
+  updated={d.updated}
+  tags={d.tags}
+  sources={d.sources}
+  headings={headings}
+  prev={prev ? { href: hrefOf('arcs', prev.id), title: titleOf(prev) } : null}
+  next={next ? { href: hrefOf('arcs', next.id), title: titleOf(next) } : null}
+>
+  <Content />
+</EntityDetail>

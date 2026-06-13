@@ -205,6 +205,24 @@ const vehicles = defineCollection({
     }),
 });
 
+/**
+ * arcs: 武器「弧盤（Arc）」の個別データベース。1弧盤1ページ。
+ * レア度・物質形態・入手方法・おすすめキャラを収録（特に無課金で狙えるS弧盤）。
+ */
+const arcs = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/arcs' }),
+  schema: () =>
+    z.object({
+      ...base,
+      title: z.string(),
+      rarity: z.enum(['S', 'A', 'B']).default('S'),
+      form: z.string().optional(), // 物質形態（固体/液体/気体/プラズマ/集合）
+      acquisition: z.string().optional(), // 入手方法
+      free: z.boolean().optional(), // 無課金で入手可
+      recommendedFor: z.string().optional(), // おすすめキャラ/属性
+    }),
+});
+
 export const collections = {
   characters,
   locations,
@@ -217,4 +235,5 @@ export const collections = {
   shops,
   terms,
   vehicles,
+  arcs,
 };

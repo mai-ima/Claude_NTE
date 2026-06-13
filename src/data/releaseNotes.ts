@@ -9,6 +9,17 @@ export interface ReleaseNote {
 
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    version: 'beta v0.6.6',
+    date: '2026-06-13',
+    title: '弧盤(武器)DBを新設＋UIの分離・品質向上',
+    changes: [
+      '武器「弧盤(Arc)」の個別データベースを新設。まず無課金で入手できるSランク弧盤6種（炎魂ハリケーン／熱狂の渦 ほか）を、入手先の異象依頼つきで収録。サイドバー・検索・関連記事に自動連携（効果の細部は要確認、判明し次第追記）。',
+      '似ていた新UIを別方向へ分離: Aurora を「ガラス」から外し不透明×ネオングラデへ（Liquid＝フロストガラスと明確に区別、Aurora Neon へ改称）。Terminal＝CRT発光／Blueprint＝本格の青写真グリッド、にも振り分け。',
+      'UI品質向上: backdrop-filter 非対応ブラウザ向けフォールバック（Liquid/Apple のガラス面を不透明化し可読性を担保）、Liquid/Terminal/Blueprint/Clay にフォーカスリングを明示（WCAG準拠）。',
+      '各UIの専用スタイルを大幅拡張: アバター・設定の選択カード・トースト・折りたたみ・図版・絞り込みチップ等を全8UIの作法で統一。',
+    ],
+  },
+  {
     version: 'beta v0.6.5',
     date: '2026-06-13',
     title: '新UIを8種に（オリジナル3種追加）＋既存UIの強化・細部調整',
