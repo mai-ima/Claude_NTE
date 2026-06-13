@@ -4,6 +4,7 @@
  */
 import { useState } from 'preact/hooks';
 import { ELEMENT_RING, DUO_REACTIONS, elementMeta } from '../../lib/nav';
+import { cssVars } from '../../lib/css';
 
 export default function ReactionChart() {
   const [sel, setSel] = useState<string | null>(null);
@@ -69,9 +70,9 @@ export default function ReactionChart() {
                   <td><strong>{d.ja}</strong><br /><span class="muted text-sm">{d.name}</span></td>
                   <td>
                     <span class="cluster" style={{ gap: '4px' }}>
-                      <span class="el-badge" style={{ ['--el' as any]: ea.hue }}>{ea.label}</span>
+                      <span class="el-badge" style={cssVars({ '--el': ea.hue })}>{ea.label}</span>
                       <span>＋</span>
-                      <span class="el-badge" style={{ ['--el' as any]: eb.hue }}>{eb.label}</span>
+                      <span class="el-badge" style={cssVars({ '--el': eb.hue })}>{eb.label}</span>
                     </span>
                   </td>
                   <td class="text-sm">{d.effect}</td>

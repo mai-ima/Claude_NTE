@@ -6,6 +6,7 @@
  */
 import { useStore } from './useStore';
 import { HBars } from './chart';
+import { cssVars } from '../../lib/css';
 
 export interface TeamChar {
   id: string;
@@ -67,7 +68,7 @@ export default function TeamBuilder({ characters }: { characters: TeamChar[] }) 
             >
               {c ? (
                 <button type="button" class="list-reset" style={{ background: 'transparent', border: 0, cursor: 'pointer' }} onClick={() => toggle(c.id)}>
-                  <span class="el-dot" style={{ ['--el' as any]: c.el, margin: '0 auto 4px' }} />
+                  <span class="el-dot" style={cssVars({ '--el': c.el }, { margin: '0 auto 4px' })} />
                   <div style={{ fontWeight: 700, fontSize: '0.82rem' }}>{c.name}</div>
                   <div class="muted" style={{ fontSize: '0.66rem' }}>{ROLE_JA[c.role] ?? c.role}</div>
                 </button>
@@ -139,7 +140,7 @@ export default function TeamBuilder({ characters }: { characters: TeamChar[] }) 
                 onClick={() => toggle(c.id)}
               >
                 <div class="row" style={{ gap: '6px' }}>
-                  <span class="el-dot" style={{ ['--el' as any]: c.el }} />
+                  <span class="el-dot" style={cssVars({ '--el': c.el })} />
                   <span style={{ fontWeight: 700, fontSize: '0.84rem' }}>{c.name}</span>
                 </div>
                 <div class="muted" style={{ fontSize: '0.7rem', marginTop: '2px' }}>

@@ -168,7 +168,7 @@ export default function Planner() {
         <div class="row" style={{ gap: '8px' }}>
           <input class="input" placeholder="タスクを追加" value={newTask}
             onInput={(e) => setNewTask((e.target as HTMLInputElement).value)}
-            onKeyDown={(e) => e.key === 'Enter' && !(e as any).isComposing && add('daily')} />
+            onKeyDown={(e) => e.key === 'Enter' && !(e as KeyboardEvent).isComposing && add('daily')} />
           <button class="btn btn-sm" type="button" onClick={() => add('daily')}>日課に</button>
           <button class="btn btn-sm" type="button" onClick={() => add('weekly')}>週課に</button>
         </div>

@@ -6,6 +6,7 @@
  */
 import { useState } from 'preact/hooks';
 import { useStore } from './useStore';
+import { cssVars } from '../../lib/css';
 
 export interface TierChar {
   id: string;
@@ -72,7 +73,7 @@ export default function TierList({ characters }: { characters: TierChar[] }) {
                     setSelected((prev) => (prev === c.id ? null : c.id));
                   }}
                 >
-                  <span class="el-dot" style={{ ['--el' as any]: c.el }} />
+                  <span class="el-dot" style={cssVars({ '--el': c.el })} />
                   {c.name}
                   <span class="muted" style={{ fontSize: '0.7rem' }}>{c.rarity}</span>
                 </button>
