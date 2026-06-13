@@ -18,11 +18,13 @@ sources:
 
 **ミゲル区** は山辺に広がる風光明媚な区。市内最高のランドマーク **Heterocity Skytower**、**Caltrop Lake**、ショッピング街 **Noetic Bridge** などを擁する。
 
-## 見どころ
+## 見どころ・地区
 
-- **Skytower** — 市内で最も高いランドマーク。
-- **Caltrop Lake** / **Noetic Bridge** — 景勝・商業の中心。
+- **[ヘテロシティ・スカイタワー](/terms/skytower/)** — 市内で最も高いランドマーク。区の目印。
+- **[カルトロップ湖](/terms/caltrop-lake/)** — 山辺の景勝地の湖。
+- **[ノエティックブリッジ](/terms/noetic-bridge/)** — 区の商業の中心となるショッピング街。
+- **[聖トリス大通り](/terms/saint-tris-boulevard/)** — 秋葉原をモチーフにした電気街風の一角。現実のパロディネタが点在する人気の探索スポット。
 
-## 地区・スポット
+## アクセス
 
-- **[聖トリス大通り](/terms/saint-tris-boulevard/)** — 秋葉原をモチーフにした電気街風の一角。現実のパロディネタが点在する。
+- ミゲル区からは高難度エンドコンテンツ[軌道外領域](/terms/beyond-the-rails/)へアクセスできる。
