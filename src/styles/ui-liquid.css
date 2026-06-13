@@ -481,3 +481,11 @@ html[data-ui='liquid'] .callout {
   -webkit-backdrop-filter: var(--lq-blur);
   box-shadow: var(--lq-edge);
 }
+
+/* ===== v0.6.6 統一: ガラスで揃える ===== */
+html[data-ui='liquid'] .spoiler { border: none; background: var(--lq-surface-thick); backdrop-filter: var(--lq-blur); -webkit-backdrop-filter: var(--lq-blur); box-shadow: var(--lq-edge); }
+html[data-ui='liquid'] .filterbar .chip { border: none; border-radius: 999px; background: var(--lq-surface); backdrop-filter: var(--lq-blur); -webkit-backdrop-filter: var(--lq-blur); box-shadow: var(--lq-edge); }
+html[data-ui='liquid'] .filterbar .chip.is-on { background: var(--lq-surface-thick); color: var(--accent); }
+html[data-ui='liquid'] .figure img { border: none; border-radius: var(--radius-sm); box-shadow: var(--lq-edge); }
+html[data-ui='liquid'] .drawer-panel { border-right: none; box-shadow: var(--lq-edge), var(--lq-shadow-lg); }
+html[data-ui='liquid'] .empty { border-radius: var(--radius); }

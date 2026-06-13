@@ -206,3 +206,15 @@ html[data-ui='terminal'] .callout {
   border: 1px solid var(--accent);
   background: var(--surface);
 }
+
+/* ===== 統一: 端末の作法で揃える ===== */
+html[data-ui='terminal'] .spoiler { border: 1px solid var(--term-line); border-radius: 0; background: var(--surface); }
+html[data-ui='terminal'] .spoiler-summary { font-family: var(--font-mono); color: var(--accent); }
+html[data-ui='terminal'] .toc { border-left: 1px solid var(--accent); padding-left: 12px; }
+html[data-ui='terminal'] .filterbar .chip { border-radius: 0; border: 1px solid var(--term-line); font-family: var(--font-mono); background: transparent; }
+html[data-ui='terminal'] .filterbar .chip.is-on { background: var(--accent); color: var(--accent-contrast); }
+html[data-ui='terminal'] .figure img { border: 1px solid var(--term-line); border-radius: 0; }
+html[data-ui='terminal'] .app-footer { font-family: var(--font-mono); border-top: 1px solid var(--accent); }
+html[data-ui='terminal'] .drawer-panel { border-right: 1px solid var(--accent); }
+html[data-ui='terminal'] .edit-link { font-family: var(--font-mono); }
+html[data-ui='terminal'] .empty { border: 1px dashed var(--term-line); border-radius: 0; }

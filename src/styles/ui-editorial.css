@@ -521,3 +521,12 @@ html[data-ui='editorial'] .callout {
   border-left-width: 5px;
   box-shadow: var(--shadow-hard-sm);
 }
+
+/* ===== v0.6.6 統一: 折りたたみ/絞り込み/図版/ドロワー/空状態 ===== */
+html[data-ui='editorial'] .spoiler { border: 2px solid var(--ink); border-radius: 0; }
+html[data-ui='editorial'] .spoiler-summary { font-family: var(--font-mono); }
+html[data-ui='editorial'] .filterbar .chip { border-radius: 0; border: 1.5px solid var(--ink-soft); font-family: var(--font-mono); }
+html[data-ui='editorial'] .filterbar .chip.is-on { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+html[data-ui='editorial'] .figure img { border: 2px solid var(--ink); border-radius: 0; box-shadow: var(--shadow-hard-sm); }
+html[data-ui='editorial'] .drawer-panel { border-right: 2px solid var(--ink); }
+html[data-ui='editorial'] .empty { border: 1.5px dashed var(--ink-soft); border-radius: 0; }

@@ -449,3 +449,9 @@ html[data-ui='apple'] .callout {
   border: none;
   box-shadow: var(--ap-shadow);
 }
+
+/* ===== v0.6.6 統一: iOS で揃える ===== */
+html[data-ui='apple'] .spoiler { border: none; border-radius: var(--radius-sm); box-shadow: var(--ap-shadow); }
+html[data-ui='apple'] .figure img { border: none; border-radius: var(--radius-sm); box-shadow: var(--ap-shadow); }
+html[data-ui='apple'] .drawer-panel { border-right: var(--hairline); }
+html[data-ui='apple'] .empty { border-radius: var(--radius); }

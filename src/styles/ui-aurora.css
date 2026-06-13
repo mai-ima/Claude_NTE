@@ -715,3 +715,9 @@ html[data-ui='aurora'] .nav-link:hover {
 html[data-ui='aurora'] .callout {
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent);
 }
+
+/* ===== v0.6.6 統一: ネオンで揃える ===== */
+html[data-ui='aurora'] .spoiler { border-color: color-mix(in srgb, var(--accent) 30%, var(--border)); }
+html[data-ui='aurora'] .spoiler[open] { box-shadow: var(--beta-glow); }
+html[data-ui='aurora'] .filterbar .chip.is-on { background: var(--beta-grad); color: #fff; border-color: transparent; }
+html[data-ui='aurora'] .figure img { border: 1px solid transparent; background: linear-gradient(var(--surface), var(--surface)) padding-box, var(--beta-grad) border-box; }

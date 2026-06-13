@@ -172,3 +172,14 @@ html[data-ui='blueprint'] .callout {
   border: 1px solid var(--bp-line);
   border-radius: 2px;
 }
+
+/* ===== 統一: 製図で揃える ===== */
+html[data-ui='blueprint'] .spoiler { border: 1px dashed var(--bp-line); border-radius: 2px; }
+html[data-ui='blueprint'] .spoiler-summary { font-family: var(--font-mono); }
+html[data-ui='blueprint'] .toc { border-left: 1px solid var(--bp-line); }
+html[data-ui='blueprint'] .filterbar .chip { border: 1px solid var(--bp-line); border-radius: 2px; font-family: var(--font-mono); background: transparent; }
+html[data-ui='blueprint'] .filterbar .chip.is-on { background: color-mix(in srgb, var(--accent) 14%, transparent); border-color: var(--accent); color: var(--accent); }
+html[data-ui='blueprint'] .figure img { border: 1px solid var(--bp-line); border-radius: 2px; }
+html[data-ui='blueprint'] .app-footer { border-top: 1px dashed var(--bp-line); font-family: var(--font-mono); }
+html[data-ui='blueprint'] .edit-link { font-family: var(--font-mono); }
+html[data-ui='blueprint'] .empty { border: 1px dashed var(--bp-line); border-radius: 2px; }
