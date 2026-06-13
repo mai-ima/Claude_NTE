@@ -1,0 +1,45 @@
+---
+title: "超渦（ハイパーヴォルテックス）"
+reading: "ちょうか"
+en: "Hypervortex"
+category: "世界観・組織・地名"
+order: 48
+description: "異象のすべての根源とされる、異次元の渦。ニューヘリオスの大災害(Class VII)を引き起こした前史の中心であり、本作の世界観の起点。日本語正式表記は要確認。"
+status: "draft"
+updated: 2026-06-13
+tags: ["世界観", "設定", "アノマリー"]
+aliases: ["ハイパーヴォルテックス", "Hypervortex"]
+sources:
+  - label: "公式 — Opening Animation | Hypervortex Before the Storm"
+    url: "https://nte.perfectworld.com/en/article/news/gamenews/20250625/257051.html"
+  - label: "The Games Wiki — Anomalies（英語）"
+    url: "https://thegameswiki.com/nte/wiki/anomalies"
+---
+
+import Callout from '../../components/Callout.astro';
+
+<Callout type="warning">
+英語名 **Hypervortex** に対する**日本語の正式表記は未確認**（暫定で「超渦／ハイパーヴォルテックス」と記載）。日本語版で確定し次第差し替える。
+</Callout>
+
+**超渦（ハイパーヴォルテックス／Hypervortex）** は、[異象（アノマリー）](/terms/anomaly/)的なエネルギーと存在の**根源**とされる、渦巻く**異次元の深淵**。ここから漏れ出したものが現実世界に「異象」として現れる、本作の世界観の起点である。公式オープニングアニメ「Hypervortex Before the Storm」でも世界の発端として描かれる。
+
+## 仕組み・性質
+
+「見てはならないもの」として一貫して描かれるのが特徴。
+
+- 異形の生命を地上へ**引き寄せ**、周囲の環境を**作り変える**。
+- **直視した者を侵食（コラプション）する**——観測そのものが危険、というコズミックホラー的な設定。
+- 付随する**異様な雨**は、浴びた人間を凶暴な抜け殻に変えるとされる。
+
+## 物語上の位置づけ
+
+- 前史の大災害の中心：都市[ニューヘリオス](/terms/new-helios/)を襲った**[等級VII（Class VII）](/story/anomaly-cosmology/)**の超大型異象は、この渦の顕現とされる。
+- どんな異象にも、対処の鍵となる**[核（Nexus）](/terms/nexus/)**がある——超渦由来の異象もまた、核を突くことで収束させうる。
+- 主人公[零](/characters/zero/)の記憶喪失とも深く関わる、本編中心の謎（→[異象の体系](/story/anomaly-cosmology/)）。
+
+## 注意点
+
+- 設定の細部（渦の正体・発生条件など）は未確定で、英語圏資料に依拠する部分が多い（**要確認**）。創作で埋めず、続報で更新する。
+
+関連: [異象の体系（詳説）](/story/anomaly-cosmology/) ／ [異象](/terms/anomaly/) ／ [連環核](/terms/nexus/) ／ [ニューヘリオス](/terms/new-helios/) ／ [オッディティ](/terms/oddity/)

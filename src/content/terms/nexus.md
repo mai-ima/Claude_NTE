@@ -1,0 +1,38 @@
+---
+title: "連環核（Nexus）"
+reading: "れんかんかく"
+en: "Nexus"
+category: "世界観・組織・地名"
+order: 49
+description: "あらゆる異象が持つ「核」。これを見抜き突くことで、巨大な異象でも収束させられる。主人公の固有能力「Nexus Sense」が感知する対象。日本語正式表記は要確認。"
+status: "draft"
+updated: 2026-06-13
+tags: ["世界観", "設定", "アノマリー"]
+aliases: ["Nexus", "ネクサス"]
+sources:
+  - label: "Fandom — Esper Zero（英語）"
+    url: "https://neverness-to-everness.fandom.com/wiki/Esper_Zero"
+  - label: "The Games Wiki — The Appraiser（英語）"
+    url: "https://thegameswiki.com/nte/wiki/the-appraiser"
+---
+
+import Callout from '../../components/Callout.astro';
+
+<Callout type="warning">
+英語名 **Nexus** の**日本語正式表記は未確認**（暫定で「連環核／ネクサス」）。日本語版で確定し次第差し替える。
+</Callout>
+
+**連環核（Nexus／ネクサス）** は、あらゆる[異象（アノマリー）](/terms/anomaly/)が内に持つ「**核**」。異象の急所であり、これを特定して突くことで、どれほど巨大な異象でも対処・収束させられるとされる。
+
+## 役割
+
+- **巨大異象を止める鍵**：前史の大災害では、都市[ニューヘリオス](/terms/new-helios/)が壊滅寸前まで追い込まれたのち、[超渦](/terms/hypervortex/)由来の異象の**核が特定・攻撃されたこと**で事態が収束したと描かれる。
+- **「核さえ見抜けば対処できる」**という希望が、[異象管理局（BAC）](/terms/bac/)の管理体制と[異象ハンター](/terms/anomaly-hunter/)の戦い方の前提になっている。
+
+## 主人公との関係
+
+<Callout type="note" title="ネタバレ・要確認">
+主人公[零（エスパー・ゼロ）](/characters/zero/)は、あらゆる異象の核を感知する固有能力「**Nexus Sense**」を持つとされる。これがエイボンへ[鑑定士](/terms/appraiser/)として迎えられる理由のひとつだが、能力の出自は本編中心の謎（英語圏資料由来・**要確認**）。
+</Callout>
+
+関連: [異象の体系（詳説）](/story/anomaly-cosmology/) ／ [超渦](/terms/hypervortex/) ／ [異象](/terms/anomaly/) ／ [ニューヘリオス](/terms/new-helios/) ／ [零](/characters/zero/)

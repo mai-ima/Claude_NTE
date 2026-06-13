@@ -1,0 +1,36 @@
+---
+title: "ヴェルトハイマー指数"
+en: "Wertheimer Index"
+category: "世界観・組織・地名"
+order: 51
+description: "エスパー(異能者)を計測・検知するための指標。ゲーム内では重要アイテムとしても登場。主人公はこの指数で検知できない唯一の存在とされる。同名のファストトラベル塔(Wertheimerタワー)とは別物。"
+status: "draft"
+updated: 2026-06-13
+tags: ["世界観", "設定"]
+aliases: ["Wertheimer Index", "ヴェルトハイマー指数"]
+sources:
+  - label: "Fandom — Esper Zero（英語）"
+    url: "https://neverness-to-everness.fandom.com/wiki/Esper_Zero"
+  - label: "Icy Veins — Wertheimer（英語）"
+    url: "https://www.icy-veins.com/neverness-to-everness/items/wertheimer"
+---
+
+import Callout from '../../components/Callout.astro';
+
+**ヴェルトハイマー指数（Wertheimer Index）** は、[エスパー（異能者）](/terms/esper/)を計測・検知するための指標。ゲーム内では重要アイテムとしても登場する。
+
+<Callout type="warning">
+名前の似た **[Wertheimerタワー](/terms/wertheimer-towers/)**（ファストトラベルの拠点）とは**別物**。こちらは「エスパー検知の指標」、あちらは「移動拠点の塔」。
+</Callout>
+
+## 役割
+
+- エスパーの素質・強度を測る物差しとして、[異象管理局（BAC）](/terms/bac/)的な管理体制の前提になっていると考えられる（詳細は**要確認**）。
+
+## 主人公との関係
+
+<Callout type="note" title="ネタバレ・要確認">
+主人公[零（エスパー・ゼロ）](/characters/zero/)は、記録上**ヴェルトハイマー指数で一切検知できない唯一のエスパー**とされる。[ニューヘリオス](/terms/new-helios/)の大災害の"グラウンド・ゼロ"で記憶を失って発見された経緯とあわせ、その特異性が本編の謎の核になっている（英語圏資料由来・**要確認**）。
+</Callout>
+
+関連: [異象の体系（詳説）](/story/anomaly-cosmology/) ／ [エスパー](/terms/esper/) ／ [連環核](/terms/nexus/) ／ [零](/characters/zero/) ／ [Wertheimerタワー](/terms/wertheimer-towers/)
