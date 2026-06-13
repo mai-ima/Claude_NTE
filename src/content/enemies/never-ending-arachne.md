@@ -6,7 +6,7 @@ location: "異象巡礼"
 order: 71
 description: "蜘蛛型のボス。弱点は闇(Chaos)。"
 status: "verified"
-updated: 2026-06-09
+updated: 2026-06-13
 tags: ["ボス", "boss"]
 sources:
   - label: "ゲームウィズ — ボス攻略まとめ"
@@ -17,4 +17,24 @@ sources:
 
 ## 概要
 
-**踊りだせアラクネ（The Never-ending Arachne）** は蜘蛛型のボス。**弱点は 闇（Chaos）**。地面に広がる衝撃波が多いため、ジャンプで回避しつつ闇属性で攻めるのが最適。
+**踊りだせアラクネ（The Never-ending Arachne）** は蜘蛛型のボス。
+
+## 出現場所
+
+- アノマリー巡礼（[異象狩り](/terms/anomaly-hunter/)）のボス。解放条件は**要確認**。
+
+## 弱点属性
+
+- **弱点は [闇（Chaos）](/terms/el-chaos/)**。
+
+## 行動・ギミック
+
+- **地面に広がる衝撃波**を多用する。ジャンプでの回避が有効。その他の技は**要確認**。
+
+## ドロップ・報酬
+
+- 巡礼ボスの周回報酬。詳細は**要確認**。
+
+## 攻略のコツ
+
+- 衝撃波をジャンプでかわしつつ、[闇（Chaos）](/terms/el-chaos/)で弱点を突いて[ブレイク](/terms/break/)を狙う。

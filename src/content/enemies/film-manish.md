@@ -6,7 +6,7 @@ location: "—"
 order: 60
 description: "ストーリーボス。弱点は魂(Psyche)。"
 status: "verified"
-updated: 2026-06-09
+updated: 2026-06-13
 tags: ["ボス", "boss"]
 sources:
   - label: "ゲームウィズ — ボス攻略まとめ"
@@ -17,4 +17,24 @@ sources:
 
 ## 概要
 
-**フィルム・マニッシュ（Film-MANISH）** はストーリーボス。**弱点は 魂（Psyche）**。魂属性で弱点を突きつつ、闇属性アタッカー（[レクイエム](/characters/lacrimosa/)など）と合わせて **暗星（闇＋魂）** の[連環反応](/systems/esper-cycle/)を起こすのが有効。
+**フィルム・マニッシュ（Film-MANISH）** はメインストーリーで戦うボス。
+
+## 出現場所
+
+- ストーリーボス（メインクエスト進行で対戦）。具体的な章・解放条件は**要確認**。
+
+## 弱点属性
+
+- **弱点は [魂（Psyche）](/terms/el-psyche/)**。
+
+## 行動・ギミック
+
+- 詳細な行動パターン・ギミックは**要確認**（判明し次第追記）。
+
+## ドロップ・報酬
+
+- ストーリー進行報酬。周回ドロップの詳細は**要確認**。
+
+## 攻略のコツ
+
+- [魂](/terms/el-psyche/)で弱点を突きつつ、[闇（Chaos）](/terms/el-chaos/)アタッカー（[レクイエム](/characters/lacrimosa/)など）と合わせて **[暗星（闇＋魂）](/terms/reaction-nova/)** の[連環反応](/systems/esper-cycle/)を起こすと効率がよい。
