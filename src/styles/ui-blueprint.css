@@ -183,3 +183,19 @@ html[data-ui='blueprint'] .figure img { border: 1px solid var(--bp-line); border
 html[data-ui='blueprint'] .app-footer { border-top: 1px dashed var(--bp-line); font-family: var(--font-mono); }
 html[data-ui='blueprint'] .edit-link { font-family: var(--font-mono); }
 html[data-ui='blueprint'] .empty { border: 1px dashed var(--bp-line); border-radius: 2px; }
+
+/* ===== 別方向へ分離: Blueprint は本格「青写真」グリッドへ（Terminalと差別化） ===== */
+html[data-ui='blueprint'] body {
+  background:
+    linear-gradient(color-mix(in srgb, var(--accent) 10%, transparent) 1px, transparent 1px) 0 0 / 100% 24px,
+    linear-gradient(90deg, color-mix(in srgb, var(--accent) 10%, transparent) 1px, transparent 1px) 0 0 / 24px 100%,
+    linear-gradient(color-mix(in srgb, var(--accent) 5%, transparent) 1px, transparent 1px) 0 0 / 100% 8px,
+    linear-gradient(90deg, color-mix(in srgb, var(--accent) 5%, transparent) 1px, transparent 1px) 0 0 / 8px 100%,
+    var(--bg);
+}
+/* 見出しは大文字にしない（Terminalの大文字と差別化） */
+html[data-ui='blueprint'] h1,
+html[data-ui='blueprint'] h2,
+html[data-ui='blueprint'] h3 {
+  text-transform: none;
+}

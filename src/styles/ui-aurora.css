@@ -721,3 +721,39 @@ html[data-ui='aurora'] .spoiler { border-color: color-mix(in srgb, var(--accent)
 html[data-ui='aurora'] .spoiler[open] { box-shadow: var(--beta-glow); }
 html[data-ui='aurora'] .filterbar .chip.is-on { background: var(--beta-grad); color: #fff; border-color: transparent; }
 html[data-ui='aurora'] .figure img { border: 1px solid transparent; background: linear-gradient(var(--surface), var(--surface)) padding-box, var(--beta-grad) border-box; }
+
+/* ===== 別方向へ分離: Aurora は「ガラス」をやめ、不透明×ネオングラデに振り切る ===== */
+html[data-ui='aurora'] {
+  --glass: var(--surface);
+  --glass-strong: var(--surface);
+}
+html[data-ui='aurora'] .app-header,
+html[data-ui='aurora'] .card,
+html[data-ui='aurora'] .info-panel,
+html[data-ui='aurora'] .hero,
+html[data-ui='aurora'] .stat,
+html[data-ui='aurora'] .tool .tool-result,
+html[data-ui='aurora'] .bottom-nav,
+html[data-ui='aurora'] .toc,
+html[data-ui='aurora'] .spoiler,
+html[data-ui='aurora'] .page-head .eyebrow {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+/* カードは塗りのグラデ面（ガラスでない）でネオン感 */
+html[data-ui='aurora'] .card {
+  background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 8%, var(--surface)), var(--surface));
+}
+html[data-ui='aurora'] .hero {
+  background: var(--beta-grad-soft), var(--surface);
+}
+html[data-ui='aurora'] .app-header {
+  background: color-mix(in srgb, var(--surface) 94%, var(--accent));
+}
+
+/* ---- Terminal: CRT のフォスファ発光を足す（Blueprintと分離） ---- */
+html[data-ui='terminal'] .page-head h1,
+html[data-ui='terminal'] .prose h2,
+html[data-ui='terminal'] .stat-num {
+  text-shadow: 0 0 8px color-mix(in srgb, var(--accent) 50%, transparent);
+}

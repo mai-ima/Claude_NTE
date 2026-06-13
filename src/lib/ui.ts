@@ -3,7 +3,7 @@
  * - 'classic'  : 従来のUI（既定）
  * - 'editorial': 紙の特集記事風（太罫線・ハードシャドウ・活字タイポ）
  * - 'liquid'   : 本格リキッドグラス（厚い曇りガラス・カプセル形状）
- * - 'aurora'   : オーロラグラデーション＋グロー
+ * - 'aurora'   : 不透明×ネオングラデーション＋発光（ガラスでない）
  * - 'apple'    : Apple HIG 風のクリーンなフラット（仮称）
  * html[data-ui='<mode>'] でスタイルを切り替える。テーマ（配色）とは独立。
  */
@@ -25,7 +25,7 @@ export const UI_MODES: { value: UIMode; label: string; hint: string; beta: boole
   { value: 'classic', label: '従来UI', hint: 'これまでのシンプルな表示', beta: false },
   { value: 'editorial', label: 'Editorial', hint: '紙の特集記事風。太い罫線とハードシャドウ', beta: true },
   { value: 'liquid', label: 'Liquid Glass', hint: '本格リキッドグラス。厚い曇りガラスとカプセル', beta: true },
-  { value: 'aurora', label: 'Aurora Glass', hint: 'オーロラグラデーションとグロー', beta: true },
+  { value: 'aurora', label: 'Aurora Neon', hint: '不透明×ネオングラデーションと発光（ガラスではない）', beta: true },
   { value: 'apple', label: 'Apple（仮称）', hint: 'HIG風のクリーンなフラットデザイン', beta: true },
   { value: 'terminal', label: 'Terminal', hint: 'レトロCRT/端末風。等幅・走査線・記号UI', beta: true },
   { value: 'clay', label: 'Clay', hint: 'やわらかニューモーフィズム。ぷっくり3D', beta: true },
