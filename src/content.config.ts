@@ -199,6 +199,9 @@ const vehicles = defineCollection({
       type: z.enum(['scooter', 'bike', 'car', 'special']).default('car'),
       acquisition: z.string().optional(), // 入手方法
       perk: z.string().optional(), // 同乗効果・特性など
+      price: z.string().optional(), // 購入額
+      topSpeed: z.string().optional(), // 最高速
+      shop: z.string().optional(), // 購入できるカーショップ
     }),
 });
 

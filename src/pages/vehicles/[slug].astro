@@ -25,6 +25,9 @@ const TYPE_LABEL: Record<string, string> = {
 };
 const rows: Row[] = [];
 rows.push({ k: '種別', v: TYPE_LABEL[d.type] ?? d.type });
+if (d.price) rows.push({ k: '価格', v: d.price });
+if (d.topSpeed) rows.push({ k: '最高速', v: d.topSpeed });
+if (d.shop) rows.push({ k: '購入店', v: d.shop });
 if (d.acquisition) rows.push({ k: '入手方法', v: d.acquisition });
 if (d.perk) rows.push({ k: '同乗効果・特性', v: d.perk });
 
