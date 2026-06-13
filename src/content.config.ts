@@ -1,4 +1,5 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { z } from 'astro/zod';
 import { glob } from 'astro/loaders';
 
 /**
@@ -13,7 +14,7 @@ import { glob } from 'astro/loaders';
  *   - 'draft'    : 未検証の数値・仕様を含む下書き（UIに「要確認」バッジ）
  */
 
-const source = z.object({ label: z.string(), url: z.string().url() });
+const source = z.object({ label: z.string(), url: z.url() });
 
 /** 全コレクション共通のベースフィールド */
 const base = {
