@@ -157,3 +157,10 @@ html[data-ui='clay'] .tool .progress > span {
     color: var(--accent);
   }
 }
+
+/* ===== コールアウト: 凹みクレイ ===== */
+html[data-ui='clay'] .callout {
+  border: none;
+  background: var(--bg);
+  box-shadow: var(--clay-in);
+}

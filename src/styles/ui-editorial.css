@@ -514,3 +514,10 @@ html[data-ui='editorial'] .prose blockquote {
 html[data-ui='editorial'] .prose h3 {
   font-family: var(--serif);
 }
+
+/* ===== v0.6.5c コールアウトを誌面の囲み風に ===== */
+html[data-ui='editorial'] .callout {
+  border-radius: 0;
+  border-left-width: 5px;
+  box-shadow: var(--shadow-hard-sm);
+}

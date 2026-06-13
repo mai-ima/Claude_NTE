@@ -440,27 +440,8 @@ html[data-ui='liquid'] body {
     var(--bg);
   background-attachment: fixed;
 }
-/* ヘッダーをゆっくり横切る光沢（モーション許可時のみ） */
-@media (prefers-reduced-motion: no-preference) {
-  html[data-ui='liquid'] .app-header {
-    overflow: hidden;
-  }
-  html[data-ui='liquid'] .app-header::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -45%;
-    width: 45%;
-    height: 100%;
-    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    animation: lq-sheen 8s ease-in-out infinite;
-    pointer-events: none;
-  }
-  @keyframes lq-sheen {
-    0%, 100% { left: -45%; }
-    50% { left: 125%; }
-  }
-}
+/* 注: 以前ここにヘッダー横断の光沢(overflow:hidden が必要)を入れていたが、
+   テーマメニューのドロップダウンを切り取ってしまうため撤去した。 */
 
 /* ===== v0.6.5b (A) 常に色が透けるリキッドガラス（壁紙を全面化＋縁の光） ===== */
 html[data-ui='liquid'] {
@@ -490,4 +471,13 @@ html[data-ui='liquid'] .hero {
 }
 html[data-ui='liquid'] .card-link::after {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 44%);
+}
+
+/* ===== v0.6.5c コールアウトもガラスに ===== */
+html[data-ui='liquid'] .callout {
+  border: none;
+  background: var(--lq-surface-thick);
+  backdrop-filter: var(--lq-blur);
+  -webkit-backdrop-filter: var(--lq-blur);
+  box-shadow: var(--lq-edge);
 }

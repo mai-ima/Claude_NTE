@@ -199,3 +199,10 @@ html[data-ui='terminal'] .prose code:not(pre code) {
     color: var(--accent);
   }
 }
+
+/* ===== コールアウト: 角ばった枠 ===== */
+html[data-ui='terminal'] .callout {
+  border-radius: 0;
+  border: 1px solid var(--accent);
+  background: var(--surface);
+}

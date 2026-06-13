@@ -443,3 +443,9 @@ html[data-ui='apple'] .nav-group + .nav-group {
 html[data-ui='apple'] .edit-link a {
   color: var(--accent);
 }
+
+/* ===== v0.6.5c コールアウトを iOS カード風に ===== */
+html[data-ui='apple'] .callout {
+  border: none;
+  box-shadow: var(--ap-shadow);
+}

@@ -166,3 +166,9 @@ html[data-ui='blueprint'] .select:focus {
     color: var(--accent);
   }
 }
+
+/* ===== コールアウト: 細罫 ===== */
+html[data-ui='blueprint'] .callout {
+  border: 1px solid var(--bp-line);
+  border-radius: 2px;
+}
