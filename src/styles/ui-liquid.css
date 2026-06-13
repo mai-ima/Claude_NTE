@@ -375,3 +375,43 @@ html[data-ui='liquid'] .el-badge,
 html[data-ui='liquid'] .chip {
   border-radius: 999px;
 }
+
+/* ===== v0.6.3 さらにガラス感強化（iPhone Liquid Glass 級の透け感） ===== */
+html[data-ui='liquid'] {
+  /* クローム(ヘッダー/ナビ/ボタン/バッジ)はより透明に、カードは可読性を保ちつつ透ける */
+  --lq-surface: color-mix(in srgb, var(--surface) 42%, transparent);
+  --lq-surface-thick: color-mix(in srgb, var(--surface) 66%, transparent);
+  --lq-blur: saturate(200%) blur(40px);
+  /* レンズのような明暗の縁（上=ハイライト/下=陰）で“厚み”を表現 */
+  --lq-edge:
+    inset 0 1px 0 color-mix(in srgb, #fff 60%, transparent),
+    inset 0 -1.5px 2px color-mix(in srgb, #000 14%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, #fff 22%, transparent);
+}
+/* 壁紙をより鮮やかに → ガラス越しの透け（屈折）が際立つ */
+html[data-ui='liquid'] body {
+  background:
+    radial-gradient(1000px 700px at 88% -8%, color-mix(in srgb, var(--accent) 28%, transparent), transparent 60%),
+    radial-gradient(900px 640px at -8% 24%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 58%),
+    radial-gradient(820px 580px at 62% 112%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
+}
+/* サイドバーもガラス板に（透けて背後が見える） */
+@media (min-width: 960px) {
+  html[data-ui='liquid'] .sidebar {
+    background: var(--lq-surface);
+    backdrop-filter: var(--lq-blur);
+    -webkit-backdrop-filter: var(--lq-blur);
+    box-shadow: var(--lq-edge);
+    border-radius: var(--radius-lg);
+    padding: 16px 10px;
+  }
+}
+/* 下部ナビ・ドロワーもより透明＋強ブラー */
+html[data-ui='liquid'] .bottom-nav,
+html[data-ui='liquid'] .drawer-panel {
+  background: var(--lq-surface);
+  backdrop-filter: var(--lq-blur);
+  -webkit-backdrop-filter: var(--lq-blur);
+}

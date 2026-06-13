@@ -50,6 +50,7 @@ const pills: Pill[] = [{ kind: 'plain', value: d.category }];
   headings={headings}
   prev={prev ? { href: hrefOf('terms', prev.id), title: titleOf(prev) } : null}
   next={next ? { href: hrefOf('terms', next.id), title: titleOf(next) } : null}
+  editPath={(entry as any).filePath}
   related={related}
   relatedLabel={`${d.category} の用語`}
 >

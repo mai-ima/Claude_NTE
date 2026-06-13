@@ -1531,3 +1531,14 @@ body {
   height: 100%;
   border: 0;
 }
+
+/* ---- ヘッダーはみ出し対策（モバイルではヘッダー内ナビを隠す） ---------- */
+.brand span:last-child {
+  white-space: nowrap;
+}
+@media (max-width: 767px) {
+  /* ドロワー(ハンバーガー)＋下部ナビがあるので、ヘッダー内のアイコン列は隠す */
+  .app-header nav[aria-label='グローバルナビ'] {
+    display: none;
+  }
+}
