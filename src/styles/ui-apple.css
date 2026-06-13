@@ -339,3 +339,79 @@ html[data-ui='apple'] .app-header {
   backdrop-filter: saturate(180%) blur(24px);
   -webkit-backdrop-filter: saturate(180%) blur(24px);
 }
+
+/* ===== v0.6.5 大幅強化: より忠実な iOS/Apple 体験 ===== */
+html[data-ui='apple'] {
+  --radius: 20px;
+  --radius-sm: 13px;
+  --radius-lg: 26px;
+  --ap-shadow: 0 1px 2px color-mix(in srgb, var(--text) 6%, transparent);
+}
+/* ヘッダーのビブランシー強化 */
+html[data-ui='apple'] .app-header {
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  backdrop-filter: saturate(200%) blur(30px);
+  -webkit-backdrop-filter: saturate(200%) blur(30px);
+}
+/* サイドバー/ドロワーのナビ行を iOS 設定アプリ風（右端ディスクロージャ »） */
+html[data-ui='apple'] .sidebar .nav-link,
+html[data-ui='apple'] .drawer-panel .nav-link {
+  position: relative;
+  border-radius: 10px;
+  padding-right: 26px;
+}
+html[data-ui='apple'] .sidebar .nav-link::after,
+html[data-ui='apple'] .drawer-panel .nav-link::after {
+  content: '›';
+  position: absolute;
+  right: 11px;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--text) 28%, transparent);
+}
+html[data-ui='apple'] .nav-link[aria-current='page'] {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+html[data-ui='apple'] .nav-link[aria-current='page']::after {
+  color: color-mix(in srgb, var(--accent-contrast) 70%, transparent);
+}
+/* カードのホバーは暗くせず軽く持ち上げ、押下は iOS 風スケール */
+html[data-ui='apple'] .card-link:hover {
+  background: var(--surface);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--text) 9%, transparent);
+}
+html[data-ui='apple'] .card-link:active {
+  transform: scale(0.99);
+}
+/* インフォパネルを inset グループ表（行は最低44px） */
+html[data-ui='apple'] .info-row {
+  min-height: 44px;
+  align-items: center;
+}
+/* 下部ナビ（iOS タブバー） */
+@media (max-width: 959px) {
+  html[data-ui='apple'] .bottom-nav {
+    background: color-mix(in srgb, var(--surface) 70%, transparent);
+    backdrop-filter: saturate(200%) blur(30px);
+    -webkit-backdrop-filter: saturate(200%) blur(30px);
+    border-top: var(--hairline);
+  }
+  html[data-ui='apple'] .bottom-nav a[aria-current='page'] {
+    color: var(--accent);
+  }
+}
+/* 選択カード・フォーカス */
+html[data-ui='apple'] .ui-switch-opt.is-active,
+html[data-ui='apple'] .theme-opt.is-active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+html[data-ui='apple'] :focus-visible {
+  outline-color: var(--accent);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+html[data-ui='apple'] .page-head h1 {
+  letter-spacing: -0.035em;
+}

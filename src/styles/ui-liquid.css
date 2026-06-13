@@ -415,3 +415,49 @@ html[data-ui='liquid'] .drawer-panel {
   backdrop-filter: var(--lq-blur);
   -webkit-backdrop-filter: var(--lq-blur);
 }
+
+/* ===== v0.6.5 大幅強化: 屈折する厚いリキッドグラス ===== */
+html[data-ui='liquid'] {
+  --radius: 28px;
+  --radius-sm: 18px;
+  --radius-lg: 36px;
+  --lq-surface: color-mix(in srgb, var(--surface) 38%, transparent);
+  --lq-surface-thick: color-mix(in srgb, var(--surface) 66%, transparent);
+  --lq-blur: saturate(210%) blur(44px);
+  /* 上=強ハイライト / 下=陰 / 内周=淡い光 → レンズの厚みと屈折 */
+  --lq-edge:
+    inset 0 1.5px 0 color-mix(in srgb, #fff 65%, transparent),
+    inset 0 -2px 3px color-mix(in srgb, #000 16%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, #fff 24%, transparent),
+    inset 0 0 26px color-mix(in srgb, #fff 6%, transparent);
+}
+/* 壁紙をさらに鮮やかな3色メッシュに（ガラス越しの屈折を強調） */
+html[data-ui='liquid'] body {
+  background:
+    radial-gradient(1100px 760px at 86% -10%, color-mix(in srgb, var(--accent) 34%, transparent), transparent 58%),
+    radial-gradient(980px 700px at -10% 22%, color-mix(in srgb, #a855f7 24%, transparent), transparent 56%),
+    radial-gradient(900px 640px at 64% 114%, color-mix(in srgb, #22d3ee 22%, transparent), transparent 60%),
+    var(--bg);
+  background-attachment: fixed;
+}
+/* ヘッダーをゆっくり横切る光沢（モーション許可時のみ） */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-ui='liquid'] .app-header {
+    overflow: hidden;
+  }
+  html[data-ui='liquid'] .app-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -45%;
+    width: 45%;
+    height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: lq-sheen 8s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes lq-sheen {
+    0%, 100% { left: -45%; }
+    50% { left: 125%; }
+  }
+}

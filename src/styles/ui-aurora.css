@@ -656,3 +656,43 @@ html[data-ui='aurora'] .tool .big {
     }
   }
 }
+
+/* ===== v0.6.5 大幅強化: 流れるオーロラ＋ネオン発光 ===== */
+/* 見出し・大数字をグラデ＋発光に */
+html[data-ui='aurora'] .page-head h1 {
+  background: var(--beta-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: none;
+  filter: drop-shadow(0 0 16px color-mix(in srgb, var(--accent) 40%, transparent));
+}
+/* カードに淡いアクセントの内周リング＋ホバーで虹色グロー */
+html[data-ui='aurora'] .card {
+  box-shadow: var(--shadow-sm), inset 0 0 0 1px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+html[data-ui='aurora'] .card-link:hover {
+  box-shadow: var(--beta-glow-strong), 0 0 0 1.5px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+html[data-ui='aurora'] .badge-accent {
+  box-shadow: 0 0 12px -2px color-mix(in srgb, var(--accent) 50%, transparent);
+}
+/* 本文 h2 の下線をグラデに */
+html[data-ui='aurora'] .prose h2 {
+  border-bottom-color: transparent;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 22%, transparent), transparent) left bottom / 100% 2px no-repeat;
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* オーロラ背景をより速く大きく動かす */
+  html[data-ui='aurora'] body::before {
+    animation-duration: 16s;
+  }
+  /* プライマリボタンが脈打つ発光 */
+  html[data-ui='aurora'] .btn-primary {
+    animation: aurora-pulse 3.4s ease-in-out infinite;
+  }
+  @keyframes aurora-pulse {
+    0%, 100% { box-shadow: var(--beta-glow); }
+    50% { box-shadow: var(--beta-glow-strong); }
+  }
+}
