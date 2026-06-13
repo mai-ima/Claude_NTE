@@ -1,0 +1,159 @@
+/* =========================================================================
+   新UI「Clay」 — <html data-ui="clay"> のときだけ適用。
+   やわらかいニューモーフィズム（粘土細工）風: ぷっくりした厚み・二重の柔らか影・
+   大きな丸み。押すと凹む。配色テーマの bg から陰影を導出。classic 不変。
+   ========================================================================= */
+
+html[data-ui='clay'] {
+  --radius: 22px;
+  --radius-sm: 16px;
+  --radius-lg: 30px;
+  /* bg を基準に「暗い影」と「明るいハイライト」を作る（テーマ非依存） */
+  --clay-dark: color-mix(in srgb, var(--bg) 76%, #000);
+  --clay-light: color-mix(in srgb, var(--bg) 84%, #fff);
+  --clay-out: 7px 7px 16px var(--clay-dark), -7px -7px 16px var(--clay-light);
+  --clay-out-sm: 4px 4px 9px var(--clay-dark), -4px -4px 9px var(--clay-light);
+  --clay-in: inset 5px 5px 12px var(--clay-dark), inset -5px -5px 12px var(--clay-light);
+}
+
+html[data-ui='clay'] body {
+  background: var(--bg);
+}
+
+/* カード・パネル: bg と同色で浮き出す（押すと凹む） */
+html[data-ui='clay'] .card,
+html[data-ui='clay'] .hero,
+html[data-ui='clay'] .stat,
+html[data-ui='clay'] .info-panel,
+html[data-ui='clay'] .tool .tool-result {
+  border: none;
+  border-radius: var(--radius-lg);
+  background: var(--bg);
+  box-shadow: var(--clay-out);
+}
+html[data-ui='clay'] .card-link {
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+html[data-ui='clay'] .card-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 9px 11px 20px var(--clay-dark), -9px -9px 20px var(--clay-light);
+}
+html[data-ui='clay'] .card-link:active {
+  transform: none;
+  box-shadow: var(--clay-in);
+}
+html[data-ui='clay'] .stat:hover {
+  box-shadow: var(--clay-in);
+}
+html[data-ui='clay'] .stat-num {
+  color: var(--accent);
+}
+
+/* ヘッダー */
+html[data-ui='clay'] .app-header {
+  background: var(--bg);
+  border: none;
+  box-shadow: 0 6px 18px var(--clay-dark);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+html[data-ui='clay'] .brand-mark {
+  border-radius: 12px;
+  background: var(--accent);
+  box-shadow: var(--clay-out-sm);
+}
+
+/* 見出し */
+html[data-ui='clay'] h1,
+html[data-ui='clay'] h2 {
+  font-weight: 800;
+}
+
+/* ボタン: ぷにっと */
+html[data-ui='clay'] .btn {
+  border: none;
+  border-radius: 999px;
+  background: var(--bg);
+  box-shadow: var(--clay-out-sm);
+  font-weight: 700;
+  transition: box-shadow 0.12s ease, transform 0.12s ease;
+}
+html[data-ui='clay'] .btn:active {
+  box-shadow: var(--clay-in);
+  transform: scale(0.98);
+}
+html[data-ui='clay'] .btn-primary {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  box-shadow: var(--clay-out-sm);
+}
+
+/* 入力: 凹み */
+html[data-ui='clay'] .input,
+html[data-ui='clay'] .textarea,
+html[data-ui='clay'] .select {
+  border: none;
+  border-radius: 16px;
+  background: var(--bg);
+  box-shadow: var(--clay-in);
+}
+html[data-ui='clay'] .input:focus,
+html[data-ui='clay'] .textarea:focus,
+html[data-ui='clay'] .select:focus {
+  box-shadow: var(--clay-in), 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent);
+}
+
+/* バッジ */
+html[data-ui='clay'] .badge,
+html[data-ui='clay'] .el-badge {
+  border: none;
+  border-radius: 999px;
+  box-shadow: 3px 3px 7px var(--clay-dark), -3px -3px 7px var(--clay-light);
+}
+
+/* ナビ */
+html[data-ui='clay'] .nav-link {
+  border-radius: 14px;
+}
+html[data-ui='clay'] .nav-link[aria-current='page'],
+html[data-ui='clay'] .nav-link.is-active {
+  background: var(--bg);
+  box-shadow: var(--clay-in);
+  color: var(--accent);
+}
+
+/* 本文 */
+html[data-ui='clay'] .prose pre,
+html[data-ui='clay'] .prose table {
+  border: none;
+  border-radius: 16px;
+  box-shadow: var(--clay-in);
+  overflow: hidden;
+}
+html[data-ui='clay'] .prose blockquote {
+  border-left: none;
+  border-radius: 16px;
+  background: var(--bg);
+  box-shadow: var(--clay-in);
+}
+html[data-ui='clay'] .tool .progress {
+  border-radius: 999px;
+  box-shadow: var(--clay-in);
+}
+html[data-ui='clay'] .tool .progress > span {
+  background: var(--accent);
+}
+
+/* 下部ナビ */
+@media (max-width: 959px) {
+  html[data-ui='clay'] .bottom-nav {
+    background: var(--bg);
+    border-top: none;
+    box-shadow: 0 -6px 18px var(--clay-dark);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  html[data-ui='clay'] .bottom-nav a[aria-current='page'] {
+    color: var(--accent);
+  }
+}

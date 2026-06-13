@@ -1,0 +1,168 @@
+/* =========================================================================
+   新UI「Blueprint」 — <html data-ui="blueprint"> のときだけ適用。
+   製図/設計図風: 方眼の背景・細いアクセント罫・カード四隅のティック・
+   等幅ラベル・破線の区切り。配色テーマの変数から導出。classic 不変。
+   ========================================================================= */
+
+html[data-ui='blueprint'] {
+  --radius: 2px;
+  --radius-sm: 2px;
+  --radius-lg: 2px;
+  --bp-line: color-mix(in srgb, var(--accent) 32%, var(--border));
+}
+
+/* 方眼紙 */
+html[data-ui='blueprint'] body {
+  background:
+    linear-gradient(color-mix(in srgb, var(--accent) 7%, transparent) 1px, transparent 1px) 0 0 / 100% 22px,
+    linear-gradient(90deg, color-mix(in srgb, var(--accent) 7%, transparent) 1px, transparent 1px) 0 0 / 22px 100%,
+    var(--bg);
+}
+
+/* 等幅ラベル */
+html[data-ui='blueprint'] .page-head .eyebrow,
+html[data-ui='blueprint'] .nav-group-title,
+html[data-ui='blueprint'] .stat-label,
+html[data-ui='blueprint'] .badge,
+html[data-ui='blueprint'] .info-row .k {
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+}
+html[data-ui='blueprint'] h1,
+html[data-ui='blueprint'] h2 {
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+/* ヘッダー */
+html[data-ui='blueprint'] .app-header {
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  border-bottom: 1px solid var(--bp-line);
+}
+html[data-ui='blueprint'] .brand-mark {
+  border-radius: 2px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+/* カード・パネル: 細罫＋四隅ティック */
+html[data-ui='blueprint'] .card,
+html[data-ui='blueprint'] .hero,
+html[data-ui='blueprint'] .info-panel,
+html[data-ui='blueprint'] .tool .tool-result,
+html[data-ui='blueprint'] .stat {
+  border: 1px solid var(--bp-line);
+  border-radius: 2px;
+  box-shadow: none;
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  position: relative;
+}
+html[data-ui='blueprint'] .card::before,
+html[data-ui='blueprint'] .card::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 1.5px solid var(--accent);
+}
+html[data-ui='blueprint'] .card::before {
+  top: -1px;
+  left: -1px;
+  border-right: 0;
+  border-bottom: 0;
+}
+html[data-ui='blueprint'] .card::after {
+  bottom: -1px;
+  right: -1px;
+  border-left: 0;
+  border-top: 0;
+}
+html[data-ui='blueprint'] .card-link:hover {
+  border-color: var(--accent);
+  transform: none;
+  box-shadow: none;
+}
+html[data-ui='blueprint'] .stat-num {
+  font-family: var(--font-mono);
+  color: var(--accent);
+}
+
+/* ボタン */
+html[data-ui='blueprint'] .btn {
+  border-radius: 2px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--font-mono);
+}
+html[data-ui='blueprint'] .btn:hover {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+html[data-ui='blueprint'] .btn-primary {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+/* バッジ */
+html[data-ui='blueprint'] .badge {
+  border: 1px solid var(--bp-line);
+  border-radius: 2px;
+  background: transparent;
+}
+html[data-ui='blueprint'] .badge-accent {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ナビ */
+html[data-ui='blueprint'] .nav-link {
+  border-radius: 2px;
+}
+html[data-ui='blueprint'] .nav-link[aria-current='page'],
+html[data-ui='blueprint'] .nav-link.is-active {
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  box-shadow: inset 2px 0 0 var(--accent);
+  color: var(--accent);
+}
+
+/* 本文 */
+html[data-ui='blueprint'] .prose h2 {
+  border-bottom: 1px dashed var(--bp-line);
+}
+html[data-ui='blueprint'] .prose table {
+  border: 1px solid var(--bp-line);
+  border-radius: 0;
+}
+html[data-ui='blueprint'] .prose th {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  font-family: var(--font-mono);
+}
+html[data-ui='blueprint'] .info-row + .info-row {
+  border-top: 1px dashed var(--bp-line);
+}
+
+/* 入力 */
+html[data-ui='blueprint'] .input,
+html[data-ui='blueprint'] .textarea,
+html[data-ui='blueprint'] .select {
+  border-radius: 2px;
+  border: 1px solid var(--bp-line);
+  font-family: var(--font-mono);
+}
+html[data-ui='blueprint'] .input:focus,
+html[data-ui='blueprint'] .textarea:focus,
+html[data-ui='blueprint'] .select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+/* 下部ナビ */
+@media (max-width: 959px) {
+  html[data-ui='blueprint'] .bottom-nav {
+    background: color-mix(in srgb, var(--surface) 85%, transparent);
+    border-top: 1px solid var(--bp-line);
+  }
+  html[data-ui='blueprint'] .bottom-nav a[aria-current='page'] {
+    color: var(--accent);
+  }
+}

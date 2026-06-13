@@ -1,0 +1,201 @@
+/* =========================================================================
+   新UI「Terminal」 — <html data-ui="terminal"> のときだけ適用。
+   レトロCRT/コンソール風: 等幅フォント・走査線・角ばった枠・$ > [ ] の記号UI。
+   配色テーマの変数から導出（アクセント＝蛍光色）。classic には影響しない。
+   ========================================================================= */
+
+html[data-ui='terminal'] {
+  --radius: 0px;
+  --radius-sm: 0px;
+  --radius-lg: 0px;
+  --term-line: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+
+/* 走査線（CRT）をごく薄く敷く */
+html[data-ui='terminal'] body {
+  font-family: var(--font-mono);
+  background:
+    repeating-linear-gradient(
+      0deg,
+      color-mix(in srgb, var(--text) 4%, transparent) 0 1px,
+      transparent 1px 3px
+    ),
+    var(--bg);
+}
+html[data-ui='terminal'] ::selection {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+/* 見出し: 大文字＋記号プレフィックス */
+html[data-ui='terminal'] h1,
+html[data-ui='terminal'] h2,
+html[data-ui='terminal'] h3 {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+}
+html[data-ui='terminal'] .page-head h1::before {
+  content: '$ ';
+  color: var(--accent);
+}
+html[data-ui='terminal'] .prose h2::before {
+  content: '> ';
+  color: var(--accent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html[data-ui='terminal'] .page-head h1::after {
+    content: '_';
+    color: var(--accent);
+    animation: term-blink 1.1s step-end infinite;
+  }
+  @keyframes term-blink {
+    50% { opacity: 0; }
+  }
+}
+
+/* ヘッダー */
+html[data-ui='terminal'] .app-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--accent);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+html[data-ui='terminal'] .brand-mark {
+  border-radius: 0;
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+html[data-ui='terminal'] .brand span:last-child {
+  font-family: var(--font-mono);
+}
+
+/* カード・パネル: 角ばった枠 */
+html[data-ui='terminal'] .card,
+html[data-ui='terminal'] .info-panel,
+html[data-ui='terminal'] .tool .tool-result,
+html[data-ui='terminal'] .stat,
+html[data-ui='terminal'] .hero {
+  border: 1px solid var(--term-line);
+  border-radius: 0;
+  box-shadow: none;
+  background: var(--surface);
+}
+html[data-ui='terminal'] .card-link:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+  transform: none;
+}
+html[data-ui='terminal'] .stat-num {
+  font-family: var(--font-mono);
+  color: var(--accent);
+}
+
+/* ボタン: [ label ] */
+html[data-ui='terminal'] .btn {
+  border-radius: 0;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+html[data-ui='terminal'] .btn::before {
+  content: '[';
+  margin-right: 6px;
+}
+html[data-ui='terminal'] .btn::after {
+  content: ']';
+  margin-left: 6px;
+}
+html[data-ui='terminal'] .btn:hover {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+html[data-ui='terminal'] .btn-primary {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+html[data-ui='terminal'] .btn-icon::before,
+html[data-ui='terminal'] .btn-icon::after {
+  content: none;
+}
+
+/* バッジ */
+html[data-ui='terminal'] .badge {
+  border-radius: 0;
+  font-family: var(--font-mono);
+  border: 1px solid var(--term-line);
+  background: transparent;
+  text-transform: uppercase;
+}
+html[data-ui='terminal'] .badge-accent {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+html[data-ui='terminal'] .el-badge {
+  border-radius: 0;
+}
+
+/* ナビ */
+html[data-ui='terminal'] .nav-link {
+  border-radius: 0;
+  font-family: var(--font-mono);
+}
+html[data-ui='terminal'] .nav-link[aria-current='page'],
+html[data-ui='terminal'] .nav-link.is-active {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+html[data-ui='terminal'] .nav-group-title {
+  font-family: var(--font-mono);
+}
+
+/* 入力 */
+html[data-ui='terminal'] .input,
+html[data-ui='terminal'] .textarea,
+html[data-ui='terminal'] .select {
+  border-radius: 0;
+  border: 1px solid var(--term-line);
+  font-family: var(--font-mono);
+}
+html[data-ui='terminal'] .input:focus,
+html[data-ui='terminal'] .textarea:focus,
+html[data-ui='terminal'] .select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+/* 本文 */
+html[data-ui='terminal'] .prose a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+html[data-ui='terminal'] .prose table {
+  border: 1px solid var(--accent);
+  border-radius: 0;
+}
+html[data-ui='terminal'] .prose th {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+}
+html[data-ui='terminal'] .prose code:not(pre code) {
+  border-radius: 0;
+  border: 1px solid var(--term-line);
+}
+
+/* 下部ナビ */
+@media (max-width: 959px) {
+  html[data-ui='terminal'] .bottom-nav {
+    background: var(--surface);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-top: 1px solid var(--accent);
+  }
+  html[data-ui='terminal'] .bottom-nav a[aria-current='page'] {
+    color: var(--accent);
+  }
+}

@@ -503,3 +503,14 @@ html[data-ui='editorial'] .prose > p:first-of-type::first-letter {
   margin: 6px 12px -4px 0;
   color: var(--ink);
 }
+
+/* ===== v0.6.5c 細部: プルクオート（引用を誌面風に） ===== */
+html[data-ui='editorial'] .prose blockquote {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.08rem;
+  border-left-width: 5px;
+}
+html[data-ui='editorial'] .prose h3 {
+  font-family: var(--serif);
+}

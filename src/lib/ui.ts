@@ -8,7 +8,15 @@
  * html[data-ui='<mode>'] でスタイルを切り替える。テーマ（配色）とは独立。
  */
 
-export type UIMode = 'classic' | 'editorial' | 'liquid' | 'aurora' | 'apple';
+export type UIMode =
+  | 'classic'
+  | 'editorial'
+  | 'liquid'
+  | 'aurora'
+  | 'apple'
+  | 'terminal'
+  | 'clay'
+  | 'blueprint';
 
 export const UI_KEY = 'nte.ui';
 const DEFAULT_UI: UIMode = 'classic';
@@ -19,6 +27,9 @@ export const UI_MODES: { value: UIMode; label: string; hint: string; beta: boole
   { value: 'liquid', label: 'Liquid Glass', hint: '本格リキッドグラス。厚い曇りガラスとカプセル', beta: true },
   { value: 'aurora', label: 'Aurora Glass', hint: 'オーロラグラデーションとグロー', beta: true },
   { value: 'apple', label: 'Apple（仮称）', hint: 'HIG風のクリーンなフラットデザイン', beta: true },
+  { value: 'terminal', label: 'Terminal', hint: 'レトロCRT/端末風。等幅・走査線・記号UI', beta: true },
+  { value: 'clay', label: 'Clay', hint: 'やわらかニューモーフィズム。ぷっくり3D', beta: true },
+  { value: 'blueprint', label: 'Blueprint', hint: '製図/設計図風。方眼と四隅のティック', beta: true },
 ];
 
 const VALID: UIMode[] = UI_MODES.map((m) => m.value);

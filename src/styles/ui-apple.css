@@ -435,3 +435,11 @@ html[data-ui='apple'] .info-row {
 html[data-ui='apple'] .prose {
   line-height: 1.8;
 }
+
+/* ===== v0.6.5c 細部: グループ間の余白とリンク色 ===== */
+html[data-ui='apple'] .nav-group + .nav-group {
+  margin-top: 26px;
+}
+html[data-ui='apple'] .edit-link a {
+  color: var(--accent);
+}
