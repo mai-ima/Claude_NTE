@@ -13,6 +13,8 @@ sources:
     url: "https://gamerant.com/neverness-to-everness-things-to-do-daily-checklist/"
 ---
 
+> 各育成要素の効果・必要素材・上げ方まで網羅した詳細版は **[育成完全ガイド](/guides/cultivation/)** を参照。本ページは要点のみ。
+
 ## 優先順位
 
 1. **メインDPS**（例: ナナリ / 零 / ちぃちゃん）を先に育て、戦力の天井を上げる。

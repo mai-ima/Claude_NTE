@@ -1,0 +1,40 @@
+---
+title: "ポルシェコラボ「エバードライブ」"
+kind: "event"
+featured: ["Porsche 918 Spyder", "零 限定コス", "Regis CREST"]
+start: 2026-06-03
+end: 2026-07-08
+version: "v1.1"
+description: "実在の自動車ブランド Porsche とのコラボ。ブラインドボックスで新車「Porsche 918 Spyder」・零の限定コスチューム・新物件などを入手できる期間限定コラボ。"
+status: "verified"
+updated: 2026-06-13
+tags: ["コラボ", "v1.1", "ビークル", "ガチャ"]
+sources:
+  - label: "ゲームウィズ — ポルシェガチャの引き方／天井に必要なファンス"
+    url: "https://gamewith.jp/nte/561626"
+  - label: "神ゲー攻略 — ポルシェコラボはいつまで？ガチャの仕様"
+    url: "https://kamigame.jp/nte/page/423859650287403925.html"
+  - label: "AppMedia — ポルシェコラボガチャの値段と場所"
+    url: "https://appmedia.jp/nte/80044120"
+---
+
+## 概要
+
+**ポルシェコラボ「エバードライブ」** は、実在の自動車ブランド **Porsche** とのコラボイベント（**6/3〜7/8 06:59 JST**）。**ブラインドボックス**形式のガチャを引いて、コラボ限定報酬を入手する。
+
+## ガチャ仕様
+
+- [ファンス](/terms/fons/)または[円石](/items/annulith/)で引ける**ブラインドボックス**。
+- **1回目は 50,000ファンス／50円石**で、引くごとに価格が上昇。**最大15回**ですべての報酬を入手できる。
+
+## 報酬
+
+- **新車[ポルシェ 918 スパイダー](/vehicles/porsche-918-spyder/)（Porsche 918 Spyder）** — コラボ限定ビークル。
+- 主人公[零](/characters/zero/)の**限定コラボコスチューム「プライムパートナー（Prime Partner）」**。
+- 新物件「**Regis CREST**」。
+
+## メモ
+
+- 期間限定のため、欲しい報酬がある場合は終了前に**最大15回**まで引き切るのが目安。
+
+関連: [ポルシェ 918 スパイダー](/vehicles/porsche-918-spyder/) ／ [ファンス](/terms/fons/) ／ [円石](/items/annulith/) ／ [ガチャ/イベント一覧](/events/)
