@@ -9,7 +9,19 @@ export interface ReleaseNote {
 
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
-    version: 'v0.5.0',
+    version: 'beta v0.6.0',
+    date: '2026-06-13',
+    title: 'ストーリー用語の続き＋編集機能・内部最新化',
+    changes: [
+      'ストーリー用語を9件新規追加: 超渦(ハイパーヴォルテックス)・連環核(Nexus)・オッディティ・ヴェルトハイマー指数・スカーレット・レター(緋文字)・ニューヘリオス・ガーディアン・大いなる変容・ETD-4。本文中で自動的に青リンク化され、世界観の用語がたどれるように（未確認の設定・日本語表記は「要確認」を明示）。',
+      '記事編集機能を追加: 全記事に「このページを編集（GitHub）」リンクを設置し、誰でも GitHub の編集→プルリクで修正提案できるように。',
+      '画像・動画の埋め込みを整備: 出典明記つきの画像コンポーネント（Figure）と YouTube 埋め込み（VideoEmbed）を追加。引用は出典明記・自作図解を優先する運用に。',
+      '内部の最新化・改良: フレームワークを最新へ更新（Astro 6 / MDX 6 / Preact 5 / TypeScript 6 ほか）。型の安全性を高め未使用設定を整理（表示・コンテンツに変更なし）。',
+      'バージョン表記を整理: 本サイトは開発中のため、これまでの版を含めすべて「beta」表記に統一。',
+    ],
+  },
+  {
+    version: 'beta v0.5.0',
     date: '2026-06-12',
     title: '新UIを4種類に大幅拡張＋ストーリー百科の新設',
     changes: [
@@ -20,7 +32,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
-    version: 'v0.4.3',
+    version: 'beta v0.4.3',
     date: '2026-06-12',
     title: '新UI（ベータ）を大幅刷新 — 「Aurora Glass」',
     changes: [
@@ -32,7 +44,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
-    version: 'v0.4.2',
+    version: 'beta v0.4.2',
     date: '2026-06-12',
     title: '最適化・重大バグ修正（用語リンク／日付／コード整理）',
     changes: [
@@ -44,7 +56,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
-    version: 'v0.4.1',
+    version: 'beta v0.4.1',
     date: '2026-06-11',
     title: '用語の自動リンク化・新ツール・ベータUI追い込み',
     changes: [
@@ -54,7 +66,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
-    version: 'v0.4.0',
+    version: 'beta v0.4.0',
     date: '2026-06-11',
     title: 'メジャーアップデート（新UI大幅強化・コンテンツ最終監査・残タスク完了）',
     changes: [
@@ -65,7 +77,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
-    version: 'v0.3.0',
+    version: 'beta v0.3.0',
     date: '2026-06-11',
     title: '新UI（ベータ）を追加・設定を刷新・UI調整',
     changes: [
@@ -76,7 +88,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
-    version: 'v0.2.12',
+    version: 'beta v0.2.12',
     date: '2026-06-11',
     title: 'Skia/Aurelia の日本版実装を反映・誤情報修正',
     changes: [
@@ -88,7 +100,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
-    version: 'v0.2.11',
+    version: 'beta v0.2.11',
     date: '2026-06-11',
     title: '全用語を超深堀り（84語）・固有名詞をさらに拡充',
     changes: [
@@ -101,7 +113,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
-    version: 'v0.2.10',
+    version: 'beta v0.2.10',
     date: '2026-06-11',
     title: '固有名詞を網羅追加（用語77語）・最新情報を反映',
     changes: [
@@ -113,7 +125,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
-    version: 'v0.2.9',
+    version: 'beta v0.2.9',
     date: '2026-06-10',
     title: '用語集を全面拡充・新用語を多数追加',
     changes: [
@@ -125,7 +137,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
-    version: 'v0.2.8',
+    version: 'beta v0.2.8',
     date: '2026-06-10',
     title: '重大バグ徹底修正（データ損失・開催状況の焼き付き・属性矛盾ほか）',
     changes: [
@@ -138,7 +150,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
-    version: 'v0.2.7',
+    version: 'beta v0.2.7',
     date: '2026-06-09',
     title: 'ライブ運営導線・イベント網羅・用語/店ページ・被リンク・SEO強化',
     changes: [
@@ -154,7 +166,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
-    version: 'v0.2.6',
+    version: 'beta v0.2.6',
     date: '2026-06-09',
     title: '正式版データで残りの「要確認」を確定',
     changes: [
@@ -166,7 +178,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
-    version: 'v0.2.5',
+    version: 'beta v0.2.5',
     date: '2026-06-09',
     title: 'UI表現の拡張・視認性バグ修正',
     changes: [
@@ -177,7 +189,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
-    version: 'v0.2.4',
+    version: 'beta v0.2.4',
     date: '2026-06-09',
     title: '「要確認」項目の検証・確定',
     changes: [
@@ -189,7 +201,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
-    version: 'v0.2.3',
+    version: 'beta v0.2.3',
     date: '2026-06-08',
     title: 'ツール大幅改修・新ツール・グラフ強化',
     changes: [
@@ -202,7 +214,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
-    version: 'v0.2.2',
+    version: 'beta v0.2.2',
     date: '2026-06-08',
     title: 'キャラ深掘り・名称精査・UI表現の拡張',
     changes: [
@@ -214,7 +226,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
-    version: 'v0.2.1',
+    version: 'beta v0.2.1',
     date: '2026-06-08',
     title: '日本版公式表記への統一・属性リング',
     changes: [
@@ -227,7 +239,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
-    version: 'v0.2.0',
+    version: 'beta v0.2.0',
     date: '2026-06-08',
     title: '実データ化・Vercel移行・専用ページ・ツール拡充',
     changes: [
@@ -241,7 +253,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
-    version: 'v0.1.1',
+    version: 'beta v0.1.1',
     date: '2026-06-08',
     title: 'PWA廃止と堅牢化',
     changes: [
@@ -253,7 +265,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     ],
   },
   {
-    version: 'v0.1.0',
+    version: 'beta v0.1.0',
     date: '2026-06-08',
     title: '初版リリース',
     changes: [
