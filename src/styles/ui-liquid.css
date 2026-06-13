@@ -322,3 +322,56 @@ html[data-ui='liquid'] .pagefind-ui input {
     transform: none;
   }
 }
+
+/* ===== v0.6.3 特徴強化: より厚いガラス＋走る光沢 ===== */
+html[data-ui='liquid'] {
+  --lq-blur: saturate(205%) blur(30px);
+  --radius: 26px;
+  --radius-sm: 16px;
+  --radius-lg: 34px;
+}
+html[data-ui='liquid'] .app-footer {
+  background: var(--lq-surface);
+  backdrop-filter: var(--lq-blur);
+  -webkit-backdrop-filter: var(--lq-blur);
+  border-top: none;
+}
+/* カード上端のスペキュラ（白い艶） */
+html[data-ui='liquid'] .card-link {
+  position: relative;
+  overflow: hidden;
+}
+html[data-ui='liquid'] .card-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 42%);
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html[data-ui='liquid'] .card-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -130%;
+    width: 70%;
+    height: 100%;
+    z-index: 1;
+    background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+    transition: left 0.6s ease;
+    pointer-events: none;
+  }
+  html[data-ui='liquid'] .card-link:hover::before {
+    left: 130%;
+  }
+}
+html[data-ui='liquid'] .page-head h1,
+html[data-ui='liquid'] .hero h1 {
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+html[data-ui='liquid'] .badge,
+html[data-ui='liquid'] .el-badge,
+html[data-ui='liquid'] .chip {
+  border-radius: 999px;
+}

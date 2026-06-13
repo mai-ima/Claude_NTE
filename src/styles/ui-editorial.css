@@ -445,3 +445,53 @@ html[data-ui='editorial'] .content > .grid > section > h2:first-child {
     transform: none;
   }
 }
+
+/* ===== v0.6.3 特徴強化: 明朝ディスプレイ／連番/ドロップキャップ ===== */
+html[data-ui='editorial'] {
+  --serif: Georgia, 'Times New Roman', 'Yu Mincho', '游明朝', serif;
+}
+html[data-ui='editorial'] h1,
+html[data-ui='editorial'] .hero h1,
+html[data-ui='editorial'] .page-head h1,
+html[data-ui='editorial'] .prose h2 {
+  font-family: var(--serif);
+  letter-spacing: -0.01em;
+}
+html[data-ui='editorial'] .page-head {
+  border-top: 5px solid var(--ink);
+  padding-top: 12px;
+}
+html[data-ui='editorial'] .page-head .lead {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.12rem;
+}
+/* 本文セクションに連番（紙面の小見出し風） */
+html[data-ui='editorial'] .prose {
+  counter-reset: ed-sec;
+}
+html[data-ui='editorial'] .prose h2::before {
+  counter-increment: ed-sec;
+  content: counter(ed-sec, decimal-leading-zero);
+  width: auto;
+  height: auto;
+  background: none;
+  display: inline-block;
+  margin-right: 10px;
+  font-family: var(--font-mono);
+  font-weight: 900;
+  color: var(--accent);
+}
+/* 書き出しのドロップキャップ */
+html[data-ui='editorial'] .prose > p:first-of-type::first-letter {
+  font-family: var(--serif);
+  font-size: 2.8em;
+  float: left;
+  line-height: 0.78;
+  margin: 4px 8px 0 0;
+  font-weight: 900;
+  color: var(--accent);
+}
+html[data-ui='editorial'] .card {
+  border-width: 2px;
+}

@@ -7,6 +7,11 @@ const s = sectionByCollection('locations')!;
   collection="locations"
   title="ロケーション"
   eyebrow="ロケーション"
-  lead="都市ヘテロシティの各区・ヒナタ島・アノマリーゾーンなどの地理と見どころ。"
+  lead="都市ヘテロシティの各区・ヒナタ島・アノマリーゾーンなどの地理と見どころ。種別で絞り込めます。"
   icon={s.icon}
+  groupField="type"
+  groupOrder={['city', 'district', 'island', 'anomaly-zone', 'landmark']}
+  groupLabels={{ city: '都市', district: '区', island: '島', 'anomaly-zone': 'アノマリーゾーン', landmark: 'ランドマーク' }}
+  filterField="type"
+  filterLabels={{ city: '都市', district: '区', island: '島', 'anomaly-zone': '異象界', landmark: 'ランドマーク' }}
 />

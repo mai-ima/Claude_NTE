@@ -301,3 +301,41 @@ html[data-ui='apple'] .theme-opt.is-active {
 html[data-ui='apple'] .spoiler {
   border-radius: var(--radius-sm);
 }
+
+/* ===== v0.6.3 特徴強化: ラージタイトル＋セグメンテッドコントロール ===== */
+html[data-ui='apple'] {
+  --radius: 18px;
+  --radius-sm: 12px;
+  --radius-lg: 22px;
+}
+html[data-ui='apple'] .page-head h1 {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-size: clamp(2rem, 1.4rem + 2.4vw, 2.6rem);
+}
+/* 絞り込みチップを iOS セグメンテッドコントロール風に */
+html[data-ui='apple'] .filterbar {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 12px;
+  background: var(--surface-2);
+}
+html[data-ui='apple'] .filterbar .chip {
+  border: none;
+  background: transparent;
+  border-radius: 9px;
+  box-shadow: none;
+}
+html[data-ui='apple'] .filterbar .chip.is-on {
+  background: var(--surface);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.14);
+}
+html[data-ui='apple'] .btn {
+  border-radius: 12px;
+}
+html[data-ui='apple'] .app-header {
+  backdrop-filter: saturate(180%) blur(24px);
+  -webkit-backdrop-filter: saturate(180%) blur(24px);
+}
