@@ -186,6 +186,22 @@ const terms = defineCollection({
     }),
 });
 
+/**
+ * vehicles: 都市生活で使う乗り物（ビークル）のデータベース。1台1ページ。
+ * スクーター/バイク/車などを、入手方法・同乗効果とともに収録。
+ */
+const vehicles = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/vehicles' }),
+  schema: () =>
+    z.object({
+      ...base,
+      title: z.string(),
+      type: z.enum(['scooter', 'bike', 'car', 'special']).default('car'),
+      acquisition: z.string().optional(), // 入手方法
+      perk: z.string().optional(), // 同乗効果・特性など
+    }),
+});
+
 export const collections = {
   characters,
   locations,
@@ -197,4 +213,5 @@ export const collections = {
   events,
   shops,
   terms,
+  vehicles,
 };

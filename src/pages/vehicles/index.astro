@@ -1,0 +1,15 @@
+---
+import EntityList from '../../components/EntityList.astro';
+import { sectionByCollection } from '../../lib/nav';
+const s = sectionByCollection('vehicles')!;
+---
+<EntityList
+  collection="vehicles"
+  title="ビークル（乗り物）"
+  eyebrow="都市生活"
+  lead="ヘテロシティを走り回るための乗り物（スクーター・バイク・車）と、その入手方法・同乗効果をまとめます。"
+  icon={s.icon}
+  groupField="type"
+  groupOrder={['scooter', 'bike', 'car', 'special']}
+  groupLabels={{ scooter: 'スクーター', bike: 'バイク', car: '車', special: '特殊・報酬' }}
+/>

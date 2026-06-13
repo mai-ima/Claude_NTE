@@ -27,4 +27,6 @@ sources:
 - **ファストトラベルと併用**: 長距離は[ReroReroフォンボックス／Wertheimerタワー](/terms/rerero-phonebox/)で瞬間移動し、近場や寄り道は乗り物で、と使い分けると効率的。
 - **収入・定住への波及**: 都市アクティビティ[ヘテロシティ・ホビー](/terms/heterocity-hobby/)や[市民ID](/terms/citizen-id/)（定住）など、街の進行と相性がよい。
 
-関連: [スイフトTAXI／配達](/terms/swift-taxi/) ／ [手配度](/terms/wanted-level/) ／ [探索・乗り物](/systems/exploration/) ／ [零](/characters/zero/)
+- **車両ごとの詳細**は[ビークル一覧](/vehicles/)（[スクーター](/vehicles/rover-a1/)・[市販車/バイク](/vehicles/market-car/)・[青い炎のバイク](/vehicles/blue-flame-bike/)）にまとめている。
+
+関連: [ビークル一覧](/vehicles/) ／ [スイフトTAXI／配達](/terms/swift-taxi/) ／ [手配度](/terms/wanted-level/) ／ [探索・乗り物](/systems/exploration/) ／ [零](/characters/zero/)

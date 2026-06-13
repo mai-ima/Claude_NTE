@@ -66,6 +66,13 @@ export const SECTIONS: SectionMeta[] = [
     blurb: 'ショップ・交換所・拠点と、その販売/交換ラインナップ。',
   },
   {
+    collection: 'vehicles',
+    href: '/vehicles/',
+    label: 'ビークル',
+    icon: 'car',
+    blurb: '都市生活で使う乗り物（スクーター/バイク/車）と入手・同乗効果。',
+  },
+  {
     collection: 'enemies',
     href: '/enemies/',
     label: '敵・アノマリー',

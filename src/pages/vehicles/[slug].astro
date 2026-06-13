@@ -1,0 +1,52 @@
+---
+import { render } from 'astro:content';
+import EntityDetail from '../../components/EntityDetail.astro';
+import { sectionByCollection } from '../../lib/nav';
+import { titleOf, hrefOf, publishedEntries } from '../../lib/content';
+import type { Row, Pill } from '../../components/EntityDetail.astro';
+
+export async function getStaticPaths() {
+  const sorted = await publishedEntries('vehicles');
+  return sorted.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: { entry, prev: sorted[i - 1] ?? null, next: sorted[i + 1] ?? null },
+  }));
+}
+const { entry, prev, next } = Astro.props;
+const { Content, headings } = await render(entry as any);
+const d = entry.data as any;
+const section = sectionByCollection('vehicles')!;
+
+const TYPE_LABEL: Record<string, string> = {
+  scooter: 'スクーター',
+  bike: 'バイク',
+  car: '車',
+  special: '特殊・報酬',
+};
+const rows: Row[] = [];
+rows.push({ k: '種別', v: TYPE_LABEL[d.type] ?? d.type });
+if (d.acquisition) rows.push({ k: '入手方法', v: d.acquisition });
+if (d.perk) rows.push({ k: '同乗効果・特性', v: d.perk });
+
+const pills: Pill[] = [{ kind: 'plain', value: TYPE_LABEL[d.type] ?? d.type }];
+---
+<EntityDetail
+  collection="vehicles"
+  currentId={entry.id}
+  sectionLabel={section.label}
+  sectionHref={section.href}
+  sectionIcon={section.icon}
+  title={titleOf(entry)}
+  lead={d.description}
+  pills={pills}
+  rows={rows}
+  status={d.status}
+  updated={d.updated}
+  tags={d.tags}
+  sources={d.sources}
+  headings={headings}
+  prev={prev ? { href: hrefOf('vehicles', prev.id), title: titleOf(prev) } : null}
+  next={next ? { href: hrefOf('vehicles', next.id), title: titleOf(next) } : null}
+>
+  <Content />
+</EntityDetail>
