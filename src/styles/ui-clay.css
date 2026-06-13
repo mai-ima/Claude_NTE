@@ -180,3 +180,9 @@ html[data-ui='clay'] .ui-switch-opt, html[data-ui='clay'] .theme-opt { border: n
 html[data-ui='clay'] .ui-switch-opt.is-active, html[data-ui='clay'] .theme-opt.is-active { box-shadow: var(--clay-in); }
 html[data-ui='clay'] .toast { border: none; border-radius: var(--radius); box-shadow: var(--clay-out); }
 html[data-ui='clay'] .tier-badge { border-radius: 8px; }
+
+/* ===== 品質: フォーカスリング（低コントラスト対策で太め） ===== */
+html[data-ui='clay'] :focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}

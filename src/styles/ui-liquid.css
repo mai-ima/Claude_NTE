@@ -496,3 +496,16 @@ html[data-ui='liquid'] .ui-switch-opt, html[data-ui='liquid'] .theme-opt { borde
 html[data-ui='liquid'] .ui-switch-opt.is-active, html[data-ui='liquid'] .theme-opt.is-active { box-shadow: var(--lq-edge), 0 0 0 2px var(--accent); }
 html[data-ui='liquid'] .toast { border: none; border-radius: var(--radius-sm); background: var(--lq-surface-thick); backdrop-filter: var(--lq-blur); -webkit-backdrop-filter: var(--lq-blur); box-shadow: var(--lq-edge), var(--lq-shadow); }
 html[data-ui='liquid'] .tier-badge { border-radius: 8px; }
+
+/* ===== 品質: backdrop-filter 非対応環境では不透明にして可読性を担保 ===== */
+@supports not ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) {
+  html[data-ui='liquid'] {
+    --lq-surface: var(--surface);
+    --lq-surface-thick: var(--surface);
+  }
+}
+/* フォーカスリング（ガラス上でも視認できるアクセント輪） */
+html[data-ui='liquid'] :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}

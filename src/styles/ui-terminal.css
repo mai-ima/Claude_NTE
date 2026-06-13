@@ -226,3 +226,10 @@ html[data-ui='terminal'] .ui-switch-opt.is-active, html[data-ui='terminal'] .the
 html[data-ui='terminal'] .toast { border-radius: 0; border: 1px solid var(--accent); font-family: var(--font-mono); }
 html[data-ui='terminal'] .tier-badge { border-radius: 0; font-family: var(--font-mono); }
 html[data-ui='terminal'] .char-meta { font-family: var(--font-mono); }
+
+/* ===== 品質: フォーカスリング（端末の角ばり） ===== */
+html[data-ui='terminal'] :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-radius: 0;
+}

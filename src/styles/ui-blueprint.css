@@ -206,3 +206,10 @@ html[data-ui='blueprint'] .ui-switch-opt, html[data-ui='blueprint'] .theme-opt {
 html[data-ui='blueprint'] .ui-switch-opt.is-active, html[data-ui='blueprint'] .theme-opt.is-active { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
 html[data-ui='blueprint'] .toast { border: 1px solid var(--accent); border-radius: 2px; font-family: var(--font-mono); }
 html[data-ui='blueprint'] .tier-badge { border-radius: 2px; font-family: var(--font-mono); }
+
+/* ===== 品質: フォーカスリング ===== */
+html[data-ui='blueprint'] :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
