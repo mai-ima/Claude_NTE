@@ -7,6 +7,7 @@
 import { useState } from 'preact/hooks';
 import { useStore } from './useStore';
 import { cssVars } from '../../lib/css';
+import { ELEMENT_RING, elementMeta } from '../../lib/nav';
 
 export interface TierChar {
   id: string;
@@ -30,8 +31,10 @@ const TIERS: { key: string; color: string }[] = [
 export default function TierList({ characters }: { characters: TierChar[] }) {
   const [overrides, setOverrides] = useStore<Record<string, string>>('tool.tierList', {});
   const [selected, setSelected] = useState<string | null>(null);
+  const [filterEl, setFilterEl] = useState<string | null>(null);
 
   const tierOf = (c: TierChar) => overrides[c.id] ?? c.tier ?? '未分類';
+  const visible = (c: TierChar) => !filterEl || c.element === filterEl;
 
   const move = (tier: string) => {
     if (!selected) return;
@@ -51,8 +54,32 @@ export default function TierList({ characters }: { characters: TierChar[] }) {
         </div>
       </div>
 
+      <div class="filterbar" role="group" aria-label="属性で絞り込み" style={{ marginBottom: '12px' }}>
+        <button
+          type="button"
+          class={`chip ${filterEl === null ? 'is-on' : ''}`}
+          aria-pressed={filterEl === null}
+          onClick={() => setFilterEl(null)}
+        >
+          すべて
+        </button>
+        {ELEMENT_RING.map((el) => (
+          <button
+            key={el}
+            type="button"
+            class={`chip ${filterEl === el ? 'is-on' : ''}`}
+            aria-pressed={filterEl === el}
+            style={cssVars({ '--el': elementMeta(el).hue })}
+            onClick={() => setFilterEl((p) => (p === el ? null : el))}
+          >
+            <span class="el-dot" />
+            {elementMeta(el).label}
+          </button>
+        ))}
+      </div>
+
       {TIERS.map((t) => {
-        const members = characters.filter((c) => tierOf(c) === t.key);
+        const members = characters.filter((c) => tierOf(c) === t.key && visible(c));
         return (
           <div class="tier-row" key={t.key} onClick={() => move(t.key)} role="button" tabIndex={0}
             onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && move(t.key)}>

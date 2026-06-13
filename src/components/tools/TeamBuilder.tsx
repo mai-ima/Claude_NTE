@@ -7,6 +7,7 @@
 import { useStore } from './useStore';
 import { HBars } from './chart';
 import { cssVars } from '../../lib/css';
+import { elementMeta } from '../../lib/nav';
 
 export interface TeamChar {
   id: string;
@@ -44,6 +45,20 @@ export default function TeamBuilder({ characters }: { characters: TeamChar[] }) 
 
   const duos = DUO.filter((r) => elements.has(r.a) && elements.has(r.b));
   const trios = TRIO.filter((r) => r.els.every((e) => elements.has(e)));
+
+  // あと1属性で発動するDuo（片方の属性だけ揃っている）＋推奨追加キャラ
+  const nearDuos =
+    picked.length >= 1 && picked.length < 4
+      ? DUO.filter((r) => elements.has(r.a) !== elements.has(r.b)).map((r) => ({
+          name: r.name,
+          note: r.note,
+          need: elements.has(r.a) ? r.b : r.a,
+        }))
+      : [];
+  const needElements = [...new Set(nearDuos.map((d) => d.need))];
+  const suggestions = needElements
+    .flatMap((el) => characters.filter((c) => c.element === el && !team.includes(c.id)).slice(0, 2))
+    .slice(0, 6);
 
   const roleCount = (role: string) => picked.filter((c) => c.role === role).length;
   const warnings: string[] = [];
@@ -101,6 +116,38 @@ export default function TeamBuilder({ characters }: { characters: TeamChar[] }) 
             </div>
           )}
         </div>
+        {nearDuos.length > 0 && (
+          <div>
+            <p class="muted text-sm mt-0" style={{ marginBottom: '4px' }}>あと1属性で発動する反応</p>
+            <div class="cluster">
+              {nearDuos.map((d) => (
+                <span class="badge" title={d.note} key={d.name}>
+                  <span class="el-dot" style={cssVars({ '--el': elementMeta(d.need).hue })} />
+                  {elementMeta(d.need).label}を追加 → {d.name}
+                </span>
+              ))}
+            </div>
+            {suggestions.length > 0 && (
+              <div style={{ marginTop: '8px' }}>
+                <p class="muted text-sm" style={{ margin: '0 0 4px' }}>推奨追加（タップで編成）</p>
+                <div class="cluster">
+                  {suggestions.map((c) => (
+                    <button
+                      key={c.id}
+                      type="button"
+                      class="badge badge-accent"
+                      style={{ cursor: 'pointer', border: 0 }}
+                      onClick={() => toggle(c.id)}
+                    >
+                      <span class="el-dot" style={cssVars({ '--el': c.el })} />
+                      {c.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
         <div>
           <p class="muted text-sm mt-0" style={{ marginBottom: '4px' }}>ロール構成</p>
           <HBars
