@@ -461,3 +461,33 @@ html[data-ui='liquid'] body {
     50% { left: 125%; }
   }
 }
+
+/* ===== v0.6.5b (A) 常に色が透けるリキッドガラス（壁紙を全面化＋縁の光） ===== */
+html[data-ui='liquid'] {
+  /* 縁の光をさらに一段強く */
+  --lq-edge:
+    inset 0 1.5px 0 color-mix(in srgb, #fff 72%, transparent),
+    inset 0 -2px 3px color-mix(in srgb, #000 18%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, #fff 28%, transparent),
+    inset 0 0 28px color-mix(in srgb, #fff 7%, transparent);
+}
+/* 画面中央にも届く大きな色面を足し、薄味ページでも常に透ける */
+html[data-ui='liquid'] body {
+  background:
+    radial-gradient(150% 130% at 50% -25%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 72%),
+    radial-gradient(1100px 820px at 88% -10%, color-mix(in srgb, var(--accent) 38%, transparent), transparent 60%),
+    radial-gradient(1000px 780px at -10% 22%, color-mix(in srgb, #a855f7 30%, transparent), transparent 58%),
+    radial-gradient(980px 740px at 64% 118%, color-mix(in srgb, #22d3ee 28%, transparent), transparent 62%),
+    var(--bg);
+  background-attachment: fixed;
+}
+/* パネル類の上面に屈折ハイライト（カードは ::after 側を強化） */
+html[data-ui='liquid'] .info-panel,
+html[data-ui='liquid'] .tool .tool-result,
+html[data-ui='liquid'] .stat,
+html[data-ui='liquid'] .hero {
+  background-image: linear-gradient(180deg, color-mix(in srgb, #fff 18%, transparent), transparent 34%);
+}
+html[data-ui='liquid'] .card-link::after {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 44%);
+}

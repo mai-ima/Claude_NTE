@@ -696,3 +696,11 @@ html[data-ui='aurora'] .prose h2 {
     50% { box-shadow: var(--beta-glow-strong); }
   }
 }
+
+/* ===== v0.6.5b (B) Aurora 微調整: 発光量のバランス ===== */
+html[data-ui='aurora'] .card {
+  box-shadow: var(--shadow-sm), inset 0 0 0 1px color-mix(in srgb, var(--accent) 10%, transparent);
+}
+html[data-ui='aurora'] .page-head h1 {
+  filter: drop-shadow(0 0 20px color-mix(in srgb, var(--accent) 36%, transparent));
+}

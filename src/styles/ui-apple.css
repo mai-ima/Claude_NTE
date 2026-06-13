@@ -415,3 +415,23 @@ html[data-ui='apple'] :focus-visible {
 html[data-ui='apple'] .page-head h1 {
   letter-spacing: -0.035em;
 }
+
+/* ===== v0.6.5b (B) Apple 微調整: iOS らしい余白・行間 ===== */
+html[data-ui='apple'] .card-pad {
+  padding: 20px;
+}
+html[data-ui='apple'] .grid {
+  gap: 14px;
+}
+html[data-ui='apple'] .page-head {
+  margin-bottom: 28px;
+}
+html[data-ui='apple'] .page-head .lead {
+  line-height: 1.62;
+}
+html[data-ui='apple'] .info-row {
+  padding: 13px 18px;
+}
+html[data-ui='apple'] .prose {
+  line-height: 1.8;
+}

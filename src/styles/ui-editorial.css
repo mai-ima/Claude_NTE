@@ -495,3 +495,11 @@ html[data-ui='editorial'] .prose > p:first-of-type::first-letter {
 html[data-ui='editorial'] .card {
   border-width: 2px;
 }
+
+/* ===== v0.6.5b (B) Editorial 微調整: ドロップキャップの位置と色 ===== */
+html[data-ui='editorial'] .prose > p:first-of-type::first-letter {
+  font-size: 3.2em;
+  line-height: 0.64;
+  margin: 6px 12px -4px 0;
+  color: var(--ink);
+}
