@@ -43,8 +43,9 @@ const latest = RELEASE_NOTES[0];
         <p class="eyebrow">NTE 完全攻略wiki</p>
         <h1>Neverness to Everness を、ここに。</h1>
         <p class="lead">
-          オープンワールド都市RPG「NTE」の攻略・キャラ・システム・世界観をまとめた非公式ファンwiki。
-          ガチャ天井トラッカーやチームビルダーなどの便利ツールも。
+          オープンワールド都市RPG「NTE（ネバエバ）」の攻略情報を網羅する非公式ファンwiki。
+          キャラ・異能連環・ガチャ・ストーリー/世界観・用語・ロケーション・ビークル・アイテムのデータベースに加え、
+          開催中のガチャ/イベント、天井トラッカーやチームビルダーなどの便利ツールも。<strong>Ver.1.1 対応・随時更新</strong>。
         </p>
         <div class="meta-row">
           <a class="btn btn-primary" href={withBase('/characters/')}>
@@ -56,9 +57,9 @@ const latest = RELEASE_NOTES[0];
         </div>
         <div class="stat-band">
           <div class="stat"><span class="stat-num">{countOf('characters')}</span><span class="stat-label">キャラ</span></div>
+          <div class="stat"><span class="stat-num">{countOf('terms')}</span><span class="stat-label">用語</span></div>
           <div class="stat"><span class="stat-num">{totalArticles}</span><span class="stat-label">記事</span></div>
           <div class="stat"><span class="stat-num">{TOOLS.length + 3}</span><span class="stat-label">ツール</span></div>
-          <div class="stat"><span class="stat-num">6</span><span class="stat-label">属性</span></div>
         </div>
       </section>
 
