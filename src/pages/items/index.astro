@@ -11,5 +11,7 @@ const s = sectionByCollection('items')!;
   icon={s.icon}
   groupField="type"
   groupOrder={['currency', 'material', 'consumable', 'gear']}
-  groupLabels={{ currency: '通貨・ダイス', material: '育成素材', consumable: '消費アイテム', gear: '装備' }}
+  groupLabels={{ currency: '通貨・ダイス', material: '育成素材', consumable: '消費アイテム', gear: '装備（ギア）' }}
+  filterField="type"
+  filterLabels={{ currency: '通貨', material: '育成素材', consumable: '消費', gear: 'ギア' }}
 />
