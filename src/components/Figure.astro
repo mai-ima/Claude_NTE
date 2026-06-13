@@ -1,0 +1,40 @@
+---
+/**
+ * 記事内の図版（画像）。キャプションと出典を必須に近い形で扱い、
+ * 引用元の明記を促す（著作権配慮）。自作図解にも使える。
+ * 使い方: <Figure src="/img/foo.png" alt="説明" caption="..." credit="出典名" creditUrl="https://..." />
+ */
+interface Props {
+  src: string;
+  alt: string;
+  caption?: string;
+  credit?: string;
+  creditUrl?: string;
+  /** 横幅の最大値（例: "480px"）。未指定なら本文幅に合わせる。 */
+  maxWidth?: string;
+}
+const { src, alt, caption, credit, creditUrl, maxWidth } = Astro.props;
+---
+
+<figure class="figure" style={maxWidth ? `max-width:${maxWidth}` : undefined}>
+  <img src={src} alt={alt} loading="lazy" decoding="async" />
+  {
+    (caption || credit) && (
+      <figcaption class="figure-cap">
+        {caption && <span>{caption}</span>}
+        {credit && (
+          <span class="figure-credit">
+            出典:{' '}
+            {creditUrl ? (
+              <a href={creditUrl} target="_blank" rel="noopener noreferrer">
+                {credit}
+              </a>
+            ) : (
+              credit
+            )}
+          </span>
+        )}
+      </figcaption>
+    )
+  }
+</figure>

@@ -36,6 +36,7 @@ if (d.arc) rows.push({ k: '章', v: d.arc });
   prev={prev ? { href: hrefOf('story', prev.id), title: titleOf(prev) } : null}
   next={next ? { href: hrefOf('story', next.id), title: titleOf(next) } : null}
   spoilerNote={d.spoiler}
+  editPath={(entry as any).filePath}
 >
   <Content />
 </EntityDetail>

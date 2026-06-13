@@ -1,0 +1,22 @@
+---
+/**
+ * YouTube 動画の埋め込み（プライバシー強化モード youtube-nocookie）。
+ * 使い方: <VideoEmbed id="dQw4w9WgXcQ" title="解説動画" />
+ * id は YouTube の動画ID（URL の v= の値）。
+ */
+interface Props {
+  id: string;
+  title?: string;
+}
+const { id, title = '動画' } = Astro.props;
+---
+
+<div class="video-embed">
+  <iframe
+    src={`https://www.youtube-nocookie.com/embed/${id}`}
+    title={title}
+    loading="lazy"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen></iframe>
+</div>

@@ -14,6 +14,7 @@ import PersonalNote from './PersonalNote';
 import { withBase } from '../lib/path';
 import { elementMeta, roleMeta } from '../lib/nav';
 import { backlinksFor } from '../lib/content';
+import { editUrl, editUrlFor } from '../lib/edit-url';
 
 export interface Pill {
   kind: 'element' | 'role' | 'rarity' | 'tier' | 'plain';
@@ -52,6 +53,8 @@ interface Props {
   related?: LinkRef[];
   /** related セクションの見出し（既定: 関連項目） */
   relatedLabel?: string;
+  /** リポジトリ相対のソースパス（.mdx 等）。未指定なら collection/id.md を既定にする */
+  editPath?: string;
 }
 
 const {
@@ -75,10 +78,13 @@ const {
   heroAvatar,
   related = [],
   relatedLabel = '関連項目',
+  editPath,
 } = Astro.props;
 
 // このページを本文から参照している記事（被リンク）
 const backlinks = await backlinksFor(collection, currentId);
+// 「このページを編集」リンク（GitHub の編集画面→PR）
+const editHref = editPath ? editUrl(editPath) : editUrlFor(collection, currentId);
 ---
 
 <BaseLayout
@@ -227,6 +233,14 @@ const backlinks = await backlinksFor(collection, currentId);
                 </section>
               )
             }
+
+            <div class="edit-link">
+              <a href={editHref} target="_blank" rel="noopener noreferrer">
+                <Icon name="lucide:pencil" style="width:14px;height:14px;" />
+                このページを編集（GitHub）
+              </a>
+              <span class="muted text-sm">— 誤りや追記は GitHub の編集→プルリクで反映できます。</span>
+            </div>
           </article>
 
           <PersonalNote client:visible articleId={`${collection}.${currentId}`} />

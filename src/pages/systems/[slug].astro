@@ -35,6 +35,7 @@ if (d.category) rows.push({ k: '分類', v: d.category });
   headings={headings}
   prev={prev ? { href: hrefOf('systems', prev.id), title: titleOf(prev) } : null}
   next={next ? { href: hrefOf('systems', next.id), title: titleOf(next) } : null}
+  editPath={(entry as any).filePath}
 >
   <Content />
 </EntityDetail>
