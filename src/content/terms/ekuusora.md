@@ -5,12 +5,12 @@ en: "Ekuusora"
 category: "世界観・組織・地名"
 order: 55
 description: "ヘテロシティのエリアのひとつ。弱点が魂（Psyche）のワールドボス「音ゲー魔王（Beat King）」が出現する探索スポット。"
-status: "draft"
-updated: 2026-06-11
+status: "verified"
+updated: 2026-06-13
 tags: ["地名", "ボス"]
 aliases: ["Ekuusora"]
 sources:
-  - label: "ゲームウィズ — 音ゲー魔王"
+  - label: "ゲームウィズ — 音ゲー魔王の攻略と倒し方"
     url: "https://gamewith.jp/nte/555648"
 ---
 
@@ -18,7 +18,7 @@ sources:
 
 ## 詳しく
 
-- **ワールドボス**: [音ゲー魔王（Beat King）](/enemies/beat-king/)が出現する。戦闘中に**音ゲー風のギミック**が発生するのが特徴で、**弱点は魂（[Psyche](/terms/el-psyche/)）**。
+- **ワールドボス**: [音ゲー魔王（Beat King）](/enemies/beat-king/)が出現する。**バロック大通り**沿いの公園が出現地点で、戦闘中に**音ゲー風のギミック**（3連続攻撃など）が発生するのが特徴。**弱点は魂（[Psyche](/terms/el-psyche/)）**。
 - **位置づけ**: 都市の各区（[未聞浦](/locations/unheard-shores/)・[橋間地](/locations/bridge-crossings/)・[ミゲル区](/locations/miguel-district/)・[ニューホランド](/locations/new-herland-district/)）と並ぶエリア名として登場する。
 - **探索**: 収集物やサブイベントの対象になる。詳細な範囲・見どころはゲーム内マップで**要確認**。
 
@@ -29,6 +29,6 @@ sources:
 
 ## 注意点
 
-- 出現条件・挑戦頻度（ワールドボスの再戦間隔など）や、エリア内の探索要素の全容はゲーム内で**要確認**。本ページは status: draft（情報追補中）。
+- ワールドボスの再戦間隔やエリア内の探索要素の全容は版で変わりうるため、最新はゲーム内マップで確認。
 
 関連: [音ゲー魔王](/enemies/beat-king/) ／ [ヘテロシティ](/terms/hethereau/) ／ [魂（El Psyche）](/terms/el-psyche/) ／ [連環反応](/systems/esper-cycle/) ／ [ワールドボス](/enemies/world-bosses/)
