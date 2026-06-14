@@ -434,6 +434,15 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
         targets.forEach((t) => revealObserver!.observe(t));
       }
 
+      // 遷移直前に検索モーダル/ドロワーを確実に閉じる。
+      // 検索を開いたまま結果リンクで遷移すると、showModal 状態の <dialog> が close されずに
+      // swap で除去され、ネイティブの inert/top-layer 状態が残ってサイドバー等を操作できなくなる。
+      // 旧DOMがまだ在る before-swap で閉じることで、その残留を防ぐ。
+      document.addEventListener('astro:before-swap', () => {
+        closeSearch();
+        setDrawer(false);
+      });
+
       // View Transitions の遷移後は入場アニメを行わない（遷移自体が動きを担う）。
       // フラグを外し、以降のページではカードを隠さない＝通常表示で軽い。
       document.addEventListener('astro:after-swap', () => {
