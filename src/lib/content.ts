@@ -16,6 +16,7 @@ export type AnyEntry = CollectionEntry<
   | 'terms'
   | 'vehicles'
   | 'arcs'
+  | 'people'
 >;
 
 /** エントリの表示タイトル（日本版名称を優先: nameJa → title → name） */

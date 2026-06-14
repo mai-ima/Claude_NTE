@@ -1,0 +1,34 @@
+---
+import EntityDetail from '../../components/EntityDetail.astro';
+import { detailPaths, renderEntry, baseDetailProps } from '../../lib/detail';
+import type { Row, Pill } from '../../components/EntityDetail.astro';
+
+export async function getStaticPaths() {
+  return detailPaths('people', { relatedBy: 'faction' });
+}
+const { entry, prev, next, related } = Astro.props;
+const { Content, headings } = await renderEntry(entry);
+const d = entry.data as any;
+
+const rows: Row[] = [];
+if (d.reading) rows.push({ k: 'よみ', v: d.reading });
+if (d.en) rows.push({ k: '英語表記', v: d.en });
+if (d.role) rows.push({ k: '立場・役割', v: d.role });
+if (d.faction) rows.push({ k: '所属', v: d.faction });
+if (d.chapter) rows.push({ k: '主な登場', v: d.chapter });
+if (d.aliases?.length) rows.push({ k: '別名', v: d.aliases.join('・') });
+
+const pills: Pill[] = [];
+if (d.faction) pills.push({ kind: 'plain', value: d.faction });
+---
+<EntityDetail
+  {...baseDetailProps('people', entry, prev, next)}
+  pills={pills}
+  rows={rows}
+  headings={headings}
+  editPath={(entry as any).filePath}
+  related={related}
+  relatedLabel={d.faction ? `${d.faction} の人物` : '登場人物'}
+>
+  <Content />
+</EntityDetail>

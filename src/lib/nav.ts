@@ -31,6 +31,13 @@ export const SECTIONS: SectionMeta[] = [
     blurb: 'エスパー（プレイアブル）の属性・ロール・性能まとめ。',
   },
   {
+    collection: 'people',
+    href: '/people/',
+    label: '登場人物',
+    icon: 'contact',
+    blurb: 'プレイアブル以外の登場人物・NPC・物語上の人物。',
+  },
+  {
     collection: 'systems',
     href: '/systems/',
     label: 'システム',

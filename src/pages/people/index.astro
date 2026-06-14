@@ -1,0 +1,13 @@
+---
+import EntityList from '../../components/EntityList.astro';
+import { sectionByCollection } from '../../lib/nav';
+const s = sectionByCollection('people')!;
+---
+<EntityList
+  collection="people"
+  title="登場人物（NPC・物語上の人物）"
+  eyebrow="登場人物"
+  lead="プレイアブル以外のキャラクター・NPC・物語上の人物をまとめます。確証が薄い表記や詳細は「要確認」を明示しています。"
+  icon={s.icon}
+  filterField="faction"
+/>

@@ -223,6 +223,25 @@ const arcs = defineCollection({
     }),
 });
 
+/**
+ * people（登場人物）: プレイアブル以外のキャラクター・NPC・物語上の人物。
+ * 役割・所属・登場章・別名を収録。確証が薄い表記/詳細は要確認を明示する。
+ */
+const people = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/people' }),
+  schema: () =>
+    z.object({
+      ...base,
+      title: z.string(), // 表示名（日本版）
+      en: z.string().optional(), // 英語表記
+      reading: z.string().optional(), // よみ
+      role: z.string().optional(), // 立場・役割（例: 緋文字のリーダー）
+      faction: z.string().optional(), // 所属
+      chapter: z.string().optional(), // 主な登場章
+      aliases: z.array(z.string()).default([]),
+    }),
+});
+
 export const collections = {
   characters,
   locations,
@@ -236,4 +255,5 @@ export const collections = {
   terms,
   vehicles,
   arcs,
+  people,
 };
