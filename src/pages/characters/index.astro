@@ -164,11 +164,13 @@ const aCount = list.filter((c: any) => c.data.rarity === 'A').length;
 </BaseLayout>
 
 <script>
-  // キャラ一覧のクライアントフィルタ（属性/ロール/レア度の AND 絞り込み）
-  const bar = document.getElementById('char-filters');
-  const grid = document.getElementById('char-grid');
-  const empty = document.getElementById('char-empty');
-  if (bar && grid) {
+  // キャラ一覧のクライアントフィルタ（属性/ロール/レア度の AND 絞り込み）。
+  // View Transitions では本文が swap されるため astro:page-load ごとに再初期化する。
+  function initCharFilter() {
+    const bar = document.getElementById('char-filters');
+    const grid = document.getElementById('char-grid');
+    const empty = document.getElementById('char-empty');
+    if (!bar || !grid) return;
     const active = { rarity: new Set<string>(), element: new Set<string>(), role: new Set<string>() };
 
     function apply() {
@@ -219,4 +221,5 @@ const aCount = list.filter((c: any) => c.data.rarity === 'A').length;
       apply();
     });
   }
+  document.addEventListener('astro:page-load', initCharFilter);
 </script>

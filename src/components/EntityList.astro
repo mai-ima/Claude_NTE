@@ -192,7 +192,7 @@ const showFilter = !!filterField && filterValues.length > 1;
 
   {
     showFilter && (
-      <script is:inline>
+      <script is:inline data-astro-rerun>
         (function () {
           var bar = document.getElementById('facet-filter');
           if (!bar) return;

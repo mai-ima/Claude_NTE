@@ -15,6 +15,13 @@ html[data-motion='reduce'] *::after {
 html[data-motion='reduce'] {
   scroll-behavior: auto !important;
 }
+/* View Transitions のページ遷移アニメも、サイト側トグルで無効化する
+   （OSの prefers-reduced-motion は Astro が自動で縮退する）。 */
+html[data-motion='reduce']::view-transition-group(root),
+html[data-motion='reduce']::view-transition-old(root),
+html[data-motion='reduce']::view-transition-new(root) {
+  animation: none !important;
+}
 
 /* ----- 用語の自動リンクを無効化（ふつうの文章に見せ、誤タップも防ぐ） ----- */
 html[data-autoterm='off'] .prose a.auto-term {

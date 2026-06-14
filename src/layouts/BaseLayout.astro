@@ -11,6 +11,7 @@ import '../styles/ui-terminal.css';
 import '../styles/ui-clay.css';
 import '../styles/ui-blueprint.css';
 import '../styles/prefs.css';
+import { ClientRouter } from 'astro:transitions';
 import { Icon } from 'astro-icon/components';
 import { withBase, activeHref } from '../lib/path';
 import { PRIMARY_NAV, BOTTOM_NAV } from '../lib/nav';
@@ -117,10 +118,14 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
     <meta name="generator" content={Astro.generator} />
+    {/* ページ遷移のビュートランジション（ネイティブアプリ的な遷移）。
+        prefers-reduced-motion 時は Astro が自動で縮退する。 */}
+    <ClientRouter />
     <script type="application/ld+json" set:html={jsonLd} is:inline />
 
-    {/* テーマ＆UIモードを描画前に適用（チラつき防止）。is:inline なのでバンドルされない素のJS */}
-    <script is:inline>
+    {/* テーマ＆UIモードを描画前に適用（チラつき防止）。is:inline なのでバンドルされない素のJS。
+        data-astro-rerun: View Transitions の swap 後も再実行し、theme/ui/prefs を再適用する。 */}
+    <script is:inline data-astro-rerun>
       (function () {
         try {
           var t = localStorage.getItem('nte.theme');
@@ -175,7 +180,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
       </filter>
     </svg>
     <div class="app">
-      <header class="app-header">
+      <header class="app-header" transition:persist>
         <button
           class="btn btn-icon btn-ghost drawer-toggle"
           type="button"
@@ -211,7 +216,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
         <ThemeMenu client:load />
       </header>
 
-      <MobileDrawer currentPath={currentPath} />
+      <MobileDrawer currentPath={currentPath} transition:persist />
 
       <main class="app-main">
         <slot />
@@ -225,7 +230,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
         </p>
       </footer>
 
-      <nav class="bottom-nav" aria-label="モバイルナビ">
+      <nav class="bottom-nav" aria-label="モバイルナビ" transition:persist>
         {
           BOTTOM_NAV.map((item) => (
             <a
@@ -241,19 +246,53 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
     </div>
 
     <script>
-      // モバイルドロワーの開閉
-      const openBtn = document.querySelector('[data-drawer-open]');
+      // モバイルドロワーの開閉。ヘッダー/ドロワーは transition:persist で永続化されるため、
+      // リスナーは初回1回の登録で View Transitions 後も有効。
       const drawer = document.getElementById('app-drawer');
-      const closeEls = document.querySelectorAll('[data-drawer-close]');
-      function setOpen(open: boolean) {
+      function setDrawer(open: boolean) {
         if (!drawer) return;
         drawer.classList.toggle('is-open', open);
         document.body.style.overflow = open ? 'hidden' : '';
       }
-      openBtn?.addEventListener('click', () => setOpen(true));
-      closeEls.forEach((el) => el.addEventListener('click', () => setOpen(false)));
+      document.querySelector('[data-drawer-open]')?.addEventListener('click', () => setDrawer(true));
+      document
+        .querySelectorAll('[data-drawer-close]')
+        .forEach((el) => el.addEventListener('click', () => setDrawer(false)));
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') setOpen(false);
+        if (e.key === 'Escape') setDrawer(false);
+      });
+
+      // View Transitions: 永続ナビ(header/bottom-nav)の現在地ハイライトは静的HTMLのままなので、
+      // 遷移ごとに location から再計算する。あわせてドロワーを閉じる。
+      function pathOf(href: string) {
+        try {
+          return new URL(href, location.origin).pathname.replace(/\/$/, '');
+        } catch {
+          return '';
+        }
+      }
+      function syncActiveNav() {
+        const cur = location.pathname.replace(/\/$/, '');
+        const home = pathOf('/');
+        for (const sel of ['.app-header .nav-link', '.bottom-nav a']) {
+          const links = Array.from(document.querySelectorAll(sel)) as HTMLAnchorElement[];
+          let best: HTMLAnchorElement | null = null;
+          let bestLen = -1;
+          for (const a of links) {
+            const tgt = pathOf(a.href);
+            const match = tgt === home ? cur === home : cur === tgt || cur.startsWith(tgt + '/');
+            if (match && tgt.length > bestLen) {
+              best = a;
+              bestLen = tgt.length;
+            }
+          }
+          for (const a of links) a.removeAttribute('aria-current');
+          if (best) best.setAttribute('aria-current', 'page');
+        }
+      }
+      document.addEventListener('astro:page-load', () => {
+        setDrawer(false);
+        syncActiveNav();
       });
     </script>
 
