@@ -245,7 +245,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
         <ThemeMenu client:load />
       </header>
 
-      <dialog id="search-dialog" class="search-modal" aria-label="サイト内検索" transition:persist>
+      <dialog id="search-dialog" class="search-modal" aria-label="サイト内検索">
         <div class="search-modal-head">
           <span class="muted text-sm">サイト内を検索（<kbd>Esc</kbd> で閉じる）</span>
           <button class="btn btn-icon btn-ghost" type="button" aria-label="閉じる" data-search-close>
@@ -329,23 +329,39 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
           if (best) best.setAttribute('aria-current', 'page');
         }
       }
-      // グローバル検索モーダル（⌘K / Ctrl+K / "/" で開く）。dialog は永続化済みで
-      // リスナーは初回登録のみ。
-      const searchDialog = document.getElementById('search-dialog') as HTMLDialogElement | null;
+      // グローバル検索モーダル（⌘K / Ctrl+K / "/" で開く）。
+      // dialog/ボタンは毎回 fresh に取得し、開閉は document 委譲で扱う。
+      // （persist 不要＝iOS でも確実に閉じ、閉じた後にサイドバー等を操作できる）
+      function getSearchDialog() {
+        return document.getElementById('search-dialog') as HTMLDialogElement | null;
+      }
       function openSearch() {
-        if (!searchDialog || searchDialog.open) return;
-        searchDialog.showModal();
-        const input = searchDialog.querySelector('input');
-        if (input) (input as HTMLInputElement).focus();
+        const d = getSearchDialog();
+        if (!d || d.open) return;
+        try {
+          d.showModal();
+        } catch {
+          return;
+        }
+        (d.querySelector('input') as HTMLInputElement | null)?.focus();
       }
       function closeSearch() {
-        searchDialog?.close();
+        const d = getSearchDialog();
+        if (d?.open) d.close();
       }
-      document.querySelector('[data-search-open]')?.addEventListener('click', openSearch);
-      searchDialog?.querySelector('[data-search-close]')?.addEventListener('click', closeSearch);
-      // 背景（::backdrop）クリックで閉じる
-      searchDialog?.addEventListener('click', (e) => {
-        if (e.target === searchDialog) closeSearch();
+      document.addEventListener('click', (e) => {
+        const t = e.target as HTMLElement | null;
+        if (!t) return;
+        if (t.closest('[data-search-open]')) {
+          e.preventDefault();
+          openSearch();
+          return;
+        }
+        if (t.closest('[data-search-close]')) {
+          closeSearch();
+          return;
+        }
+        if (t === getSearchDialog()) closeSearch(); // 背景(::backdrop)クリック
       });
       document.addEventListener('keydown', (e) => {
         const meta = e.metaKey || e.ctrlKey;
@@ -356,7 +372,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
         }
         const t = e.target as HTMLElement | null;
         const typing = t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable);
-        if (e.key === '/' && !typing && !searchDialog?.open) {
+        if (e.key === '/' && !typing && !getSearchDialog()?.open) {
           e.preventDefault();
           openSearch();
         }

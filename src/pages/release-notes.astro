@@ -33,3 +33,11 @@ import { RELEASE_NOTES } from '../data/releaseNotes';
     </div>
   </div>
 </BaseLayout>
+
+<style>
+  /* 変更履歴の文中に含まれる長い英字トークン（例: article:modified_time）が
+     スマホ幅をはみ出さないよう、語中での折り返しを許可する。 */
+  .content :is(li, strong, p) {
+    overflow-wrap: anywhere;
+  }
+</style>

@@ -9,6 +9,15 @@ export interface ReleaseNote {
 
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    version: 'beta v0.7.3',
+    date: '2026-06-14',
+    title: '不具合修正：検索→サイドバー操作・更新履歴の表示幅',
+    changes: [
+      '検索モーダルを開いて閉じたあと、メニュー（サイドバー）が開けなくなることがある不具合を修正しました（iOS Safari など）。',
+      '更新履歴ページがスマホ幅をはみ出し、縮小しないと全体が見えないことがある不具合を修正しました（長い英字表記の折り返しに対応）。',
+    ],
+  },
+  {
     version: 'beta v0.7.2',
     date: '2026-06-14',
     title: '新ツール3種＋キャラ名の全精査＋用語の拡張',
