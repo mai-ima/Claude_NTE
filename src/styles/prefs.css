@@ -47,3 +47,11 @@ html[data-draftmark='on'] .badge-draft {
   font-weight: 700;
   box-shadow: 0 0 0 3px color-mix(in srgb, #d97706 18%, transparent);
 }
+
+/* ----- 編集機能（ベータ）: 既定で非表示。設定でONにしたときだけ表示 ----- */
+.edit-link {
+  display: none;
+}
+html[data-edit='on'] .edit-link {
+  display: flex;
+}

@@ -15,6 +15,10 @@ export interface PrefDef {
   on: string;
   label: string;
   hint: string;
+  /** 設定パネルでのグループ分け（表示系 / 機能系） */
+  group: 'display' | 'feature';
+  /** 設定パネルのアイコン（SettingsPanel 内の inline-SVG マップのキー） */
+  icon: string;
 }
 
 export const PREFS: PrefDef[] = [
@@ -24,6 +28,8 @@ export const PREFS: PrefDef[] = [
     on: 'reduce',
     label: 'モーションを軽減',
     hint: 'アニメーションや光沢・屈折などの動きを抑えます（OSの設定にも追従します）。',
+    group: 'display',
+    icon: 'gauge',
   },
   {
     key: 'nte.autoterm',
@@ -31,6 +37,8 @@ export const PREFS: PrefDef[] = [
     on: 'off',
     label: '用語の自動リンクを無効化',
     hint: '本文中で自動的に付く用語リンクを、ふつうの文章表示に戻します。',
+    group: 'display',
+    icon: 'link',
   },
   {
     key: 'nte.spoiler',
@@ -38,6 +46,8 @@ export const PREFS: PrefDef[] = [
     on: 'open',
     label: 'ネタバレを最初から開く',
     hint: '折りたたまれたネタバレ（[Spoiler]）を既定で開いた状態にします。',
+    group: 'display',
+    icon: 'eye',
   },
   {
     key: 'nte.width',
@@ -45,6 +55,8 @@ export const PREFS: PrefDef[] = [
     on: 'wide',
     label: '本文を広く表示',
     hint: '記事本文の最大幅を広げ、大きな画面で1行をより長く表示します。',
+    group: 'display',
+    icon: 'text',
   },
   {
     key: 'nte.draftmark',
@@ -52,6 +64,17 @@ export const PREFS: PrefDef[] = [
     on: 'on',
     label: '未検証（要確認）を強調',
     hint: '「要確認」バッジを目立たせ、未検証の情報をひと目で分かるようにします（誠実性の可視化）。',
+    group: 'display',
+    icon: 'alert',
+  },
+  {
+    key: 'nte.edit',
+    attr: 'edit',
+    on: 'on',
+    label: 'ページの編集機能',
+    hint: '各記事の末尾に GitHub の編集（→プルリク）リンクを表示します。ベータ機能です。',
+    group: 'feature',
+    icon: 'pencil',
   },
 ];
 

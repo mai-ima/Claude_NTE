@@ -146,6 +146,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
             ['nte.spoiler', 'spoiler', 'open'],
             ['nte.width', 'width', 'wide'],
             ['nte.draftmark', 'draftmark', 'on'],
+            ['nte.edit', 'edit', 'on'],
           ];
           for (var i = 0; i < prefs.length; i++) {
             if (localStorage.getItem(prefs[i][0]) === '1') {

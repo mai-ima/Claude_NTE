@@ -1,11 +1,39 @@
-/** 設定パネル: テーマ・新UI(ベータ)・データのエクスポート/インポート/初期化。 */
+/** 設定パネル: テーマ・新UI(ベータ)・表示/機能の追加設定・データのエクスポート/インポート/初期化。 */
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { THEMES, getStoredTheme, setTheme, applyTheme, type Theme } from '../lib/theme';
 import { getStoredUI, setUI, applyUI, UI_MODES, type UIMode } from '../lib/ui';
-import { PREFS, getPref, setPref } from '../lib/prefs';
+import { PREFS, getPref, setPref, type PrefDef } from '../lib/prefs';
 import { exportAll, importAll, clearAll } from '../lib/store';
 
 type Msg = { kind: 'ok' | 'err'; text: string } | null;
+
+/** 設定行のアイコン（lucide 風の inline-SVG パス）。Preact 用にアイコン依存を持たない。 */
+const ICON_PATHS: Record<string, string> = {
+  gauge: 'M12 14l4-4M3.34 19a10 10 0 1 1 17.32 0',
+  link: 'M9 17H7A5 5 0 0 1 7 7h2M15 7h2a5 5 0 0 1 0 10h-2M8 12h8',
+  eye: 'M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z M12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z',
+  text: 'M17 6.1H3M21 12.1H3M15.1 18H3',
+  alert: 'M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z M12 9v4 M12 17h.01',
+  pencil: 'M12 20h9 M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z',
+};
+function PrefIcon({ name }: { name: string }) {
+  return (
+    <svg
+      class="pref-icon"
+      viewBox="0 0 24 24"
+      width="18"
+      height="18"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d={ICON_PATHS[name] ?? ''} />
+    </svg>
+  );
+}
 
 export default function SettingsPanel() {
   const [theme, setThemeState] = useState<Theme>('minimal');
@@ -29,6 +57,26 @@ export default function SettingsPanel() {
     setPref(key, next);
     setPrefsState((s) => ({ ...s, [key]: next }));
   }
+
+  const renderRow = (p: PrefDef) => (
+    <label key={p.key} class="pref-row">
+      <PrefIcon name={p.icon} />
+      <span class="pref-text">
+        <span class="pref-title">{p.label}</span>
+        <span class="muted text-sm">{p.hint}</span>
+      </span>
+      <button
+        type="button"
+        role="switch"
+        aria-checked={prefs[p.key] ? 'true' : 'false'}
+        aria-label={p.label}
+        class={`pref-switch ${prefs[p.key] ? 'is-on' : ''}`}
+        onClick={() => togglePref(p.key)}
+      >
+        <span class="pref-knob" aria-hidden="true" />
+      </button>
+    </label>
+  );
 
   function flash(kind: 'ok' | 'err', text: string) {
     if (flashTimer.current !== undefined) window.clearTimeout(flashTimer.current);
@@ -153,34 +201,21 @@ export default function SettingsPanel() {
         </div>
       </section>
 
-      {/* 表示の追加設定（ベータ） */}
+      {/* 表示・機能の追加設定（ベータ） */}
       <section class="card card-pad setting-card">
         <h2 class="mt-0">
-          表示の調整 <span class="beta-pill">BETA</span>
+          表示と機能 <span class="beta-pill">BETA</span>
         </h2>
         <p class="muted text-sm">
-          読みやすさ・アクセシビリティのための切り替え。配色テーマや新UIとは別に、全ページへ反映されます。
+          読みやすさ・操作性のための切り替え。配色テーマや新UIとは別に、全ページへ反映されます。
         </p>
-        <div class="pref-list" style={{ marginTop: '12px' }}>
-          {PREFS.map((p) => (
-            <label key={p.key} class="pref-row">
-              <span class="pref-text">
-                <span class="pref-title">{p.label}</span>
-                <span class="muted text-sm">{p.hint}</span>
-              </span>
-              <button
-                type="button"
-                role="switch"
-                aria-checked={prefs[p.key] ? 'true' : 'false'}
-                aria-label={p.label}
-                class={`pref-switch ${prefs[p.key] ? 'is-on' : ''}`}
-                onClick={() => togglePref(p.key)}
-              >
-                <span class="pref-knob" aria-hidden="true" />
-              </button>
-            </label>
-          ))}
-        </div>
+
+        <p class="pref-group-title">表示・読みやすさ</p>
+        <div class="pref-list">{PREFS.filter((p) => p.group === 'display').map(renderRow)}</div>
+
+        <p class="pref-group-title">機能（ベータ）</p>
+        <div class="pref-list">{PREFS.filter((p) => p.group === 'feature').map(renderRow)}</div>
+
         <p class="hint" style={{ marginTop: '10px' }}>
           設定はこの端末に保存され、バックアップ（書き出し）にも含まれます。
         </p>

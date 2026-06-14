@@ -1,6 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SettingsPanel from '../components/SettingsPanel';
+import { RELEASE_NOTES } from '../data/releaseNotes';
+
+const currentVersion = RELEASE_NOTES[0]?.version ?? '';
 ---
 
 <BaseLayout title="設定">
@@ -9,10 +12,14 @@ import SettingsPanel from '../components/SettingsPanel';
       <section class="page-head">
         <p class="eyebrow">設定</p>
         <h1>設定</h1>
-        <p class="lead">テーマの切替、データのバックアップ、アプリのインストール。</p>
+        <p class="lead">配色テーマ・新UI（ベータ）の切替、表示と機能の調整、データのバックアップ。</p>
       </section>
 
       <SettingsPanel client:only="preact" />
+
+      <p class="muted text-sm" style="margin-top:24px;text-align:center;">
+        現在のバージョン: <strong>{currentVersion}</strong> ／ <a href="/release-notes/">更新履歴</a>
+      </p>
     </div>
   </div>
 </BaseLayout>

@@ -121,6 +121,7 @@ const KEEP_ON_CLEAR = new Set([
   'nte.spoiler',
   'nte.width',
   'nte.draftmark',
+  'nte.edit',
 ]);
 
 /** nte.* のデータを全消去（テーマ・UI・表示設定は保持） */

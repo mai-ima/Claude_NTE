@@ -1420,14 +1420,27 @@ body {
 }
 
 /* 表示の追加設定（トグルスイッチ） */
+.pref-group-title {
+  margin: 18px 0 2px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--text) 55%, transparent);
+}
 .pref-list {
   display: grid;
   gap: 4px;
 }
+.pref-icon {
+  flex: none;
+  color: var(--accent);
+  opacity: 0.9;
+}
 .pref-row {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   padding: 12px 4px;
   border-bottom: 1px solid var(--border);
 }
