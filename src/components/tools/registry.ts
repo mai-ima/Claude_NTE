@@ -6,6 +6,8 @@ import Timer from './Timer';
 import GachaPity from './GachaPity';
 import GachaOdds from './GachaOdds';
 import GachaBudget from './GachaBudget';
+import GachaDashboard from './GachaDashboard';
+import GachaSim from './GachaSim';
 import ReactionChart from './ReactionChart';
 import Planner from './Planner';
 
@@ -18,6 +20,20 @@ export interface ToolDef {
 }
 
 export const TOOLS: ToolDef[] = [
+  {
+    id: 'gacha-dashboard',
+    name: 'ガチャ計画ダッシュボード',
+    description: '天井・所持円石/サイコロ・1日収入・目標を入力すると、引ける連数・到達日・累積確率を1画面に統合表示。',
+    icon: 'layout-dashboard',
+    Component: GachaDashboard,
+  },
+  {
+    id: 'gacha-sim',
+    name: 'ガチャ・シミュレーター',
+    description: 'すごろく式ボードを引く演出付きシミュレーター（70連転換／90連確定・すり抜け無し）。天井・引き運の統計も表示。',
+    icon: 'dices',
+    Component: GachaSim,
+  },
   {
     id: 'gacha-pity',
     name: 'ガチャ天井トラッカー',

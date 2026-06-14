@@ -1,0 +1,43 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../lib/path';
+import { loadEvents } from '../../lib/content';
+import EventTimeline from '../../components/tools/EventTimeline';
+
+const events = await loadEvents();
+const data = events.map((e) => ({
+  id: e.id,
+  title: e.title,
+  href: e.href,
+  kind: e.kind,
+  featured: e.featured,
+  startMs: e.startMs,
+  endMs: e.endMs,
+}));
+---
+
+<BaseLayout
+  title="イベントタイムライン"
+  description="NTEの開催中・予定・終了イベントをタイムラインで可視化。残り時間をライブカウントダウン表示。"
+>
+  <div class="layout">
+    <div class="content" style="max-width:920px;margin:0 auto;">
+      <nav class="text-sm muted cluster" style="margin-bottom:16px;" aria-label="パンくず">
+        <a href={withBase('/tools/')}>ツール</a>
+        <Icon name="lucide:chevron-right" style="width:14px;height:14px;" />
+        <span>イベントタイムライン</span>
+      </nav>
+      <section class="page-head">
+        <div class="row" style="gap:10px;">
+          <Icon name="lucide:calendar-clock" style="width:26px;height:26px;color:var(--accent);" />
+          <h1 style="margin:0;">イベントタイムライン</h1>
+        </div>
+        <p class="lead" style="margin-top:8px;">
+          開催中・予定・終了のガチャ／イベントをタイムラインで一覧。残り時間をリアルタイムでカウントダウンします。
+        </p>
+      </section>
+      <EventTimeline client:only="preact" events={data} />
+    </div>
+  </div>
+</BaseLayout>

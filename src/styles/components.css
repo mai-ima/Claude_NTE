@@ -603,6 +603,125 @@
   background: var(--accent);
   transition: width 0.25s ease;
 }
+
+/* ===== ガチャ・シミュレーター ===== */
+.sim-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  text-align: center;
+}
+@media (max-width: 460px) {
+  .sim-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.sim-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.sim-num {
+  font-size: 1.7rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.sim-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.sim-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  background: var(--surface-2);
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+.sim-chip.is-s {
+  background: linear-gradient(160deg, #ffd76a, #f5a623);
+  color: #4a2f00;
+  border-color: #f5a623;
+  box-shadow: 0 0 0 2px color-mix(in srgb, #f5a623 35%, transparent), 0 4px 14px -4px #f5a623;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .sim-chip.pop {
+    animation: sim-pop 0.32s cubic-bezier(0.22, 1.2, 0.36, 1) both;
+  }
+}
+@keyframes sim-pop {
+  from {
+    transform: scale(0.4) rotate(-8deg);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) rotate(0);
+    opacity: 1;
+  }
+}
+
+/* ===== イベントタイムライン（ガント） ===== */
+.tl-gantt {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 0 4px;
+  min-height: 60px;
+}
+.tl-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 34px;
+  min-width: 44px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--hue) 22%, var(--surface));
+  border: 1.5px solid var(--hue);
+  color: var(--text);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.tl-bar:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px -6px var(--hue);
+  z-index: 3;
+}
+.tl-bar-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tl-today {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-left: 2px dashed color-mix(in srgb, var(--danger, #e53e3e) 80%, transparent);
+  z-index: 2;
+}
+.tl-today-dot {
+  position: absolute;
+  top: -2px;
+  left: -5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--danger, #e53e3e);
+}
+.tl-count {
+  font-variant-numeric: tabular-nums;
+}
 .check-item {
   display: flex;
   align-items: center;
