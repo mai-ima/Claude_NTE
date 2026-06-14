@@ -285,18 +285,26 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
     </div>
 
     <script>
-      // モバイルドロワーの開閉。ヘッダー/ドロワーは transition:persist で永続化されるため、
-      // リスナーは初回1回の登録で View Transitions 後も有効。
-      const drawer = document.getElementById('app-drawer');
+      // モバイルドロワーの開閉。要素は毎回 fresh に取得し、開閉は document 委譲で扱う。
+      // （初回キャッシュした参照やリスナーが、View Transitions の遷移で stale 化して
+      //  「特定条件でサイドバーが開けない」状態になるのを根本回避する）
       function setDrawer(open: boolean) {
-        if (!drawer) return;
-        drawer.classList.toggle('is-open', open);
+        const d = document.getElementById('app-drawer');
+        if (!d) return;
+        d.classList.toggle('is-open', open);
         document.body.style.overflow = open ? 'hidden' : '';
       }
-      document.querySelector('[data-drawer-open]')?.addEventListener('click', () => setDrawer(true));
-      document
-        .querySelectorAll('[data-drawer-close]')
-        .forEach((el) => el.addEventListener('click', () => setDrawer(false)));
+      document.addEventListener('click', (e) => {
+        const t = e.target as HTMLElement | null;
+        if (!t) return;
+        if (t.closest('[data-drawer-open]')) {
+          setDrawer(true);
+          return;
+        }
+        if (t.closest('[data-drawer-close]')) {
+          setDrawer(false);
+        }
+      });
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') setDrawer(false);
       });
