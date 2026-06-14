@@ -17,6 +17,7 @@ import { withBase, activeHref } from '../lib/path';
 import { PRIMARY_NAV, BOTTOM_NAV } from '../lib/nav';
 import MobileDrawer from '../components/MobileDrawer.astro';
 import ThemeMenu from '../components/ThemeMenu';
+import Search from 'astro-pagefind/components/Search';
 
 interface Crumb {
   name: string;
@@ -216,8 +217,27 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
           }
         </nav>
 
+        <button
+          class="btn btn-icon btn-ghost"
+          type="button"
+          aria-label="検索（⌘K / Ctrl+K）"
+          data-search-open
+        >
+          <Icon name="lucide:search" />
+        </button>
+
         <ThemeMenu client:load />
       </header>
+
+      <dialog id="search-dialog" class="search-modal" aria-label="サイト内検索" transition:persist>
+        <div class="search-modal-head">
+          <span class="muted text-sm">サイト内を検索（<kbd>Esc</kbd> で閉じる）</span>
+          <button class="btn btn-icon btn-ghost" type="button" aria-label="閉じる" data-search-close>
+            <Icon name="lucide:x" />
+          </button>
+        </div>
+        <Search id="global-search" className="pagefind-ui" uiOptions={{ showImages: false, excerptLength: 15 }} />
+      </dialog>
 
       <MobileDrawer currentPath={currentPath} transition:persist />
 
@@ -293,8 +313,42 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
           if (best) best.setAttribute('aria-current', 'page');
         }
       }
+      // グローバル検索モーダル（⌘K / Ctrl+K / "/" で開く）。dialog は永続化済みで
+      // リスナーは初回登録のみ。
+      const searchDialog = document.getElementById('search-dialog') as HTMLDialogElement | null;
+      function openSearch() {
+        if (!searchDialog || searchDialog.open) return;
+        searchDialog.showModal();
+        const input = searchDialog.querySelector('input');
+        if (input) (input as HTMLInputElement).focus();
+      }
+      function closeSearch() {
+        searchDialog?.close();
+      }
+      document.querySelector('[data-search-open]')?.addEventListener('click', openSearch);
+      searchDialog?.querySelector('[data-search-close]')?.addEventListener('click', closeSearch);
+      // 背景（::backdrop）クリックで閉じる
+      searchDialog?.addEventListener('click', (e) => {
+        if (e.target === searchDialog) closeSearch();
+      });
+      document.addEventListener('keydown', (e) => {
+        const meta = e.metaKey || e.ctrlKey;
+        if (meta && e.key.toLowerCase() === 'k') {
+          e.preventDefault();
+          openSearch();
+          return;
+        }
+        const t = e.target as HTMLElement | null;
+        const typing = t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable);
+        if (e.key === '/' && !typing && !searchDialog?.open) {
+          e.preventDefault();
+          openSearch();
+        }
+      });
+
       document.addEventListener('astro:page-load', () => {
         setDrawer(false);
+        closeSearch();
         syncActiveNav();
       });
     </script>
