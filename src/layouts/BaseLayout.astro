@@ -31,6 +31,8 @@ interface Props {
   modified?: Date;
   /** パンくず（BreadcrumbList JSON-LD 用）。先頭にホームを含めなくてよい */
   breadcrumbs?: Crumb[];
+  /** OG/Twitter 画像のサイト内パス（例: 'og/characters/x.png'）。未指定は既定アイコン */
+  image?: string;
 }
 
 const {
@@ -39,6 +41,7 @@ const {
   ogType = 'website',
   modified,
   breadcrumbs = [],
+  image,
 } = Astro.props;
 
 const siteName = 'NTE 完全攻略wiki';
@@ -48,7 +51,7 @@ const currentPath = Astro.url.pathname;
 const primaryActive = activeHref(currentPath, PRIMARY_NAV.map((n) => n.href));
 const bottomActive = activeHref(currentPath, BOTTOM_NAV.map((n) => n.href));
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const ogImage = new URL(withBase('icons/icon-192.png'), Astro.site).href;
+const ogImage = new URL(withBase(image ?? 'icons/icon-192.png'), Astro.site).href;
 const homeUrl = new URL(withBase('/'), Astro.site).href;
 
 // --- 構造化データ (JSON-LD) ---
@@ -113,7 +116,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
     {ogType === 'article' && modified && (
       <meta property="article:modified_time" content={modified.toISOString()} />
     )}
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />

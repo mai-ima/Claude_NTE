@@ -92,6 +92,7 @@ const editHref = editPath ? editUrl(editPath) : editUrlFor(collection, currentId
   description={lead}
   ogType="article"
   modified={updated}
+  image={`og/${collection}/${currentId}.png`}
   breadcrumbs={[
     { name: sectionLabel, href: withBase(sectionHref) },
     { name: title, href: withBase(`/${collection}/${currentId}/`) },
