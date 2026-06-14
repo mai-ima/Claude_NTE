@@ -37,25 +37,25 @@ export default function GachaBudget() {
         <div class="row" style={{ gap: '8px', flexWrap: 'wrap' }}>
           <label class="field" style={{ flex: '1 1 110px', marginBottom: 0 }}>
             <span class="text-sm">目標連数</span>
-            <input class="input" type="number" min={1} value={goal} onInput={(e) => setGoal(num((e.target as HTMLInputElement).value))} />
+            <input class="input" type="number" inputmode="decimal" min={1} value={goal} onInput={(e) => setGoal(num((e.target as HTMLInputElement).value))} />
           </label>
           <label class="field" style={{ flex: '1 1 110px', marginBottom: 0 }}>
             <span class="text-sm">現在の天井</span>
-            <input class="input" type="number" min={0} value={pity} onInput={(e) => setPity(num((e.target as HTMLInputElement).value))} />
+            <input class="input" type="number" inputmode="decimal" min={0} value={pity} onInput={(e) => setPity(num((e.target as HTMLInputElement).value))} />
           </label>
         </div>
         <div class="row" style={{ gap: '8px', flexWrap: 'wrap', marginTop: '10px' }}>
           <label class="field" style={{ flex: '1 1 110px', marginBottom: 0 }}>
             <span class="text-sm">所持 円石</span>
-            <input class="input" type="number" min={0} value={annulith} onInput={(e) => setAnnulith(num((e.target as HTMLInputElement).value))} />
+            <input class="input" type="number" inputmode="decimal" min={0} value={annulith} onInput={(e) => setAnnulith(num((e.target as HTMLInputElement).value))} />
           </label>
           <label class="field" style={{ flex: '1 1 110px', marginBottom: 0 }}>
             <span class="text-sm">所持 サイコロ</span>
-            <input class="input" type="number" min={0} value={dice} onInput={(e) => setDice(num((e.target as HTMLInputElement).value))} />
+            <input class="input" type="number" inputmode="decimal" min={0} value={dice} onInput={(e) => setDice(num((e.target as HTMLInputElement).value))} />
           </label>
           <label class="field" style={{ flex: '1 1 110px', marginBottom: 0 }}>
             <span class="text-sm">1日の円石収入</span>
-            <input class="input" type="number" min={0} value={perDay} onInput={(e) => setPerDay(num((e.target as HTMLInputElement).value))} />
+            <input class="input" type="number" inputmode="decimal" min={0} value={perDay} onInput={(e) => setPerDay(num((e.target as HTMLInputElement).value))} />
           </label>
         </div>
         <p class="hint" style={{ marginTop: '8px' }}>

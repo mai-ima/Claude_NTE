@@ -63,15 +63,15 @@ export default function GachaOdds() {
       <div class="row" style={{ gap: '8px', flexWrap: 'wrap' }}>
         <label class="field" style={{ flex: '1 1 90px', marginBottom: 0 }}>
           <span class="text-sm">現在の天井</span>
-          <input class="input" type="number" min={0} value={pity} onInput={num(setPity)} />
+          <input class="input" type="number" inputmode="decimal" min={0} value={pity} onInput={num(setPity)} />
         </label>
         <label class="field" style={{ flex: '1 1 90px', marginBottom: 0 }}>
           <span class="text-sm">基礎S率(%)</span>
-          <input class="input" type="number" step={0.01} value={base} onInput={num(setBase)} />
+          <input class="input" type="number" inputmode="decimal" step={0.01} value={base} onInput={num(setBase)} />
         </label>
         <label class="field" style={{ flex: '1 1 90px', marginBottom: 0 }}>
           <span class="text-sm">転換後S率(%)</span>
-          <input class="input" type="number" step={0.01} value={soft} onInput={num(setSoft)} />
+          <input class="input" type="number" inputmode="decimal" step={0.01} value={soft} onInput={num(setSoft)} />
         </label>
       </div>
 
@@ -119,15 +119,15 @@ export default function GachaOdds() {
         <div class="row" style={{ gap: '8px', marginTop: '10px', flexWrap: 'wrap' }}>
           <label class="field" style={{ flex: '1 1 100px', marginBottom: 0 }}>
             <span class="text-sm">転換(ソフト)</span>
-            <input class="input" type="number" value={softAt} onInput={num(setSoftAt)} />
+            <input class="input" type="number" inputmode="decimal" value={softAt} onInput={num(setSoftAt)} />
           </label>
           <label class="field" style={{ flex: '1 1 100px', marginBottom: 0 }}>
             <span class="text-sm">確定(ハード)</span>
-            <input class="input" type="number" value={hardAt} onInput={num(setHardAt)} />
+            <input class="input" type="number" inputmode="decimal" value={hardAt} onInput={num(setHardAt)} />
           </label>
           <label class="field" style={{ flex: '1 1 100px', marginBottom: 0 }}>
             <span class="text-sm">1ダイスの円石</span>
-            <input class="input" type="number" value={perDie} onInput={num(setPerDie)} />
+            <input class="input" type="number" inputmode="decimal" value={perDie} onInput={num(setPerDie)} />
           </label>
         </div>
         <ul class="text-sm muted" style={{ marginTop: '8px' }}>

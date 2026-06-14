@@ -120,19 +120,19 @@ export default function Planner() {
         <div class="row" style={{ gap: '8px', flexWrap: 'wrap' }}>
           <label class="field" style={{ flex: '1 1 80px', marginBottom: 0 }}>
             <span class="text-sm">現在値</span>
-            <input class="input" type="number" min={0} value={cur} onInput={(e) => setCurNow(Number((e.target as HTMLInputElement).value) || 0)} />
+            <input class="input" type="number" inputmode="decimal" min={0} value={cur} onInput={(e) => setCurNow(Number((e.target as HTMLInputElement).value) || 0)} />
           </label>
           <label class="field" style={{ flex: '1 1 80px', marginBottom: 0 }}>
             <span class="text-sm">最大</span>
-            <input class="input" type="number" min={0} value={max} onInput={(e) => setMax(Number((e.target as HTMLInputElement).value) || 0)} />
+            <input class="input" type="number" inputmode="decimal" min={0} value={max} onInput={(e) => setMax(Number((e.target as HTMLInputElement).value) || 0)} />
           </label>
           <label class="field" style={{ flex: '1 1 80px', marginBottom: 0 }}>
             <span class="text-sm">回復(分/1)</span>
-            <input class="input" type="number" min={0} step={0.5} value={perMin} onInput={(e) => setPerMin(Number((e.target as HTMLInputElement).value) || 0)} />
+            <input class="input" type="number" inputmode="decimal" min={0} step={0.5} value={perMin} onInput={(e) => setPerMin(Number((e.target as HTMLInputElement).value) || 0)} />
           </label>
           <label class="field" style={{ flex: '1 1 80px', marginBottom: 0 }}>
             <span class="text-sm">1周回</span>
-            <input class="input" type="number" min={1} value={runCost} onInput={(e) => setRunCost(Number((e.target as HTMLInputElement).value) || 1)} />
+            <input class="input" type="number" inputmode="decimal" min={1} value={runCost} onInput={(e) => setRunCost(Number((e.target as HTMLInputElement).value) || 1)} />
           </label>
         </div>
         <p class="hint">既定: 上限240・6分で1回復・アノマリーゾーン1回40（倍取り80）。</p>
@@ -151,11 +151,11 @@ export default function Planner() {
         <div class="row" style={{ gap: '8px' }}>
           <label class="field" style={{ flex: 1, marginBottom: 0 }}>
             <span class="text-sm">現在値</span>
-            <input class="input" type="number" min={0} value={city} onInput={(e) => setCity(Number((e.target as HTMLInputElement).value) || 0)} />
+            <input class="input" type="number" inputmode="decimal" min={0} value={city} onInput={(e) => setCity(Number((e.target as HTMLInputElement).value) || 0)} />
           </label>
           <label class="field" style={{ flex: 1, marginBottom: 0 }}>
             <span class="text-sm">最大</span>
-            <input class="input" type="number" min={0} value={cityMax} onInput={(e) => setCityMax(Number((e.target as HTMLInputElement).value) || 0)} />
+            <input class="input" type="number" inputmode="decimal" min={0} value={cityMax} onInput={(e) => setCityMax(Number((e.target as HTMLInputElement).value) || 0)} />
           </label>
         </div>
         <p class="hint">毎分回復せず、毎週月曜04:00(UTC+8)に全回復。リセット前に使い切るのが基本。</p>

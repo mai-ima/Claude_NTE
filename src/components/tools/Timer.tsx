@@ -82,7 +82,7 @@ export default function Timer() {
             <input
               id="t-min"
               class="input"
-              type="number"
+              type="number" inputmode="decimal"
               min={0}
               max={999}
               value={inputMin}
@@ -94,7 +94,7 @@ export default function Timer() {
             <input
               id="t-sec"
               class="input"
-              type="number"
+              type="number" inputmode="decimal"
               min={0}
               max={59}
               value={inputSec}

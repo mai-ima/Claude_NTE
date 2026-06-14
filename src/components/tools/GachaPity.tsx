@@ -116,23 +116,23 @@ export default function GachaPity() {
         <div class="row" style={{ gap: '8px', marginTop: '10px', flexWrap: 'wrap' }}>
           <label class="field" style={{ flex: '1 1 120px', marginBottom: 0 }}>
             <span class="text-sm">ソフト天井</span>
-            <input class="input" type="number" value={s.softAt} onInput={(e) => num('softAt', (e.target as HTMLInputElement).value)} />
+            <input class="input" type="number" inputmode="decimal" value={s.softAt} onInput={(e) => num('softAt', (e.target as HTMLInputElement).value)} />
           </label>
           <label class="field" style={{ flex: '1 1 120px', marginBottom: 0 }}>
             <span class="text-sm">ハード天井</span>
-            <input class="input" type="number" value={s.hardAt} onInput={(e) => num('hardAt', (e.target as HTMLInputElement).value)} />
+            <input class="input" type="number" inputmode="decimal" value={s.hardAt} onInput={(e) => num('hardAt', (e.target as HTMLInputElement).value)} />
           </label>
           <label class="field" style={{ flex: '1 1 120px', marginBottom: 0 }}>
             <span class="text-sm">基礎S率(%)</span>
-            <input class="input" type="number" step={0.01} value={s.baseRate} onInput={(e) => num('baseRate', (e.target as HTMLInputElement).value)} />
+            <input class="input" type="number" inputmode="decimal" step={0.01} value={s.baseRate} onInput={(e) => num('baseRate', (e.target as HTMLInputElement).value)} />
           </label>
           <label class="field" style={{ flex: '1 1 120px', marginBottom: 0 }}>
             <span class="text-sm">天井後S率(%)</span>
-            <input class="input" type="number" step={0.01} value={s.softRate} onInput={(e) => num('softRate', (e.target as HTMLInputElement).value)} />
+            <input class="input" type="number" inputmode="decimal" step={0.01} value={s.softRate} onInput={(e) => num('softRate', (e.target as HTMLInputElement).value)} />
           </label>
           <label class="field" style={{ flex: '1 1 120px', marginBottom: 0 }}>
             <span class="text-sm">1ダイスの Annulith</span>
-            <input class="input" type="number" value={s.annulithPerDie} onInput={(e) => num('annulithPerDie', (e.target as HTMLInputElement).value)} />
+            <input class="input" type="number" inputmode="decimal" value={s.annulithPerDie} onInput={(e) => num('annulithPerDie', (e.target as HTMLInputElement).value)} />
           </label>
         </div>
         <p class="hint" style={{ marginTop: '8px' }}>
