@@ -1,10 +1,12 @@
 /* =========================================================================
-   新UI（ベータ） — <html data-ui="beta"> のときだけ適用。
-   コンセプト「Aurora Glass」: 配色テーマ(data-theme)の上に重ねる、
-   フロストガラス＋オーロラグラデーション＋ネオングローの大胆な体験レイヤー。
-   どの配色テーマ(minimal/dark/soft/auto)でも崩れないよう、既存のCSS変数を
-   活かして上書きする。classic（既定）の見た目には一切影響しない。
-   レイアウト幾何はほぼ維持し、質感・余白・タイポ・動き・装飾を大幅に強化する。
+   新UI「Aurora Neon」 — <html data-ui="aurora"> のときだけ適用。
+   コンセプト: 配色テーマ(data-theme)の上に重ねる、不透明な面 × オーロラ
+   グラデーション × ネオングローの大胆な体験レイヤー（"ガラス"ではない＝
+   Liquid Glass と方向性を分離）。どの配色テーマ(minimal/dark/soft/auto)でも
+   崩れないよう既存のCSS変数を活かして上書きする。classic には一切影響しない。
+   レイアウト幾何はほぼ維持し、質感・余白・タイポ・動き・装飾を強化する。
+   注: --glass/--glass-strong は不透明面（= var(--surface)）。名残の変数名だが
+   「ガラスをやめ不透明ネオンに振り切る」方針の最終値をここで一元定義している。
    ========================================================================= */
 
 html[data-ui='aurora'] {
@@ -26,9 +28,9 @@ html[data-ui='aurora'] {
   /* ネオングロー */
   --beta-glow: 0 10px 34px color-mix(in srgb, var(--accent) 30%, transparent);
   --beta-glow-strong: 0 18px 50px color-mix(in srgb, var(--accent) 42%, transparent);
-  /* ガラス面 */
-  --glass: color-mix(in srgb, var(--surface) 72%, transparent);
-  --glass-strong: color-mix(in srgb, var(--surface) 86%, transparent);
+  /* 面（不透明＝ガラスをやめた最終値。下流の backdrop-filter:none と対で使う） */
+  --glass: var(--surface);
+  --glass-strong: var(--surface);
 
   scroll-behavior: smooth;
   scrollbar-width: thin;
@@ -723,10 +725,7 @@ html[data-ui='aurora'] .filterbar .chip.is-on { background: var(--beta-grad); co
 html[data-ui='aurora'] .figure img { border: 1px solid transparent; background: linear-gradient(var(--surface), var(--surface)) padding-box, var(--beta-grad) border-box; }
 
 /* ===== 別方向へ分離: Aurora は「ガラス」をやめ、不透明×ネオングラデに振り切る ===== */
-html[data-ui='aurora'] {
-  --glass: var(--surface);
-  --glass-strong: var(--surface);
-}
+/* （--glass/--glass-strong の不透明化は先頭の root ブロックへ一元化済み） */
 html[data-ui='aurora'] .app-header,
 html[data-ui='aurora'] .card,
 html[data-ui='aurora'] .info-panel,

@@ -3,7 +3,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import { withBase } from './path';
 import { SECTIONS } from './nav';
 
-type AnyEntry = CollectionEntry<
+export type AnyEntry = CollectionEntry<
   | 'characters'
   | 'locations'
   | 'enemies'

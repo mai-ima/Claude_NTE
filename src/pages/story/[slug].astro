@@ -1,40 +1,21 @@
 ---
-import { render } from 'astro:content';
 import EntityDetail from '../../components/EntityDetail.astro';
-import { sectionByCollection } from '../../lib/nav';
-import { titleOf, hrefOf, publishedEntries } from '../../lib/content';
+import { detailPaths, renderEntry, baseDetailProps } from '../../lib/detail';
 import type { Row } from '../../components/EntityDetail.astro';
 
 export async function getStaticPaths() {
-  const sorted = await publishedEntries('story');
-  return sorted.map((entry, i) => ({
-    params: { slug: entry.id },
-    props: { entry, prev: sorted[i - 1] ?? null, next: sorted[i + 1] ?? null },
-  }));
+  return detailPaths('story');
 }
 const { entry, prev, next } = Astro.props;
-const { Content, headings } = await render(entry as any);
+const { Content, headings } = await renderEntry(entry);
 const d = entry.data as any;
-const section = sectionByCollection('story')!;
 const rows: Row[] = [];
 if (d.arc) rows.push({ k: '章', v: d.arc });
 ---
 <EntityDetail
-  collection="story"
-  currentId={entry.id}
-  sectionLabel={section.label}
-  sectionHref={section.href}
-  sectionIcon={section.icon}
-  title={titleOf(entry)}
-  lead={d.description}
+  {...baseDetailProps('story', entry, prev, next)}
   rows={rows}
-  status={d.status}
-  updated={d.updated}
-  tags={d.tags}
-  sources={d.sources}
   headings={headings}
-  prev={prev ? { href: hrefOf('story', prev.id), title: titleOf(prev) } : null}
-  next={next ? { href: hrefOf('story', next.id), title: titleOf(next) } : null}
   spoilerNote={d.spoiler}
   editPath={(entry as any).filePath}
 >
