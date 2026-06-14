@@ -1256,28 +1256,21 @@
 }
 
 /* =========================================================================
-   視覚強化（v0.7.0）— classic を除く全UIで、スクロール駆動の入場アニメ。
-   純CSS（animation-timeline: view()）。非対応ブラウザは @supports で素通り＝通常表示
-   （要素を隠さないのでフラッシュや事故が無い）。reduced-motion / data-motion は尊重。
+   視覚強化（v0.7.0→v0.7.1）— classic を除く全UIで、要素の入場アニメ。
+   v0.7.1: スクロール連動(animation-timeline:view())は長い一覧で常時コンポジットが走り
+   重くなるため廃止し、初回表示のみ一度だけ動く IntersectionObserver 方式へ変更。
+   非対応・reduced-motion・classic・遷移後はフラグ(html[data-reveal])が付かず通常表示。
    ========================================================================= */
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    html:not([data-ui='classic']):not([data-motion='reduce']) :is(.grid-cards > *, .stat-band > .stat) {
-      animation: nc-reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 36%;
-    }
-  }
+html[data-reveal='1'] :is(.grid-cards > *, .stat-band > .stat) {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.45s ease,
+    transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
-@keyframes nc-reveal {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+html[data-reveal='1'] :is(.grid-cards > *, .stat-band > .stat).is-in {
+  opacity: 1;
+  transform: none;
 }
 
 /* グローバル検索モーダル（⌘K） */

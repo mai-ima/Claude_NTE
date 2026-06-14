@@ -166,6 +166,22 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
         } catch (e) {}
       })();
     </script>
+    {/* 入場アニメ用フラグ（初回ロードのみ・描画前）。classic / モーション抑制では付けない。
+        data-astro-rerun を付けない＝View Transitions の遷移では再付与されない（遷移後は通常表示）。 */}
+    <script is:inline>
+      (function () {
+        try {
+          var ui = localStorage.getItem('nte.ui');
+          if (ui === 'beta') ui = 'editorial';
+          var reduced =
+            localStorage.getItem('nte.motion') === '1' ||
+            window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if (ui !== 'classic' && !reduced) {
+            document.documentElement.setAttribute('data-reveal', '1');
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     {/* Liquid Glass UI 用の屈折フィルタ。backdrop-filter: url(#lq-glass) が対応する
@@ -297,7 +313,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
       function syncActiveNav() {
         const cur = location.pathname.replace(/\/$/, '');
         const home = pathOf('/');
-        for (const sel of ['.app-header .nav-link', '.bottom-nav a']) {
+        for (const sel of ['.app-header .nav-link', '.bottom-nav a', '.drawer-panel .nav-link']) {
           const links = Array.from(document.querySelectorAll(sel)) as HTMLAnchorElement[];
           let best: HTMLAnchorElement | null = null;
           let bestLen = -1;
@@ -377,11 +393,45 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
         });
       }
 
+      // 入場アニメ（初回ロードのみ・一度きり）。IntersectionObserver で可視時に1回だけ
+      // .is-in を付与し unobserve。スクロール連動と違い常時コストが無く軽い。
+      let revealObserver: IntersectionObserver | null = null;
+      function runReveal() {
+        if (document.documentElement.getAttribute('data-reveal') !== '1') return;
+        const targets = document.querySelectorAll('.grid-cards > *, .stat-band > .stat');
+        if (!('IntersectionObserver' in window)) {
+          targets.forEach((t) => t.classList.add('is-in'));
+          return;
+        }
+        revealObserver?.disconnect();
+        revealObserver = new IntersectionObserver(
+          (entries, obs) => {
+            for (const e of entries) {
+              if (e.isIntersecting) {
+                e.target.classList.add('is-in');
+                obs.unobserve(e.target);
+              }
+            }
+          },
+          { rootMargin: '0px 0px -8% 0px' },
+        );
+        targets.forEach((t) => revealObserver!.observe(t));
+      }
+
+      // View Transitions の遷移後は入場アニメを行わない（遷移自体が動きを担う）。
+      // フラグを外し、以降のページではカードを隠さない＝通常表示で軽い。
+      document.addEventListener('astro:after-swap', () => {
+        document.documentElement.removeAttribute('data-reveal');
+        revealObserver?.disconnect();
+        revealObserver = null;
+      });
+
       document.addEventListener('astro:page-load', () => {
         setDrawer(false);
         closeSearch();
         syncActiveNav();
         animateCounters();
+        runReveal();
       });
     </script>
 
