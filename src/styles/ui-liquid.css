@@ -1,31 +1,79 @@
 /* =========================================================================
    新UI「Liquid Glass」 — <html data-ui="liquid"> のときだけ適用。
-   iOS/visionOS 系の本格リキッドグラス: 厚い曇りガラス・上端のスペキュラ
-   ハイライト・浮遊するカプセル形状。配色テーマの変数から導出し、
-   minimal/dark/soft/auto すべてで成立させる。classic には影響しない。
+   Apple iOS 26「Liquid Glass」級を目標にした本格リキッドグラス:
+     ・鏡面エッジ（上端の細い強ハイライト＋下端の陰＋内周の淡光）
+     ・コンテンツ適応ティント（背後の明暗に応じて締まる/明るむ backdrop）
+     ・屈折/レンズ（SVG #lq-glass の feDisplacementMap で背後を実際に歪める。
+       対応ブラウザのみ＝プログレッシブエンハンスメント）
+     ・同心円角丸（concentric radii）・押下時のジェルの沈み込み
+   配色テーマ(minimal/dark/soft/auto)すべてで成立。classic には影響しない。
+   ※ かつてヘッダー横断光沢で overflow:hidden を使い、テーママニューの
+     ドロップダウンを切り取る不具合があったため、ヘッダーには overflow を付けない。
    ========================================================================= */
 
 html[data-ui='liquid'] {
-  --radius: 22px;
-  --radius-sm: 14px;
-  --radius-lg: 28px;
-  /* ガラス面（厚め）と縁のスペキュラ */
-  --lq-surface: color-mix(in srgb, var(--surface) 58%, transparent);
-  --lq-surface-thick: color-mix(in srgb, var(--surface) 76%, transparent);
-  --lq-blur: saturate(180%) blur(24px);
+  /* 角丸（親→子で padding 差により同心になるよう設計） */
+  --radius: 28px;
+  --radius-sm: 18px;
+  --radius-lg: 36px;
+  --radius-pill: 999px;
+
+  /* ガラス面の不透明度（クロームは薄く透ける／本文カードは可読性優先で厚め） */
+  --lq-surface: color-mix(in srgb, var(--surface) 40%, transparent);
+  --lq-surface-thick: color-mix(in srgb, var(--surface) 66%, transparent);
+
+  /* backdrop フィルタ:
+     blur=厚み / saturate=ガラス越しの色の冴え / brightness=コンテンツ適応の明調 */
+  --lq-blur: saturate(185%) brightness(1.05) blur(22px);
+  --lq-blur-chrome: saturate(200%) brightness(1.06) blur(30px);
+
+  /* 屈折レンズ。既定は blur のみ。対応環境では @supports で SVG 変位を合成 */
+  --lq-lens: var(--lq-blur-chrome);
+
+  /* 鏡面エッジ: 上端=細く強い白／ヘアライン／内周上=淡光／下端=陰 → 厚いガラスの縁 */
   --lq-edge:
-    inset 0 1px 0 color-mix(in srgb, #fff 38%, transparent),
-    inset 0 0 0 1px color-mix(in srgb, #fff 14%, transparent);
+    inset 0 1px 0 0 color-mix(in srgb, #fff 72%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, #fff 16%, transparent),
+    inset 0 9px 20px -12px color-mix(in srgb, #fff 34%, transparent),
+    inset 0 -10px 18px -12px color-mix(in srgb, #000 22%, transparent);
+
   --lq-shadow: 0 10px 36px color-mix(in srgb, var(--text) 16%, transparent);
-  --lq-shadow-lg: 0 18px 56px color-mix(in srgb, var(--text) 22%, transparent);
+  --lq-shadow-lg: 0 20px 60px color-mix(in srgb, var(--text) 24%, transparent);
+
+  /* 上面のスペキュラ（艶）グラデーション。各パネルの background-image に重ねる */
+  --lq-sheen: linear-gradient(180deg, color-mix(in srgb, #fff 22%, transparent), transparent 38%);
 }
 
-/* 壁紙: アクセント由来のやわらかな色面（ガラスの透けを見せるため必須） */
+/* 暗いテーマでは背後が暗いので、適応ティントを一段明るめにして視認性を確保 */
+html[data-ui='liquid'][data-theme='dark'] {
+  --lq-blur: saturate(180%) brightness(1.12) blur(22px);
+  --lq-blur-chrome: saturate(190%) brightness(1.14) blur(30px);
+  --lq-surface: color-mix(in srgb, var(--surface) 46%, transparent);
+  --lq-surface-thick: color-mix(in srgb, var(--surface) 70%, transparent);
+}
+@media (prefers-color-scheme: dark) {
+  html[data-ui='liquid'][data-theme='auto'] {
+    --lq-blur: saturate(180%) brightness(1.12) blur(22px);
+    --lq-blur-chrome: saturate(190%) brightness(1.14) blur(30px);
+    --lq-surface: color-mix(in srgb, var(--surface) 46%, transparent);
+    --lq-surface-thick: color-mix(in srgb, var(--surface) 70%, transparent);
+  }
+}
+
+/* 屈折レンズ: backdrop-filter が SVG フィルタ参照に対応する環境のみ有効化 */
+@supports (backdrop-filter: url('#lq-glass')) or (-webkit-backdrop-filter: url('#lq-glass')) {
+  html[data-ui='liquid'] {
+    --lq-lens: url('#lq-glass') var(--lq-blur-chrome);
+  }
+}
+
+/* 壁紙: アクセント由来の色面メッシュ（ガラスの透け・屈折を見せるため必須・全面化） */
 html[data-ui='liquid'] body {
   background:
-    radial-gradient(900px 600px at 85% -8%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 60%),
-    radial-gradient(800px 560px at -8% 30%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 58%),
-    radial-gradient(700px 500px at 60% 110%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
+    radial-gradient(150% 130% at 50% -25%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 72%),
+    radial-gradient(1100px 820px at 88% -10%, color-mix(in srgb, var(--accent) 38%, transparent), transparent 60%),
+    radial-gradient(1000px 780px at -10% 22%, color-mix(in srgb, #a855f7 30%, transparent), transparent 58%),
+    radial-gradient(980px 740px at 64% 118%, color-mix(in srgb, #22d3ee 28%, transparent), transparent 62%),
     var(--bg);
   background-attachment: fixed;
 }
@@ -34,13 +82,13 @@ html[data-ui='liquid'] ::selection {
   background: color-mix(in srgb, var(--accent) 28%, transparent);
 }
 
-/* 共通トランジション */
+/* 共通トランジション（ジェルの動き） */
 html[data-ui='liquid'] .card,
 html[data-ui='liquid'] .btn,
 html[data-ui='liquid'] .nav-link,
 html[data-ui='liquid'] .stat {
   transition:
-    transform 0.22s cubic-bezier(0.32, 0.72, 0, 1),
+    transform 0.24s cubic-bezier(0.32, 0.72, 0, 1),
     box-shadow 0.25s ease,
     background 0.25s ease;
 }
@@ -49,31 +97,43 @@ html[data-ui='liquid'] .stat {
 html[data-ui='liquid'] .app-header {
   top: 8px;
   margin: 8px 10px 0;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   border: none;
   background: var(--lq-surface);
-  backdrop-filter: var(--lq-blur);
-  -webkit-backdrop-filter: var(--lq-blur);
+  backdrop-filter: var(--lq-lens);
+  -webkit-backdrop-filter: var(--lq-lens);
   box-shadow: var(--lq-edge), var(--lq-shadow);
 }
 html[data-ui='liquid'] .brand-mark {
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--accent);
   box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 45%, transparent);
 }
 html[data-ui='liquid'] .app-header .nav-link {
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
 }
 html[data-ui='liquid'] .app-header .nav-link[aria-current='page'] {
   background: var(--lq-surface-thick);
   color: var(--accent);
   box-shadow: var(--lq-edge);
 }
-/* ヘッダー浮遊分、サイドバーの吸着位置を下げる */
+html[data-ui='liquid'] .app-footer {
+  background: var(--lq-surface);
+  backdrop-filter: var(--lq-blur);
+  -webkit-backdrop-filter: var(--lq-blur);
+  border-top: none;
+}
+/* ヘッダー浮遊分、サイドバーの吸着位置を下げる＋サイドバーもガラス板に */
 @media (min-width: 960px) {
   html[data-ui='liquid'] .sidebar {
     top: 86px;
     max-height: calc(100dvh - 102px);
+    background: var(--lq-surface);
+    backdrop-filter: var(--lq-lens);
+    -webkit-backdrop-filter: var(--lq-lens);
+    box-shadow: var(--lq-edge);
+    border-radius: var(--radius-lg);
+    padding: 16px 10px;
   }
 }
 
@@ -85,7 +145,7 @@ html[data-ui='liquid'] h1 {
 html[data-ui='liquid'] .page-head .eyebrow {
   display: inline-block;
   padding: 4px 14px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--lq-surface);
   backdrop-filter: var(--lq-blur);
   -webkit-backdrop-filter: var(--lq-blur);
@@ -95,22 +155,27 @@ html[data-ui='liquid'] .page-head .eyebrow {
 html[data-ui='liquid'] .page-head h1 {
   margin-top: 10px;
 }
+html[data-ui='liquid'] .page-head h1,
+html[data-ui='liquid'] .hero h1 {
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
+}
 
 /* ===== ヒーロー・統計 =================================================== */
 html[data-ui='liquid'] .hero {
   border-radius: var(--radius-lg);
   border: none;
   background:
+    var(--lq-sheen),
     radial-gradient(600px 220px at 12% -20%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 70%),
     var(--lq-surface);
-  backdrop-filter: var(--lq-blur);
-  -webkit-backdrop-filter: var(--lq-blur);
+  backdrop-filter: var(--lq-lens);
+  -webkit-backdrop-filter: var(--lq-lens);
   box-shadow: var(--lq-edge), var(--lq-shadow-lg);
 }
 html[data-ui='liquid'] .stat {
   border: none;
   border-radius: var(--radius);
-  background: var(--lq-surface);
+  background: var(--lq-sheen), var(--lq-surface);
   backdrop-filter: var(--lq-blur);
   -webkit-backdrop-filter: var(--lq-blur);
   box-shadow: var(--lq-edge), var(--shadow-sm);
@@ -128,9 +193,22 @@ html[data-ui='liquid'] .card {
   border-radius: var(--radius);
   border: none;
   background: var(--lq-surface-thick);
-  backdrop-filter: var(--lq-blur);
-  -webkit-backdrop-filter: var(--lq-blur);
+  backdrop-filter: var(--lq-lens);
+  -webkit-backdrop-filter: var(--lq-lens);
   box-shadow: var(--lq-edge), var(--shadow-sm);
+}
+html[data-ui='liquid'] .card-link {
+  position: relative;
+  overflow: hidden;
+}
+/* カード上端の屈折ハイライト（艶） */
+html[data-ui='liquid'] .card-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 44%);
+  pointer-events: none;
 }
 html[data-ui='liquid'] .card-link:hover {
   transform: scale(1.02);
@@ -141,7 +219,7 @@ html[data-ui='liquid'] .char-card {
 }
 html[data-ui='liquid'] .char-card::before {
   height: 4px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   inset: 10px 14px auto 14px;
 }
 html[data-ui='liquid'] .char-card :is(.avatar, [class*='avatar']) {
@@ -153,9 +231,9 @@ html[data-ui='liquid'] .char-card :is(.avatar, [class*='avatar']) {
 html[data-ui='liquid'] .info-panel {
   border: none;
   border-radius: var(--radius);
-  background: var(--lq-surface-thick);
-  backdrop-filter: var(--lq-blur);
-  -webkit-backdrop-filter: var(--lq-blur);
+  background: var(--lq-sheen), var(--lq-surface-thick);
+  backdrop-filter: var(--lq-lens);
+  -webkit-backdrop-filter: var(--lq-lens);
   box-shadow: var(--lq-edge), var(--lq-shadow);
   overflow: hidden;
 }
@@ -198,10 +276,29 @@ html[data-ui='liquid'] .prose pre {
   border-radius: var(--radius-sm);
   box-shadow: var(--lq-edge);
 }
+html[data-ui='liquid'] .callout {
+  border: none;
+  background: var(--lq-surface-thick);
+  backdrop-filter: var(--lq-blur);
+  -webkit-backdrop-filter: var(--lq-blur);
+  box-shadow: var(--lq-edge);
+}
+html[data-ui='liquid'] .spoiler {
+  border: none;
+  background: var(--lq-surface-thick);
+  backdrop-filter: var(--lq-blur);
+  -webkit-backdrop-filter: var(--lq-blur);
+  box-shadow: var(--lq-edge);
+}
+html[data-ui='liquid'] .figure img {
+  border: none;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--lq-edge);
+}
 
 /* ===== ボタン・入力: カプセル ========================================== */
 html[data-ui='liquid'] .btn {
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   border: none;
   background: var(--lq-surface-thick);
   backdrop-filter: var(--lq-blur);
@@ -212,7 +309,7 @@ html[data-ui='liquid'] .btn:hover {
   transform: scale(1.04);
 }
 html[data-ui='liquid'] .btn:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
 }
 html[data-ui='liquid'] .btn-primary {
   background: var(--accent);
@@ -223,7 +320,7 @@ html[data-ui='liquid'] .btn-primary {
 html[data-ui='liquid'] .input,
 html[data-ui='liquid'] .textarea,
 html[data-ui='liquid'] .select {
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   border: none;
   background: var(--lq-surface-thick);
   box-shadow: var(--lq-edge);
@@ -236,8 +333,11 @@ html[data-ui='liquid'] .textarea:focus,
 html[data-ui='liquid'] .select:focus {
   box-shadow: var(--lq-edge), 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent);
 }
-html[data-ui='liquid'] .badge {
+html[data-ui='liquid'] .badge,
+html[data-ui='liquid'] .el-badge,
+html[data-ui='liquid'] .chip {
   border: none;
+  border-radius: var(--radius-pill);
   background: var(--lq-surface-thick);
   box-shadow: var(--lq-edge);
 }
@@ -245,21 +345,24 @@ html[data-ui='liquid'] .badge-accent {
   background: color-mix(in srgb, var(--accent) 22%, transparent);
   color: var(--accent);
 }
+html[data-ui='liquid'] .tier-badge {
+  border-radius: 8px;
+}
 
 /* ===== ツール =========================================================== */
 html[data-ui='liquid'] .tool .tool-result {
   border: none;
   border-radius: var(--radius);
-  background: var(--lq-surface);
-  backdrop-filter: var(--lq-blur);
-  -webkit-backdrop-filter: var(--lq-blur);
+  background: var(--lq-sheen), var(--lq-surface);
+  backdrop-filter: var(--lq-lens);
+  -webkit-backdrop-filter: var(--lq-lens);
   box-shadow: var(--lq-edge), var(--lq-shadow);
 }
 html[data-ui='liquid'] .tool .big {
   color: var(--accent);
 }
 html[data-ui='liquid'] .tool .progress {
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   overflow: hidden;
   background: color-mix(in srgb, var(--text) 10%, transparent);
 }
@@ -268,10 +371,10 @@ html[data-ui='liquid'] .tool .progress > span {
   box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 40%, transparent);
 }
 
-/* ===== サイドバー / 下部ナビ =========================================== */
+/* ===== サイドバー / 下部ナビ / ドロワー =============================== */
 html[data-ui='liquid'] .sidebar .nav-link,
 html[data-ui='liquid'] .drawer-panel .nav-link {
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
 }
 html[data-ui='liquid'] .nav-link[aria-current='page'],
 html[data-ui='liquid'] .nav-link.is-active {
@@ -281,8 +384,10 @@ html[data-ui='liquid'] .nav-link.is-active {
 }
 html[data-ui='liquid'] .drawer-panel {
   background: var(--lq-surface-thick);
-  backdrop-filter: var(--lq-blur);
-  -webkit-backdrop-filter: var(--lq-blur);
+  backdrop-filter: var(--lq-lens);
+  -webkit-backdrop-filter: var(--lq-lens);
+  border-right: none;
+  box-shadow: var(--lq-edge), var(--lq-shadow-lg);
 }
 @media (max-width: 959px) {
   html[data-ui='liquid'] .bottom-nav {
@@ -292,10 +397,10 @@ html[data-ui='liquid'] .drawer-panel {
     height: 62px;
     padding-bottom: 0;
     border: none;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: var(--lq-surface);
-    backdrop-filter: var(--lq-blur);
-    -webkit-backdrop-filter: var(--lq-blur);
+    backdrop-filter: var(--lq-lens);
+    -webkit-backdrop-filter: var(--lq-lens);
     box-shadow: var(--lq-edge), var(--lq-shadow-lg);
   }
   html[data-ui='liquid'] .bottom-nav a[aria-current='page'] {
@@ -303,52 +408,51 @@ html[data-ui='liquid'] .drawer-panel {
   }
 }
 
-/* ===== 設定・検索 ======================================================= */
+/* ===== 設定・検索・トースト ============================================ */
+html[data-ui='liquid'] .avatar {
+  box-shadow: var(--lq-edge);
+}
+html[data-ui='liquid'] .ui-switch-opt,
+html[data-ui='liquid'] .theme-opt {
+  border: none;
+  background: var(--lq-surface-thick);
+  backdrop-filter: var(--lq-blur);
+  -webkit-backdrop-filter: var(--lq-blur);
+  box-shadow: var(--lq-edge);
+}
 html[data-ui='liquid'] .ui-switch-opt.is-active,
 html[data-ui='liquid'] .theme-opt.is-active {
   border-color: transparent;
   box-shadow: var(--lq-edge), 0 0 0 2px var(--accent);
 }
-html[data-ui='liquid'] .pagefind-ui input {
-  border-radius: 999px !important;
-}
-
-/* ===== モーション抑制 =================================================== */
-@media (prefers-reduced-motion: reduce) {
-  html[data-ui='liquid'] .card-link:hover,
-  html[data-ui='liquid'] .stat:hover,
-  html[data-ui='liquid'] .btn:hover,
-  html[data-ui='liquid'] .btn:active {
-    transform: none;
-  }
-}
-
-/* ===== v0.6.3 特徴強化: より厚いガラス＋走る光沢 ===== */
-html[data-ui='liquid'] {
-  --lq-blur: saturate(205%) blur(30px);
-  --radius: 26px;
-  --radius-sm: 16px;
-  --radius-lg: 34px;
-}
-html[data-ui='liquid'] .app-footer {
+html[data-ui='liquid'] .filterbar .chip {
+  border: none;
+  border-radius: var(--radius-pill);
   background: var(--lq-surface);
   backdrop-filter: var(--lq-blur);
   -webkit-backdrop-filter: var(--lq-blur);
-  border-top: none;
+  box-shadow: var(--lq-edge);
 }
-/* カード上端のスペキュラ（白い艶） */
-html[data-ui='liquid'] .card-link {
-  position: relative;
-  overflow: hidden;
+html[data-ui='liquid'] .filterbar .chip.is-on {
+  background: var(--lq-surface-thick);
+  color: var(--accent);
 }
-html[data-ui='liquid'] .card-link::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22), transparent 42%);
-  pointer-events: none;
+html[data-ui='liquid'] .toast {
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--lq-surface-thick);
+  backdrop-filter: var(--lq-blur);
+  -webkit-backdrop-filter: var(--lq-blur);
+  box-shadow: var(--lq-edge), var(--lq-shadow);
 }
+html[data-ui='liquid'] .empty {
+  border-radius: var(--radius);
+}
+html[data-ui='liquid'] .pagefind-ui input {
+  border-radius: var(--radius-pill) !important;
+}
+
+/* ===== ホバー時に走る光沢（モーション許可時のみ） ===================== */
 @media (prefers-reduced-motion: no-preference) {
   html[data-ui='liquid'] .card-link::before {
     content: '';
@@ -366,136 +470,29 @@ html[data-ui='liquid'] .card-link::after {
     left: 130%;
   }
 }
-html[data-ui='liquid'] .page-head h1,
-html[data-ui='liquid'] .hero h1 {
-  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
-}
-html[data-ui='liquid'] .badge,
-html[data-ui='liquid'] .el-badge,
-html[data-ui='liquid'] .chip {
-  border-radius: 999px;
-}
 
-/* ===== v0.6.3 さらにガラス感強化（iPhone Liquid Glass 級の透け感） ===== */
-html[data-ui='liquid'] {
-  /* クローム(ヘッダー/ナビ/ボタン/バッジ)はより透明に、カードは可読性を保ちつつ透ける */
-  --lq-surface: color-mix(in srgb, var(--surface) 42%, transparent);
-  --lq-surface-thick: color-mix(in srgb, var(--surface) 66%, transparent);
-  --lq-blur: saturate(200%) blur(40px);
-  /* レンズのような明暗の縁（上=ハイライト/下=陰）で“厚み”を表現 */
-  --lq-edge:
-    inset 0 1px 0 color-mix(in srgb, #fff 60%, transparent),
-    inset 0 -1.5px 2px color-mix(in srgb, #000 14%, transparent),
-    inset 0 0 0 1px color-mix(in srgb, #fff 22%, transparent);
-}
-/* 壁紙をより鮮やかに → ガラス越しの透け（屈折）が際立つ */
-html[data-ui='liquid'] body {
-  background:
-    radial-gradient(1000px 700px at 88% -8%, color-mix(in srgb, var(--accent) 28%, transparent), transparent 60%),
-    radial-gradient(900px 640px at -8% 24%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 58%),
-    radial-gradient(820px 580px at 62% 112%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 60%),
-    var(--bg);
-  background-attachment: fixed;
-}
-/* サイドバーもガラス板に（透けて背後が見える） */
-@media (min-width: 960px) {
-  html[data-ui='liquid'] .sidebar {
-    background: var(--lq-surface);
-    backdrop-filter: var(--lq-blur);
-    -webkit-backdrop-filter: var(--lq-blur);
-    box-shadow: var(--lq-edge);
-    border-radius: var(--radius-lg);
-    padding: 16px 10px;
+/* ===== モーション抑制（OS設定 or サイト側トグル data-motion=reduce） ==== */
+@media (prefers-reduced-motion: reduce) {
+  html[data-ui='liquid'] .card-link:hover,
+  html[data-ui='liquid'] .stat:hover,
+  html[data-ui='liquid'] .btn:hover,
+  html[data-ui='liquid'] .btn:active {
+    transform: none;
+  }
+  /* 屈折レンズは負荷・揺らぎを避けるため通常ブラーに落とす */
+  html[data-ui='liquid'] {
+    --lq-lens: var(--lq-blur-chrome);
   }
 }
-/* 下部ナビ・ドロワーもより透明＋強ブラー */
-html[data-ui='liquid'] .bottom-nav,
-html[data-ui='liquid'] .drawer-panel {
-  background: var(--lq-surface);
-  backdrop-filter: var(--lq-blur);
-  -webkit-backdrop-filter: var(--lq-blur);
+html[data-ui='liquid'][data-motion='reduce'] .card-link:hover,
+html[data-ui='liquid'][data-motion='reduce'] .stat:hover,
+html[data-ui='liquid'][data-motion='reduce'] .btn:hover,
+html[data-ui='liquid'][data-motion='reduce'] .btn:active {
+  transform: none;
 }
-
-/* ===== v0.6.5 大幅強化: 屈折する厚いリキッドグラス ===== */
-html[data-ui='liquid'] {
-  --radius: 28px;
-  --radius-sm: 18px;
-  --radius-lg: 36px;
-  --lq-surface: color-mix(in srgb, var(--surface) 38%, transparent);
-  --lq-surface-thick: color-mix(in srgb, var(--surface) 66%, transparent);
-  --lq-blur: saturate(210%) blur(44px);
-  /* 上=強ハイライト / 下=陰 / 内周=淡い光 → レンズの厚みと屈折 */
-  --lq-edge:
-    inset 0 1.5px 0 color-mix(in srgb, #fff 65%, transparent),
-    inset 0 -2px 3px color-mix(in srgb, #000 16%, transparent),
-    inset 0 0 0 1px color-mix(in srgb, #fff 24%, transparent),
-    inset 0 0 26px color-mix(in srgb, #fff 6%, transparent);
+html[data-ui='liquid'][data-motion='reduce'] {
+  --lq-lens: var(--lq-blur-chrome);
 }
-/* 壁紙をさらに鮮やかな3色メッシュに（ガラス越しの屈折を強調） */
-html[data-ui='liquid'] body {
-  background:
-    radial-gradient(1100px 760px at 86% -10%, color-mix(in srgb, var(--accent) 34%, transparent), transparent 58%),
-    radial-gradient(980px 700px at -10% 22%, color-mix(in srgb, #a855f7 24%, transparent), transparent 56%),
-    radial-gradient(900px 640px at 64% 114%, color-mix(in srgb, #22d3ee 22%, transparent), transparent 60%),
-    var(--bg);
-  background-attachment: fixed;
-}
-/* 注: 以前ここにヘッダー横断の光沢(overflow:hidden が必要)を入れていたが、
-   テーマメニューのドロップダウンを切り取ってしまうため撤去した。 */
-
-/* ===== v0.6.5b (A) 常に色が透けるリキッドガラス（壁紙を全面化＋縁の光） ===== */
-html[data-ui='liquid'] {
-  /* 縁の光をさらに一段強く */
-  --lq-edge:
-    inset 0 1.5px 0 color-mix(in srgb, #fff 72%, transparent),
-    inset 0 -2px 3px color-mix(in srgb, #000 18%, transparent),
-    inset 0 0 0 1px color-mix(in srgb, #fff 28%, transparent),
-    inset 0 0 28px color-mix(in srgb, #fff 7%, transparent);
-}
-/* 画面中央にも届く大きな色面を足し、薄味ページでも常に透ける */
-html[data-ui='liquid'] body {
-  background:
-    radial-gradient(150% 130% at 50% -25%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 72%),
-    radial-gradient(1100px 820px at 88% -10%, color-mix(in srgb, var(--accent) 38%, transparent), transparent 60%),
-    radial-gradient(1000px 780px at -10% 22%, color-mix(in srgb, #a855f7 30%, transparent), transparent 58%),
-    radial-gradient(980px 740px at 64% 118%, color-mix(in srgb, #22d3ee 28%, transparent), transparent 62%),
-    var(--bg);
-  background-attachment: fixed;
-}
-/* パネル類の上面に屈折ハイライト（カードは ::after 側を強化） */
-html[data-ui='liquid'] .info-panel,
-html[data-ui='liquid'] .tool .tool-result,
-html[data-ui='liquid'] .stat,
-html[data-ui='liquid'] .hero {
-  background-image: linear-gradient(180deg, color-mix(in srgb, #fff 18%, transparent), transparent 34%);
-}
-html[data-ui='liquid'] .card-link::after {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 44%);
-}
-
-/* ===== v0.6.5c コールアウトもガラスに ===== */
-html[data-ui='liquid'] .callout {
-  border: none;
-  background: var(--lq-surface-thick);
-  backdrop-filter: var(--lq-blur);
-  -webkit-backdrop-filter: var(--lq-blur);
-  box-shadow: var(--lq-edge);
-}
-
-/* ===== v0.6.6 統一: ガラスで揃える ===== */
-html[data-ui='liquid'] .spoiler { border: none; background: var(--lq-surface-thick); backdrop-filter: var(--lq-blur); -webkit-backdrop-filter: var(--lq-blur); box-shadow: var(--lq-edge); }
-html[data-ui='liquid'] .filterbar .chip { border: none; border-radius: 999px; background: var(--lq-surface); backdrop-filter: var(--lq-blur); -webkit-backdrop-filter: var(--lq-blur); box-shadow: var(--lq-edge); }
-html[data-ui='liquid'] .filterbar .chip.is-on { background: var(--lq-surface-thick); color: var(--accent); }
-html[data-ui='liquid'] .figure img { border: none; border-radius: var(--radius-sm); box-shadow: var(--lq-edge); }
-html[data-ui='liquid'] .drawer-panel { border-right: none; box-shadow: var(--lq-edge), var(--lq-shadow-lg); }
-html[data-ui='liquid'] .empty { border-radius: var(--radius); }
-
-/* ===== v0.6.7 全体見直し ===== */
-html[data-ui='liquid'] .avatar { box-shadow: var(--lq-edge); }
-html[data-ui='liquid'] .ui-switch-opt, html[data-ui='liquid'] .theme-opt { border: none; background: var(--lq-surface-thick); backdrop-filter: var(--lq-blur); -webkit-backdrop-filter: var(--lq-blur); box-shadow: var(--lq-edge); }
-html[data-ui='liquid'] .ui-switch-opt.is-active, html[data-ui='liquid'] .theme-opt.is-active { box-shadow: var(--lq-edge), 0 0 0 2px var(--accent); }
-html[data-ui='liquid'] .toast { border: none; border-radius: var(--radius-sm); background: var(--lq-surface-thick); backdrop-filter: var(--lq-blur); -webkit-backdrop-filter: var(--lq-blur); box-shadow: var(--lq-edge), var(--lq-shadow); }
-html[data-ui='liquid'] .tier-badge { border-radius: 8px; }
 
 /* ===== 品質: backdrop-filter 非対応環境では不透明にして可読性を担保 ===== */
 @supports not ((backdrop-filter: blur(2px)) or (-webkit-backdrop-filter: blur(2px))) {
@@ -504,6 +501,7 @@ html[data-ui='liquid'] .tier-badge { border-radius: 8px; }
     --lq-surface-thick: var(--surface);
   }
 }
+
 /* フォーカスリング（ガラス上でも視認できるアクセント輪） */
 html[data-ui='liquid'] :focus-visible {
   outline: 2px solid var(--accent);
