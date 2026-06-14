@@ -346,10 +346,42 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
         }
       });
 
+      // 視覚強化: トップ統計のカウントアップ（classic 除外・reduced-motion 尊重）。
+      function motionOff() {
+        return (
+          document.documentElement.dataset.motion === 'reduce' ||
+          window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        );
+      }
+      function animateCounters() {
+        if (document.documentElement.dataset.ui === 'classic' || motionOff()) return;
+        document.querySelectorAll('.stat-num').forEach((node) => {
+          const el = node as HTMLElement;
+          if (el.dataset.counted) return;
+          const m = (el.textContent || '').match(/^(\d[\d,]*)(.*)$/);
+          if (!m) return;
+          const target = parseInt(m[1].replace(/,/g, ''), 10);
+          const suffix = m[2] || '';
+          if (!Number.isFinite(target) || target <= 0) return;
+          el.dataset.counted = '1';
+          const dur = 700;
+          const start = performance.now();
+          const step = (now: number) => {
+            const p = Math.min(1, (now - start) / dur);
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.round(target * eased) + suffix;
+            if (p < 1) requestAnimationFrame(step);
+            else el.textContent = target + suffix;
+          };
+          requestAnimationFrame(step);
+        });
+      }
+
       document.addEventListener('astro:page-load', () => {
         setDrawer(false);
         closeSearch();
         syncActiveNav();
+        animateCounters();
       });
     </script>
 
