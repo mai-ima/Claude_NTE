@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { THEMES, getStoredTheme, setTheme, applyTheme, type Theme } from '../lib/theme';
 import { getStoredUI, setUI, applyUI, UI_MODES, type UIMode } from '../lib/ui';
+import { PREFS, getPref, setPref } from '../lib/prefs';
 import { exportAll, importAll, clearAll } from '../lib/store';
 
 type Msg = { kind: 'ok' | 'err'; text: string } | null;
@@ -9,6 +10,7 @@ type Msg = { kind: 'ok' | 'err'; text: string } | null;
 export default function SettingsPanel() {
   const [theme, setThemeState] = useState<Theme>('minimal');
   const [ui, setUIState] = useState<UIMode>('classic');
+  const [prefs, setPrefsState] = useState<Record<string, boolean>>({});
   const [msg, setMsg] = useState<Msg>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const flashTimer = useRef<number | undefined>(undefined);
@@ -16,10 +18,17 @@ export default function SettingsPanel() {
   useEffect(() => {
     setThemeState(getStoredTheme());
     setUIState(getStoredUI());
+    setPrefsState(Object.fromEntries(PREFS.map((p) => [p.key, getPref(p.key)])));
     return () => {
       if (flashTimer.current !== undefined) window.clearTimeout(flashTimer.current);
     };
   }, []);
+
+  function togglePref(key: string) {
+    const next = !prefs[key];
+    setPref(key, next);
+    setPrefsState((s) => ({ ...s, [key]: next }));
+  }
 
   function flash(kind: 'ok' | 'err', text: string) {
     if (flashTimer.current !== undefined) window.clearTimeout(flashTimer.current);
@@ -71,7 +80,7 @@ export default function SettingsPanel() {
   }
 
   function doClear() {
-    if (!confirm('メモ・ツール・個人メモなど、この端末に保存したデータをすべて削除します。よろしいですか？（テーマ・UI設定は残ります）')) {
+    if (!confirm('メモ・ツール・個人メモなど、この端末に保存したデータをすべて削除します。よろしいですか？（テーマ・UI・表示設定は残ります）')) {
       return;
     }
     const n = clearAll();
@@ -142,6 +151,39 @@ export default function SettingsPanel() {
             </label>
           ))}
         </div>
+      </section>
+
+      {/* 表示の追加設定（ベータ） */}
+      <section class="card card-pad setting-card">
+        <h2 class="mt-0">
+          表示の調整 <span class="beta-pill">BETA</span>
+        </h2>
+        <p class="muted text-sm">
+          読みやすさ・アクセシビリティのための切り替え。配色テーマや新UIとは別に、全ページへ反映されます。
+        </p>
+        <div class="pref-list" style={{ marginTop: '12px' }}>
+          {PREFS.map((p) => (
+            <label key={p.key} class="pref-row">
+              <span class="pref-text">
+                <span class="pref-title">{p.label}</span>
+                <span class="muted text-sm">{p.hint}</span>
+              </span>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={prefs[p.key] ? 'true' : 'false'}
+                aria-label={p.label}
+                class={`pref-switch ${prefs[p.key] ? 'is-on' : ''}`}
+                onClick={() => togglePref(p.key)}
+              >
+                <span class="pref-knob" aria-hidden="true" />
+              </button>
+            </label>
+          ))}
+        </div>
+        <p class="hint" style={{ marginTop: '10px' }}>
+          設定はこの端末に保存され、バックアップ（書き出し）にも含まれます。
+        </p>
       </section>
 
       {/* データ */}

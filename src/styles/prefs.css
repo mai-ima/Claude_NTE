@@ -1,0 +1,49 @@
+/* =========================================================================
+   表示の追加設定（ベータ）。<html> の data-* 属性で全UI共通に効く軽量トグル。
+   src/lib/prefs.ts と設定パネルから付与される。classic 含め全モードに適用。
+   読み込み順は ui-*.css より後（BaseLayout の最後）なので、同特異度なら本ファイルが勝つ。
+   ========================================================================= */
+
+/* ----- モーション軽減（OSの prefers-reduced-motion と同等の挙動をサイト側でも） ----- */
+html[data-motion='reduce'] *,
+html[data-motion='reduce'] *::before,
+html[data-motion='reduce'] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+html[data-motion='reduce'] {
+  scroll-behavior: auto !important;
+}
+
+/* ----- 用語の自動リンクを無効化（ふつうの文章に見せ、誤タップも防ぐ） ----- */
+html[data-autoterm='off'] .prose a.auto-term {
+  color: inherit !important;
+  text-decoration: none !important;
+  background: none !important;
+  border-bottom: 0 !important;
+  cursor: text;
+  pointer-events: none;
+}
+
+/* ----- ネタバレを既定で開く（閉じた <details.spoiler> の中身を表示） ----- */
+html[data-spoiler='open'] details.spoiler:not([open]) > *:not(summary) {
+  display: revert !important;
+}
+html[data-spoiler='open'] details.spoiler:not([open]) > summary {
+  /* 開閉は引き続き可能。マーカーは閉じた見た目のままにして手動で畳めるようにする */
+  opacity: 0.85;
+}
+
+/* ----- 本文を広く表示 ----- */
+html[data-width='wide'] .prose {
+  max-width: 92ch;
+}
+
+/* ----- 未検証（要確認）を強調 ----- */
+html[data-draftmark='on'] .badge-draft {
+  outline: 2px solid color-mix(in srgb, #d97706 70%, transparent);
+  outline-offset: 1px;
+  font-weight: 700;
+  box-shadow: 0 0 0 3px color-mix(in srgb, #d97706 18%, transparent);
+}

@@ -9,6 +9,7 @@ import '../styles/ui-apple.css';
 import '../styles/ui-terminal.css';
 import '../styles/ui-clay.css';
 import '../styles/ui-blueprint.css';
+import '../styles/prefs.css';
 import { Icon } from 'astro-icon/components';
 import { withBase, activeHref } from '../lib/path';
 import { PRIMARY_NAV, BOTTOM_NAV } from '../lib/nav';
@@ -138,6 +139,19 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
           var uiValid = ['classic', 'editorial', 'liquid', 'aurora', 'apple', 'terminal', 'clay', 'blueprint'];
           if (uiValid.indexOf(ui) === -1) ui = 'classic';
           document.documentElement.setAttribute('data-ui', ui);
+          // 表示の追加設定（ベータ）。src/lib/prefs.ts の PREFS と並びを揃えること。
+          var prefs = [
+            ['nte.motion', 'motion', 'reduce'],
+            ['nte.autoterm', 'autoterm', 'off'],
+            ['nte.spoiler', 'spoiler', 'open'],
+            ['nte.width', 'width', 'wide'],
+            ['nte.draftmark', 'draftmark', 'on'],
+          ];
+          for (var i = 0; i < prefs.length; i++) {
+            if (localStorage.getItem(prefs[i][0]) === '1') {
+              document.documentElement.setAttribute('data-' + prefs[i][1], prefs[i][2]);
+            }
+          }
         } catch (e) {}
       })();
     </script>

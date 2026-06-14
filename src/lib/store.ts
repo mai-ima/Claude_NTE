@@ -111,13 +111,25 @@ export function importAll(json: string): ImportResult {
   return { ok: true, imported };
 }
 
-/** nte.* を全消去（テーマ設定は保持） */
+/** 初期化しても残す「設定」キー（テーマ・UIモード・表示の追加設定）。
+ *  メモ/ツール等の「データ」だけを消し、表示の好みは保持する。 */
+const KEEP_ON_CLEAR = new Set([
+  'nte.theme',
+  'nte.ui',
+  'nte.motion',
+  'nte.autoterm',
+  'nte.spoiler',
+  'nte.width',
+  'nte.draftmark',
+]);
+
+/** nte.* のデータを全消去（テーマ・UI・表示設定は保持） */
 export function clearAll(): number {
   const toRemove: string[] = [];
   try {
     for (let i = 0; i < localStorage.length; i++) {
       const k = localStorage.key(i);
-      if (k && k.startsWith(STORE_PREFIX) && k !== 'nte.theme') toRemove.push(k);
+      if (k && k.startsWith(STORE_PREFIX) && !KEEP_ON_CLEAR.has(k)) toRemove.push(k);
     }
     toRemove.forEach((k) => localStorage.removeItem(k));
   } catch {
