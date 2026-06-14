@@ -1,6 +1,7 @@
 /**
  * UIモード（ベータ機能）の定義と適用ロジック。
  * - 'classic'  : 従来のUI（既定）
+ * - 'new-classic': 従来UIを近代化した非ベータの新デザイン
  * - 'editorial': 紙の特集記事風（太罫線・ハードシャドウ・活字タイポ）
  * - 'liquid'   : 本格リキッドグラス（厚い曇りガラス・カプセル形状）
  * - 'aurora'   : 不透明×ネオングラデーション＋発光（ガラスでない）
@@ -10,6 +11,7 @@
 
 export type UIMode =
   | 'classic'
+  | 'new-classic'
   | 'editorial'
   | 'liquid'
   | 'aurora'
@@ -23,6 +25,7 @@ const DEFAULT_UI: UIMode = 'classic';
 
 export const UI_MODES: { value: UIMode; label: string; hint: string; beta: boolean }[] = [
   { value: 'classic', label: '従来UI', hint: 'これまでのシンプルな表示', beta: false },
+  { value: 'new-classic', label: 'New Classic', hint: '従来UIを近代化した非ベータの新デザイン（洗練タイポ・やわらか影）', beta: false },
   { value: 'editorial', label: 'Editorial', hint: '紙の特集記事風。太い罫線とハードシャドウ', beta: true },
   { value: 'liquid', label: 'Liquid Glass', hint: '本格リキッドグラス。厚い曇りガラスとカプセル', beta: true },
   { value: 'aurora', label: 'Aurora Neon', hint: '不透明×ネオングラデーションと発光（ガラスではない）', beta: true },

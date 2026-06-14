@@ -2,6 +2,7 @@
 import '../styles/themes.css';
 import '../styles/base.css';
 import '../styles/components.css';
+import '../styles/ui-new-classic.css';
 import '../styles/ui-editorial.css';
 import '../styles/ui-liquid.css';
 import '../styles/ui-aurora.css';
@@ -136,7 +137,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
           if (meta && color) meta.setAttribute('content', color);
           var ui = localStorage.getItem('nte.ui');
           if (ui === 'beta') ui = 'editorial'; // 旧ベータからの移行
-          var uiValid = ['classic', 'editorial', 'liquid', 'aurora', 'apple', 'terminal', 'clay', 'blueprint'];
+          var uiValid = ['classic', 'new-classic', 'editorial', 'liquid', 'aurora', 'apple', 'terminal', 'clay', 'blueprint'];
           if (uiValid.indexOf(ui) === -1) ui = 'classic';
           document.documentElement.setAttribute('data-ui', ui);
           // 表示の追加設定（ベータ）。src/lib/prefs.ts の PREFS と並びを揃えること。
