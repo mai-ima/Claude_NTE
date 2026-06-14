@@ -29,7 +29,7 @@ sources:
 ## 使い方・編成
 
 - 攻撃が激しい敵やボスの動きを鈍らせ、味方のバーストや他反応を安全に通すために使う。守りを固めたい高難度戦で価値が高い。
-- 相は[ハソール](/characters/hathor/)・[カオス](/characters/chaos/)・[スキア](/characters/skia/)、光は[零](/characters/zero/)・[ちぃちゃん](/characters/chiz/)・[エドガー](/characters/edgar/)などが該当。
+- 相は[ハソール](/characters/hathor/)・[カオス](/characters/chaos/)・[翳（えい）](/characters/skia/)、光は[零](/characters/zero/)・[ちぃちゃん](/characters/chiz/)・[エドガー](/characters/edgar/)などが該当。
 - 同じ相が絡む[浸染](/terms/reaction-stain/)（被ダメージ増加）と合わせて、支援軸の編成として組みやすい。3属性が絡めば[充蓄／失諧](/terms/charge-discord/)のトリオ反応にも発展する。
 
 ## 注意点

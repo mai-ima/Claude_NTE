@@ -32,8 +32,8 @@ sources:
 ## おすすめ編成
 
 - **延滞（相＋光）**: 光属性（[零](/characters/zero/)・[ちぃちゃん](/characters/chiz/)・[エドガー](/characters/edgar/)）と組み、敵をマーク・鈍化して制圧。
-- **浸染（魂＋相）**: 魂属性（[ファルディーヤ](/characters/fadia/)・[ハニア](/characters/haniel/)・[アウレリア](/characters/aurelia/)）と組み、被ダメージ増加で味方全体の火力を底上げ。
-- 同じ相属性の[スキア](/characters/skia/)・[カオス](/characters/chaos/)とは反応の相方を共有でき、組み合わせの幅が広い。
+- **浸染（魂＋相）**: 魂属性（[ファルディーヤ](/characters/fadia/)・[ハニア](/characters/haniel/)・[海月（みつき）](/characters/aurelia/)）と組み、被ダメージ増加で味方全体の火力を底上げ。
+- 同じ相属性の[翳（えい）](/characters/skia/)・[カオス](/characters/chaos/)とは反応の相方を共有でき、組み合わせの幅が広い。
 
 ## 入手
 

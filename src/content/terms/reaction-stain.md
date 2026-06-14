@@ -29,7 +29,7 @@ sources:
 ## 使い方・編成
 
 - バースト前に浸染を入れておくと、続く大技や他反応のダメージが伸びる。火力役のアルティメットと合わせて使うと効率的。
-- 魂は[ファルディーヤ](/characters/fadia/)・[ハニア](/characters/haniel/)・[アウレリア](/characters/aurelia/)、相は[ハソール](/characters/hathor/)・[カオス](/characters/chaos/)・[スキア](/characters/skia/)などが該当。
+- 魂は[ファルディーヤ](/characters/fadia/)・[ハニア](/characters/haniel/)・[海月（みつき）](/characters/aurelia/)、相は[ハソール](/characters/hathor/)・[カオス](/characters/chaos/)・[翳（えい）](/characters/skia/)などが該当。
 - 同じ相が絡む[延滞](/terms/reaction-remora/)（妨害）と役割が近く、支援として編成へ組み込みやすい。3属性が絡めば[充蓄／失諧](/terms/charge-discord/)のトリオ反応にも発展する。
 
 ## 注意点

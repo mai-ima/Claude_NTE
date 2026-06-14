@@ -1,6 +1,6 @@
 ---
 name: "Aurelia"
-nameJa: "アウレリア"
+nameJa: "海月（みつき）"
 rarity: "A"
 element: "Psyche"
 role: "DPS"
@@ -8,22 +8,22 @@ weapon: "弧盤: プラズマ"
 faction: "—"
 version: "v1.0"
 tier: "A"
-description: "魂（Psyche）属性のメインアタッカー（A級）。海月（クラゲ）を操り「ジェリーフィッシュ・ブラスト」で戦う、移動射撃が得意なキャラ。"
+description: "魂（Psyche）属性のメインアタッカー（A級）。海月（クラゲ）を操り「ジェリーフィッシュ・ブラスト」で戦う、移動射撃が得意なキャラ。日本版公式名は「海月（みつき）」（英名 Aurelia）。"
 status: "verified"
-updated: 2026-06-11
-tags: ["魂", "Psyche", "DPS", "Aランク", "配布"]
+updated: 2026-06-14
+tags: ["魂", "Psyche", "DPS", "Aランク", "配布", "海月", "みつき", "アウレリア"]
 sources:
-  - label: "Game8 — Aurelia Best Build and Arcs（英語）"
-    url: "https://game8.co/games/Neverness-to-Everness/archives/597759"
-  - label: "Prydwen — Aurelia Guide（英語）"
-    url: "https://www.prydwen.gg/neverness-to-everness/characters/aurelia"
-  - label: "NTE Wiki（日本語）— アウレリア（海月）ビルドガイド"
-    url: "https://ntewiki.org/ja/blog/aurelia-build-guide-2026/"
+  - label: "ゲームウィズ — 海月(みつき)の評価とおすすめ編成・武器"
+    url: "https://gamewith.jp/nte/557062"
+  - label: "神ゲー攻略 — 海月（みつき）の評価とおすすめビルド"
+    url: "https://kamigame.jp/nte/page/420126527728917732.html"
+  - label: "ゲームエイト — 海月（みつき）の評価とおすすめ編成"
+    url: "https://game8.jp/nte/782341"
 ---
 
 ## 概要
 
-**アウレリア（英名 Aurelia）** は **魂（Psyche）属性のメインDPS（A級）**。海月（クラゲ）を操り、**「ジェリーフィッシュ・ブラスト」**を放って戦う。**回避ホールドで移動しながら攻撃**できるため、敵と距離を取りつつ継続的にダメージを出せるのが強み。
+**海月（みつき／英名 Aurelia）** は **魂（Psyche）属性のメインDPS（A級）**。日本版は「海月（クラゲ）」の漢字表記、海外版はミズクラゲの学名 Aurelia に由来する。海月を操り、**「ジェリーフィッシュ・ブラスト」**を放って戦う。**回避ホールドで移動しながら攻撃**できるため、敵と距離を取りつつ継続的にダメージを出せるのが強み。
 
 ## 性能・評価
 

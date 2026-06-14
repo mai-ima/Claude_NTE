@@ -29,7 +29,7 @@ sources:
 ## 使い方・編成
 
 - 爆発の瞬間に[ブレイク](/terms/break/)や大技を合わせるとバーストが伸びる。遅延を逆手に取り、火力を一点へ集約する。
-- 闇は[レクイエム](/characters/lacrimosa/)・[ダフォディール](/characters/daffodill/)、魂は[ファルディーヤ](/characters/fadia/)・[ハニア](/characters/haniel/)・[アウレリア](/characters/aurelia/)などが該当。
+- 闇は[レクイエム](/characters/lacrimosa/)・[ダフォディール](/characters/daffodill/)、魂は[ファルディーヤ](/characters/fadia/)・[ハニア](/characters/haniel/)・[海月（みつき）](/characters/aurelia/)などが該当。
 - 敵のブレイク値を削る失諧（Discord）系とも噛み合う。3属性が絡めば[充蓄／失諧](/terms/charge-discord/)のトリオ反応にも発展する。
 
 ## 注意点

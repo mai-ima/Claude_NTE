@@ -1,6 +1,6 @@
 ---
 name: "Skia"
-nameJa: "スキア"
+nameJa: "翳（えい）"
 rarity: "A"
 element: "Lakshana"
 role: "DPS"
@@ -8,22 +8,22 @@ weapon: "弧盤: 気体"
 faction: "—"
 version: "v1.0"
 tier: "A"
-description: "相（Lakshana）属性のサブDPS／デバッファー（A級）。影を操り、格闘で追撃を重ねて戦う。"
+description: "相（Lakshana）属性のサブDPS／デバッファー（A級）。影を操り、格闘で追撃を重ねて戦う。日本版公式名は「翳（えい）」（英名 Skia）。"
 status: "verified"
-updated: 2026-06-11
-tags: ["相", "Lakshana", "DPS", "デバッファー", "Aランク"]
+updated: 2026-06-14
+tags: ["相", "Lakshana", "DPS", "デバッファー", "Aランク", "翳", "えい", "スキア"]
 sources:
-  - label: "Game8 — Skia Best Build and Arcs（英語）"
-    url: "https://game8.co/games/Neverness-to-Everness/archives/597810"
-  - label: "Dexerto — Skia A-Tier Lakshana Build（英語）"
-    url: "https://www.dexerto.com/wikis/neverness-to-everness/characters/skia/"
-  - label: "Prydwen — Skia Guide（英語）"
-    url: "https://www.prydwen.gg/neverness-to-everness/characters/skia"
+  - label: "ゲームウィズ — 翳(えい)の評価とおすすめ編成・武器"
+    url: "https://gamewith.jp/nte/555735"
+  - label: "神ゲー攻略 — 翳（えい）の評価とおすすめビルド・パーティ編成"
+    url: "https://kamigame.jp/nte/page/420125605686705637.html"
+  - label: "ゲームエイト — 翳（えい）の評価とおすすめ編成"
+    url: "https://game8.jp/nte/782346"
 ---
 
 ## 概要
 
-**スキア（英名 Skia）** は **相（Lakshana）属性のサブDPS／デバッファー（A級）**。**影を操り**、執拗な格闘の追撃で敵を追い詰めるトリッキーなアタッカー。
+**翳（えい／英名 Skia）** は **相（Lakshana）属性のサブDPS／デバッファー（A級）**。**影を操り**、執拗な格闘の追撃で敵を追い詰めるトリッキーなアタッカー。
 
 ## 性能・評価
 

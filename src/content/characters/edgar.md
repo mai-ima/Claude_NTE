@@ -34,7 +34,7 @@ sources:
 ## おすすめ編成
 
 - **光アタッカーの継戦**: [零](/characters/zero/)・[ちぃちゃん](/characters/chiz/)などの光主力と組み、被弾の多い高難度で生存を担保。
-- **反応の橋渡し**: 光属性なので、霊（[ナナリ](/characters/nanally/)・[ミント](/characters/mint/)）と**創生**、相（[ハソール](/characters/hathor/)・[スキア](/characters/skia/)）と**延滞**の起点を兼ねられる。
+- **反応の橋渡し**: 光属性なので、霊（[ナナリ](/characters/nanally/)・[ミント](/characters/mint/)）と**創生**、相（[ハソール](/characters/hathor/)・[翳（えい）](/characters/skia/)）と**延滞**の起点を兼ねられる。
 - アタッカー2＋エドガー＋もう1枚の支援/反応役、という構成が組みやすい。
 
 ## 入手
