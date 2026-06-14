@@ -1,0 +1,46 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../lib/path';
+import { publishedEntries, titleOf, hrefOf } from '../../lib/content';
+import CharacterCompare from '../../components/tools/CharacterCompare';
+
+const chars = await publishedEntries('characters');
+const data = chars.map((c: any) => ({
+  id: c.id,
+  name: titleOf(c),
+  element: c.data.element,
+  rarity: c.data.rarity,
+  role: c.data.role,
+  tier: c.data.tier,
+  weapon: c.data.weapon,
+  version: c.data.version,
+  cv: c.data.cv,
+  href: hrefOf('characters', c.id),
+}));
+---
+
+<BaseLayout
+  title="キャラ比較"
+  description="NTEのキャラクターを2〜4体まで横並びで比較。属性・ロール・ティア・武器・声優や、選択キャラ同士の連環反応を確認できます。"
+>
+  <div class="layout">
+    <div class="content" style="max-width:920px;margin:0 auto;">
+      <nav class="text-sm muted cluster" style="margin-bottom:16px;" aria-label="パンくず">
+        <a href={withBase('/tools/')}>ツール</a>
+        <Icon name="lucide:chevron-right" style="width:14px;height:14px;" />
+        <span>キャラ比較</span>
+      </nav>
+      <section class="page-head">
+        <div class="row" style="gap:10px;">
+          <Icon name="lucide:columns-3" style="width:26px;height:26px;color:var(--accent);" />
+          <h1 style="margin:0;">キャラ比較</h1>
+        </div>
+        <p class="lead" style="margin-top:8px;">
+          2〜4体を選んで横並びで比較。属性・ロール・ティア・武器・声優に加え、選択キャラ同士で成立する連環反応も表示します。
+        </p>
+      </section>
+      <CharacterCompare client:only="preact" characters={data} />
+    </div>
+  </div>
+</BaseLayout>

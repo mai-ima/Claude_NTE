@@ -666,6 +666,80 @@
   }
 }
 
+/* ===== キャラ比較 ===== */
+.cmp-pick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.cmp-pick .el-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--el, var(--accent));
+}
+.cmp-scroll {
+  overflow-x: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 360px;
+}
+.cmp-table th,
+.cmp-table td {
+  padding: 10px 12px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+.cmp-table thead th {
+  border-bottom: 2px solid color-mix(in srgb, var(--el, var(--accent)) 60%, var(--border));
+  background: color-mix(in srgb, var(--el, var(--accent)) 8%, var(--surface));
+}
+.cmp-rowhead {
+  text-align: left !important;
+  font-weight: 700;
+  color: var(--muted);
+  background: var(--surface-2);
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  white-space: nowrap;
+}
+.cmp-charhead {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: inherit;
+}
+.cmp-avatar {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  font-weight: 800;
+  color: #fff;
+  background: var(--el, var(--accent));
+  box-shadow: 0 2px 8px -2px var(--el, var(--accent));
+}
+.cmp-charname {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.cmp-table .el-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--el, var(--accent));
+  display: inline-block;
+}
+
 /* ===== イベントタイムライン（ガント） ===== */
 .tl-gantt {
   position: relative;
