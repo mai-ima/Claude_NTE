@@ -171,6 +171,9 @@ const aCount = list.filter((c: any) => c.data.rarity === 'A').length;
     const grid = document.getElementById('char-grid');
     const empty = document.getElementById('char-empty');
     if (!bar || !grid) return;
+    // 同一バー要素への二重バインド防止（堅牢化）。遷移ごとにバーは作り直されるため通常は不要だが安全策。
+    if (bar.dataset.filterBound) return;
+    bar.dataset.filterBound = '1';
     const active = { rarity: new Set<string>(), element: new Set<string>(), role: new Set<string>() };
 
     function apply() {
