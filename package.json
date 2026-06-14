@@ -7,7 +7,10 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:links": "node scripts/check-links.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^6.0.3",
@@ -20,9 +23,10 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
-    "@iconify-json/lucide": "^1.2.111",
+    "@iconify-json/lucide": "^1.2.112",
     "sharp": "^0.35.1",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.8"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
