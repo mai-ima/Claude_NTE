@@ -20,6 +20,11 @@ export default defineConfig({
   trailingSlash: 'always',
   output: 'static',
   build: { format: 'directory' },
+  // 廃統合した旧ツールの URL を統合先へリダイレクト（旧リンク/ブックマーク救済）。
+  redirects: {
+    '/tools/gacha-odds/': '/tools/gacha-dashboard/',
+    '/tools/gacha-budget/': '/tools/gacha-dashboard/',
+  },
   // 本文中の用語を、その用語ページへ自動リンク（Wikipedia風の青リンク化）。
   markdown: { rehypePlugins: [rehypeTermLinks] },
   // 注: Markdown/MDX 内部リンクは「相対リンク」で記述しているため base 付与の
