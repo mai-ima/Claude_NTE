@@ -32,6 +32,10 @@ sources:
 | [魔の書（Black Tome）](/enemies/black-tome/) | [光](/terms/el-cosmos/) |
 | [斑蝶（Swallowtail）](/enemies/swallowtail/) | [霊](/terms/el-anima/) |
 
+## 交通
+
+- 市内の[電車（市内交通）](/terms/city-train/)に**ニューホランド**方面の路線があり、他区と結ばれている。区内の下位地名・駅の正式名称はゲーム内マップで**要確認**（出典が取れ次第追記）。
+
 ## 関連
 
 - 街の勢力・組織の整理は[勢力と組織](/story/factions/)、ボスの早見表は[ボス一覧](/enemies/world-bosses/)を参照。
