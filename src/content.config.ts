@@ -47,9 +47,11 @@ const characters = defineCollection({
       ...base,
       name: z.string(),
       nameJa: z.string().optional(),
-      rarity: z.enum(['S', 'A']),
-      element: z.string(), // ELEMENTS 推奨
-      role: z.string(), // ROLES 推奨
+      // 実装済みは必須相当だが、未実装（告知済み）キャラは属性等が未確定なため optional。
+      rarity: z.enum(['S', 'A', 'B']).optional(),
+      element: z.string().optional(), // ELEMENTS 推奨
+      role: z.string().optional(), // ROLES 推奨
+      implemented: z.boolean().default(true), // false=実装予定（未実装）
       weapon: z.string().optional(),
       faction: z.string().optional(),
       version: z.string().optional(), // 実装バージョン/バナー

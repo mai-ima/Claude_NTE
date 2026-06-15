@@ -7,9 +7,12 @@ import { ELEMENT_META, ROLE_META, elementMeta, roleMeta } from '../../lib/nav';
 import { publishedEntries, titleOf, enNameOf, hrefOf } from '../../lib/content';
 
 const entries = await publishedEntries('characters');
+// 実装済み（プレイアブル）と実装予定（未実装・告知済み）を分離
+const implementedEntries = entries.filter((c: any) => c.data.implemented !== false);
+const upcoming = entries.filter((c: any) => c.data.implemented === false);
 // レア度(S→A) → 属性 → 名前 で整列
 const RAR = { S: 0, A: 1 } as Record<string, number>;
-const list = [...entries].sort(
+const list = [...implementedEntries].sort(
   (a: any, b: any) =>
     (RAR[a.data.rarity] ?? 9) - (RAR[b.data.rarity] ?? 9) ||
     titleOf(a).localeCompare(titleOf(b), 'ja'),
@@ -159,6 +162,39 @@ const aCount = list.filter((c: any) => c.data.rarity === 'A').length;
       </div>
 
       <p class="empty" id="char-empty" hidden>条件に合うキャラがいません。</p>
+
+      {
+        upcoming.length > 0 && (
+          <section style="margin-top:32px;">
+            <div class="row" style="gap:8px;align-items:center;margin-bottom:6px;">
+              <Icon name="lucide:wrench" style="width:18px;height:18px;color:var(--accent);" />
+              <h2 style="margin:0;">実装予定（未実装）</h2>
+            </div>
+            <p class="muted text-sm" style="margin-bottom:12px;">
+              公式で告知されている実装予定キャラ。属性・性能は未確定（要確認）です。
+            </p>
+            <div class="grid grid-cards">
+              {upcoming.map((entry: any) => (
+                <a class="card card-pad card-link" href={hrefOf('characters', entry.id)}>
+                  <div class="row" style="gap:6px;align-items:center;">
+                    <span style="font-weight:800;font-size:1.02rem;">{titleOf(entry)}</span>
+                    <span class="badge badge-accent">実装予定</span>
+                  </div>
+                  <div class="muted" style="font-size:0.72rem;">{enNameOf(entry)}</div>
+                  {entry.data.description && (
+                    <p class="muted text-sm" style="margin-top:8px;">{entry.data.description}</p>
+                  )}
+                  {entry.data.version && (
+                    <div class="char-meta">
+                      <span><Icon name="lucide:calendar-clock" /> {entry.data.version}</span>
+                    </div>
+                  )}
+                </a>
+              ))}
+            </div>
+          </section>
+        )
+      }
     </div>
   </div>
 </BaseLayout>

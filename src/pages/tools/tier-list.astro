@@ -6,7 +6,7 @@ import { elementMeta } from '../../lib/nav';
 import { publishedEntries, titleOf, hrefOf } from '../../lib/content';
 import TierList from '../../components/tools/TierList';
 
-const chars = await publishedEntries('characters');
+const chars = (await publishedEntries('characters')).filter((c: any) => c.data.implemented !== false);
 const data = chars.map((c: any) => ({
   id: c.id,
   name: titleOf(c),

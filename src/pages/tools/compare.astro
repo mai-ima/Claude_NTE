@@ -5,7 +5,7 @@ import { withBase } from '../../lib/path';
 import { publishedEntries, titleOf, hrefOf } from '../../lib/content';
 import CharacterCompare from '../../components/tools/CharacterCompare';
 
-const chars = await publishedEntries('characters');
+const chars = (await publishedEntries('characters')).filter((c: any) => c.data.implemented !== false);
 const data = chars.map((c: any) => ({
   id: c.id,
   name: titleOf(c),
