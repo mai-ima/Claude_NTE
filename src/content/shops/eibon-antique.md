@@ -2,6 +2,7 @@
 title: "エイボン骨董品店（Eibon Antique Shop）"
 type: "hub"
 unlock: "ストーリー序盤で拠点として解放"
+aliases: ["エイボン", "エイボン骨董品店", "Eibon Antique Shop"]
 order: 10
 description: "主人公（鑑定士）たちが拠点とする骨董品店。クルーの勤務先であり、アノマリー関連の依頼や交流の起点。"
 status: "verified"

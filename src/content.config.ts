@@ -167,6 +167,7 @@ const shops = defineCollection({
       type: z.enum(['shop', 'exchange', 'hub', 'pass']).default('shop'),
       currency: z.string().optional(), // 主に使用する通貨/ポイント
       unlock: z.string().optional(), // 解放条件
+      aliases: z.array(z.string()).default([]), // 自動リンク用の別名（短縮形など）
       image: image().optional(),
     }),
 });

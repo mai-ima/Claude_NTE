@@ -1,75 +1,109 @@
 /**
- * rehype プラグイン: 本文中に現れる「用語(terms)」の語を、その用語ページへ
- * 自動的にリンクする（Wikipediaのような自動リンク）。
+ * rehype プラグイン: 本文中に現れるサイト内エンティティ名（用語・キャラ・店・弧盤・
+ * 地名・敵・アイテム・登場人物など）を、その個別ページへ自動リンクする
+ * （Wikipediaのような自動リンク）。
  *
  * 方針:
- * - 用語辞書は src/content/terms/*.md の frontmatter（title/aliases）から構築。
+ * - 辞書は src/content/<collection>/*.md の frontmatter（nameJa/title/aliases）から構築。
+ * - href は `/<collection>/<slug>/`。
  * - 1ページ・1フレーズにつき最初の1回だけリンク化（リンクの過剰を防ぐ）。
  * - 既存リンク(a)・コード(code/pre)・見出し(h1〜h3)の中はリンクしない。
  * - 長いフレーズを優先（「異象管理局」を「異象」より先に処理）。
- * - 用語ページ自身への自己リンクは張らない。
+ * - エンティティ自身のページへの自己リンクは張らない。
  * 依存を増やさないため、hast を手書きで走査する。
  */
 import fs from 'node:fs';
 import path from 'node:path';
 
-const TERMS_DIR = path.resolve('src/content/terms');
+const CONTENT_DIR = path.resolve('src/content');
+// 自動リンク対象コレクション（href は /<collection>/<slug>/）。
+const COLLECTIONS = [
+  'terms',
+  'characters',
+  'people',
+  'shops',
+  'locations',
+  'arcs',
+  'systems',
+  'enemies',
+  'items',
+  'vehicles',
+  'events',
+];
 
 /** 汎用すぎてリンクするとノイズになる語は除外 */
 const DENY = new Set([
   '光', '霊', '呪', '闇', '魂', '相', '心', '凸', '例', '街', '島', '駅', '区',
-  '本編', 'ガチャ', 'プレイヤー', '都市', '攻略', '戦闘', '育成',
+  '本編', 'ガチャ', 'プレイヤー', '都市', '攻略', '戦闘', '育成', '電車', '移動',
+  'キャラ', 'キャラクター', 'システム', 'イベント', 'アイテム', 'ショップ',
 ]);
 
 const SKIP_TAGS = new Set(['a', 'code', 'pre', 'script', 'style', 'kbd', 'h1', 'h2', 'h3']);
 
+/** title/nameJa から、本文に現れやすい主フレーズへ整形（括弧・併記を除去） */
+function cleanName(s) {
+  return s
+    .replace(/（.*?）/g, '')
+    .replace(/\(.*?\)/g, '')
+    .replace(/／.*$/, '')
+    .trim();
+}
+
 function buildDict() {
   const entries = [];
-  let files = [];
-  try {
-    files = fs.readdirSync(TERMS_DIR);
-  } catch {
-    return entries;
-  }
-  for (const file of files) {
-    if (!file.endsWith('.md') && !file.endsWith('.mdx')) continue;
-    const slug = file.replace(/\.(md|mdx)$/, '');
-    let raw = '';
+  for (const collection of COLLECTIONS) {
+    const dir = path.join(CONTENT_DIR, collection);
+    let files = [];
     try {
-      raw = fs.readFileSync(path.join(TERMS_DIR, file), 'utf8');
+      files = fs.readdirSync(dir);
     } catch {
       continue;
     }
-    const fm = raw.match(/^---\n([\s\S]*?)\n---/);
-    if (!fm) continue;
-    const front = fm[1];
-    const title = (front.match(/^title:\s*["']?(.+?)["']?\s*$/m) || [])[1] || '';
-    const aliasesLine = (front.match(/^aliases:\s*\[(.*)\]/m) || [])[1] || '';
-    const aliases = aliasesLine
-      .split(',')
-      .map((s) => s.replace(/^\s*["']?/, '').replace(/["']?\s*$/, '').trim())
-      .filter(Boolean);
-    const phrases = new Set();
-    const clean = title
-      .replace(/（.*?）/g, '')
-      .replace(/\(.*?\)/g, '')
-      .replace(/／.*$/, '')
-      .trim();
-    if (clean) phrases.add(clean);
-    for (const a of aliases) phrases.add(a);
-    for (const p of phrases) {
-      // 英語別名は3文字以上、日本語は2文字以上を採用（短すぎる/汎用は除外）
-      if (p.length < 2) continue;
-      if (DENY.has(p)) continue;
-      // ASCII(英数記号)のみのフレーズは、単語境界チェックを要する＆3文字以上に限定
-      const ascii = /^[\x20-\x7e]+$/.test(p);
-      if (ascii && p.replace(/[^A-Za-z0-9]/g, '').length < 3) continue;
-      entries.push({ phrase: p, slug, ascii });
+    for (const file of files) {
+      if (!file.endsWith('.md') && !file.endsWith('.mdx')) continue;
+      const slug = file.replace(/\.(md|mdx)$/, '');
+      let raw = '';
+      try {
+        raw = fs.readFileSync(path.join(dir, file), 'utf8');
+      } catch {
+        continue;
+      }
+      const fm = raw.match(/^---\n([\s\S]*?)\n---/);
+      if (!fm) continue;
+      const front = fm[1];
+      const title = (front.match(/^title:\s*["']?(.+?)["']?\s*$/m) || [])[1] || '';
+      const nameJa = (front.match(/^nameJa:\s*["']?(.+?)["']?\s*$/m) || [])[1] || '';
+      const aliasesLine = (front.match(/^aliases:\s*\[(.*)\]/m) || [])[1] || '';
+      const aliases = aliasesLine
+        .split(',')
+        .map((s) => s.replace(/^\s*["']?/, '').replace(/["']?\s*$/, '').trim())
+        .filter(Boolean);
+      const phrases = new Set();
+      // 主フレーズは nameJa 優先（キャラの表示名）、無ければ title
+      const primary = cleanName(nameJa || title);
+      if (primary) phrases.add(primary);
+      const cleanTitle = cleanName(title);
+      if (cleanTitle) phrases.add(cleanTitle);
+      for (const a of aliases) phrases.add(a);
+      for (const p of phrases) {
+        if (p.length < 2) continue;
+        if (DENY.has(p)) continue;
+        const ascii = /^[\x20-\x7e]+$/.test(p);
+        // ASCII(英数記号)のみのフレーズは、単語境界チェックを要する＆3文字以上に限定
+        if (ascii && p.replace(/[^A-Za-z0-9]/g, '').length < 3) continue;
+        entries.push({ phrase: p, collection, slug, ascii });
+      }
     }
   }
-  // 長いフレーズ優先（部分一致の取り違えを防ぐ）
+  // 長いフレーズ優先（部分一致の取り違えを防ぐ）。同長は terms を優先（順序維持で十分）。
   entries.sort((a, b) => b.phrase.length - a.phrase.length);
-  return entries;
+  // 同一フレーズの重複は最初の1件（最長一致・コレクション順）だけ残す
+  const seenPhrase = new Set();
+  return entries.filter((e) => {
+    if (seenPhrase.has(e.phrase)) return false;
+    seenPhrase.add(e.phrase);
+    return true;
+  });
 }
 
 let DICT = null;
@@ -79,9 +113,10 @@ export default function rehypeTermLinks() {
   return (tree, file) => {
     if (!DICT.length) return;
     const fpath = (file && (file.path || (file.history && file.history[0]))) || '';
-    const selfSlug = (/[\\/]terms[\\/]([a-z0-9-]+)\.(md|mdx)$/.exec(fpath) || [])[1] || null;
+    const m = /[\\/]content[\\/]([a-z]+)[\\/]([a-z0-9-]+)\.(md|mdx)$/.exec(fpath);
+    const selfKey = m ? `${m[1]}/${m[2]}` : null;
     const seen = new Set();
-    walk(tree, false, selfSlug, seen);
+    walk(tree, false, selfKey, seen);
   };
 }
 
@@ -90,7 +125,7 @@ function tagOf(node) {
   return node.type === 'element' ? node.tagName : node.name || '';
 }
 
-function walk(node, skip, selfSlug, seen) {
+function walk(node, skip, selfKey, seen) {
   if (!node || !Array.isArray(node.children)) return;
   const tag = tagOf(node);
   const here = skip || (tag && SKIP_TAGS.has(tag));
@@ -98,32 +133,30 @@ function walk(node, skip, selfSlug, seen) {
   for (let i = 0; i < children.length; i++) {
     const child = children[i];
     if (child.type === 'text' && !here && child.value && child.value.trim()) {
-      const replaced = linkify(child.value, selfSlug, seen);
+      const replaced = linkify(child.value, selfKey, seen);
       if (replaced) {
         children.splice(i, 1, ...replaced);
         i += replaced.length - 1;
       }
     } else if (Array.isArray(child.children)) {
-      // element だけでなく MDX の JSX 要素配下も走査する
-      walk(child, here, selfSlug, seen);
+      walk(child, here, selfKey, seen);
     }
   }
 }
 
 const WORD = /[A-Za-z0-9]/;
 
-function linkify(text, selfSlug, seen) {
+function linkify(text, selfKey, seen) {
   let nodes = [{ type: 'text', value: text }];
   let changed = false;
-  for (const { phrase, slug, ascii } of DICT) {
-    if (slug === selfSlug) continue;
+  for (const { phrase, collection, slug, ascii } of DICT) {
+    if (selfKey && `${collection}/${slug}` === selfKey) continue;
     if (seen.has(phrase)) continue;
     for (let n = 0; n < nodes.length; n++) {
       const nd = nodes[n];
       if (nd.type !== 'text') continue;
       const idx = nd.value.indexOf(phrase);
       if (idx === -1) continue;
-      // ASCII フレーズは単語の途中に差し込まない（"Arc" が "Arcane" 内にヒットしない）
       if (ascii) {
         const prev = nd.value[idx - 1];
         const next = nd.value[idx + phrase.length];
@@ -134,7 +167,7 @@ function linkify(text, selfSlug, seen) {
       const link = {
         type: 'element',
         tagName: 'a',
-        properties: { href: `/terms/${slug}/`, className: ['auto-term'] },
+        properties: { href: `/${collection}/${slug}/`, className: ['auto-term'] },
         children: [{ type: 'text', value: phrase }],
       };
       const repl = [];
