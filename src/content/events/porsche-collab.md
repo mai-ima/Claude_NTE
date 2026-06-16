@@ -1,13 +1,13 @@
 ---
 title: "ポルシェコラボ「エバードライブ」"
 kind: "event"
-featured: ["Porsche 918 Spyder", "零 限定コス", "Regis CREST"]
+featured: ["Porsche 918 Spyder", "鑑定士（零）限定コス", "ペガサス・レジデンス"]
 start: 2026-06-03
 end: 2026-07-08
 version: "v1.1"
-description: "実在の自動車ブランド Porsche とのコラボ。ブラインドボックスで新車「Porsche 918 Spyder」・零の限定コスチューム・新物件などを入手できる期間限定コラボ。"
+description: "実在の自動車ブランド Porsche とのコラボ。ブラインドボックスで新車「Porsche 918 Spyder」・鑑定士（零）の限定コスチューム・新物件「ペガサス・レジデンス」などを入手できる期間限定コラボ。"
 status: "verified"
-updated: 2026-06-13
+updated: 2026-06-16
 tags: ["コラボ", "v1.1", "ビークル", "ガチャ"]
 sources:
   - label: "ゲームウィズ — ポルシェガチャの引き方／天井に必要なファンス"
@@ -30,8 +30,9 @@ sources:
 ## 報酬
 
 - **新車[ポルシェ 918 スパイダー](/vehicles/porsche-918-spyder/)（Porsche 918 Spyder）** — コラボ限定ビークル。
-- 主人公[零](/characters/zero/)の**限定コラボコスチューム「プライムパートナー（Prime Partner）」**。
-- 新物件「**Regis CREST**」。
+- 主人公[零](/characters/zero/)（鑑定士）の**限定コラボコスチューム**（ポルシェ仕様の鑑定士衣装。正式名称は**要確認**）。
+- 新物件「**ペガサス・レジデンス（Pegasus Residence）**」。
+- このほか手紙アイテム・[ファンス](/terms/fons/)・アバターフレームなどが同梱される。
 
 ## メモ
 

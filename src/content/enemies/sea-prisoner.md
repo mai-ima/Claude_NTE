@@ -1,12 +1,12 @@
 ---
 title: "シープリズン（Sea Prisoner）"
 type: "boss"
-weakness: "Psyche"
-location: "—"
+weakness: "Anima"
+location: "橋間地（ノーティリ・トンネル／異象依頼「深藍の嘆き」）"
 order: 53
-description: "ワールドボス。弱点は魂(Psyche)。"
+description: "異象依頼「深藍の嘆き」のボス。弱点は霊(Anima)。"
 status: "verified"
-updated: 2026-06-13
+updated: 2026-06-16
 tags: ["ボス", "boss"]
 sources:
   - label: "ゲームウィズ — ボス攻略まとめ"
@@ -17,15 +17,15 @@ sources:
 
 ## 概要
 
-**シープリズン（Sea Prisoner）** はワールドボス。
+**シープリズン（Sea Prisoner）** は異象依頼「**深藍の嘆き**」で戦うボス。
 
 ## 出現場所
 
-- ワールドボス。出現エリアは**要確認**。
+- 橋間地のノーティリ・トンネル付近。車で進入して挑む異象依頼「深藍の嘆き」のボス。
 
 ## 弱点属性
 
-- **弱点は [魂（Psyche）](/terms/el-psyche/)**。
+- **弱点は [霊（Anima）](/terms/el-anima/)**。
 
 ## 行動・ギミック
 
@@ -33,8 +33,8 @@ sources:
 
 ## ドロップ・報酬
 
-- ワールドボスの討伐報酬（週課制）。詳細は**要確認**。
+- 異象依頼の討伐報酬。詳細は**要確認**。
 
 ## 攻略のコツ
 
-- [魂（Psyche）](/terms/el-psyche/)で弱点を突く。[ファルディーヤ](/characters/fadia/)などの魂属性サポート（回復・支援）を混ぜた継戦編成が安定する。
+- [霊（Anima）](/terms/el-anima/)で弱点を突く。[ナナリ](/characters/nanally/)・[九原](/characters/jiuyuan/)・[ミント](/characters/mint/)など霊属性アタッカーを軸にすると効率がよい。

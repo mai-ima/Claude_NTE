@@ -5,7 +5,7 @@ region: "ヘテロシティ"
 order: 30
 description: "アーケードや電話ボックスなどのランドマークを擁する区。エイボン骨董品店の所在地。"
 status: "verified"
-updated: 2026-06-08
+updated: 2026-06-16
 tags: ["区", "エイボン"]
 sources:
   - label: "GameWith — 橋間地 Map"
@@ -23,7 +23,7 @@ sources:
 - **[ハンカク街](/terms/hankaku-street/)** — アーケードなどが集まる街区。エイボン周辺の中心的な一角。
 - **[エイボン骨董品店](/shops/eibon-antique/)** — 主人公（[鑑定士](/terms/appraiser/)）の拠点。クルーが集う活動の起点。
 - **[ReroReroフォンボックス](/terms/rerero-phonebox/)** — 電話ボックス型のランドマーク。[ファストトラベル](/terms/fast-travel/)地点にもなる。
-- **魔女の家（[クロベイン](/people/crobane/)）** — メインストーリー4章に関わる魔女が住むとされる家。
+- **魔女の家（[クロバネ／Blackbird](/people/blackbird/)）** — メインストーリー4章に関わる魔女が住む家。日替わりの占い等で報酬を得られる。
 
 ## 交通
 

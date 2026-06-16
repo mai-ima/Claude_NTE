@@ -4,7 +4,7 @@ type: "anomaly"
 order: 10
 description: "ヘテロシティに現れる超常現象・存在の総称。委託・ゾーン・ハント・巡礼など多様な形で登場。"
 status: "verified"
-updated: 2026-06-08
+updated: 2026-06-16
 tags: ["アノマリー", "概要"]
 sources:
   - label: "neverness.gg — Anomalies"
@@ -30,7 +30,7 @@ sources:
 
 - [セレニティ（Serenetti）](/enemies/serenetti/) — **呪（Incantation）**
 - [斑蝶（Swallowtail）](/enemies/swallowtail/) — **霊（Anima）**
-- [魔の書（Black Tome）](/enemies/black-tome/) — **光（Cosmos）**
+- [魔の書（Black Tome）](/enemies/black-tome/) — **闇（Chaos）**
 - [音ゲー魔王（Beat King）](/enemies/beat-king/) — **魂（Psyche）**
 
 詳しくは[ボス一覧](/enemies/world-bosses/)を参照。

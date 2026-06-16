@@ -1,12 +1,12 @@
 ---
 title: "フィルム・マニッシュ（Film-MANISH）"
 type: "boss"
-weakness: "Psyche"
+weakness: "Cosmos"
 location: "—"
 order: 60
-description: "ストーリーボス。弱点は魂(Psyche)。"
+description: "ストーリーボス。弱点は光(Cosmos)。"
 status: "verified"
-updated: 2026-06-13
+updated: 2026-06-16
 tags: ["ボス", "boss"]
 sources:
   - label: "ゲームウィズ — ボス攻略まとめ"
@@ -25,16 +25,16 @@ sources:
 
 ## 弱点属性
 
-- **弱点は [魂（Psyche）](/terms/el-psyche/)**。
+- **弱点は [光（Cosmos）](/terms/el-cosmos/)**。光異能ダメージを大きく伸ばせる光属性編成での攻略が確認されている。
 
 ## 行動・ギミック
 
-- 詳細な行動パターン・ギミックは**要確認**（判明し次第追記）。
+- フィルムを使った長射程攻撃と、連続ヒットする高火力攻撃が特徴。レール反撃（パリィ）を絡めた立ち回りが重要。詳細は**要確認**（判明し次第追記）。
 
 ## ドロップ・報酬
 
-- 撃破報酬として最初の乗り物**[スクーター（ローバーA1）](/vehicles/rover-a1/)**が手に入る。
+- 序章下のストーリー撃破報酬として最初の乗り物**[スクーター（ローバーA1）](/vehicles/rover-a1/)**が手に入る。
 
 ## 攻略のコツ
 
-- [魂](/terms/el-psyche/)で弱点を突きつつ、[闇（Chaos）](/terms/el-chaos/)アタッカー（[レクイエム](/characters/lacrimosa/)など）と合わせて **[暗星（闇＋魂）](/terms/reaction-nova/)** の[連環反応](/systems/esper-cycle/)を起こすと効率がよい。
+- [光（Cosmos）](/terms/el-cosmos/)で弱点を突きつつ、[零](/characters/zero/)・[ちぃちゃん](/characters/chiz/)など光属性アタッカーを軸にレール反撃を狙う。霊属性と組めば[創生（光＋霊）](/terms/reaction-blossom/)も起こせる。

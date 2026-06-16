@@ -1,12 +1,12 @@
 ---
-title: "青い炎のバイク"
+title: "青い炎のバイク（炎エフェクト）"
 type: "special"
-acquisition: "ワールドボス「デュラハン」撃破報酬"
-perk: "—（性能の詳細は要確認）"
+acquisition: "弧盤「炎魂ハリケーン」を装備してバイクに乗ると発現"
+perk: "見た目演出（バイクに青い炎をまとわせる）"
 order: 30
-description: "ワールドボス デュラハン（Headless Rider）を撃破すると入手できる、青い炎をまとったバイク。報酬限定のビークル。"
+description: "独立した報酬車ではなく、ワールドボス デュラハン撃破で得る弧盤「炎魂ハリケーン」を装備したキャラがバイクに乗ると車体が青い炎をまとう、見た目（エフェクト）の俗称。"
 status: "verified"
-updated: 2026-06-13
+updated: 2026-06-16
 tags: ["バイク", "報酬", "ワールドボス"]
 sources:
   - label: "ゲームウィズ — ボス攻略まとめ"
@@ -17,18 +17,19 @@ sources:
 
 ## 概要
 
-**青い炎のバイク**は、[未聞浦](/locations/unheard-shores/)に出現するワールドボス**[デュラハン（Headless Rider）](/enemies/headless-rider/)**を撃破すると入手できる、報酬限定のビークル。
+「**青い炎のバイク**」は独立した報酬車ではなく、弧盤**[炎魂ハリケーン](/arcs/flame-soul-hurricane/)** を装備したキャラがバイクに乗ると車体が**青い炎をまとう**、見た目（エフェクト）の俗称。元になる弧盤は[未聞浦](/locations/unheard-shores/)のワールドボス**[デュラハン（Headless Rider）](/enemies/headless-rider/)**撃破で入手する。
 
-## 入手方法
+## 発現方法
 
-- ワールドボス[デュラハン](/enemies/headless-rider/)（弱点[光](/terms/el-cosmos/)）を撃破する。デュラハンは未聞浦の環状道路Z42付近に出現する。
+- ワールドボス[デュラハン](/enemies/headless-rider/)（弱点[魂（Psyche）](/terms/el-psyche/)、未聞浦の環状道路Z42付近）を撃破して弧盤[炎魂ハリケーン](/arcs/flame-soul-hurricane/)を入手。
+- その弧盤を装備したキャラで**任意のバイク**に乗ると、車体に青い炎の演出が付く。
 
-## 特性
+## 注意
 
-- 見た目に青い炎をまとったバイク。**具体的な速度・性能は要確認**（判明し次第追記）。
+- バイク自体が新たに増えるわけではない（**性能変化ではなく見た目演出**）。
 
 ## 入手のコツ
 
-- デュラハンは[光（Cosmos）](/terms/el-cosmos/)弱点。光属性で[ブレイク](/terms/break/)を奪って撃破する（→[デュラハン攻略](/enemies/headless-rider/)）。
+- デュラハンは[魂（Psyche）](/terms/el-psyche/)弱点。魂属性で[ブレイク](/terms/break/)を奪って撃破する（→[デュラハン攻略](/enemies/headless-rider/)）。
 
-関連: [デュラハン](/enemies/headless-rider/) ／ [乗り物（用語）](/terms/rover/) ／ [ビークル一覧](/vehicles/)
+関連: [炎魂ハリケーン](/arcs/flame-soul-hurricane/) ／ [デュラハン](/enemies/headless-rider/) ／ [乗り物（用語）](/terms/rover/) ／ [ビークル一覧](/vehicles/)

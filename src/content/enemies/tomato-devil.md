@@ -4,9 +4,9 @@ type: "boss"
 weakness: "Chaos"
 location: "—"
 order: 63
-description: "番外編で戦うボス。弱点は闇(Chaos)。後半は呪(Incantation)弱点も追加。"
+description: "番外編で戦うボス。弱点は闇(Chaos)。2段階構成で、後半はエネルギー弾の反射ギミックを持つ。"
 status: "verified"
-updated: 2026-06-13
+updated: 2026-06-16
 tags: ["ボス", "boss"]
 sources:
   - label: "ゲームウィズ — ボス攻略まとめ"
@@ -25,11 +25,11 @@ sources:
 
 ## 弱点属性
 
-- **弱点は [闇（Chaos）](/terms/el-chaos/)**。**後半ステージでは [呪（Incantation）](/terms/el-incantation/) 弱点も追加**される。
+- **弱点は終始 [闇（Chaos）](/terms/el-chaos/)**（前後半で変わらない）。
 
 ## 行動・ギミック
 
-- 前後半で弱点が変化する点に注意。具体的な技は**要確認**。
+- 2段階構成。後半はエネルギー弾を反射するギミックを持つため、無理に攻め込まず反射を捌く。具体的な技は**要確認**。
 
 ## ドロップ・報酬
 
@@ -37,4 +37,4 @@ sources:
 
 ## 攻略のコツ
 
-- 前半は[闇（Chaos）](/terms/el-chaos/)、後半は[呪（Incantation）](/terms/el-incantation/)に切り替えて弱点を突く。後半は[白蔵](/characters/baicang/)（呪）が刺さる。
+- 終始[闇（Chaos）](/terms/el-chaos/)で弱点を突く。[ダフォディール](/characters/daffodill/)（闇）が刺さる。

@@ -6,12 +6,12 @@ element: "Lakshana"
 role: "DPS"
 cv: "市ノ瀬加那"
 weapon: "弧盤: プラズマ"
-faction: "エイボン骨董品店"
+faction: "Sterry Express"
 version: "v1.0（スタンダード恒常）"
 tier: "A"
 description: "相属性のアタッカー。延滞（Remora）反応を強く後押しできる。"
 status: "verified"
-updated: 2026-06-08
+updated: 2026-06-16
 tags: ["相", "Lakshana", "DPS"]
 sources:
   - label: "Game8 — ハソール"

@@ -29,7 +29,7 @@ sources:
 
 ## イベント・ガチャ
 
-- **ガチャ**: [永き夢の目覚め](/events/eternal-dream/)・[還らざる路](/events/road-of-no-return/) などのピックアップ（[スカボロー市場](/terms/scarborough-fair/)）。
+- **ガチャ**: [永き夢の目覚め](/events/eternal-dream/)（レクイエム）・[カオス ピックアップ「還らざる路」](/events/chaos-pickup/)（6/24〜）などのキャラピックアップ。弧盤は[レクイエム弧盤PU（ラストローズ）](/events/road-of-no-return/)。いずれも[スカボロー市場](/terms/scarborough-fair/)／弧盤研究。
 - **イベント**: SNS連動の[ホットに焙煎中](/events/hot-roasting/)（〜7/8）、[暗黒レーシング](/events/dark-racing/) など。
 
 ## 注意点
