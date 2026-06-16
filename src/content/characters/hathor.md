@@ -29,9 +29,14 @@ sources:
 - **[相（Lakshana）](/terms/el-lakshana/)アタッカー**。弧盤が攻撃特化寄りの[プラズマ](/terms/arc-forms/)で、火力を出しつつ相属性の[連環反応](/terms/esper-cycle/)を起点にできる。
 - 恒常Sの一角で、相属性パーティの主力として扱いやすい。具体的なスキル倍率・固有ギミックは要確認。
 
+## おすすめ弧盤
+
+- **おすすめ: [炎魂ハリケーン](/arcs/flame-soul-hurricane/)** — EX終結直後に[バイレール](/terms/bilrail/)スキルの与ダメージアップバフを付与する。**無課金で入手可能**（橋間地の異象依頼）で、ハソールの火力を底上げできる。
+- 育成方針: [会心](/terms/crit/)を軸に攻撃力を伸ばす（物質形態はプラズマ）。
+
 ## おすすめ編成
 
-- **延滞（相＋光）**: 光属性（[零](/characters/zero/)・[ちぃちゃん](/characters/chiz/)・[エドガー](/characters/edgar/)）と組み、敵をマーク・鈍化して制圧。
+- **[延滞（相＋光）](/terms/reaction-remora/)**: 光属性（[零](/characters/zero/)・[ちぃちゃん](/characters/chiz/)・[エドガー](/characters/edgar/)）と組み、敵をマーク・鈍化して制圧。
 - **浸染（魂＋相）**: 魂属性（[ファルディーヤ](/characters/fadia/)・[ハニア](/characters/haniel/)・[海月（みつき）](/characters/aurelia/)）と組み、被ダメージ増加で味方全体の火力を底上げ。
 - 同じ相属性の[翳（えい）](/characters/skia/)・[カオス](/characters/chaos/)とは反応の相方を共有でき、組み合わせの幅が広い。
 
