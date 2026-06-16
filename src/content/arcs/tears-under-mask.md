@@ -4,7 +4,7 @@ rarity: "S"
 form: "（要確認）"
 acquisition: "異象依頼「孤児を呼ぶ者」クリア報酬"
 free: true
-recommendedFor: "（要確認）"
+recommendedFor: "早霧（さきり）"
 order: 20
 description: "無課金で入手できるSランク弧盤。異象依頼「孤児を呼ぶ者」をクリアすると獲得できる。"
 status: "verified"
@@ -27,6 +27,6 @@ sources:
 
 ## 性能
 
-- 具体的な効果・対応属性・おすすめキャラは**要確認**（→[弧盤システム](/systems/arc-weapons/)）。確定情報が出次第追記する。
+- **[早霧（さきり）](/characters/sakiri/)におすすめ**として挙げられる弧盤。具体的な効果・倍率は**要確認**（→[弧盤システム](/systems/arc-weapons/)）。確定情報が出次第追記する。
 
 関連: [弧盤（システム）](/systems/arc-weapons/) ／ [異象依頼](/enemies/anomalies-overview/) ／ [弧盤一覧](/arcs/)
