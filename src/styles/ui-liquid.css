@@ -390,6 +390,10 @@ html[data-ui='liquid'] .drawer-panel {
   box-shadow: var(--lq-edge), var(--lq-shadow-lg);
 }
 @media (max-width: 959px) {
+  /* フローティングピル型ナビ分の余白を十分に確保（bottom10 + 高さ62 + 余白） */
+  html[data-ui='liquid'] .app {
+    padding-bottom: calc(92px + env(safe-area-inset-bottom, 0px));
+  }
   html[data-ui='liquid'] .bottom-nav {
     left: 14px;
     right: 14px;
@@ -398,9 +402,11 @@ html[data-ui='liquid'] .drawer-panel {
     padding-bottom: 0;
     border: none;
     border-radius: var(--radius-pill);
-    background: var(--lq-surface);
-    backdrop-filter: var(--lq-lens);
-    -webkit-backdrop-filter: var(--lq-lens);
+    /* 屈折レンズは背後の文字を透かして可読性を損なうため、ナビは不透明化。
+       ガラス感は鏡面エッジ(box-shadow)で担保する。 */
+    background: var(--surface);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
     box-shadow: var(--lq-edge), var(--lq-shadow-lg);
   }
   html[data-ui='liquid'] .bottom-nav a[aria-current='page'] {

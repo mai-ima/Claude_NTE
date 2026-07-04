@@ -11,16 +11,25 @@ html[data-ui='terminal'] {
   --term-line: color-mix(in srgb, var(--accent) 45%, var(--border));
 }
 
-/* 走査線（CRT）をごく薄く敷く */
+/* 走査線（CRT）＋わずかなビネットでブラウン管質感を出す */
 html[data-ui='terminal'] body {
   font-family: var(--font-mono);
   background:
     repeating-linear-gradient(
       0deg,
-      color-mix(in srgb, var(--text) 4%, transparent) 0 1px,
+      color-mix(in srgb, var(--text) 7%, transparent) 0 1px,
       transparent 1px 3px
     ),
+    radial-gradient(120% 90% at 50% 40%, transparent 62%, color-mix(in srgb, var(--text) 10%, transparent) 100%),
     var(--bg);
+}
+/* 蛍光体グロー: 見出し・アクセント文字をほのかに発光させる */
+html[data-ui='terminal'] .page-head h1,
+html[data-ui='terminal'] .stat-num,
+html[data-ui='terminal'] .prose h2::before,
+html[data-ui='terminal'] .page-head h1::before,
+html[data-ui='terminal'] .page-head h1::after {
+  text-shadow: 0 0 6px color-mix(in srgb, var(--accent) 55%, transparent);
 }
 html[data-ui='terminal'] ::selection {
   background: var(--accent);

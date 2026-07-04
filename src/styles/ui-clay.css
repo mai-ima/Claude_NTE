@@ -9,11 +9,11 @@ html[data-ui='clay'] {
   --radius-sm: 16px;
   --radius-lg: 30px;
   /* bg を基準に「暗い影」と「明るいハイライト」を作る（テーマ非依存） */
-  --clay-dark: color-mix(in srgb, var(--bg) 76%, #000);
-  --clay-light: color-mix(in srgb, var(--bg) 84%, #fff);
-  --clay-out: 7px 7px 16px var(--clay-dark), -7px -7px 16px var(--clay-light);
-  --clay-out-sm: 4px 4px 9px var(--clay-dark), -4px -4px 9px var(--clay-light);
-  --clay-in: inset 5px 5px 12px var(--clay-dark), inset -5px -5px 12px var(--clay-light);
+  --clay-dark: color-mix(in srgb, var(--bg) 68%, #000);
+  --clay-light: color-mix(in srgb, var(--bg) 82%, #fff);
+  --clay-out: 10px 10px 22px var(--clay-dark), -9px -9px 20px var(--clay-light);
+  --clay-out-sm: 5px 5px 12px var(--clay-dark), -5px -5px 12px var(--clay-light);
+  --clay-in: inset 6px 6px 14px var(--clay-dark), inset -6px -6px 14px var(--clay-light);
 }
 
 html[data-ui='clay'] body {
