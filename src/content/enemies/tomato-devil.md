@@ -7,7 +7,7 @@ order: 63
 description: "番外編で戦うボス。弱点は闇(Chaos)。2段階構成で、後半はエネルギー弾の反射ギミックを持つ。"
 status: "verified"
 updated: 2026-06-16
-tags: ["ボス", "boss"]
+tags: ["ボス"]
 sources:
   - label: "ゲームウィズ — ボス攻略まとめ"
     url: "https://gamewith.jp/nte/555902"

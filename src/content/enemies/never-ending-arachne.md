@@ -7,7 +7,7 @@ order: 71
 description: "蜘蛛型のボス。弱点は闇(Chaos)。"
 status: "verified"
 updated: 2026-06-13
-tags: ["ボス", "boss"]
+tags: ["ボス"]
 sources:
   - label: "ゲームウィズ — ボス攻略まとめ"
     url: "https://gamewith.jp/nte/555902"

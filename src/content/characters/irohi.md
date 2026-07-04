@@ -10,7 +10,7 @@ faction: "—"
 description: "実装予定（告知済み）の霊（Anima）属性Sランク。回復・ヒーラー役と見られる。山羊のような角・眼帯・エルフ耳が特徴。性能の細部は実装まで要確認。"
 status: "draft"
 updated: 2026-06-16
-tags: ["実装予定", "霊", "Anima", "Sランク", "v1.2"]
+tags: ["実装予定", "霊", "Sランク", "v1.2"]
 sources:
   - label: "ゲームウィズ — イロヒの実装時期と性能予想"
     url: "https://gamewith.jp/nte/563075"
@@ -29,4 +29,4 @@ sources:
 - **実装時期**: Ver.1.2（2026年7月後半）に実装予定とされる。
 - **スキル・弧盤・編成の具体**は未公開のため**要確認**（実装後に追記）。
 
-関連: [霊（El Anima）](/terms/el-anima/) ／ [キャラクター](/characters/) ／ [ガチャ/イベント](/events/)
+関連: [霊（Anima）](/terms/el-anima/) ／ [キャラクター](/characters/) ／ [ガチャ/イベント](/events/)

@@ -12,7 +12,7 @@ tier: "A"
 description: "シールド付与でチーム耐久を高める呪属性サポーター（A級）。シールドは交代後も持続する。"
 status: "verified"
 updated: 2026-06-08
-tags: ["呪", "Incantation", "Survival", "シールド"]
+tags: ["呪", "サバイバル", "シールド"]
 sources:
   - label: "Game8 — アドレー"
     url: "https://game8.jp/nte/782342"

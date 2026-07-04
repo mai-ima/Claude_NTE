@@ -12,7 +12,7 @@ tier: "A"
 description: "相属性のアタッカー。延滞（Remora）反応を強く後押しできる。"
 status: "verified"
 updated: 2026-06-16
-tags: ["相", "Lakshana", "DPS"]
+tags: ["相", "アタッカー"]
 sources:
   - label: "Game8 — ハソール"
     url: "https://game8.jp/nte/782351"

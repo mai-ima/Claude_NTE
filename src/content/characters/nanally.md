@@ -13,7 +13,7 @@ birthday: "8月20日"
 description: "ローンチ最強格の霊属性メインアタッカー。通常攻撃主体で操作が簡単、リセマラ最優先候補。"
 status: "verified"
 updated: 2026-06-08
-tags: ["霊", "Anima", "DPS", "メインアタッカー", "リセマラ"]
+tags: ["霊", "アタッカー", "メインアタッカー", "リセマラ"]
 sources:
   - label: "Game8（日本版）— ナナリ"
     url: "https://game8.jp/nte/782354"

@@ -11,7 +11,7 @@ tier: "A"
 description: "相（Lakshana）属性のサブDPS／デバッファー（A級）。影を操り、格闘で追撃を重ねて戦う。日本版公式名は「翳（えい）」（英名 Skia）。"
 status: "verified"
 updated: 2026-06-14
-tags: ["相", "Lakshana", "DPS", "デバッファー", "Aランク", "翳", "えい", "スキア"]
+tags: ["相", "アタッカー", "デバッファー", "Aランク", "翳", "えい", "スキア"]
 sources:
   - label: "ゲームウィズ — 翳(えい)の評価とおすすめ編成・武器"
     url: "https://gamewith.jp/nte/555735"

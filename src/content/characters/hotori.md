@@ -12,7 +12,7 @@ cv: "伊藤静"
 description: "エイボン骨董品店の店主。時間操作を軸にした光属性のサブアタッカー/支援で、味方スキルを記録して再現する。"
 status: "verified"
 updated: 2026-06-08
-tags: ["光", "Cosmos", "Buff", "サポート", "時間停止"]
+tags: ["光", "バッファー", "サポート", "時間停止"]
 sources:
   - label: "Game8 — 潯（ほとり）"
     url: "https://game8.jp/nte/784101"

@@ -12,7 +12,7 @@ tier: "S"
 description: "日本版名「ハニア」。A級ながらS級評価の魂属性バッファー。引いてすぐ使える使いやすさが魅力。"
 status: "verified"
 updated: 2026-06-08
-tags: ["魂", "Psyche", "Buff", "無料", "支援"]
+tags: ["魂", "バッファー", "無料", "支援"]
 sources:
   - label: "Game8 — ハニア"
     url: "https://game8.jp/nte/782344"

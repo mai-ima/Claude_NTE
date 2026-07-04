@@ -12,7 +12,7 @@ cv: "中村悠一"
 description: "ETD-4のお調子者隊長。文字を発生させ、EXレール終結時に高火力を出す呪属性の近接メインアタッカー。"
 status: "verified"
 updated: 2026-06-08
-tags: ["呪", "Incantation", "DPS"]
+tags: ["呪", "アタッカー"]
 sources:
   - label: "Game8 — 白蔵（ばいざん）"
     url: "https://game8.jp/nte/782352"

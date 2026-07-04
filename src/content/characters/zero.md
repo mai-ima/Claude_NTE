@@ -12,7 +12,7 @@ cv: "内田雄馬（男）／内田真礼（女）"
 description: "カスタマイズ可能な主人公「異能者・零」。光属性のシンプルなアタッカーで、連環値を一気に最大化できる特異な性能を持つ。"
 status: "verified"
 updated: 2026-06-08
-tags: ["光", "Cosmos", "DPS", "無料", "主人公"]
+tags: ["光", "アタッカー", "無料", "主人公"]
 sources:
   - label: "ゲームウィズ — 主人公(異能者・零)"
     url: "https://gamewith.jp/nte/555725"

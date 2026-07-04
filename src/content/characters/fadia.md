@@ -12,7 +12,7 @@ cv: "真堂圭"
 description: "ETD-4の謎多きメンバー。被ダメージを敵に共有し、チーム全体のHPを底上げ・回復する優秀な耐久補助。"
 status: "verified"
 updated: 2026-06-08
-tags: ["魂", "Psyche", "Survival", "耐久"]
+tags: ["魂", "サバイバル", "耐久"]
 sources:
   - label: "Game8 — ファルディーヤ"
     url: "https://game8.jp/nte/782350"

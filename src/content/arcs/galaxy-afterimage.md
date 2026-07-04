@@ -26,4 +26,4 @@ sources:
 
 > 具体的な倍率・物質形態は**要確認**（→[弧盤システム](/systems/arc-weapons/)）。
 
-関連: [海月（みつき）](/characters/aurelia/) ／ [弧盤](/terms/arc/) ／ [会心（クリティカル）](/terms/crit/) ／ [魂（El Psyche）](/terms/el-psyche/) ／ [弧盤（武器）一覧](/arcs/)
+関連: [海月（みつき）](/characters/aurelia/) ／ [弧盤](/terms/arc/) ／ [会心（クリティカル）](/terms/crit/) ／ [魂（Psyche）](/terms/el-psyche/) ／ [弧盤（武器）一覧](/arcs/)

@@ -11,7 +11,7 @@ tier: "S"
 description: "名前は『カオス（闇）』だが属性は相（Lakshana）という変則S。罪悪感スタックを溜めて派生攻撃に消費する自己完結型アタッカー。"
 status: "draft"
 updated: 2026-06-09
-tags: ["相", "Lakshana", "DPS", "v1.1", "予定", "罪悪感"]
+tags: ["相", "アタッカー", "v1.1", "予定", "罪悪感"]
 sources:
   - label: "ゲームウィズ — カオスはいつ実装？声優と性能"
     url: "https://gamewith.jp/nte/561676"

@@ -12,7 +12,7 @@ tier: "A"
 description: "HP回復に特化した光属性のヒーラー（A級）。バイレールスキルとEXレール終結で味方を回復する。"
 status: "verified"
 updated: 2026-06-08
-tags: ["光", "Cosmos", "Survival", "ヒーラー"]
+tags: ["光", "サバイバル", "ヒーラー"]
 sources:
   - label: "Game8 — エドガー"
     url: "https://game8.jp/nte/782343"

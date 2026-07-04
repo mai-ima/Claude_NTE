@@ -11,7 +11,7 @@ tier: "B"
 description: "霊属性のアタッカー（A級）。1凸で真価を発揮し、スキル連打型のアタッカーになる配布キャラ。"
 status: "verified"
 updated: 2026-06-08
-tags: ["霊", "Anima", "DPS"]
+tags: ["霊", "アタッカー"]
 sources:
   - label: "Game8 — ミント"
     url: "https://game8.jp/nte/782345"

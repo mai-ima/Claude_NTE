@@ -7,7 +7,7 @@ order: 62
 description: "ストーリーボス。弱点は相(Lakshana)。"
 status: "verified"
 updated: 2026-06-13
-tags: ["ボス", "boss"]
+tags: ["ボス"]
 sources:
   - label: "ゲームウィズ — ボス攻略まとめ"
     url: "https://gamewith.jp/nte/555902"

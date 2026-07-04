@@ -12,7 +12,7 @@ cv: "長縄まりあ"
 description: "日本版名「レクイエム」。2つの攻撃モードを切り替える闇属性メインアタッカー。継続ダメ「悪夢」を付与し、敵スキルをコピーする。"
 status: "verified"
 updated: 2026-06-08
-tags: ["闇", "Chaos", "DPS", "DoT", "ブレイカー", "リセマラ"]
+tags: ["闇", "アタッカー", "DoT", "ブレイカー", "リセマラ"]
 sources:
   - label: "ゲームウィズ — レクイエム"
     url: "https://gamewith.jp/nte/559773"

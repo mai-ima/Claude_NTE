@@ -25,10 +25,10 @@ sources:
 ## ボス攻略の要点
 
 - **弱点を突く**: [音ゲー魔王](/enemies/beat-king/)の弱点は魂（[Psyche](/terms/el-psyche/)）。魂属性アタッカーを軸に編成する。
-- **連環反応**: 魂に[闇（El Chaos）](/terms/el-chaos/)を合わせて**暗星（闇＋魂）**の[連環反応](/systems/esper-cycle/)を絡めると効率がよく、音ゲーギミックへの対応にもつながる。詳しい立ち回りは[音ゲー魔王](/enemies/beat-king/)を参照。
+- **連環反応**: 魂に[闇（Chaos）](/terms/el-chaos/)を合わせて**暗星（闇＋魂）**の[連環反応](/systems/esper-cycle/)を絡めると効率がよく、音ゲーギミックへの対応にもつながる。詳しい立ち回りは[音ゲー魔王](/enemies/beat-king/)を参照。
 
 ## 注意点
 
 - ワールドボスの再戦間隔やエリア内の探索要素の全容は版で変わりうるため、最新はゲーム内マップで確認。
 
-関連: [音ゲー魔王](/enemies/beat-king/) ／ [ヘテロシティ](/terms/hethereau/) ／ [魂（El Psyche）](/terms/el-psyche/) ／ [連環反応](/systems/esper-cycle/) ／ [ワールドボス](/enemies/world-bosses/)
+関連: [音ゲー魔王](/enemies/beat-king/) ／ [ヘテロシティ](/terms/hethereau/) ／ [魂（Psyche）](/terms/el-psyche/) ／ [連環反応](/systems/esper-cycle/) ／ [ワールドボス](/enemies/world-bosses/)

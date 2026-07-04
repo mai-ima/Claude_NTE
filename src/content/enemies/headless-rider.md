@@ -7,7 +7,7 @@ order: 51
 description: "ワールドボス。バイクで暴走する。弱点は魂(Psyche)。撃破で弧盤「炎魂ハリケーン」入手（装備するとバイクが青い炎をまとう）。"
 status: "verified"
 updated: 2026-06-16
-tags: ["ボス", "boss"]
+tags: ["ボス"]
 sources:
   - label: "ゲームウィズ — ボス攻略まとめ"
     url: "https://gamewith.jp/nte/555902"

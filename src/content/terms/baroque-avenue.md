@@ -25,4 +25,4 @@ sources:
 
 - 通りの正確な範囲・周辺施設・収集物の配置はゲーム内マップで**要確認**。
 
-関連: [絵空町](/terms/ekuusora/) ／ [音ゲー魔王](/enemies/beat-king/) ／ [ヘテロシティ](/terms/hethereau/) ／ [魂（El Psyche）](/terms/el-psyche/)
+関連: [絵空町](/terms/ekuusora/) ／ [音ゲー魔王](/enemies/beat-king/) ／ [ヘテロシティ](/terms/hethereau/) ／ [魂（Psyche）](/terms/el-psyche/)

@@ -5,7 +5,7 @@ order: 20
 description: "キャラの武器「弧盤(こばん/Arc)」。物質5形態(固体/液体/気体/プラズマ/集合)で分類。弧盤研究プロジェクト(トリプルキー)で抽選。"
 status: "verified"
 updated: 2026-06-16
-tags: ["武器", "弧盤", "Arc"]
+tags: ["武器", "弧盤"]
 sources:
   - label: "ゲームウィズ（日本版）— 弧盤一覧"
     url: "https://gamewith.jp/nte/557408"

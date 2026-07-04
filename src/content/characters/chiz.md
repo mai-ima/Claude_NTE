@@ -11,7 +11,7 @@ tier: "A"
 description: "日本版名「ちぃちゃん」。最良の無料DPS。通常攻撃でファンスを稼ぎ、「金穀」を貯めてバーストする経済効率の高い光属性アタッカー。"
 status: "verified"
 updated: 2026-06-08
-tags: ["光", "Cosmos", "DPS", "無料", "F2P"]
+tags: ["光", "アタッカー", "無料", "無課金"]
 sources:
   - label: "Game8 — ちぃちゃん"
     url: "https://game8.jp/nte/782428"

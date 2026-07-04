@@ -7,7 +7,7 @@ order: 70
 description: "巡礼/異象狩りのボス。弱点は光(Cosmos)。"
 status: "verified"
 updated: 2026-06-13
-tags: ["ボス", "boss"]
+tags: ["ボス"]
 sources:
   - label: "ゲームウィズ — ボス攻略まとめ"
     url: "https://gamewith.jp/nte/555902"

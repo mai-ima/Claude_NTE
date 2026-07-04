@@ -12,7 +12,7 @@ cv: "大原さやか"
 description: "ブレイク特化の闇属性アタッカー。控えから登場した瞬間のカウンター爆発力が魅力。"
 status: "verified"
 updated: 2026-06-08
-tags: ["闇", "Chaos", "DPS", "ブレイク"]
+tags: ["闇", "アタッカー", "ブレイク"]
 sources:
   - label: "Game8 — ダフォディール"
     url: "https://game8.jp/nte/782349"

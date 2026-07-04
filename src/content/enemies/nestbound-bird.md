@@ -7,7 +7,7 @@ order: 54
 description: "ワールドボス。攻撃力が非常に高い。弱点は光(Cosmos)（霊も有効）。"
 status: "verified"
 updated: 2026-06-13
-tags: ["ボス", "boss"]
+tags: ["ボス"]
 sources:
   - label: "ゲームウィズ — ボス攻略まとめ"
     url: "https://gamewith.jp/nte/555902"

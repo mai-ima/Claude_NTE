@@ -7,7 +7,7 @@ order: 53
 description: "異象依頼「深藍の嘆き」のボス。弱点は霊(Anima)。"
 status: "verified"
 updated: 2026-06-16
-tags: ["ボス", "boss"]
+tags: ["ボス"]
 sources:
   - label: "ゲームウィズ — ボス攻略まとめ"
     url: "https://gamewith.jp/nte/555902"

@@ -12,7 +12,7 @@ tier: "S"
 description: "二丁拳銃を扱う霊属性アタッカー。継続ダメージとEXレール終結による高バーストが持ち味。"
 status: "verified"
 updated: 2026-06-11
-tags: ["霊", "Anima", "DPS", "バースト"]
+tags: ["霊", "アタッカー", "バースト"]
 sources:
   - label: "Game8 — 九原（じょえん）"
     url: "https://game8.jp/nte/782348"

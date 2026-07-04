@@ -12,7 +12,7 @@ cv: "伊藤美来"
 description: "ローンチ唯一のS級攻撃力バッファー。全体攻撃力バフに加え対複数戦に強く、バフ・デバフ両対応。"
 status: "verified"
 updated: 2026-06-08
-tags: ["呪", "Incantation", "Buff", "攻撃バフ"]
+tags: ["呪", "バッファー", "攻撃バフ"]
 sources:
   - label: "Game8 — 早霧（さきり）"
     url: "https://game8.jp/nte/782353"
