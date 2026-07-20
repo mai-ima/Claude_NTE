@@ -11,6 +11,10 @@ sources:
     url: "https://appmedia.jp/nte/79981195"
   - label: "神ゲー攻略 — シティライフの一覧と解放条件"
     url: "https://kamigame.jp/nte/page/420360567677537905.html"
+  - label: "神ゲー攻略 — アクアリウムのやり方"
+    url: "https://kamigame.jp/nte/page/429369728490829034.html"
+  - label: "ゲームウィズ — 日本式麻雀の解放と遊び方"
+    url: "https://gamewith.jp/nte/566889"
 ---
 
 ## 概要
@@ -25,4 +29,13 @@ sources:
 
 > 各釣り場の場所・魚種・必要な解放条件はゲーム内および攻略サイトで**要確認**（版で追加・調整されうる）。
 
-関連: [シティライフ](/systems/city-life/) ／ [ヘテロシティ・ホビー](/terms/heterocity-hobby/) ／ [ファンス](/terms/fons/) ／ [探索・シティライフ](/systems/exploration/)
+## アクアリウム（Ver.1.2 追加）
+
+Ver.1.2 で、釣った魚を自宅の**アクアリウム**で飼育・鑑賞できるようになった。
+
+- 購入する**水槽のサイズ**、**海水用／淡水用**の使い分け、**水温・pH**の管理など、本格的な要素を持つ。
+- **釣り上げたレア魚を車の後部に装着して飾る**こともできる。
+
+あわせて雀荘「ジャン」に日本式の[リーチ麻雀](/terms/riichi-mahjong/)が追加された。
+
+関連: [シティライフ](/systems/city-life/) ／ [ヘテロシティ・ホビー](/terms/heterocity-hobby/) ／ [ファンス](/terms/fons/) ／ [リーチ麻雀](/terms/riichi-mahjong/) ／ [探索・シティライフ](/systems/exploration/)
