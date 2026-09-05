@@ -19,7 +19,7 @@
   本文の「要確認」で明示する。全記事に `sources` と `updated` を付ける。
 - **過去バージョンの情報は消さない**。古い記述は「いつ時点の情報か」を添えて残す。
 - 変更したら `pnpm test` → `pnpm build` → `node scripts/check-links.mjs` を通す。
-- 作業ブランチは `claude/wiki-feature-ui-update-d169kd`。
+- 作業ブランチは `claude/claude-nte-audit-E1OnP`。
 
 ## 作業が一区切りしたら
 

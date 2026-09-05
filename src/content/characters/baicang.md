@@ -5,15 +5,17 @@ rarity: "S"
 element: "Incantation"
 role: "DPS"
 weapon: "弧盤: 集合（重合体）／専用「椿会」"
-faction: "異象管理局（BAC）ETD-4 隊長"
+faction: "異象管理局 E.T.D 第4小隊 隊長"
 version: "v1.0（スタンダード恒常）"
 tier: "A"
 cv: "中村悠一"
 description: "ETD-4のお調子者隊長。文字を発生させ、EXレール終結時に高火力を出す呪属性の近接メインアタッカー。"
 status: "verified"
-updated: 2026-06-08
+updated: 2026-09-05
 tags: ["呪", "アタッカー"]
 sources:
+  - label: "カノウィキ — 白蔵(NTE)"
+    url: "https://wiki.kanotype.net/ja/%E7%99%BD%E8%94%B5(NTE)"
   - label: "Game8 — 白蔵（ばいざん）"
     url: "https://game8.jp/nte/782352"
   - label: "ゲームウィズ — 白蔵"
@@ -24,7 +26,7 @@ sources:
 
 ## 概要
 
-**白蔵（ばいざん／Baicang）** は異象管理局（BAC）の部隊 **ETD-4 の隊長**。気さくでお調子者な人気の男性ユニットで、**[呪（Incantation）](/terms/el-incantation/)属性の近接メインアタッカー**。状況に応じて「呪文字」を発生させ、**EXレール終結**時に高火力を出す。3種の呪文字キャラを使い分けて戦う。
+**白蔵（ばいざん／Baicang）** は[異象管理局（BAC）](/terms/bac/)の実戦部隊 **[E.T.D 第4小隊](/terms/etd-4/) の隊長**（肩書きはS級[異象ハンター](/terms/anomaly-hunter/)）。気さくでお調子者な人気の男性ユニットで、**[呪（Incantation）](/terms/el-incantation/)属性の近接メインアタッカー**。異能は「**言霊**」で、状況に応じて**言霊の文字**を発生させ、**EXレール終結**時に高火力を出す。3種の文字を使い分けて戦う。
 
 ## おすすめ編成
 

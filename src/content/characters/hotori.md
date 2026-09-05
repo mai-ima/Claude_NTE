@@ -6,12 +6,12 @@ element: "Cosmos"
 role: "Buff"
 weapon: "弧盤: 固体（推奨「時間外を行く」）"
 faction: "エイボン骨董品店（店主）"
-version: "v1.0（「Misty Tipsy Style」）"
+version: "v1.0 後半（限定・2026/5/13〜6/3）"
 tier: "S"
 cv: "伊藤静"
 description: "エイボン骨董品店の店主。時間操作を軸にした光属性のサブアタッカー/支援で、味方スキルを記録して再現する。"
 status: "verified"
-updated: 2026-06-08
+updated: 2026-09-05
 tags: ["光", "バッファー", "サポート", "時間停止"]
 sources:
   - label: "Game8 — 潯（ほとり）"
@@ -41,4 +41,4 @@ sources:
 
 ## 入手
 
-v1.0 のリミテッドS（バナー「Misty Tipsy Style」）。
+v1.0 後半の限定ピックアップ（**2026/5/13〜6/3**）→ [潯（ほとり）ピックアップ](/events/hotori-pickup/)。英語版のバナー名は「Misty Tipsy Style」。Ver.1.3 後半（9/9〜）に**復刻**が予定されている（→[全帯域ローミング中！](/events/rinko-pickup/)）。

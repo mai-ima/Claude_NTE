@@ -6,12 +6,12 @@ element: "Psyche"
 role: "Buff"
 cv: "石見舞菜香"
 weapon: "弧盤: 固体（携帯スピーカー「ホーホーちゃん」）"
-faction: "Sterry Express"
+faction: "Sterry Express（配送会社）"
 version: "v1.0（無料スターター）"
 tier: "S"
 description: "日本版名「ハニア」。A級ながらS級評価の魂属性バッファー。引いてすぐ使える使いやすさが魅力。"
 status: "verified"
-updated: 2026-06-08
+updated: 2026-09-05
 tags: ["魂", "バッファー", "無料", "支援"]
 sources:
   - label: "Game8 — ハニア"

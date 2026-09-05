@@ -10,7 +10,8 @@
     "check": "astro check",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:links": "node scripts/check-links.mjs"
+    "test:links": "node scripts/check-links.mjs",
+    "test:content": "node scripts/check-content.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^6.0.3",

@@ -6,7 +6,7 @@ element: "Lakshana"
 role: "DPS"
 cv: "市ノ瀬加那"
 weapon: "弧盤: プラズマ"
-faction: "Sterry Express"
+faction: "Sterry Express（配送会社）"
 version: "v1.0（スタンダード恒常）"
 tier: "S"
 description: "相属性のアタッカー。延滞（Remora）反応を強く後押しできる。"
@@ -14,6 +14,8 @@ status: "verified"
 updated: 2026-09-05
 tags: ["相", "アタッカー"]
 sources:
+  - label: "神ゲー攻略 — ハソールの評価と使い方・おすすめ編成・育成素材"
+    url: "https://kamigame.jp/nte/page/420125995119420697.html"
   - label: "Game8 — ハソール"
     url: "https://game8.jp/nte/782351"
   - label: "AppMedia — ハソール"
@@ -27,7 +29,8 @@ sources:
 ## 性能・特徴
 
 - **[相（Lakshana）](/terms/el-lakshana/)アタッカー**。弧盤が攻撃特化寄りの[プラズマ](/terms/arc-forms/)で、火力を出しつつ相属性の[連環反応](/terms/esper-cycle/)を起点にできる。
-- 恒常Sの一角で、相属性パーティの主力として扱いやすい。具体的なスキル倍率・固有ギミックは要確認。
+- 固有リソース「**特急配送力**」を溜め、EXレール終結後に「**緊急配送**」状態へ移行して強力なスキルを放つ、バースト型のアタッカー。
+- 恒常Sの一角で、相属性パーティの主力として扱いやすい。具体的なスキル倍率は要確認。
 
 ## おすすめ弧盤
 

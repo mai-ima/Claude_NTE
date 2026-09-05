@@ -20,7 +20,7 @@
 | **αテスト（仮）wiki** | `/alpha/` | マルチwiki機能の**検証用サンプル**。実在ゲームではなくダミーデータ |
 
 - 公開先: Vercel（静的出力、`base = "/"`）
-- 開発ブランチ: `claude/wiki-feature-ui-update-d169kd`（作業はここへコミット／プッシュ）
+- 開発ブランチ: `claude/claude-nte-audit-E1OnP`（作業はここへコミット／プッシュ）
 - リポジトリ: `mai-ima/claude_nte`
 
 ---
@@ -97,12 +97,14 @@ pnpm install        # 依存インストール
 pnpm dev            # 開発サーバ
 pnpm test           # vitest（31テスト）
 pnpm build          # 本番ビルド（dist/ に出力）
+pnpm test:content   # 記事の品質検査（出典・更新日・リンク記法・重複。ビルド不要）
 node scripts/check-links.mjs   # 内部リンク切れ検査（build の後に実行）
 ```
 
-**変更したら必ず `pnpm test` → `pnpm build` → `check-links.mjs` を通してからコミットする。**
+**変更したら必ず `pnpm test` → `pnpm test:content` → `pnpm build` → `check-links.mjs` を
+通してからコミットする。**
 
-コミット後は `git push -u origin claude/wiki-feature-ui-update-d169kd`。
+コミット後は `git push -u origin claude/claude-nte-audit-E1OnP`。
 
 ---
 
