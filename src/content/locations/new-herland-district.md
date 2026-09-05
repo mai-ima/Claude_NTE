@@ -5,7 +5,7 @@ region: "ヘテロシティ"
 order: 50
 description: "高層ビルが林立する金融街。著名企業とエリートが集う「富の中枢」。ワールドボスが多く出現する。"
 status: "verified"
-updated: 2026-06-13
+updated: 2026-09-05
 tags: ["区", "金融街"]
 sources:
   - label: "thegameswiki — ニューホランド"
@@ -29,7 +29,7 @@ sources:
 | ボス | 弱点 |
 | --- | --- |
 | [巣囚鳥（Nestbound Bird）](/enemies/nestbound-bird/) | [光](/terms/el-cosmos/)（[霊](/terms/el-anima/)も可） |
-| [魔の書（Black Tome）](/enemies/black-tome/) | [光](/terms/el-cosmos/) |
+| [魔の書（Black Tome）](/enemies/black-tome/) | [闇](/terms/el-chaos/) |
 | [斑蝶（Swallowtail）](/enemies/swallowtail/) | [霊](/terms/el-anima/) |
 
 ## 交通

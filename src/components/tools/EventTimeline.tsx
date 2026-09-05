@@ -59,7 +59,6 @@ export default function EventTimeline({ events }: { events: TLEvent[] }) {
   const withPhase = events.map((e) => ({ ...e, phase: phaseOf(now, e.startMs, e.endMs) }));
   const current = withPhase.filter((e) => e.phase === 'current');
   const upcoming = withPhase.filter((e) => e.phase === 'upcoming');
-  const ended = withPhase.filter((e) => e.phase === 'ended');
 
   // ガント軸: 開催中＋予定のうち日付があるものから [min(now), max end] を作る
   const live = [...current, ...upcoming].filter((e) => e.startMs != null && e.endMs != null);

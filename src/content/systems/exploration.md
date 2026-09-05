@@ -4,9 +4,11 @@ category: "育成・進行"
 order: 30
 description: "シームレスな都市探索。乗り物での移動・改造、シティデリバリー(配達)、スイフトTAXI、フォトモード。"
 status: "verified"
-updated: 2026-06-08
+updated: 2026-09-05
 tags: ["探索", "乗り物", "シティライフ", "オープンワールド"]
 sources:
+  - label: "NTE公式 — Ver.1.3「霧月夜に星還りて」アップデートのお知らせ"
+    url: "https://nte.perfectworld.com/jp/article/news/gamenews/20260817/263606.html"
   - label: "Game8 — 乗り物の入手と改造"
     url: "https://game8.jp/nte/783395"
   - label: "ゲームウィズ — シティライフまとめ"
@@ -34,6 +36,13 @@ sources:
 
 ## ファストトラベル
 
-- **ReroReroフォンボックス** や **Wertheimer Towers** が転送地点。
+- **[ReroReroフォンボックス](/terms/rerero-phonebox/)** や **[ヴェルテハイモー塔](/terms/wertheimer-towers/)** が転送地点。
+
+## Ver.1.3 で追加された運転まわり
+
+- **自動運転**に対応。目的地を指定して移動を任せられる。
+- **助手席への同乗**が可能になり、キャラを隣に乗せて走れる。
+- 新しい乗り物として**水上バイク「Tide」／ビーチバギー「サウザン」／自転車「ノスタルジー号」**が追加され、[星暮保護区](/locations/hoshigure-sanctuary/)の海と砂浜で使える。
+- ほかに**コスチュームローテーション（ランダムコーデ）**、**UI非表示**、マルチの**敵影追跡**などの操作性改善が入った。
 
 > 個別の車両名・全台数は版で増えるため、最新はゲーム内ショップ/ガレージで確認してください。

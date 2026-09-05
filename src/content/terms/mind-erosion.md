@@ -1,6 +1,7 @@
 ---
 title: "心蝕"
 reading: "しんしょく"
+en: "Mind Erosion"
 category: "戦闘"
 aliases: ["心蝕状態"]
 order: 100

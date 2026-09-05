@@ -5,6 +5,7 @@ import preact from '@astrojs/preact';
 import sitemap from '@astrojs/sitemap';
 import icon from 'astro-icon';
 import pagefind from 'astro-pagefind';
+import { unified } from '@astrojs/markdown-remark';
 import rehypeTermLinks from './src/lib/rehype-term-links.mjs';
 
 // --- Deploy configuration ---------------------------------------------------
@@ -28,7 +29,8 @@ export default defineConfig({
     '/events/road-of-no-return/': '/events/lacrimosa-arc-pickup/',
   },
   // 本文中の用語を、その用語ページへ自動リンク（Wikipedia風の青リンク化）。
-  markdown: { rehypePlugins: [rehypeTermLinks] },
+  // Astro 6 では markdown.rehypePlugins が非推奨のため、unified() のプロセッサへ直接渡す。
+  markdown: { processor: unified({ rehypePlugins: [rehypeTermLinks] }) },
   // 注: Markdown/MDX 内部リンクは「相対リンク」で記述しているため base 付与の
   // 変換プラグインは不要（Astro のバージョン更新にも壊れにくい）。
   integrations: [preact({ compat: true }), mdx(), icon(), pagefind(), sitemap()],

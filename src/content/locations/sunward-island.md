@@ -3,9 +3,9 @@ title: "ヒナタ島（Sunward Island）"
 type: "island"
 region: "v1.1 追加"
 order: 60
-description: "v1.1「Dreamwalk Corridor」で追加された熱帯の新リージョン。リゾートと隠れアノマリー。"
+description: "v1.1「夢巡る回廊」で追加された熱帯の新リージョン。リゾートと隠れアノマリー。"
 status: "verified"
-updated: 2026-06-08
+updated: 2026-09-05
 tags: ["島", "v1.1"]
 sources:
   - label: "GameWith — Sunward Island"
@@ -16,9 +16,9 @@ sources:
 
 ## 概要
 
-**ヒナタ島** は v1.1「Dreamwalk Corridor」（2026/6/3）で追加された**熱帯の新リージョン**。高級リゾート、港町、ビーチ、森、ひまわり畑、難破船エリア、灯台などがあり、**隠れたアノマリー**も点在する。主にボートでアクセスする。
+**ヒナタ島** は v1.1「[夢巡る回廊](/terms/dreamwalk/)」（2026/6/3）で追加された**熱帯の新リージョン**。高級リゾート、港町、ビーチ、森、ひまわり畑、難破船エリア、灯台などがあり、**隠れたアノマリー**も点在する。主にボートでアクセスする。
 
 - リゾートは市が出資し、アノマリーの保護・育成を目的とする。
-- 解放は v1.1 のストーリー（「A Research in Scarlet」後のエピソード）。
+- 解放は v1.1 のストーリー第5章「[夢巡る回廊](/story/main-story/)」の進行による。
 
 > 「Sunni Island」と呼ぶ媒体もあるが、公式名は **Sunward Island**。

@@ -3,9 +3,9 @@ title: "ミゲル区（Miguel District）"
 type: "district"
 region: "ヘテロシティ"
 order: 40
-description: "山辺の風光明媚な区。最高峰のランドマーク「Skytower」やCaltrop Lake、Noetic Bridge商店街がある。"
+description: "山辺の風光明媚な区。市内最高のランドマーク「ヘテロシティ・スカイタワー」やカルトロップ湖、ノエティックブリッジ商店街がある。"
 status: "verified"
-updated: 2026-06-08
+updated: 2026-09-05
 tags: ["区", "ランドマーク"]
 sources:
   - label: "GameWith — ミゲル区 Map"
@@ -16,7 +16,7 @@ sources:
 
 ## 概要
 
-**ミゲル区** は山辺に広がる風光明媚な区。市内最高のランドマーク **Heterocity Skytower**、**Caltrop Lake**、ショッピング街 **Noetic Bridge** などを擁する。
+**ミゲル区** は山辺に広がる風光明媚な区。市内最高のランドマーク **[ヘテロシティ・スカイタワー](/terms/skytower/)**、**[カルトロップ湖](/terms/caltrop-lake/)**、ショッピング街 **[ノエティックブリッジ](/terms/noetic-bridge/)** などを擁する。
 
 ## 見どころ・地区
 

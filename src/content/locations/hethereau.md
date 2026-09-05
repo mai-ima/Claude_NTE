@@ -4,7 +4,7 @@ type: "city"
 order: 10
 description: "本作の舞台となる現代都市。超常的なアノマリーと日常が共存する。マップ南側に位置。"
 status: "verified"
-updated: 2026-06-08
+updated: 2026-09-05
 tags: ["都市", "舞台"]
 sources:
   - label: "Wikipedia — Neverness to Everness"
@@ -28,9 +28,9 @@ sources:
 - [ミゲル区（ミゲル区）](/locations/miguel-district/) — 山辺の景勝
 - [ニューホランド（ニューホランド）](/locations/new-herland-district/) — 金融街
 
-このほか「絵空町」などのエリアがあり、v1.1 で [ヒナタ島（Sunward Island）](/locations/sunward-island/) が追加された。
+このほか[絵空町](/terms/ekuusora/)などのエリアがあり、v1.1 で [ヒナタ島（Sunward Island）](/locations/sunward-island/) が、Ver.1.3 で [星暮保護区](/locations/hoshigure-sanctuary/) が追加された。
 
 ## 探索
 
-- ファストトラベルは **ReroReroフォンボックス** や **Wertheimer Towers**。
-- **フォトモード**で名所を撮影して Footprint Points を獲得。宝箱・ビューポイント・キャラストーリーなどが探索度に加算される。
+- ファストトラベルは **[ReroReroフォンボックス](/terms/rerero-phonebox/)** や **[ヴェルテハイモー塔](/terms/wertheimer-towers/)**。
+- **[フォトモード](/terms/photo-mode/)** で名所を撮影すると探索度が加算される。宝箱・ビューポイント・キャラストーリーなども探索度に寄与する。

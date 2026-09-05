@@ -17,7 +17,7 @@ sources:
 
 ## 概要
 
-**日向旅行記** は、v1.1「Dreamwalk Corridor」で追加された[ヒナタ島](/locations/sunward-island/)を舞台にする外伝（異聞録）エピソード。クリアすると[円石](/items/annulith/)などの報酬を獲得できる。
+**日向旅行記** は、v1.1「[夢巡る回廊](/terms/dreamwalk/)」で追加された[ヒナタ島](/locations/sunward-island/)を舞台にする外伝（異聞録）エピソード。クリアすると[円石](/items/annulith/)などの報酬を獲得できる。
 
 - 島の解放後に進行可能。リゾート・港町・ひまわり畑など島内各所を巡る内容とされる。
 

@@ -4,7 +4,7 @@ category: "ガチャ"
 order: 10
 description: "サイコロでボードを進める独自ガチャ。70連でボード転換（確率上昇）、限定90連で天井・すり抜けなし。"
 status: "verified"
-updated: 2026-06-08
+updated: 2026-09-05
 tags: ["ガチャ", "天井", "通貨"]
 sources:
   - label: "AppMedia（日本版）— ガチャ仕様"
@@ -20,7 +20,7 @@ sources:
 NTE（Neverness to Everness）のガチャは **「スカボロー市場（Scarborough Fair）」** と呼ばれるボードゲーム式。**サイコロ（1〜6）** を振ってコマを進め、止まったマスの報酬を得る。
 
 - **限定ボード:** 期間限定の注目キャラ。**本質サイコロ**を使用。
-- **標準ボード:** 恒常。**虚質サイコロ**を使用。恒常S級は **早霧 / ダフォディール / 白蔵 / 九原 / ファルディーヤ / ハソール**。
+- **標準ボード:** 恒常。**虚質サイコロ**を使用。恒常S級は **[早霧](/characters/sakiri/) / [ダフォディール](/characters/daffodill/) / [白蔵](/characters/baicang/) / [九原](/characters/jiuyuan/) / [ファルディーヤ](/characters/fadia/) / [ハソール](/characters/hathor/)** の6体（Ver.1.1 時点で確認。恒常追加の有無は**要確認**）。
 
 ## 天井（ピティ）
 
@@ -29,7 +29,7 @@ NTE（Neverness to Everness）のガチャは **「スカボロー市場（Scarb
 - **すり抜け（50/50）なし:** 限定ボードで出たS級は**必ず注目キャラ**。
 - **天井は持ち越し:** キャラ天井のカウントは失われない。
 
-> 当wikiの[ガチャ天井トラッカー](/tools/gacha-pity/)で、確定までの連数と必要 **円石** を計算できます。
+> 当wikiの[ガチャ天井トラッカー](/tools/gacha-pity/)で、確定までの連数と必要な**[円石](/terms/annulith/)**を計算できます。過去バナーの一覧は[バージョン履歴](/systems/version-history/)へ。
 
 ## 通貨
 

@@ -4,9 +4,11 @@ category: "シティライフ"
 order: 5
 description: "戦闘やクエストとは別軸の都市生活コンテンツの総称。レーシング・海釣り・カフェ経営・音ゲー・タクシーなど多彩なミニゲームでファンスや円石・コスチュームを稼げる。"
 status: "verified"
-updated: 2026-06-15
+updated: 2026-09-05
 tags: ["シティライフ", "都市生活", "ミニゲーム", "ファンス"]
 sources:
+  - label: "NTE公式 — Ver.1.3「霧月夜に星還りて」アップデートのお知らせ"
+    url: "https://nte.perfectworld.com/jp/article/news/gamenews/20260817/263606.html"
   - label: "AppMedia — シティライフ一覧とやり方"
     url: "https://appmedia.jp/nte/79981195"
   - label: "神ゲー攻略 — シティライフの一覧と解放条件"
@@ -27,6 +29,7 @@ sources:
 - **[ベーグル（SNS）](/systems/bagel/)** — 写真・動画投稿のゲーム内SNS。
 - **[ファイトクラブ](/systems/fight-club/)** — 拳のみで戦うバトルコンテンツ。
 - **[フォトモード](/terms/photo-mode/)** — 街並みを撮影。探索度にも寄与。
+- **ビーチアクティビティ（Ver.1.3）** — [星暮保護区](/locations/hoshigure-sanctuary/)で、ビーチバレー「[スターズ・バレー](/events/stars-valley/)」、水上バイクレース「[サーフブレイカー](/events/surf-breaker/)」、漂流物回収「[難破船トレジャー](/events/shipwreck-treasure/)」が遊べる。
 
 ## 仕組み・コツ
 
