@@ -1,0 +1,99 @@
+---
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../lib/path';
+import { wiki } from '../../lib/wikis';
+import { loadNavSections, recentEntries } from '../../lib/content';
+
+const w = wiki('alpha');
+const sections = await loadNavSections(w.sections);
+const countOf = (c: string) => sections.find((s) => s.collection === c)?.items.length ?? 0;
+const total = sections.reduce((sum, s) => sum + s.items.length, 0);
+const recent = await recentEntries(6, w.sections);
+---
+
+<BaseLayout title="ホーム" wikiId="alpha">
+  <div class="layout">
+    <div class="content">
+      <section class="page-head hero">
+        <p class="eyebrow">{w.siteName}</p>
+        <h1>αテスト（仮）wiki</h1>
+        <p class="lead">
+          このwikiは、<strong>1つのサイトに複数ゲームのwikiを並置できるか</strong>を検証するためのサンプルです。
+          「αテスト（仮）」は<strong>実在のゲームではなく</strong>、掲載している記事もすべてダミーデータです。
+          <a href={withBase('/')}>NTE 完全攻略wiki</a> とは記事データ・ナビゲーション・URL を完全に分離しています。
+        </p>
+        <div class="meta-row">
+          <a class="btn btn-primary" href={withBase('/alpha/guides/about/')}>
+            <Icon name="lucide:info" /> このwikiについて
+          </a>
+          <a class="btn" href={withBase('/')}>
+            <Icon name="lucide:arrow-left-right" /> NTE wiki へ
+          </a>
+        </div>
+        <div class="stat-band">
+          <div class="stat"><span class="stat-num">{total}</span><span class="stat-label">記事（サンプル）</span></div>
+          <div class="stat"><span class="stat-num">{countOf('alphaCharacters')}</span><span class="stat-label">キャラ</span></div>
+          <div class="stat"><span class="stat-num">{countOf('alphaTerms')}</span><span class="stat-label">用語</span></div>
+          <div class="stat"><span class="stat-num">{w.sections.length}</span><span class="stat-label">セクション</span></div>
+        </div>
+      </section>
+
+      <div class="callout callout-info" style="margin-top:8px;">
+        <Icon name="lucide:flask-conical" />
+        <div>
+          <p class="callout-title">サンプルwikiです</p>
+          <div class="text-sm">
+            記事の内容は構造確認用のダミーで、攻略情報ではありません。実際に別ゲームのwikiを追加するときは、
+            この α wiki と同じ形（専用コレクション＋<code>/&lt;game&gt;/</code> 配下のページ）で増やします。
+          </div>
+        </div>
+      </div>
+
+      <section style="margin-top:40px;">
+        <h2>データベース</h2>
+        <div class="grid grid-cards" style="margin-top:16px;">
+          {
+            w.sections.map((s) => (
+              <a class="card card-pad card-link" href={withBase(s.href)}>
+                <div class="row" style="gap:10px;align-items:flex-start;">
+                  <span class="badge badge-accent" style="height:34px;width:34px;padding:0;border-radius:9px;justify-content:center;">
+                    <Icon name={`lucide:${s.icon}`} style="width:18px;height:18px;" />
+                  </span>
+                  <div>
+                    <div style="font-weight:700;">{s.label}</div>
+                    <div class="muted text-sm">{countOf(s.collection)} 記事</div>
+                  </div>
+                </div>
+                <p class="muted text-sm" style="margin-top:8px;">{s.blurb}</p>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+
+      {
+        recent.length > 0 && (
+          <section style="margin-top:40px;">
+            <h2>最近更新した記事</h2>
+            <ul class="list-reset stack" style="margin-top:16px;">
+              {recent.map((e) => (
+                <li>
+                  <a class="card card-pad card-link" href={e.href}>
+                    <div class="row row-between">
+                      <span style="font-weight:600;">{e.title}</span>
+                      <span class="muted text-sm">
+                        {e.updated.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' })}
+                      </span>
+                    </div>
+                    <span class="badge" style="margin-top:6px;">{e.sectionLabel}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+    </div>
+  </div>
+</BaseLayout>

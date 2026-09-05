@@ -8,10 +8,10 @@ cv: "市ノ瀬加那"
 weapon: "弧盤: プラズマ"
 faction: "Sterry Express"
 version: "v1.0（スタンダード恒常）"
-tier: "A"
+tier: "S"
 description: "相属性のアタッカー。延滞（Remora）反応を強く後押しできる。"
 status: "verified"
-updated: 2026-06-16
+updated: 2026-09-05
 tags: ["相", "アタッカー"]
 sources:
   - label: "Game8 — ハソール"

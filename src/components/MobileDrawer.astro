@@ -1,21 +1,24 @@
 ---
 import { Icon } from 'astro-icon/components';
 import { withBase, activeHref } from '../lib/path';
-import { PRIMARY_NAV, SECTIONS } from '../lib/nav';
 import { loadNavSections } from '../lib/content';
+import { wiki, WIKI_LIST, type WikiId } from '../lib/wikis';
 
 interface Props {
   currentPath: string;
+  /** どの wiki のドロワーか（既定: NTE） */
+  wikiId?: WikiId;
 }
-const { currentPath } = Astro.props;
+const { currentPath, wikiId = 'nte' } = Astro.props;
+const w = wiki(wikiId);
 
 // 記事が存在するセクションのみ表示
-const sections = await loadNavSections();
+const sections = await loadNavSections(w.sections);
 const used = new Set(sections.map((s) => s.collection));
-const navSections = SECTIONS.filter((s) => used.has(s.collection));
+const navSections = w.sections.filter((s) => used.has(s.collection));
 
 // 最長一致の1件だけを現在ページ扱いに（PRIMARY と DB セクションを合わせて判定）
-const allHrefs = [...PRIMARY_NAV.map((n) => n.href), ...navSections.map((s) => s.href)];
+const allHrefs = [...w.primaryNav.map((n) => n.href), ...navSections.map((s) => s.href)];
 const drawerActive = activeHref(currentPath, allHrefs);
 ---
 
@@ -23,7 +26,7 @@ const drawerActive = activeHref(currentPath, allHrefs);
   <button class="drawer-backdrop" type="button" aria-label="閉じる" data-drawer-close></button>
   <nav class="drawer-panel">
     <div class="row row-between" style="margin-bottom:12px;">
-      <span class="brand"><span class="brand-mark">NTE</span><span>攻略wiki</span></span>
+      <span class="brand"><span class="brand-mark">{w.mark}</span><span>{w.brand}</span></span>
       <button class="btn btn-icon btn-ghost" type="button" aria-label="閉じる" data-drawer-close>
         <Icon name="lucide:x" />
       </button>
@@ -31,7 +34,7 @@ const drawerActive = activeHref(currentPath, allHrefs);
 
     <div class="nav-group">
       {
-        PRIMARY_NAV.map((item) => (
+        w.primaryNav.map((item) => (
           <a
             class="nav-link"
             href={withBase(item.href)}
@@ -63,5 +66,25 @@ const drawerActive = activeHref(currentPath, allHrefs);
         </div>
       )
     }
+
+    <div class="nav-group">
+      <p class="nav-group-title">wiki を切り替え</p>
+      {
+        WIKI_LIST.map((target) => (
+          <a
+            class:list={['nav-link', { 'is-active': target.id === w.id }]}
+            href={withBase(target.base ? `${target.base}/` : '/')}
+            data-drawer-close
+            aria-current={target.id === w.id ? 'true' : undefined}
+          >
+            <span class="brand-mark" style="width:22px;height:22px;font-size:0.6rem;">{target.mark}</span>
+            <span style="flex:1;min-width:0;">
+              {target.siteName}
+              <span class="muted text-sm" style="display:block;">{target.tagline}</span>
+            </span>
+          </a>
+        ))
+      }
+    </div>
   </nav>
 </div>

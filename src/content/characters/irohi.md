@@ -3,7 +3,7 @@ name: "Irohi"
 nameJa: "イロヒ"
 rarity: "S"
 element: "Anima"
-role: "サポート（回復/バフ）"
+role: "Buff"
 implemented: true
 version: "Ver.1.2 後半（2026/7/29〜 限定）"
 faction: "—"
@@ -12,7 +12,7 @@ cv: "日高里菜"
 weapon: "弧盤: 専用「偽りの門」（The Wrong Gate）"
 description: "Ver.1.2 後半の限定S。霊（Anima）属性のヒーラー兼バッファー。味方を無敵の「トランス」状態にし、EXレール終結で全体回復・蘇生までこなす万能サポート。"
 status: "verified"
-updated: 2026-07-24
+updated: 2026-09-05
 tags: ["霊", "サポート", "ヒーラー", "v1.2", "トランス"]
 sources:
   - label: "AppMedia — イロヒの性能と声優"

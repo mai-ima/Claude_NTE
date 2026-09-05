@@ -1,7 +1,8 @@
 /** コレクション横断のヘルパ。表示タイトル・リンク・サイドバー用データを組み立てる。 */
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { withBase } from './path';
-import { SECTIONS } from './nav';
+import { SECTIONS, sectionByCollection, type SectionMeta } from './nav';
+import { wikiOfCollection } from './wikis';
 
 export type AnyEntry = CollectionEntry<
   | 'characters'
@@ -17,6 +18,11 @@ export type AnyEntry = CollectionEntry<
   | 'vehicles'
   | 'arcs'
   | 'people'
+  // αテスト（仮）wiki のコレクション（NTE 側とは分離）
+  | 'alphaCharacters'
+  | 'alphaSystems'
+  | 'alphaGuides'
+  | 'alphaTerms'
 >;
 
 /** エントリの表示タイトル（日本版名称を優先: nameJa → title → name） */
@@ -31,9 +37,14 @@ export function enNameOf(entry: AnyEntry): string {
   return (d.name as string) || (d.title as string) || entry.id;
 }
 
-/** コレクション内リンク */
+/**
+ * コレクション内リンク。URL はセクション定義の href を基準にするため、
+ * /alpha/ 配下のような wiki 固有のパスにも自動で追従する。
+ * （セクション未登録のコレクションは従来どおり /<collection>/<id>/）
+ */
 export function hrefOf(collection: string, id: string): string {
-  return withBase(`/${collection}/${id}/`);
+  const base = sectionByCollection(collection)?.href ?? `/${collection}/`;
+  return withBase(`${base}${id}/`);
 }
 
 export interface NavItem {
@@ -81,13 +92,15 @@ interface IndexedEntry {
   sectionLabel: string;
   body: string;
 }
-let _entryIndex: IndexedEntry[] | null = null;
+const _entryIndexCache = new Map<string, IndexedEntry[]>();
 
-/** 全公開エントリの本文インデックス（ビルド中キャッシュ） */
-async function entryIndex(): Promise<IndexedEntry[]> {
-  if (_entryIndex) return _entryIndex;
+/** 指定セクション群の本文インデックス（ビルド中キャッシュ・wiki ごとに別キャッシュ） */
+async function entryIndex(sections: SectionMeta[] = SECTIONS): Promise<IndexedEntry[]> {
+  const key = sections.map((s) => s.collection).join(',');
+  const cached = _entryIndexCache.get(key);
+  if (cached) return cached;
   const idx: IndexedEntry[] = [];
-  for (const s of SECTIONS) {
+  for (const s of sections) {
     for (const e of await publishedEntries(s.collection)) {
       idx.push({
         collection: s.collection,
@@ -99,7 +112,7 @@ async function entryIndex(): Promise<IndexedEntry[]> {
       });
     }
   }
-  _entryIndex = idx;
+  _entryIndexCache.set(key, idx);
   return idx;
 }
 
@@ -109,11 +122,12 @@ export interface Backlink {
   sectionLabel: string;
 }
 
-/** 指定エントリへ本文からリンクしている他記事（被リンク）を返す。 */
+/** 指定エントリへ本文からリンクしている他記事（被リンク）を返す。探索範囲は同じ wiki 内のみ。 */
 export async function backlinksFor(collection: string, id: string): Promise<Backlink[]> {
-  const idx = await entryIndex();
-  // コンテンツの内部リンクは絶対パス記法 `](/coll/id/)`
-  const needles = [`/${collection}/${id}/`, `/${collection}/${id})`];
+  const idx = await entryIndex(wikiOfCollection(collection).sections);
+  // コンテンツの内部リンクは絶対パス記法 `](/<section>/<id>/)`
+  const path = (sectionByCollection(collection)?.href ?? `/${collection}/`) + id;
+  const needles = [`${path}/`, `${path})`];
   return idx
     .filter(
       (e) =>
@@ -124,9 +138,9 @@ export async function backlinksFor(collection: string, id: string): Promise<Back
 }
 
 /** 全コレクション横断で「最近更新した記事」を取得 */
-export async function recentEntries(limit = 6): Promise<RecentEntry[]> {
+export async function recentEntries(limit = 6, sections: SectionMeta[] = SECTIONS): Promise<RecentEntry[]> {
   const all: RecentEntry[] = [];
-  for (const s of SECTIONS) {
+  for (const s of sections) {
     const entries = await publishedEntries(s.collection);
     for (const e of entries) {
       if (!e.data.updated) continue;
@@ -142,9 +156,9 @@ export async function recentEntries(limit = 6): Promise<RecentEntry[]> {
 }
 
 /** 全セクション分のナビ用データをまとめて取得（サイドバー/ドロワー共通） */
-export async function loadNavSections(): Promise<NavSection[]> {
+export async function loadNavSections(sections: SectionMeta[] = SECTIONS): Promise<NavSection[]> {
   const out: NavSection[] = [];
-  for (const s of SECTIONS) {
+  for (const s of sections) {
     const entries = await publishedEntries(s.collection);
     if (entries.length === 0) continue;
     out.push({

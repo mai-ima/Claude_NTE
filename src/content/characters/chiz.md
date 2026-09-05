@@ -7,12 +7,15 @@ role: "DPS"
 weapon: "弧盤: 気体"
 faction: "にくきゅう銀行（ニューホランド、ロビーマネージャー）"
 version: "v1.0（無料・名声進行）"
-tier: "A"
+tier: "S"
+cv: "小原好美"
 description: "日本版名「ちぃちゃん」。最良の無料DPS。通常攻撃でファンスを稼ぎ、「金穀」を貯めてバーストする経済効率の高い光属性アタッカー。"
 status: "verified"
-updated: 2026-06-08
+updated: 2026-09-05
 tags: ["光", "アタッカー", "無料", "無課金"]
 sources:
+  - label: "神ゲー攻略 — 声優（CV）一覧"
+    url: "https://kamigame.jp/nte/page/419364570465864671.html"
   - label: "Game8 — ちぃちゃん"
     url: "https://game8.jp/nte/782428"
   - label: "ゲームウィズ — ちぃちゃん"

@@ -7,12 +7,12 @@ role: "DPS"
 weapon: "弧盤: プラズマ"
 faction: "エイボン骨董品店／コリンスファミリー一代目ボス"
 version: "v1.0 ローンチ（限定）"
-tier: "SS"
+tier: "S"
 cv: "竹達彩奈"
 birthday: "8月20日"
 description: "ローンチ最強格の霊属性メインアタッカー。通常攻撃主体で操作が簡単、リセマラ最優先候補。"
 status: "verified"
-updated: 2026-06-08
+updated: 2026-09-05
 tags: ["霊", "アタッカー", "メインアタッカー", "リセマラ"]
 sources:
   - label: "Game8（日本版）— ナナリ"

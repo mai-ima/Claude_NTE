@@ -1,0 +1,35 @@
+---
+import EntityDetail from '../../../components/EntityDetail.astro';
+import { detailPaths, renderEntry, baseDetailProps } from '../../../lib/detail';
+import type { Row, Pill } from '../../../components/EntityDetail.astro';
+
+export async function getStaticPaths() {
+  return detailPaths('alphaCharacters', { relatedBy: 'role' });
+}
+const { entry, prev, next, related } = Astro.props;
+const { Content, headings } = await renderEntry(entry);
+const d = entry.data as any;
+
+const rows: Row[] = [];
+if (d.en) rows.push({ k: '英語表記', v: d.en });
+if (d.rarity) rows.push({ k: 'レア度', v: d.rarity });
+if (d.role) rows.push({ k: '役割', v: d.role });
+if (d.element) rows.push({ k: '属性', v: d.element });
+if (d.build) rows.push({ k: '実装ビルド', v: d.build });
+
+const pills: Pill[] = [];
+if (d.rarity) pills.push({ kind: 'rarity', value: d.rarity });
+if (d.role) pills.push({ kind: 'plain', value: d.role });
+if (d.element) pills.push({ kind: 'plain', value: d.element });
+---
+<EntityDetail
+  {...baseDetailProps('alphaCharacters', entry, prev, next)}
+  pills={pills}
+  rows={rows}
+  headings={headings}
+  editPath={(entry as any).filePath}
+  related={related}
+  relatedLabel="同じ役割のキャラ"
+>
+  <Content />
+</EntityDetail>

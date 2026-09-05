@@ -13,7 +13,8 @@ import Avatar from './Avatar.astro';
 import PersonalNote from './PersonalNote';
 import { withBase } from '../lib/path';
 import { elementMeta, roleMeta } from '../lib/nav';
-import { backlinksFor } from '../lib/content';
+import { backlinksFor, hrefOf } from '../lib/content';
+import { wikiOfCollection } from '../lib/wikis';
 import { editUrl, editUrlFor } from '../lib/edit-url';
 
 export interface Pill {
@@ -81,6 +82,8 @@ const {
   editPath,
 } = Astro.props;
 
+// このページが属する wiki（ブランド・ナビ・OG の切替に使う）
+const w = wikiOfCollection(collection);
 // このページを本文から参照している記事（被リンク）
 const backlinks = await backlinksFor(collection, currentId);
 // 「このページを編集」リンク（GitHub の編集画面→PR）
@@ -92,17 +95,18 @@ const editHref = editPath ? editUrl(editPath) : editUrlFor(collection, currentId
   description={lead}
   ogType="article"
   modified={updated}
-  image={`og/${collection}/${currentId}.png`}
+  wikiId={w.id}
+  image={w.hasOgImages ? `og/${collection}/${currentId}.png` : undefined}
   breadcrumbs={[
     { name: sectionLabel, href: withBase(sectionHref) },
-    { name: title, href: withBase(`/${collection}/${currentId}/`) },
+    { name: title, href: hrefOf(collection, currentId) },
   ]}
 >
   <div class="layout has-sidebar">
-    <Sidebar currentCollection={collection} currentId={currentId} />
+    <Sidebar currentCollection={collection} currentId={currentId} wikiId={w.id} />
     <div class="content">
       <nav class="text-sm muted cluster" style="margin-bottom:16px;" aria-label="パンくず">
-        <a href={withBase('/')}>ホーム</a>
+        <a href={withBase(w.base ? `${w.base}/` : '/')}>{w.id === 'nte' ? 'ホーム' : w.siteName}</a>
         <Icon name="lucide:chevron-right" style="width:14px;height:14px;" />
         <a href={withBase(sectionHref)}>{sectionLabel}</a>
       </nav>

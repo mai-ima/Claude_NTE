@@ -8,10 +8,10 @@ cv: "森川智之"
 weapon: "弧盤: 集合（重合体）／専用「忘れな傘」"
 faction: "—"
 version: "v1.0"
-tier: "A"
+tier: "B"
 description: "シールド付与でチーム耐久を高める呪属性サポーター（A級）。シールドは交代後も持続する。"
 status: "verified"
-updated: 2026-06-08
+updated: 2026-09-05
 tags: ["呪", "サバイバル", "シールド"]
 sources:
   - label: "Game8 — アドレー"

@@ -7,6 +7,7 @@ import Sidebar from './Sidebar.astro';
 import StatusBadge from './StatusBadge.astro';
 import { elementMeta } from '../lib/nav';
 import { publishedEntries, titleOf, hrefOf } from '../lib/content';
+import { wikiOfCollection } from '../lib/wikis';
 
 interface Props {
   collection: string;
@@ -41,6 +42,8 @@ const {
   search = true,
 } = Astro.props;
 
+// このコレクションが属する wiki（ブランド・ナビ・サイドバーの切替に使う）
+const w = wikiOfCollection(collection);
 const entries = await publishedEntries(collection);
 
 type Item = (typeof entries)[number];
@@ -81,9 +84,9 @@ if (filterField) {
 const showFilter = !!filterField && filterValues.length > 1;
 ---
 
-<BaseLayout title={title}>
+<BaseLayout title={title} wikiId={w.id}>
   <div class="layout has-sidebar">
-    <Sidebar currentCollection={collection} />
+    <Sidebar currentCollection={collection} wikiId={w.id} />
     <div class="content">
       <section class="page-head">
         <p class="eyebrow">{eyebrow}</p>

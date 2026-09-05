@@ -7,11 +7,11 @@ role: "DPS"
 weapon: "弧盤: 液体"
 faction: "エイボン骨董品店（用心棒）"
 version: "v1.0（スタンダード恒常）"
-tier: "A"
+tier: "S"
 cv: "大原さやか"
 description: "ブレイク特化の闇属性アタッカー。控えから登場した瞬間のカウンター爆発力が魅力。"
 status: "verified"
-updated: 2026-06-08
+updated: 2026-09-05
 tags: ["闇", "アタッカー", "ブレイク"]
 sources:
   - label: "Game8 — ダフォディール"

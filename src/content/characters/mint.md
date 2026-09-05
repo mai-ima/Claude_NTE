@@ -7,12 +7,15 @@ role: "DPS"
 weapon: "弧盤: 液体"
 faction: "—"
 version: "v1.0"
-tier: "B"
+tier: "C"
+cv: "鬼頭明里"
 description: "霊属性のアタッカー（A級）。1凸で真価を発揮し、スキル連打型のアタッカーになる配布キャラ。"
 status: "verified"
-updated: 2026-06-08
+updated: 2026-09-05
 tags: ["霊", "アタッカー"]
 sources:
+  - label: "神ゲー攻略 — 声優（CV）一覧"
+    url: "https://kamigame.jp/nte/page/419364570465864671.html"
   - label: "Game8 — ミント"
     url: "https://game8.jp/nte/782345"
   - label: "ゲームウィズ — ミント"

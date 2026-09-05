@@ -7,12 +7,15 @@ role: "DPS"
 weapon: "弧盤: 気体"
 faction: "—"
 version: "v1.0"
-tier: "A"
+tier: "B"
+cv: "杉田智和"
 description: "相（Lakshana）属性のサブDPS／デバッファー（A級）。影を操り、格闘で追撃を重ねて戦う。日本版公式名は「翳（えい）」（英名 Skia）。"
 status: "verified"
-updated: 2026-06-14
+updated: 2026-09-05
 tags: ["相", "アタッカー", "デバッファー", "Aランク", "翳", "えい", "スキア"]
 sources:
+  - label: "神ゲー攻略 — 声優（CV）一覧"
+    url: "https://kamigame.jp/nte/page/419364570465864671.html"
   - label: "ゲームウィズ — 翳(えい)の評価とおすすめ編成・武器"
     url: "https://gamewith.jp/nte/555735"
   - label: "神ゲー攻略 — 翳（えい）の評価とおすすめビルド・パーティ編成"

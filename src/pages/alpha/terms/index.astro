@@ -1,0 +1,13 @@
+---
+import EntityList from '../../../components/EntityList.astro';
+import { sectionByCollection } from '../../../lib/nav';
+const s = sectionByCollection('alphaTerms')!;
+---
+<EntityList
+  collection="alphaTerms"
+  title="用語集（αテスト）"
+  eyebrow="αテスト（仮）wiki"
+  lead="αテスト版で使う用語のサンプル。NTE の用語集とは別のコレクションで管理しています。"
+  icon={s.icon}
+  groupField="category"
+/>

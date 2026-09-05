@@ -24,6 +24,8 @@ export default defineConfig({
   redirects: {
     '/tools/gacha-odds/': '/tools/gacha-dashboard/',
     '/tools/gacha-budget/': '/tools/gacha-dashboard/',
+    // 実態（レクイエム弧盤PU）と食い違っていた旧スラッグを救済。
+    '/events/road-of-no-return/': '/events/lacrimosa-arc-pickup/',
   },
   // 本文中の用語を、その用語ページへ自動リンク（Wikipedia風の青リンク化）。
   markdown: { rehypePlugins: [rehypeTermLinks] },

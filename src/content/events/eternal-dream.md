@@ -30,4 +30,4 @@ sources:
 
 ## 同時開催
 
-- 武器ピックアップ「[レクイエム弧盤PU（ラストローズ）](/events/road-of-no-return/)」。
+- 武器ピックアップ「[レクイエム弧盤PU（ラストローズ）](/events/lacrimosa-arc-pickup/)」。

@@ -1882,3 +1882,101 @@ body {
     display: none;
   }
 }
+
+/* =========================================================================
+   マルチwiki（ゲーム切替）
+   ヘッダーのブランド横に置く <details> ポップオーバー。JS を使わないので
+   View Transitions で永続化されたヘッダーでも状態がおかしくならない。
+   ========================================================================= */
+
+/* wiki ごとのアクセント。--wiki-accent は BaseLayout が html に付ける。
+   既定 wiki（NTE）はテーマのアクセントをそのまま使い、それ以外だけ上書きする。 */
+html[data-wiki]:not([data-wiki='nte']) {
+  --accent: var(--wiki-accent, #a855f7);
+  --accent-weak: color-mix(in srgb, var(--wiki-accent, #a855f7) 12%, var(--surface));
+}
+
+.wiki-switch {
+  position: relative;
+  flex: none;
+}
+.wiki-switch > summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  color: var(--muted);
+}
+.wiki-switch > summary::-webkit-details-marker {
+  display: none;
+}
+.wiki-switch > summary svg {
+  width: 15px;
+  height: 15px;
+}
+.wiki-switch > summary:hover,
+.wiki-switch[open] > summary {
+  background: var(--surface-2);
+  color: var(--text);
+}
+.wiki-switch-menu {
+  position: absolute;
+  z-index: 70;
+  top: calc(100% + 8px);
+  left: 0;
+  min-width: min(300px, 80vw);
+  padding: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+.wiki-switch-title {
+  margin: 4px 6px 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.wiki-switch-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  border-radius: var(--radius);
+  color: var(--text);
+}
+.wiki-switch-item:hover {
+  background: var(--surface-2);
+  text-decoration: none;
+}
+.wiki-switch-item.is-current {
+  background: var(--accent-weak);
+}
+.wiki-switch-item > span:nth-child(2) {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.wiki-switch-item strong {
+  font-size: 0.9rem;
+}
+.wiki-switch-item svg {
+  width: 16px;
+  height: 16px;
+  margin-left: auto;
+  color: var(--accent);
+}
+
+/* フッターの wiki 一覧 */
+.wiki-footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  justify-content: center;
+  margin-top: 8px;
+  font-size: 0.8rem;
+}

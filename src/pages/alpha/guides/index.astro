@@ -1,0 +1,13 @@
+---
+import EntityList from '../../../components/EntityList.astro';
+import { sectionByCollection } from '../../../lib/nav';
+const s = sectionByCollection('alphaGuides')!;
+---
+<EntityList
+  collection="alphaGuides"
+  title="ガイド（αテスト）"
+  eyebrow="αテスト（仮）wiki"
+  lead="このwikiの位置づけと、αテスト版の進め方（サンプル）。"
+  icon={s.icon}
+  groupField="category"
+/>

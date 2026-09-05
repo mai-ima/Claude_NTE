@@ -245,6 +245,69 @@ const people = defineCollection({
     }),
 });
 
+// ---------------------------------------------------------------------------
+// αテスト（仮）wiki のコレクション。
+//
+// 別ゲームの wiki を同じサイトに並置できるかを検証するためのサンプル。
+// NTE 側とはコレクション・ディレクトリ・URL（/alpha/…）をすべて分離しており、
+// 片方を編集してももう片方には影響しない。実ゲームの wiki を足すときも同じ形で
+// `<game>*` のコレクションを追加する。
+// ---------------------------------------------------------------------------
+
+/** αテスト wiki 共通のベース（NTE 側の base と同じ誠実性フィールドを持つ） */
+const alphaBase = {
+  ...base,
+  /** サンプルデータであることを明示するフラグ（UIで注意書きを出す） */
+  sample: z.boolean().default(true),
+};
+
+const alphaCharacters = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/alpha-characters' }),
+  schema: () =>
+    z.object({
+      ...alphaBase,
+      title: z.string(),
+      en: z.string().optional(),
+      rarity: z.enum(['S', 'A', 'B']).optional(),
+      role: z.string().optional(),
+      element: z.string().optional(),
+      build: z.string().optional(), // 実装ビルド（α1 / α2 など）
+    }),
+});
+
+const alphaSystems = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/alpha-systems' }),
+  schema: () =>
+    z.object({
+      ...alphaBase,
+      title: z.string(),
+      category: z.string().default('システム'),
+    }),
+});
+
+const alphaGuides = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/alpha-guides' }),
+  schema: () =>
+    z.object({
+      ...alphaBase,
+      title: z.string(),
+      category: z.string().default('ガイド'),
+    }),
+});
+
+const alphaTerms = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/alpha-terms' }),
+  schema: () =>
+    z.object({
+      ...alphaBase,
+      title: z.string(),
+      reading: z.string().optional(),
+      en: z.string().optional(),
+      category: z.string().default('用語'),
+      aliases: z.array(z.string()).default([]),
+    }),
+});
+
 export const collections = {
   characters,
   locations,
@@ -259,4 +322,9 @@ export const collections = {
   vehicles,
   arcs,
   people,
+  // αテスト（仮）wiki
+  alphaCharacters,
+  alphaSystems,
+  alphaGuides,
+  alphaTerms,
 };

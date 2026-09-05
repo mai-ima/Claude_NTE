@@ -16,20 +16,46 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const CONTENT_DIR = path.resolve('src/content');
-// 自動リンク対象コレクション（href は /<collection>/<slug>/）。
-const COLLECTIONS = [
-  'terms',
-  'characters',
-  'people',
-  'shops',
-  'locations',
-  'arcs',
-  'systems',
-  'enemies',
-  'items',
-  'vehicles',
-  'events',
+
+/**
+ * 自動リンクの対象を **wiki ごと**に定義する。
+ * 辞書は wiki 単位で作られ、記事にはその記事が属する wiki の辞書だけが適用される。
+ * （NTE の記事に αテストの用語が、αテストの記事に NTE の用語が混ざらない）
+ *
+ * `dir` は src/content 配下のディレクトリ名、`base` は URL のベース。
+ * src/lib/nav.ts の SECTIONS / ALPHA_SECTIONS と対応させること。
+ */
+const WIKI_GROUPS = [
+  {
+    id: 'nte',
+    collections: [
+      { dir: 'terms', base: '/terms/' },
+      { dir: 'characters', base: '/characters/' },
+      { dir: 'people', base: '/people/' },
+      { dir: 'shops', base: '/shops/' },
+      { dir: 'locations', base: '/locations/' },
+      { dir: 'arcs', base: '/arcs/' },
+      { dir: 'systems', base: '/systems/' },
+      { dir: 'enemies', base: '/enemies/' },
+      { dir: 'items', base: '/items/' },
+      { dir: 'vehicles', base: '/vehicles/' },
+      { dir: 'events', base: '/events/' },
+    ],
+  },
+  {
+    id: 'alpha',
+    collections: [
+      { dir: 'alpha-terms', base: '/alpha/terms/' },
+      { dir: 'alpha-characters', base: '/alpha/characters/' },
+      { dir: 'alpha-systems', base: '/alpha/systems/' },
+      { dir: 'alpha-guides', base: '/alpha/guides/' },
+    ],
+  },
 ];
+
+/** ディレクトリ名 → wiki id（記事がどの辞書を使うかの判定に使う） */
+const DIR_TO_WIKI = new Map();
+for (const g of WIKI_GROUPS) for (const c of g.collections) DIR_TO_WIKI.set(c.dir, g.id);
 
 /** 汎用すぎてリンクするとノイズになる語は除外 */
 const DENY = new Set([
@@ -49,10 +75,10 @@ function cleanName(s) {
     .trim();
 }
 
-function buildDict() {
+function buildDict(group) {
   const entries = [];
-  for (const collection of COLLECTIONS) {
-    const dir = path.join(CONTENT_DIR, collection);
+  for (const { dir: dirName, base } of group.collections) {
+    const dir = path.join(CONTENT_DIR, dirName);
     let files = [];
     try {
       files = fs.readdirSync(dir);
@@ -91,7 +117,7 @@ function buildDict() {
         const ascii = /^[\x20-\x7e]+$/.test(p);
         // ASCII(英数記号)のみのフレーズは、単語境界チェックを要する＆3文字以上に限定
         if (ascii && p.replace(/[^A-Za-z0-9]/g, '').length < 3) continue;
-        entries.push({ phrase: p, collection, slug, ascii });
+        entries.push({ phrase: p, dir: dirName, base, slug, ascii });
       }
     }
   }
@@ -106,17 +132,28 @@ function buildDict() {
   });
 }
 
-let DICT = null;
+/** wiki id → 辞書（ビルド中に一度だけ構築） */
+const DICTS = new Map();
+
+function dictFor(wikiId) {
+  if (!DICTS.has(wikiId)) {
+    const group = WIKI_GROUPS.find((g) => g.id === wikiId) ?? WIKI_GROUPS[0];
+    DICTS.set(wikiId, buildDict(group));
+  }
+  return DICTS.get(wikiId);
+}
 
 export default function rehypeTermLinks() {
-  if (!DICT) DICT = buildDict();
   return (tree, file) => {
-    if (!DICT.length) return;
     const fpath = (file && (file.path || (file.history && file.history[0]))) || '';
-    const m = /[\\/]content[\\/]([a-z]+)[\\/]([a-z0-9-]+)\.(md|mdx)$/.exec(fpath);
-    const selfKey = m ? `${m[1]}/${m[2]}` : null;
+    const m = /[\\/]content[\\/]([a-z0-9-]+)[\\/]([a-z0-9-]+)\.(md|mdx)$/.exec(fpath);
+    if (!m) return;
+    // 記事の属する wiki の辞書だけを適用する（wiki 間で用語が混ざらない）
+    const dict = dictFor(DIR_TO_WIKI.get(m[1]) ?? 'nte');
+    if (!dict.length) return;
+    const selfKey = `${m[1]}/${m[2]}`;
     const seen = new Set();
-    walk(tree, false, selfKey, seen);
+    walk(tree, false, selfKey, dict, seen);
   };
 }
 
@@ -125,7 +162,7 @@ function tagOf(node) {
   return node.type === 'element' ? node.tagName : node.name || '';
 }
 
-function walk(node, skip, selfKey, seen) {
+function walk(node, skip, selfKey, dict, seen) {
   if (!node || !Array.isArray(node.children)) return;
   const tag = tagOf(node);
   const here = skip || (tag && SKIP_TAGS.has(tag));
@@ -133,24 +170,24 @@ function walk(node, skip, selfKey, seen) {
   for (let i = 0; i < children.length; i++) {
     const child = children[i];
     if (child.type === 'text' && !here && child.value && child.value.trim()) {
-      const replaced = linkify(child.value, selfKey, seen);
+      const replaced = linkify(child.value, selfKey, dict, seen);
       if (replaced) {
         children.splice(i, 1, ...replaced);
         i += replaced.length - 1;
       }
     } else if (Array.isArray(child.children)) {
-      walk(child, here, selfKey, seen);
+      walk(child, here, selfKey, dict, seen);
     }
   }
 }
 
 const WORD = /[A-Za-z0-9]/;
 
-function linkify(text, selfKey, seen) {
+function linkify(text, selfKey, dict, seen) {
   let nodes = [{ type: 'text', value: text }];
   let changed = false;
-  for (const { phrase, collection, slug, ascii } of DICT) {
-    if (selfKey && `${collection}/${slug}` === selfKey) continue;
+  for (const { phrase, dir, base, slug, ascii } of dict) {
+    if (selfKey && `${dir}/${slug}` === selfKey) continue;
     if (seen.has(phrase)) continue;
     for (let n = 0; n < nodes.length; n++) {
       const nd = nodes[n];
@@ -167,7 +204,7 @@ function linkify(text, selfKey, seen) {
       const link = {
         type: 'element',
         tagName: 'a',
-        properties: { href: `/${collection}/${slug}/`, className: ['auto-term'] },
+        properties: { href: `${base}${slug}/`, className: ['auto-term'] },
         children: [{ type: 'text', value: phrase }],
       };
       const repl = [];

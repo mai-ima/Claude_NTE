@@ -7,12 +7,15 @@ role: "DPS"
 weapon: "弧盤: プラズマ"
 faction: "—"
 version: "v1.0"
-tier: "A"
+tier: "B"
+cv: "高橋花林"
 description: "魂（Psyche）属性のメインアタッカー（A級）。海月（クラゲ）を操り「ジェリーフィッシュ・ブラスト」で戦う、移動射撃が得意なキャラ。日本版公式名は「海月（みつき）」（英名 Aurelia）。"
 status: "verified"
-updated: 2026-06-14
+updated: 2026-09-05
 tags: ["魂", "アタッカー", "Aランク", "配布", "海月", "みつき", "アウレリア"]
 sources:
+  - label: "神ゲー攻略 — 声優（CV）一覧"
+    url: "https://kamigame.jp/nte/page/419364570465864671.html"
   - label: "ゲームウィズ — 海月(みつき)の評価とおすすめ編成・武器"
     url: "https://gamewith.jp/nte/557062"
   - label: "神ゲー攻略 — 海月（みつき）の評価とおすすめビルド"

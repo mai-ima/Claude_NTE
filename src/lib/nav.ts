@@ -12,6 +12,8 @@ export interface SectionMeta {
   icon: string; // lucide アイコン名
   /** 一覧/サイドバーの説明 */
   blurb: string;
+  /** src/content 配下のディレクトリ名（既定はコレクション名と同じ） */
+  dir?: string;
 }
 
 /** エンティティ系コレクションのセクション（表示順） */
@@ -109,8 +111,48 @@ export const SECTIONS: SectionMeta[] = [
   },
 ];
 
+/**
+ * αテスト（仮）wiki のセクション。NTE 側とは**コレクションから分離**しており、
+ * URL も /alpha/ 配下に閉じる。別ゲームの wiki を増やすときはこの形を複製する。
+ */
+export const ALPHA_SECTIONS: SectionMeta[] = [
+  {
+    collection: 'alphaCharacters',
+    dir: 'alpha-characters',
+    href: '/alpha/characters/',
+    label: 'キャラクター',
+    icon: 'users',
+    blurb: 'αテスト版で使えるキャラクターと役割。',
+  },
+  {
+    collection: 'alphaSystems',
+    dir: 'alpha-systems',
+    href: '/alpha/systems/',
+    label: 'システム',
+    icon: 'settings-2',
+    blurb: '戦闘・育成・進行など、αテスト版の仕組み。',
+  },
+  {
+    collection: 'alphaGuides',
+    dir: 'alpha-guides',
+    href: '/alpha/guides/',
+    label: 'ガイド',
+    icon: 'compass',
+    blurb: 'はじめ方・進め方・テスト参加時の注意。',
+  },
+  {
+    collection: 'alphaTerms',
+    dir: 'alpha-terms',
+    href: '/alpha/terms/',
+    label: '用語集',
+    icon: 'book-a',
+    blurb: 'αテスト版で使われる用語の意味。',
+  },
+];
+
+/** 全 wiki のセクションを横断した検索（コレクション名は wiki 間で重複しない）。 */
 export function sectionByCollection(collection: string): SectionMeta | undefined {
-  return SECTIONS.find((s) => s.collection === collection);
+  return [...SECTIONS, ...ALPHA_SECTIONS].find((s) => s.collection === collection);
 }
 
 /** 主要なグローバルナビ（ヘッダーアイコン＋ドロワー） */

@@ -1,0 +1,13 @@
+---
+import EntityList from '../../../components/EntityList.astro';
+import { sectionByCollection } from '../../../lib/nav';
+const s = sectionByCollection('alphaCharacters')!;
+---
+<EntityList
+  collection="alphaCharacters"
+  title="キャラクター（αテスト）"
+  eyebrow="αテスト（仮）wiki"
+  lead="αテスト版のキャラクター一覧。内容はマルチwiki機能の検証用サンプルで、実在のゲームのデータではありません。"
+  icon={s.icon}
+  filterField="role"
+/>

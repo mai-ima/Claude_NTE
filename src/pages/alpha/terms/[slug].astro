@@ -1,0 +1,28 @@
+---
+import EntityDetail from '../../../components/EntityDetail.astro';
+import { detailPaths, renderEntry, baseDetailProps } from '../../../lib/detail';
+import type { Row } from '../../../components/EntityDetail.astro';
+
+export async function getStaticPaths() {
+  return detailPaths('alphaTerms', { relatedBy: 'category' });
+}
+const { entry, prev, next, related } = Astro.props;
+const { Content, headings } = await renderEntry(entry);
+const d = entry.data as any;
+
+const rows: Row[] = [{ k: '分類', v: d.category }];
+if (d.reading) rows.push({ k: 'よみ', v: d.reading });
+if (d.en) rows.push({ k: '英語表記', v: d.en });
+if (d.aliases?.length) rows.push({ k: '別名', v: d.aliases.join('・') });
+---
+<EntityDetail
+  {...baseDetailProps('alphaTerms', entry, prev, next)}
+  pills={[{ kind: 'plain', value: d.category }]}
+  rows={rows}
+  headings={headings}
+  editPath={(entry as any).filePath}
+  related={related}
+  relatedLabel={`${d.category} の用語`}
+>
+  <Content />
+</EntityDetail>

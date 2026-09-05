@@ -14,7 +14,7 @@ import '../styles/prefs.css';
 import { ClientRouter } from 'astro:transitions';
 import { Icon } from 'astro-icon/components';
 import { withBase, activeHref } from '../lib/path';
-import { PRIMARY_NAV, BOTTOM_NAV } from '../lib/nav';
+import { wiki as wikiMeta, WIKI_LIST, type WikiId } from '../lib/wikis';
 import MobileDrawer from '../components/MobileDrawer.astro';
 import ThemeMenu from '../components/ThemeMenu';
 import Search from 'astro-pagefind/components/Search';
@@ -34,18 +34,26 @@ interface Props {
   breadcrumbs?: Crumb[];
   /** OG/Twitter 画像のサイト内パス（例: 'og/characters/x.png'）。未指定は既定アイコン */
   image?: string;
+  /** どの wiki のページか（既定: NTE）。ブランド・ナビ・フッターがまるごと切り替わる */
+  wikiId?: WikiId;
 }
 
 const {
   title,
-  description = 'NTE（Neverness to Everness）に関する攻略・情報をまとめた非公式ファンwiki + 各種ツール。',
   ogType = 'website',
   modified,
   breadcrumbs = [],
   image,
+  wikiId = 'nte',
 } = Astro.props;
 
-const siteName = 'NTE 完全攻略wiki';
+const w = wikiMeta(wikiId);
+const description = Astro.props.description ?? w.description;
+const siteName = w.siteName;
+const PRIMARY_NAV = w.primaryNav;
+const BOTTOM_NAV = w.bottomNav;
+/** この wiki のホーム（αテストなら /alpha/） */
+const wikiHome = withBase(w.base ? `${w.base}/` : '/');
 const fullTitle = title ? `${title} | ${siteName}` : siteName;
 const currentPath = Astro.url.pathname;
 // ナビは「最長一致の1件だけ」を現在ページ扱いにする（/tools と /tools/tier-list の二重ハイライト防止）
@@ -53,7 +61,7 @@ const primaryActive = activeHref(currentPath, PRIMARY_NAV.map((n) => n.href));
 const bottomActive = activeHref(currentPath, BOTTOM_NAV.map((n) => n.href));
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(withBase(image ?? 'icons/icon-192.png'), Astro.site).href;
-const homeUrl = new URL(withBase('/'), Astro.site).href;
+const homeUrl = new URL(wikiHome, Astro.site).href;
 
 // --- 構造化データ (JSON-LD) ---
 const ldGraph: Record<string, unknown>[] = [
@@ -77,7 +85,7 @@ if (ogType === 'article') {
     ...(modified ? { dateModified: modified.toISOString() } : {}),
   });
 }
-const crumbItems = [{ name: 'ホーム', href: withBase('/') }, ...breadcrumbs];
+const crumbItems = [{ name: w.id === 'nte' ? 'ホーム' : w.siteName, href: wikiHome }, ...breadcrumbs];
 if (crumbItems.length > 1) {
   ldGraph.push({
     '@type': 'BreadcrumbList',
@@ -97,7 +105,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
 ---
 
 <!doctype html>
-<html lang="ja" data-theme="minimal">
+<html lang="ja" data-theme="minimal" data-wiki={w.id} style={`--wiki-accent:${w.accent}`}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -210,10 +218,36 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
           <Icon name="lucide:menu" />
         </button>
 
-        <a class="brand" href={withBase('/')}>
-          <span class="brand-mark">NTE</span>
-          <span>完全攻略wiki</span>
+        <a class="brand" href={wikiHome}>
+          <span class="brand-mark">{w.mark}</span>
+          <span>{w.brand}</span>
         </a>
+
+        {/* wiki（ゲーム）切替。JS 不要の <details> ポップオーバー。 */}
+        <details class="wiki-switch">
+          <summary aria-label="wiki を切り替え" title="wiki を切り替え">
+            <Icon name="lucide:chevrons-up-down" />
+          </summary>
+          <div class="wiki-switch-menu">
+            <p class="wiki-switch-title">wiki を切り替え</p>
+            {
+              WIKI_LIST.map((target) => (
+                <a
+                  class:list={['wiki-switch-item', { 'is-current': target.id === w.id }]}
+                  href={withBase(target.base ? `${target.base}/` : '/')}
+                  aria-current={target.id === w.id ? 'true' : undefined}
+                >
+                  <span class="brand-mark">{target.mark}</span>
+                  <span>
+                    <strong>{target.siteName}</strong>
+                    <span class="muted text-sm">{target.tagline}</span>
+                  </span>
+                  {target.id === w.id && <Icon name="lucide:check" />}
+                </a>
+              ))
+            }
+          </div>
+        </details>
 
         <div class="header-spacer"></div>
 
@@ -255,17 +289,20 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
         <Search id="global-search" className="pagefind-ui" uiOptions={{ showImages: false, excerptLength: 15 }} />
       </dialog>
 
-      <MobileDrawer currentPath={currentPath} transition:persist />
+      <MobileDrawer currentPath={currentPath} wikiId={w.id} transition:persist />
 
       <main class="app-main">
         <slot />
       </main>
 
       <footer class="app-footer">
-        <p>
-          NTE 完全攻略wiki — 非公式ファンサイト。各記事は出典を明記し、未確認情報には「要確認」を付しています。
-          <br />
-          ゲーム内画像・地図等の権利はすべて Hotta Studio / Perfect World Games に帰属します。
+        <p>{w.footer}</p>
+        <p class="wiki-footer-nav">
+          {
+            WIKI_LIST.map((target) => (
+              <a href={withBase(target.base ? `${target.base}/` : '/')}>{target.siteName}</a>
+            ))
+          }
         </p>
       </footer>
 

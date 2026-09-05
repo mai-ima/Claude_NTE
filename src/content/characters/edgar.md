@@ -8,10 +8,10 @@ cv: "三瓶由布子"
 weapon: "弧盤: 液体（リキッド）／専用「歪んだ城の呼び声」"
 faction: "—"
 version: "v1.0"
-tier: "A"
+tier: "C"
 description: "HP回復に特化した光属性のヒーラー（A級）。バイレールスキルとEXレール終結で味方を回復する。"
 status: "verified"
-updated: 2026-06-08
+updated: 2026-09-05
 tags: ["光", "サバイバル", "ヒーラー"]
 sources:
   - label: "Game8 — エドガー"

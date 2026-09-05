@@ -7,6 +7,10 @@ import { TOOLS } from '../components/tools/registry';
 import Avatar from '../components/Avatar.astro';
 import { RELEASE_NOTES } from '../data/releaseNotes';
 import { loadNavSections, recentEntries, publishedEntries, titleOf, enNameOf, hrefOf, loadEvents } from '../lib/content';
+import { WIKI_LIST } from '../lib/wikis';
+
+// このサイトに同居している他ゲームの wiki（NTE 以外）
+const otherWikis = WIKI_LIST.filter((x) => x.id !== 'nte');
 
 const sections = await loadNavSections();
 const countOf = (c: string) => sections.find((s) => s.collection === c)?.items.length ?? 0;
@@ -45,7 +49,7 @@ const latest = RELEASE_NOTES[0];
         <p class="lead">
           オープンワールド都市RPG「NTE（ネバエバ）」の攻略情報を網羅する非公式ファンwiki。
           キャラ・異能連環・ガチャ・ストーリー/世界観・用語・ロケーション・ビークル・アイテムのデータベースに加え、
-          開催中のガチャ/イベント、天井トラッカーやチームビルダーなどの便利ツールも。<strong>Ver.1.2「九百九十九夜」対応・随時更新</strong>。
+          開催中のガチャ/イベント、天井トラッカーやチームビルダーなどの便利ツールも。<strong>Ver.1.3「霧月夜に星還りて」対応・随時更新</strong>。
         </p>
         <div class="meta-row">
           <a class="btn btn-primary" href={withBase('/characters/')}>
@@ -238,6 +242,31 @@ const latest = RELEASE_NOTES[0];
           )
         }
       </div>
+
+      {
+        otherWikis.length > 0 && (
+          <section style="margin-top:40px;">
+            <h2>ほかの wiki</h2>
+            <p class="muted text-sm" style="margin-top:4px;">
+              このサイトは複数ゲームの wiki を並置できます。記事データは wiki ごとに完全に分かれています。
+            </p>
+            <div class="grid grid-cards" style="margin-top:16px;">
+              {otherWikis.map((x) => (
+                <a class="card card-pad card-link" href={withBase(x.base ? `${x.base}/` : '/')}>
+                  <div class="row" style="gap:10px;align-items:center;">
+                    <span class="brand-mark">{x.mark}</span>
+                    <div>
+                      <div style="font-weight:700;">{x.siteName}</div>
+                      <div class="muted text-sm">{x.tagline}</div>
+                    </div>
+                  </div>
+                  <p class="muted text-sm" style="margin-top:8px;">{x.description}</p>
+                </a>
+              ))}
+            </div>
+          </section>
+        )
+      }
     </div>
   </div>
 </BaseLayout>

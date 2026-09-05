@@ -2,14 +2,18 @@
 import { Icon } from 'astro-icon/components';
 import { elementMeta } from '../lib/nav';
 import { loadNavSections } from '../lib/content';
+import { wiki, type WikiId } from '../lib/wikis';
 
 interface Props {
   currentCollection?: string;
   currentId?: string;
+  /** どの wiki のサイドバーか（既定: NTE） */
+  wikiId?: WikiId;
 }
-const { currentCollection, currentId } = Astro.props;
+const { currentCollection, currentId, wikiId = 'nte' } = Astro.props;
 
-const sections = await loadNavSections();
+// wiki ごとに自分のセクションだけを出す（NTE と αテストのナビは混ざらない）
+const sections = await loadNavSections(wiki(wikiId).sections);
 ---
 
 <aside class="sidebar" aria-label="サイトナビゲーション">
