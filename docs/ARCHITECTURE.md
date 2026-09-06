@@ -302,7 +302,12 @@ themes.css → base.css → components.css
 | --- | --- | --- |
 | `nte.theme` | 設定（配色テーマ） | **残る** |
 | `nte.ui` | 設定（UIモード） | **残る** |
-| `nte.motion` / `nte.autoterm` / `nte.spoiler` / `nte.width` / `nte.draftmark` / `nte.edit` | 設定（PREFS） | **残る** |
+| `nte.fontsize` / `nte.lineheight`（多値） | 設定（読みやすさ） | **残る** |
+| `nte.motion` / `nte.autoterm` / `nte.spoiler` / `nte.width` / `nte.draftmark` | 設定（読みやすさ） | **残る** |
+| `nte.listview` / `nte.listsort`（多値） | 設定（一覧） | **残る** |
+| `nte.homewiki`（多値・属性を書かない） | 設定（wiki） | **残る** |
+| `nte.tapfx`（多値） / `nte.tabbar` / `nte.callout` | 設定（タッチ操作） | **残る** |
+| `nte.edit` | 設定（機能） | **残る** |
 | `nte.<ツールの状態>` / 個人メモ など | データ | 消える |
 | `alpha.theme` | α のテーマ | **対象外**（`nte.` 接頭辞でないため export/clear の対象外） |
 

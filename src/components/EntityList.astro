@@ -82,6 +82,25 @@ if (filterField) {
   filterValues = [...set].sort((a, b) => flabel(a).localeCompare(flabel(b), 'ja'));
 }
 const showFilter = !!filterField && filterValues.length > 1;
+
+// --- 並び替え用の順位を先に計算しておく -------------------------------------
+// 設定「一覧の並び順」は CSS の order で切り替える（JS を持ち込まない）。
+// .grid-cards は CSS Grid だがグリッドアイテムにも order は効くので、
+// ここで埋めた順位を prefs.css が拾えば並び替えになる。
+const updatedMs = (e: Item) => {
+  const u = (e.data as Record<string, unknown>).updated;
+  return u instanceof Date ? u.getTime() : 0;
+};
+const ordUpdated = new Map(
+  [...entries].sort((a, b) => updatedMs(b) - updatedMs(a)).map((e, i) => [e.id, i]),
+);
+const ordName = new Map(
+  [...entries]
+    .sort((a, b) => titleOf(a).localeCompare(titleOf(b), 'ja'))
+    .map((e, i) => [e.id, i]),
+);
+const ordVars = (item: Item) =>
+  `--ord-updated:${ordUpdated.get(item.id) ?? 0};--ord-name:${ordName.get(item.id) ?? 0}`;
 ---
 
 <BaseLayout title={title} wikiId={w.id}>
@@ -144,7 +163,7 @@ const showFilter = !!filterField && filterValues.length > 1;
                       class="card card-pad card-link js-card"
                       href={hrefOf(collection, item.id)}
                       data-fval={filterField ? fval(item) : undefined}
-                      style={el ? `--el:${el.hue}` : undefined}
+                      style={el ? `--el:${el.hue};${ordVars(item)}` : ordVars(item)}
                     >
                       <div class="row row-between" style="align-items:flex-start;gap:8px;">
                         <span style="font-weight:700;">{titleOf(item)}</span>

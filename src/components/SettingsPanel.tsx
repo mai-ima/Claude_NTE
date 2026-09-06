@@ -1,13 +1,15 @@
-/** 設定パネル: テーマ・新UI(ベータ)・表示/機能の追加設定・データのエクスポート/インポート/初期化。 */
+/** 設定パネル: 外観（テーマ・新UI）／読みやすさ／一覧／wiki／タッチ操作／機能／データ。 */
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { THEMES, getStoredTheme, setTheme, applyTheme, type Theme } from '../lib/theme';
 import { getStoredUI, setUI, applyUI, UI_MODES, type UIMode } from '../lib/ui';
-import { PREFS, getPref, setPref, type PrefDef } from '../lib/prefs';
+import { PREFS, getPref, getPrefValue, setPref, type PrefDef, type PrefGroup } from '../lib/prefs';
 import { exportAll, importAll, clearAll } from '../lib/store';
 
 type Msg = { kind: 'ok' | 'err'; text: string } | null;
 
-/** 設定行のアイコン（lucide 風の inline-SVG パス）。Preact 用にアイコン依存を持たない。 */
+/** 設定行のアイコン（lucide 風の inline-SVG パス）。Preact 用にアイコン依存を持たない。
+ *  ※ PREFS に設定を足したら、その icon をここにも必ず足すこと。
+ *    足し忘れてもエラーにはならず、静かに空アイコンになるだけなので気づきにくい。 */
 const ICON_PATHS: Record<string, string> = {
   gauge: 'M12 14l4-4M3.34 19a10 10 0 1 1 17.32 0',
   link: 'M9 17H7A5 5 0 0 1 7 7h2M15 7h2a5 5 0 0 1 0 10h-2M8 12h8',
@@ -15,7 +17,16 @@ const ICON_PATHS: Record<string, string> = {
   text: 'M17 6.1H3M21 12.1H3M15.1 18H3',
   alert: 'M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z M12 9v4 M12 17h.01',
   pencil: 'M12 20h9 M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z',
+  type: 'M4 7V5h16v2 M9 19h6 M12 5v14',
+  rows: 'M3 5h18 M3 12h18 M3 19h18',
+  layout: 'M3 4h18v16H3z M3 10h18 M9 10v10',
+  sort: 'M3 6h13 M3 12h9 M3 18h5 M18 9l3 3-3 3',
+  library: 'M4 4h5v16H4z M11 4h5v16h-5z M18.5 5l2.5 14',
+  touch: 'M9 11V5a2 2 0 1 1 4 0v6 M13 11V4a2 2 0 1 1 4 0v7 M17 11v-.5a2 2 0 1 1 4 0V16a6 6 0 0 1-6 6h-2a7 7 0 0 1-7-7v-3a2 2 0 1 1 4 0',
+  panel: 'M3 4h18v16H3z M3 15h18',
+  hand: 'M18 11V6a2 2 0 0 0-4 0v5 M14 10V4a2 2 0 0 0-4 0v7 M10 10.5V6a2 2 0 0 0-4 0v9 M6 14l-1.5-1.5a2 2 0 0 0-3 3L6 20a6 6 0 0 0 5 2h2a7 7 0 0 0 7-7v-4',
 };
+
 function PrefIcon({ name }: { name: string }) {
   return (
     <svg
@@ -35,10 +46,18 @@ function PrefIcon({ name }: { name: string }) {
   );
 }
 
+// アイコンの足し忘れは無言で空アイコンになるので、開発時だけ気づけるようにする。
+if (import.meta.env.DEV) {
+  const missing = PREFS.filter((p) => !ICON_PATHS[p.icon]).map((p) => `${p.key}(${p.icon})`);
+  if (missing.length) console.warn('[SettingsPanel] ICON_PATHS に無いアイコン:', missing.join(', '));
+}
+
 export default function SettingsPanel() {
   const [theme, setThemeState] = useState<Theme>('minimal');
   const [ui, setUIState] = useState<UIMode>('classic');
-  const [prefs, setPrefsState] = useState<Record<string, boolean>>({});
+  /** toggle は boolean、choice は選択中の value を持つ */
+  const [prefs, setPrefsState] = useState<Record<string, boolean | string>>({});
+  const [isIOS, setIsIOS] = useState(false);
   const [msg, setMsg] = useState<Msg>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const flashTimer = useRef<number | undefined>(undefined);
@@ -46,37 +65,61 @@ export default function SettingsPanel() {
   useEffect(() => {
     setThemeState(getStoredTheme());
     setUIState(getStoredUI());
-    setPrefsState(Object.fromEntries(PREFS.map((p) => [p.key, getPref(p.key)])));
+    setPrefsState(
+      Object.fromEntries(
+        PREFS.map((p) => [p.key, p.type === 'choice' ? getPrefValue(p.key) : getPref(p.key)]),
+      ),
+    );
+    setIsIOS(document.documentElement.hasAttribute('data-ios'));
     return () => {
       if (flashTimer.current !== undefined) window.clearTimeout(flashTimer.current);
     };
   }, []);
 
-  function togglePref(key: string) {
-    const next = !prefs[key];
+  function change(key: string, next: boolean | string) {
     setPref(key, next);
     setPrefsState((s) => ({ ...s, [key]: next }));
   }
 
+  /** 設定1件を描画する（ON/OFF はスイッチ、多値はセグメンテッドコントロール） */
   const renderRow = (p: PrefDef) => (
-    <label key={p.key} class="pref-row">
+    <div key={p.key} class={`pref-row ${p.type === 'choice' ? 'pref-row-choice' : ''}`}>
       <PrefIcon name={p.icon} />
       <span class="pref-text">
         <span class="pref-title">{p.label}</span>
         <span class="muted text-sm">{p.hint}</span>
       </span>
-      <button
-        type="button"
-        role="switch"
-        aria-checked={prefs[p.key] ? 'true' : 'false'}
-        aria-label={p.label}
-        class={`pref-switch ${prefs[p.key] ? 'is-on' : ''}`}
-        onClick={() => togglePref(p.key)}
-      >
-        <span class="pref-knob" aria-hidden="true" />
-      </button>
-    </label>
+      {p.type === 'toggle' ? (
+        <button
+          type="button"
+          role="switch"
+          aria-checked={prefs[p.key] ? 'true' : 'false'}
+          aria-label={p.label}
+          class={`pref-switch ${prefs[p.key] ? 'is-on' : ''}`}
+          onClick={() => change(p.key, !prefs[p.key])}
+        >
+          <span class="pref-knob" aria-hidden="true" />
+        </button>
+      ) : (
+        <span class="pref-seg" role="radiogroup" aria-label={p.label}>
+          {p.choices.map((c) => (
+            <button
+              key={c.value}
+              type="button"
+              role="radio"
+              aria-checked={prefs[p.key] === c.value ? 'true' : 'false'}
+              class={`pref-seg-opt ${prefs[p.key] === c.value ? 'is-on' : ''}`}
+              onClick={() => change(p.key, c.value)}
+            >
+              {c.label}
+            </button>
+          ))}
+        </span>
+      )}
+    </div>
   );
+
+  const groupOf = (g: PrefGroup) => PREFS.filter((p) => p.group === g);
 
   function flash(kind: 'ok' | 'err', text: string) {
     if (flashTimer.current !== undefined) window.clearTimeout(flashTimer.current);
@@ -144,6 +187,30 @@ export default function SettingsPanel() {
         </div>
       )}
 
+      {/* 配色テーマ */}
+      <section class="card card-pad setting-card">
+        <h2 class="mt-0">配色テーマ</h2>
+        <p class="muted text-sm">サイト全体の配色を選べます。</p>
+        <div class="theme-grid" style={{ marginTop: '12px' }}>
+          {THEMES.map((t) => (
+            <label key={t.value} class={`theme-opt ${theme === t.value ? 'is-active' : ''}`}>
+              <input
+                type="radio"
+                name="theme"
+                checked={theme === t.value}
+                onChange={() => choose(t.value)}
+              />
+              <span class={`theme-swatch sw-${t.value}`} aria-hidden="true" />
+              <span style={{ flex: 1 }}>
+                <span style={{ display: 'block', fontWeight: 600 }}>{t.label}</span>
+                <span class="muted text-sm">{t.hint}</span>
+              </span>
+              {theme === t.value && <span class="check" aria-hidden="true">✓</span>}
+            </label>
+          ))}
+        </div>
+      </section>
+
       {/* 新UI（ベータ） */}
       <section class="card card-pad setting-card">
         <div class="setting-head">
@@ -152,7 +219,7 @@ export default function SettingsPanel() {
               新UI <span class="beta-pill">BETA</span>
             </h2>
             <p class="muted text-sm">
-              4種類の新デザインを試せます。配色テーマとは別に、全ページのレイアウト・質感を切り替えます。
+              8種類の新デザインを試せます。配色テーマとは別に、全ページのレイアウト・質感を切り替えます。
             </p>
           </div>
         </div>
@@ -177,45 +244,51 @@ export default function SettingsPanel() {
         </p>
       </section>
 
-      {/* テーマ */}
+      {/* 読みやすさ */}
       <section class="card card-pad setting-card">
-        <h2 class="mt-0">配色テーマ</h2>
-        <p class="muted text-sm">サイト全体の配色を選べます。</p>
-        <div class="theme-grid" style={{ marginTop: '12px' }}>
-          {THEMES.map((t) => (
-            <label key={t.value} class={`theme-opt ${theme === t.value ? 'is-active' : ''}`}>
-              <input
-                type="radio"
-                name="theme"
-                checked={theme === t.value}
-                onChange={() => choose(t.value)}
-              />
-              <span class={`theme-swatch sw-${t.value}`} aria-hidden="true" />
-              <span style={{ flex: 1 }}>
-                <span style={{ display: 'block', fontWeight: 600 }}>{t.label}</span>
-                <span class="muted text-sm">{t.hint}</span>
-              </span>
-              {theme === t.value && <span class="check" aria-hidden="true">✓</span>}
-            </label>
-          ))}
-        </div>
+        <h2 class="mt-0">読みやすさ</h2>
+        <p class="muted text-sm">
+          記事本文の見え方を調整します。文字サイズと行間は本文だけに効くので、
+          ナビや一覧のレイアウトは崩れません。
+        </p>
+        <div class="pref-list" style={{ marginTop: '10px' }}>{groupOf('reading').map(renderRow)}</div>
       </section>
 
-      {/* 表示・機能の追加設定（ベータ） */}
+      {/* 一覧の表示 */}
+      <section class="card card-pad setting-card">
+        <h2 class="mt-0">一覧の表示</h2>
+        <p class="muted text-sm">
+          キャラクターや用語などの一覧ページの見せ方を選べます。
+        </p>
+        <div class="pref-list" style={{ marginTop: '10px' }}>{groupOf('list').map(renderRow)}</div>
+      </section>
+
+      {/* wiki */}
+      <section class="card card-pad setting-card">
+        <h2 class="mt-0">wiki</h2>
+        <p class="muted text-sm">
+          このサイトは複数ゲームの wiki を並べて置けます。記事データは wiki ごとに完全に分かれています。
+        </p>
+        <div class="pref-list" style={{ marginTop: '10px' }}>{groupOf('wiki').map(renderRow)}</div>
+      </section>
+
+      {/* タッチ操作（iPhone / iPad のときだけ出す） */}
+      {isIOS && (
+        <section class="card card-pad setting-card">
+          <h2 class="mt-0">タッチ操作</h2>
+          <p class="muted text-sm">
+            iPhone / iPad で開いているときの操作感を調整します。
+          </p>
+          <div class="pref-list" style={{ marginTop: '10px' }}>{groupOf('touch').map(renderRow)}</div>
+        </section>
+      )}
+
+      {/* 機能（ベータ） */}
       <section class="card card-pad setting-card">
         <h2 class="mt-0">
-          表示と機能 <span class="beta-pill">BETA</span>
+          機能 <span class="beta-pill">BETA</span>
         </h2>
-        <p class="muted text-sm">
-          読みやすさ・操作性のための切り替え。配色テーマや新UIとは別に、全ページへ反映されます。
-        </p>
-
-        <p class="pref-group-title">表示・読みやすさ</p>
-        <div class="pref-list">{PREFS.filter((p) => p.group === 'reading').map(renderRow)}</div>
-
-        <p class="pref-group-title">機能（ベータ）</p>
-        <div class="pref-list">{PREFS.filter((p) => p.group === 'feature').map(renderRow)}</div>
-
+        <div class="pref-list" style={{ marginTop: '10px' }}>{groupOf('feature').map(renderRow)}</div>
         <p class="hint" style={{ marginTop: '10px' }}>
           設定はこの端末に保存され、バックアップ（書き出し）にも含まれます。
         </p>

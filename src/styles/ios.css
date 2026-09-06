@@ -18,13 +18,20 @@ html[data-ios] * {
   -webkit-tap-highlight-color: transparent;
 }
 /* ハイライトを消したままだと「押した感触」が無くなるので、主要な操作要素に
-   わずかな押し込みを付ける（モーション軽減時は無効）。 */
-html[data-ios]:not([data-motion='reduce']) .btn:active,
-html[data-ios]:not([data-motion='reduce']) .card-link:active,
-html[data-ios]:not([data-motion='reduce']) .nav-link:active,
-html[data-ios]:not([data-motion='reduce']) .chip:active,
-html[data-ios]:not([data-motion='reduce']) .bottom-nav a:active {
-  transform: scale(0.975);
+   わずかな押し込みを付ける（モーション軽減時と、設定で「なし」にしたときは無効）。
+   沈み込みの深さは設定（nte.tapfx）で変えられる。 */
+html[data-ios] {
+  --tap-scale: 0.975;
+}
+html[data-ios][data-tapfx='strong'] {
+  --tap-scale: 0.95;
+}
+html[data-ios]:not([data-motion='reduce']):not([data-tapfx='off']) .btn:active,
+html[data-ios]:not([data-motion='reduce']):not([data-tapfx='off']) .card-link:active,
+html[data-ios]:not([data-motion='reduce']):not([data-tapfx='off']) .nav-link:active,
+html[data-ios]:not([data-motion='reduce']):not([data-tapfx='off']) .chip:active,
+html[data-ios]:not([data-motion='reduce']):not([data-tapfx='off']) .bottom-nav a:active {
+  transform: scale(var(--tap-scale));
   transition: transform 0.06s ease-out;
 }
 
@@ -112,4 +119,28 @@ html[data-ios] .prose,
 html[data-ios] .prose * {
   -webkit-user-select: text;
   user-select: text;
+}
+
+/* ---- 10. 長押しメニュー（コールアウト）の抑制 ----
+   ナビ・ボタン・カードを長押ししたときに出る「リンクを開く／コピー」等の
+   iOS のシートを止める。誤爆が多く、操作の邪魔になるため。
+   本文は**必ず除外**する（画像の保存やテキストのコピーを奪わない）。 */
+html[data-ios] .app-header,
+html[data-ios] .bottom-nav,
+html[data-ios] .drawer-panel,
+html[data-ios] .sidebar,
+html[data-ios] .btn,
+html[data-ios] .chip,
+html[data-ios] .card-link,
+html[data-ios] .nav-link {
+  -webkit-touch-callout: none;
+}
+html[data-ios] .prose,
+html[data-ios] .prose * {
+  -webkit-touch-callout: default;
+}
+/* 設定で明示的に選んだときだけ、本文でも抑制する */
+html[data-ios][data-callout='on'] .prose,
+html[data-ios][data-callout='on'] .prose * {
+  -webkit-touch-callout: none;
 }

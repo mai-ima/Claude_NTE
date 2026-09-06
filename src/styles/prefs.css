@@ -47,6 +47,73 @@ html[data-width='wide'] .prose {
   max-width: 92ch;
 }
 
+/* ----- 本文の文字サイズ・行間 -----
+   本文（.prose）だけを変える。見出しや一覧・ナビの文字は動かさないので、
+   レイアウトが崩れずに「読む文字」だけが大きくなる。
+   既定（m / normal）のときは属性そのものが付かない＝この節は効かない。 */
+.prose {
+  font-size: var(--prose-size, 1rem);
+  line-height: var(--prose-lh, 1.75);
+}
+html[data-fontsize='s'] .prose {
+  --prose-size: 0.94rem;
+}
+html[data-fontsize='l'] .prose {
+  --prose-size: 1.09rem;
+}
+html[data-fontsize='xl'] .prose {
+  --prose-size: 1.2rem;
+}
+html[data-lineheight='tight'] .prose {
+  --prose-lh: 1.6;
+}
+html[data-lineheight='relaxed'] .prose {
+  --prose-lh: 2;
+}
+
+/* ----- 一覧をコンパクトに（説明を省いた1行リスト） ----- */
+html[data-listview='compact'] .grid-cards {
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+html[data-listview='compact'] .grid-cards > .card-link {
+  padding: 11px 14px;
+}
+/* 説明文だけ隠す。属性バッジ（.cluster）は識別に要るので残す */
+html[data-listview='compact'] .grid-cards > .card-link > p {
+  display: none;
+}
+html[data-listview='compact'] .grid-cards > .card-link > .cluster {
+  margin-top: 6px;
+}
+
+/* ----- 一覧の並び替え -----
+   .grid-cards は CSS Grid だが、グリッドアイテムにも order は効く。
+   各カードには EntityList 側が --ord-updated / --ord-name（順位）を埋めてある。
+   グループ（data-group）をまたいだ並べ替えにはならない＝グループ内での順序が変わる。 */
+html[data-listsort='updated'] .grid-cards > .card-link {
+  order: var(--ord-updated, 0);
+}
+html[data-listsort='name'] .grid-cards > .card-link {
+  order: var(--ord-name, 0);
+}
+
+/* ----- 下部のタブバーを隠す（本文の表示領域を広げる） ----- */
+html[data-tabbar='hide'] .bottom-nav {
+  display: none;
+}
+@media (max-width: 959px) {
+  /* ナビが無くなったぶん、本文末尾に確保していた余白を戻す。
+     打ち消す相手（ios.css の 5）は html[data-ios] .app-main と同じ詳細度で、
+     しかも後から読まれる。[data-ios] を併記して詳細度で上回る必要がある。 */
+  html[data-ios][data-tabbar='hide'] .app-main {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html[data-ios][data-tabbar='hide'] .app-footer {
+    padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
 /* ----- 未検証（要確認）を強調 ----- */
 html[data-draftmark='on'] .badge-draft {
   outline: 2px solid color-mix(in srgb, #d97706 70%, transparent);

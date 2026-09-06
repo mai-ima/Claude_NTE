@@ -52,6 +52,37 @@ export type PrefDef = TogglePref | ChoicePref;
 export const PREFS: PrefDef[] = [
   // ---- 読みやすさ -------------------------------------------------------
   {
+    type: 'choice',
+    key: 'nte.fontsize',
+    attr: 'fontsize',
+    def: 'm',
+    choices: [
+      { value: 's', label: '小' },
+      { value: 'm', label: '標準' },
+      { value: 'l', label: '大' },
+      { value: 'xl', label: '特大' },
+    ],
+    label: '本文の文字サイズ',
+    hint: '記事本文の文字を大きく／小さくします。見出しや一覧の文字は変わりません。',
+    group: 'reading',
+    icon: 'type',
+  },
+  {
+    type: 'choice',
+    key: 'nte.lineheight',
+    attr: 'lineheight',
+    def: 'normal',
+    choices: [
+      { value: 'tight', label: '詰める' },
+      { value: 'normal', label: '標準' },
+      { value: 'relaxed', label: 'ゆったり' },
+    ],
+    label: '本文の行間',
+    hint: '行と行のあいだの広さを変えます。長い記事を読むときに効きます。',
+    group: 'reading',
+    icon: 'rows',
+  },
+  {
     type: 'toggle',
     key: 'nte.motion',
     attr: 'motion',
@@ -100,6 +131,91 @@ export const PREFS: PrefDef[] = [
     hint: '「要確認」バッジを目立たせ、未検証の情報をひと目で分かるようにします（誠実性の可視化）。',
     group: 'reading',
     icon: 'alert',
+  },
+
+  // ---- 一覧の表示 -------------------------------------------------------
+  {
+    type: 'choice',
+    key: 'nte.listview',
+    attr: 'listview',
+    def: 'cards',
+    choices: [
+      { value: 'cards', label: 'カード' },
+      { value: 'compact', label: 'コンパクト' },
+    ],
+    label: '一覧の表示',
+    hint: 'コンパクトにすると、説明を省いた1行のリストになり、一度に多くの項目を見渡せます。',
+    group: 'list',
+    icon: 'layout',
+  },
+  {
+    type: 'choice',
+    key: 'nte.listsort',
+    attr: 'listsort',
+    def: 'default',
+    choices: [
+      { value: 'default', label: '既定' },
+      { value: 'updated', label: '更新が新しい順' },
+      { value: 'name', label: '名前順' },
+    ],
+    label: '一覧の並び順',
+    hint: '一覧ページのカードを並べ替えます。グループ分けはそのまま、その中で順番が変わります。',
+    group: 'list',
+    icon: 'sort',
+  },
+
+  // ---- wiki -------------------------------------------------------------
+  {
+    // 属性は書かない（`<html>` の見た目に影響しない）。wiki ハブが読んで案内に使う。
+    type: 'choice',
+    key: 'nte.homewiki',
+    def: 'nte',
+    choices: [
+      { value: 'nte', label: 'NTE' },
+      { value: 'alpha', label: 'αテスト' },
+      { value: 'ask', label: '毎回選ぶ' },
+    ],
+    label: 'よく見る wiki',
+    hint: 'wiki 一覧（ハブ）で、次に開く wiki を目立たせます。勝手に移動することはありません。',
+    group: 'wiki',
+    icon: 'library',
+  },
+
+  // ---- タッチ操作（iPhone / iPad） --------------------------------------
+  {
+    type: 'choice',
+    key: 'nte.tapfx',
+    attr: 'tapfx',
+    def: 'on',
+    choices: [
+      { value: 'on', label: '標準' },
+      { value: 'strong', label: '強め' },
+      { value: 'off', label: 'なし' },
+    ],
+    label: 'タップしたときの反応',
+    hint: 'ボタンやカードを押したときの、わずかな沈み込みの強さを変えます。',
+    group: 'touch',
+    icon: 'touch',
+  },
+  {
+    type: 'toggle',
+    key: 'nte.tabbar',
+    attr: 'tabbar',
+    on: 'hide',
+    label: '下部のタブバーを隠す',
+    hint: '画面下のタブバーを消して、本文の表示領域を広げます（メニューは左上のボタンから開けます）。',
+    group: 'touch',
+    icon: 'panel',
+  },
+  {
+    type: 'toggle',
+    key: 'nte.callout',
+    attr: 'callout',
+    on: 'on',
+    label: '本文の長押しメニューを抑制',
+    hint: '本文を長押ししたときに出る iOS のメニューを出さなくします。画像の保存やコピーもできなくなります。',
+    group: 'touch',
+    icon: 'hand',
   },
 
   // ---- 機能（ベータ） ---------------------------------------------------

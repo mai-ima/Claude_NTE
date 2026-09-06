@@ -18,6 +18,17 @@ const list = [...implementedEntries].sort(
     titleOf(a).localeCompare(titleOf(b), 'ja'),
 );
 
+// 並び替え用の順位（設定「一覧の並び順」が CSS の order で拾う。EntityList と同じ仕組み）
+const updatedMs = (e: any) => (e.data.updated instanceof Date ? e.data.updated.getTime() : 0);
+const ordUpdated = new Map(
+  [...list].sort((a, b) => updatedMs(b) - updatedMs(a)).map((e, i) => [e.id, i]),
+);
+const ordName = new Map(
+  [...list].sort((a, b) => titleOf(a).localeCompare(titleOf(b), 'ja')).map((e, i) => [e.id, i]),
+);
+const ordVars = (e: any) =>
+  `--ord-updated:${ordUpdated.get(e.id) ?? 0};--ord-name:${ordName.get(e.id) ?? 0}`;
+
 const elements = Object.keys(ELEMENT_META);
 const roles = Object.keys(ROLE_META);
 const rarities = ['S', 'A'];
@@ -115,7 +126,7 @@ const aCount = list.filter((c: any) => c.data.rarity === 'A').length;
               <a
                 class="card card-pad card-link char-card"
                 href={hrefOf('characters', entry.id)}
-                style={`--el:${em.hue}`}
+                style={`--el:${em.hue};${ordVars(entry)}`}
                 data-rarity={d.rarity}
                 data-element={d.element}
                 data-role={d.role}
