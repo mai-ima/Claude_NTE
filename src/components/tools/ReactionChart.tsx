@@ -3,7 +3,7 @@
  * 選択した属性に関わる反応をハイライトする。
  */
 import { useState } from 'preact/hooks';
-import { ELEMENT_RING, DUO_REACTIONS, elementMeta } from '../../lib/nav';
+import { ELEMENT_RING, DUO_REACTIONS, TRIO_REACTIONS, elementMeta } from '../../lib/nav';
 import { cssVars } from '../../lib/css';
 
 export default function ReactionChart() {
@@ -23,7 +23,14 @@ export default function ReactionChart() {
     <div class="tool">
       <p class="muted text-sm">属性をタップすると、その属性が起こせる反応をハイライトします。</p>
       <div style={{ display: 'grid', placeItems: 'center' }}>
-        <svg viewBox="0 0 200 200" width="240" height="240" role="img" aria-label="異能連環リング">
+        {/* 中の属性はボタンとして操作できるので role="img"（中身を読ませない）にはしない */}
+        <svg
+          viewBox="0 0 200 200"
+          width="240"
+          height="240"
+          role="group"
+          aria-label="異能連環リング。属性を選ぶと、その属性が起こせる反応をハイライトします"
+        >
           <circle cx={cx} cy={cy} r={r} fill="none" stroke="var(--border)" stroke-width="2" />
           {nodes.map((n, i) => {
             const m = nodes[(i + 1) % nodes.length];
@@ -38,8 +45,26 @@ export default function ReactionChart() {
             const on = n.id === sel;
             const near = nb.includes(n.id);
             const rad = on ? 21 : near ? 18 : 15;
+            const toggle = () => setSel(on ? null : n.id);
             return (
-              <g key={n.id} style={{ cursor: 'pointer' }} onClick={() => setSel(on ? null : n.id)}>
+              // マウスだけでなくキーボードでも選べるようにする
+              // （tabindex と Enter/Space が無く、キーボードでは操作できない状態だった）
+              <g
+                key={n.id}
+                class="rc-node"
+                style={{ cursor: 'pointer' }}
+                role="button"
+                tabindex={0}
+                aria-pressed={on ? 'true' : 'false'}
+                aria-label={`${n.meta.label}属性（${n.meta.en}）`}
+                onClick={toggle}
+                onKeyDown={(e: KeyboardEvent) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggle();
+                  }
+                }}
+              >
                 <circle cx={n.x} cy={n.y} r={rad} fill={n.meta.hue}
                   opacity={sel && !on && !near ? 0.35 : 1} stroke="#fff" stroke-width={on ? 3 : 1.5} />
                 <text x={n.x} y={n.y + 5} text-anchor="middle" font-size={on ? 16 : 13} font-weight="800" fill="#fff">
@@ -86,9 +111,16 @@ export default function ReactionChart() {
       <div class="callout callout-info">
         <div>
           <p class="callout-title">トリオ反応</p>
-          <div class="text-sm">
-            <strong>充蓄（Charge）</strong>（光＋霊＋相）＝アルティメットエネルギー獲得。
-            <strong>失諧（Discord）</strong>（闇＋魂＋呪）＝ブレイク値を削る。
+          {/* 定義は nav.ts に集約（チームビルダーと同じものを参照する） */}
+          <div class="text-sm stack" style={{ gap: '4px' }}>
+            {TRIO_REACTIONS.map((t) => (
+              <div key={t.name}>
+                <strong>
+                  {t.ja}（{t.name}）
+                </strong>
+                （{t.els.map((e) => elementMeta(e).label).join('＋')}）＝{t.effect}
+              </div>
+            ))}
           </div>
         </div>
       </div>

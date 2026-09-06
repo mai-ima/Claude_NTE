@@ -46,8 +46,14 @@ function InteractiveMap() {
   // 長押し（モバイル/デスクトップ共通）で削除。発火したらタップのトグルは抑止する。
   const pressTimer = useRef<number | null>(null);
   const longPressed = useRef(false);
-  const startPress = (id: string) => {
+  // 押し始めの座標。ここから動いたらスクロール操作とみなして長押しを取り消す
+  // （指を置いたままスクロールしようとしただけで削除確認が出ていた）。
+  const pressAt = useRef<{ x: number; y: number } | null>(null);
+  const MOVE_TOLERANCE = 10; // px
+
+  const startPress = (id: string, e: PointerEvent) => {
     longPressed.current = false;
+    pressAt.current = { x: e.clientX, y: e.clientY };
     pressTimer.current = window.setTimeout(() => {
       longPressed.current = true;
       remove(id);
@@ -57,6 +63,14 @@ function InteractiveMap() {
     if (pressTimer.current != null) {
       clearTimeout(pressTimer.current);
       pressTimer.current = null;
+    }
+    pressAt.current = null;
+  };
+  const movePress = (e: PointerEvent) => {
+    const from = pressAt.current;
+    if (!from) return;
+    if (Math.abs(e.clientX - from.x) > MOVE_TOLERANCE || Math.abs(e.clientY - from.y) > MOVE_TOLERANCE) {
+      cancelPress();
     }
   };
 
@@ -93,6 +107,8 @@ function InteractiveMap() {
             class={`map-pin${p.done ? ' done' : ''}`}
             style={{ left: `${p.x}%`, top: `${p.y}%` }}
             title={`${p.cat}${p.label ? ' / ' + p.label : ''}`}
+            aria-pressed={p.done ? 'true' : 'false'}
+            aria-label={`${p.cat}${p.label ? '「' + p.label + '」' : ''}（${p.done ? '完了' : '未完了'}）`}
             onClick={(e) => {
               e.stopPropagation();
               if (longPressed.current) {
@@ -103,10 +119,12 @@ function InteractiveMap() {
             }}
             onPointerDown={(e) => {
               e.stopPropagation();
-              startPress(p.id);
+              startPress(p.id, e as PointerEvent);
             }}
+            onPointerMove={(e) => movePress(e as PointerEvent)}
             onPointerUp={cancelPress}
             onPointerLeave={cancelPress}
+            onPointerCancel={cancelPress}
             onContextMenu={(e) => e.preventDefault()}
           >
             <span aria-hidden="true">{p.done ? '✓' : '●'}</span>

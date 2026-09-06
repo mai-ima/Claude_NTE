@@ -217,6 +217,27 @@ export const DUO_REACTIONS = [
   { a: 'Lakshana', b: 'Cosmos', name: 'Remora', ja: '延滞', effect: '対象をマーク・鈍化' },
 ];
 
+/**
+ * トリオ反応（3属性が揃うと成立）。
+ * 記事側の /terms/charge-discord/ と同じ内容。
+ * ※ 以前は異能連環チェッカーとチームビルダーがそれぞれ別に持っていて、
+ *   表示（日本語名の有無）が食い違っていたため、ここへ集約した。
+ */
+export const TRIO_REACTIONS = [
+  {
+    els: ['Cosmos', 'Anima', 'Lakshana'],
+    name: 'Charge',
+    ja: '充蓄',
+    effect: 'アルティメットエネルギーを獲得',
+  },
+  {
+    els: ['Chaos', 'Psyche', 'Incantation'],
+    name: 'Discord',
+    ja: '失諧',
+    effect: 'ブレイク値を削る',
+  },
+];
+
 /** ある属性が隣接で起こせる反応（相手属性＋反応名）を返す */
 export function reactionsFor(el: string): { partner: string; name: string; ja: string }[] {
   return DUO_REACTIONS.filter((r) => r.a === el || r.b === el).map((r) => ({

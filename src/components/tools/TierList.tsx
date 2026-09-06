@@ -92,6 +92,8 @@ function TierList({ characters }: { characters: TierChar[] }) {
                   key={c.id}
                   type="button"
                   class="tier-chip"
+                  // 選択中であることを、見た目（外枠）だけでなく支援技術にも伝える
+                  aria-pressed={selected === c.id ? 'true' : 'false'}
                   style={{
                     outline: selected === c.id ? `2px solid var(--accent)` : 'none',
                     background: selected === c.id ? 'var(--accent-weak)' : undefined,
@@ -117,7 +119,16 @@ function TierList({ characters }: { characters: TierChar[] }) {
             選択中: <strong>{characters.find((c) => c.id === selected)?.name}</strong> — 行をタップして移動
           </span>
         )}
-        <button class="btn btn-sm btn-ghost" type="button" onClick={() => setOverrides({})}>
+        <button
+          class="btn btn-sm btn-ghost"
+          type="button"
+          // 並べ替えた結果が1タップで消えるのは戻せないので、変更がある時だけ確認する
+          onClick={() => {
+            if (Object.keys(overrides).length === 0) return;
+            if (confirm('並べ替えを破棄して初期状態に戻します。よろしいですか？')) setOverrides({});
+          }}
+          disabled={Object.keys(overrides).length === 0}
+        >
           初期状態にリセット
         </button>
       </div>

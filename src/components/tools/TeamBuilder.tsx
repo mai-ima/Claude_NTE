@@ -7,7 +7,7 @@
 import { useStore } from './useStore';
 import { HBars } from './chart';
 import { cssVars } from '../../lib/css';
-import { elementMeta } from '../../lib/nav';
+import { elementMeta, DUO_REACTIONS, TRIO_REACTIONS } from '../../lib/nav';
 import { withBoundary } from './withBoundary';
 
 export interface TeamChar {
@@ -19,19 +19,11 @@ export interface TeamChar {
   el: string;
 }
 
-// 隣接ペアの Duo 反応 + Trio 反応（出典: zeroluck / Mobalytics 等, 2026/6）
-const DUO: { name: string; a: string; b: string; note: string }[] = [
-  { name: 'Remora', a: 'Lakshana', b: 'Cosmos', note: '対象を鈍化・マーク' },
-  { name: 'Blossom', a: 'Cosmos', b: 'Anima', note: 'AoE追撃' },
-  { name: 'Hexed', a: 'Anima', b: 'Incantation', note: '蓄積ダメージを一括解放' },
-  { name: 'Scorch', a: 'Incantation', b: 'Chaos', note: '継続ダメージ(DoT)' },
-  { name: 'Nova', a: 'Chaos', b: 'Psyche', note: '遅延爆発(メンタル)' },
-  { name: 'Stain', a: 'Psyche', b: 'Lakshana', note: '被ダメージ増加' },
-];
-const TRIO: { name: string; els: string[]; note: string }[] = [
-  { name: 'Charge', els: ['Cosmos', 'Anima', 'Lakshana'], note: 'アルティメットエネルギー獲得' },
-  { name: 'Discord', els: ['Chaos', 'Psyche', 'Incantation'], note: 'ブレイク値を削る' },
-];
+// 反応の定義は src/lib/nav.ts に集約している。
+// （以前ここに同じ表を持っていたため、異能連環チェッカーは日本語名「創生」、
+//   チームビルダーは英語名「Blossom」と、同じ反応が別表記で出ていた）
+const DUO = DUO_REACTIONS;
+const TRIO = TRIO_REACTIONS;
 
 const ROLE_JA: Record<string, string> = { DPS: 'アタッカー', Survival: 'サバイバル', Buff: 'バフ' };
 
@@ -52,7 +44,8 @@ function TeamBuilder({ characters }: { characters: TeamChar[] }) {
     picked.length >= 1 && picked.length < 4
       ? DUO.filter((r) => elements.has(r.a) !== elements.has(r.b)).map((r) => ({
           name: r.name,
-          note: r.note,
+          ja: r.ja,
+          effect: r.effect,
           need: elements.has(r.a) ? r.b : r.a,
         }))
       : [];
@@ -107,11 +100,13 @@ function TeamBuilder({ characters }: { characters: TeamChar[] }) {
           ) : (
             <div class="cluster" style={{ marginTop: '4px' }}>
               {duos.map((r) => (
-                <span class="badge badge-accent" title={r.note} key={r.name}>{r.name}</span>
+                <span class="badge badge-accent" title={`${r.name} — ${r.effect}`} key={r.name}>
+                  {r.ja}
+                </span>
               ))}
               {trios.map((r) => (
-                <span class="badge" style={{ background: 'var(--accent)', color: 'var(--accent-contrast)' }} title={r.note} key={r.name}>
-                  {r.name}（トリオ）
+                <span class="badge" style={{ background: 'var(--accent)', color: 'var(--accent-contrast)' }} title={`${r.name} — ${r.effect}`} key={r.name}>
+                  {r.ja}（トリオ）
                 </span>
               ))}
             </div>
@@ -122,9 +117,9 @@ function TeamBuilder({ characters }: { characters: TeamChar[] }) {
             <p class="muted text-sm mt-0" style={{ marginBottom: '4px' }}>あと1属性で発動する反応</p>
             <div class="cluster">
               {nearDuos.map((d) => (
-                <span class="badge" title={d.note} key={d.name}>
+                <span class="badge" title={`${d.name} — ${d.effect}`} key={d.name}>
                   <span class="el-dot" style={cssVars({ '--el': elementMeta(d.need).hue })} />
-                  {elementMeta(d.need).label}を追加 → {d.name}
+                  {elementMeta(d.need).label}を追加 → {d.ja}
                 </span>
               ))}
             </div>
