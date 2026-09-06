@@ -7,36 +7,35 @@
 
 ## いまやっていること
 
-**v0.11.0 全監査** — プランは `/root/.claude/plans/03-v0.11.0-full-audit.md`
-（最新版は `iphoneui-wiki-buzzing-sunbeam.md`）。
+**v0.11.0 全監査 — 5フェーズすべて完了**。記録は `docs/AUDIT-2026-09.md`。
 
 | フェーズ | 状態 |
 | --- | --- |
-| 1. コード監査 | ✅ 完了 |
-| 2. Playwright で全ツール・全ページを実操作 | ⏳ **いまここ** |
-| 3. 記事の鮮度回復 | ✅ 完了（`checked` を新設して184件に付与） |
-| 4. 新機能を4方向で追加 | ⬜ 未着手 |
-| 5. docs・リリースノート・CONTEXT の仕上げ | ⬜ 未着手 |
+| 1. コード監査 | ✅ |
+| 2. 実機ブラウザ検査（`pnpm test:browser` を新設） | ✅ |
+| 3. 記事の鮮度回復（`checked` を新設・184件に付与） | ✅ |
+| 4. 新機能を4方向（軽量化36%／サイドバー絞り込み／一覧に鮮度／タイマー・メモ強化） | ✅ |
+| 5. docs・リリースノート・CONTEXT の仕上げ | ✅ |
 
 ## 次の一手
 
-1. `scripts/audit-browser.mjs` を実行して結果を見る
-2. 出た不具合を直し、`docs/AUDIT-2026-09.md` に記録
-3. フェーズ4へ
+**利用者に「`main` へ出すか」を確認する**。作業ブランチは本番に出ない。
+`git log --oneline origin/main..HEAD` で未反映のコミットを示すこと。
 
 ## 動かし方（つまずきやすい所）
 
 ```bash
-npx serve dist -l 4322          # -s は付けない（404 が 200 になる）
-node scripts/audit-browser.mjs  # リポジトリ直下で実行（playwright の解決のため）
+pnpm verify        # test → 記事検査 → 型 → build → UI検査 → リンク検査
+pnpm test:browser  # 実機相当（Chromium。verify には入っていない。build の後）
 ```
 
-- **`pkill` は使わない**。自分のシェルを kill して exit 144 になる（`docs/FINDINGS.md`）。
-  サーバを止めたいときはポートを変えるか放置する。
-- rehype を触ったら `rm -rf .astro node_modules/.astro dist` してから再ビルド
-  （キャッシュで変更が反映されず、直っていないように見える）。
+- **`pkill` は使わない**。自分のシェルを kill して exit 144 になる。
+- `curl` で localhost を叩くときは `--noproxy '*'`（プロキシ経由で失敗する）。
+- rehype を触ったら `rm -rf .astro node_modules/.astro dist` してから再ビルド。
 
 ## 保留・気になっていること
 
-- 用語集の一覧が 192KB（105件を1ページに全部出している）／UIモード10種の CSS 137KB
+- UIモード10種の CSS 137KB を全員が読んでいる（未着手。初回のみなので優先度は低い）
 - リンコは 9/9 実装予定。実装されたら `status: "draft"` を外して確定データへ
+- Ver.1.3 のイベント個別ページが4つ未収録（バトル・バンケット／潮風ツーリング／
+  ビルド・ラッシュ／軌道外ブレイク）。`ver13-update` には名前だけ載せてある
