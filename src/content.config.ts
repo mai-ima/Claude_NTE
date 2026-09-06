@@ -16,13 +16,20 @@ import { glob } from 'astro/loaders';
 
 const source = z.object({ label: z.string(), url: z.url() });
 
-/** 全コレクション共通のベースフィールド */
+/**
+ * 全コレクション共通のベースフィールド。
+ *
+ * `description` と `updated` は**必須**にしてある。このサイトの根幹ルール
+ * （「いつ時点の情報か」を必ず示す・一覧とSEOに出す説明を持つ）を、
+ * 検査スクリプトの警告ではなく**ビルドが落ちる形**で守るため。
+ * 以前は両方とも任意で、書き忘れても気づけなかった（現状は全264記事にある）。
+ */
 const base = {
-  description: z.string().default(''),
+  description: z.string().min(1, 'description は必須です（一覧とSEOに使います）'),
   status: z.enum(['verified', 'draft']).default('draft'),
   order: z.number().default(100),
   tags: z.array(z.string()).default([]),
-  updated: z.coerce.date().optional(),
+  updated: z.coerce.date(),
   sources: z.array(source).default([]),
   draft: z.boolean().default(false), // ビルドから完全除外したい場合
 };
