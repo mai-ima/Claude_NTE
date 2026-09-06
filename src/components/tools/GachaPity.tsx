@@ -20,11 +20,16 @@ const DEFAULT: PityState = {
   pity: 0,
   softAt: 70,
   hardAt: 90,
-  baseRate: 1.87,
+  // 出典: ゲームウィズ「ガチャの排出確率と仕様」ほか（2026-09 再確認）
+  baseRate: 0.99,
   softRate: 19.59,
   annulithPerDie: 160,
   history: [],
 };
+
+/** 以前この既定値を 1.87% としていたが誤り（正しくは 0.99%）。
+ *  端末に保存済みの人が古い値のままにならないよう、読み出し時に補正する。 */
+const WRONG_BASE_RATE = 1.87;
 
 export default function GachaPity() {
   const [s, set] = useStore<PityState>('tool.gachaPity', DEFAULT);
@@ -34,7 +39,8 @@ export default function GachaPity() {
   const inSoft = pity >= s.softAt;
   const toSoft = Math.max(0, s.softAt - pity);
   const toHard = Math.max(0, hardAt - pity);
-  const curRate = inSoft ? s.softRate : s.baseRate;
+  const baseRate = s.baseRate === WRONG_BASE_RATE ? DEFAULT.baseRate : s.baseRate;
+  const curRate = inSoft ? s.softRate : baseRate;
   const diceToHard = toHard;
   const annulithToHard = diceToHard * s.annulithPerDie;
 
@@ -86,8 +92,8 @@ export default function GachaPity() {
           )}
         </div>
         <div class="text-sm muted">
-          確定までに必要: <strong>{diceToHard}</strong> ダイス（≒ {annulithToHard.toLocaleString()}{' '}
-          Annulith）
+          確定までに必要: <strong>{diceToHard}</strong> 個のサイコロ（≒ 円石{' '}
+          {annulithToHard.toLocaleString()}）
         </div>
       </div>
 
@@ -124,20 +130,20 @@ export default function GachaPity() {
           </label>
           <label class="field" style={{ flex: '1 1 120px', marginBottom: 0 }}>
             <span class="text-sm">基礎S率(%)</span>
-            <input class="input" type="number" inputmode="decimal" step={0.01} value={s.baseRate} onInput={(e) => num('baseRate', (e.target as HTMLInputElement).value)} />
+            <input class="input" type="number" inputmode="decimal" step={0.01} value={baseRate} onInput={(e) => num('baseRate', (e.target as HTMLInputElement).value)} />
           </label>
           <label class="field" style={{ flex: '1 1 120px', marginBottom: 0 }}>
             <span class="text-sm">天井後S率(%)</span>
             <input class="input" type="number" inputmode="decimal" step={0.01} value={s.softRate} onInput={(e) => num('softRate', (e.target as HTMLInputElement).value)} />
           </label>
           <label class="field" style={{ flex: '1 1 120px', marginBottom: 0 }}>
-            <span class="text-sm">1ダイスの Annulith</span>
+            <span class="text-sm">サイコロ1個ぶんの円石</span>
             <input class="input" type="number" inputmode="decimal" value={s.annulithPerDie} onInput={(e) => num('annulithPerDie', (e.target as HTMLInputElement).value)} />
           </label>
         </div>
         <p class="hint" style={{ marginTop: '8px' }}>
-          既定値は2026年6月時点のコミュニティ情報（基礎1.87%→天井後19.59%、ソフト70/ハード90、限定はすり抜け無し）。
-          ゲーム内の「詳細」で最新値をご確認ください。
+          既定値は2026年9月に再確認した値（基礎 0.99% → 転換後 19.59%、ソフト70/ハード90、
+          限定はすり抜け無し、円石160＝サイコロ1）。ゲーム内の「詳細」で最新値をご確認ください。
         </p>
       </details>
 

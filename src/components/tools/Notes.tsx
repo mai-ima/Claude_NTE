@@ -25,6 +25,11 @@ export default function Notes() {
   }
 
   function del(id: string) {
+    // メモは長文になりがちで、消すと元に戻せない。中身があるときだけ確認する。
+    const target = notes.find((n) => n.id === id);
+    if (target?.text.trim() && !confirm('このメモを削除します。元に戻せません。よろしいですか？')) {
+      return;
+    }
     setNotes(notes.filter((n) => n.id !== id));
   }
 
@@ -56,6 +61,7 @@ export default function Notes() {
               <textarea
                 class="textarea"
                 style={{ minHeight: '72px' }}
+                aria-label="メモの内容"
                 value={n.text}
                 onInput={(e) => update(n.id, (e.target as HTMLTextAreaElement).value)}
               />

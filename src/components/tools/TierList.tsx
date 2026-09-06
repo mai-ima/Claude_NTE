@@ -8,6 +8,7 @@ import { useState } from 'preact/hooks';
 import { useStore } from './useStore';
 import { cssVars } from '../../lib/css';
 import { ELEMENT_RING, elementMeta } from '../../lib/nav';
+import { withBoundary } from './withBoundary';
 
 export interface TierChar {
   id: string;
@@ -28,7 +29,7 @@ const TIERS: { key: string; color: string }[] = [
   { key: '未分類', color: '#9e9e9e' },
 ];
 
-export default function TierList({ characters }: { characters: TierChar[] }) {
+function TierList({ characters }: { characters: TierChar[] }) {
   const [overrides, setOverrides] = useStore<Record<string, string>>('tool.tierList', {});
   const [selected, setSelected] = useState<string | null>(null);
   const [filterEl, setFilterEl] = useState<string | null>(null);
@@ -123,3 +124,6 @@ export default function TierList({ characters }: { characters: TierChar[] }) {
     </div>
   );
 }
+
+/** 中で例外が出てもページが白くならないよう、エラーバウンダリで包んで公開する。 */
+export default withBoundary(TierList);

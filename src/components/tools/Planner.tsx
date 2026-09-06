@@ -16,13 +16,17 @@ interface Task {
   cycle: 'daily' | 'weekly';
 }
 
+/** 既定のタスク（利用者は自由に追加・削除できる）。
+ *  日本版で実際に回っている日課・週課に合わせてある（2026-09 時点）。 */
 const DEFAULT_TASKS: Task[] = [
-  { id: 'd1', text: 'デイリーミッション消化', done: false, cycle: 'daily' },
+  { id: 'd1', text: 'デイリーミッションでアクティブ度100', done: false, cycle: 'daily' },
   { id: 'd2', text: '本性ピクセルを使い切る', done: false, cycle: 'daily' },
-  { id: 'd3', text: 'シティスタミナで ファンス 稼ぎ', done: false, cycle: 'daily' },
-  { id: 'w1', text: 'アノマリーボスの週課報酬を回収', done: false, cycle: 'weekly' },
-  { id: 'w2', text: 'シティスタミナを使い切る（週リセット前）', done: false, cycle: 'weekly' },
-  { id: 'w3', text: 'Beyond the Rails を進める', done: false, cycle: 'weekly' },
+  { id: 'd3', text: 'シティスタミナでファンス稼ぎ', done: false, cycle: 'daily' },
+  { id: 'd4', text: 'ハンター褒章のデイリーを進める', done: false, cycle: 'daily' },
+  { id: 'w1', text: 'ウィークリーリーグに挑戦（優勝で50万ファンス）', done: false, cycle: 'weekly' },
+  { id: 'w2', text: 'シティスタミナを使い切る（月曜4時にリセット）', done: false, cycle: 'weekly' },
+  { id: 'w3', text: 'カーペホテルのオークションを確認', done: false, cycle: 'weekly' },
+  { id: 'w4', text: '古い郵便箱の特別市内依頼（週1回）', done: false, cycle: 'weekly' },
 ];
 
 /** 次の「月曜04:00 (UTC+8)」を返す */
@@ -43,11 +47,13 @@ export default function Planner() {
   const [cur, setCur] = useStore<number>('tool.planner.pixels', 0);
   // 現在値を入力した時刻。これを基準に経過分から現在量を推定する（表示が時間でズレないように）。
   const [curAt, setCurAt] = useStore<number>('tool.planner.pixelsAt', 0);
-  const [max, setMax] = useState(240);
-  const [perMin, setPerMin] = useState(6);
-  const [runCost, setRunCost] = useState(40);
+  // 上限・回復速度・1周のコストも端末に保存する。
+  // （以前は useState だったため、調整してもページを開き直すと既定値に戻っていた）
+  const [max, setMax] = useStore<number>('tool.planner.max', 240);
+  const [perMin, setPerMin] = useStore<number>('tool.planner.perMin', 6);
+  const [runCost, setRunCost] = useStore<number>('tool.planner.runCost', 40);
   const [city, setCity] = useStore<number>('tool.planner.city', 200);
-  const [cityMax, setCityMax] = useState(200);
+  const [cityMax, setCityMax] = useStore<number>('tool.planner.cityMax', 200);
   const [tasks, setTasks] = useStore<Task[]>('tool.planner.tasks', DEFAULT_TASKS);
   const [newTask, setNewTask] = useState('');
   const [now, setNow] = useState(() => Date.now());

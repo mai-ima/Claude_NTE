@@ -7,6 +7,7 @@ import type { ComponentChildren } from 'preact';
 import { useStore } from './useStore';
 import { elementMeta, roleMeta, reactionsFor, DUO_REACTIONS } from '../../lib/nav';
 import { cssVars } from '../../lib/css';
+import { withBoundary } from './withBoundary';
 
 export interface CmpChar {
   id: string;
@@ -28,7 +29,7 @@ function reactionBetween(a: string, b: string) {
   return DUO_REACTIONS.find((r) => (r.a === a && r.b === b) || (r.a === b && r.b === a)) ?? null;
 }
 
-export default function CharacterCompare({ characters }: { characters: CmpChar[] }) {
+function CharacterCompare({ characters }: { characters: CmpChar[] }) {
   const [ids, setIds] = useStore<string[]>('tool.compare.ids', []);
   const byId = (id: string) => characters.find((c) => c.id === id);
   const selected = ids.map(byId).filter(Boolean) as CmpChar[];
@@ -179,3 +180,6 @@ export default function CharacterCompare({ characters }: { characters: CmpChar[]
     </div>
   );
 }
+
+/** 中で例外が出てもページが白くならないよう、エラーバウンダリで包んで公開する。 */
+export default withBoundary(CharacterCompare);

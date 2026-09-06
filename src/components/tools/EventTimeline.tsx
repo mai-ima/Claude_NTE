@@ -5,6 +5,7 @@
  */
 import { useEffect, useState } from 'preact/hooks';
 import { cssVars } from '../../lib/css';
+import { withBoundary } from './withBoundary';
 
 export interface TLEvent {
   id: string;
@@ -25,6 +26,12 @@ const KIND = {
 const DAY = 86_400_000;
 
 type Phase = 'current' | 'upcoming' | 'ended';
+/**
+ * 開催状況の判定。src/lib/content.ts にも同名の関数があるが、あちらは
+ * astro:content に依存するモジュールの中にあるためクライアントから import できない。
+ * **判定条件は同じに保つこと**（片方だけ直すと一覧とタイムラインで表示がズレる）。
+ * ここで再判定しているのは、ビルド時刻ではなく「見ている今」で判定するため。
+ */
 function phaseOf(now: number, s: number | null, e: number | null): Phase {
   if (s != null && now < s) return 'upcoming';
   if (e != null && now >= e) return 'ended';
@@ -47,13 +54,30 @@ const fmtDate = (ms: number | null) =>
     ? '未定'
     : new Date(ms).toLocaleDateString('ja-JP', { month: 'numeric', day: 'numeric', timeZone: 'Asia/Tokyo' });
 
-export default function EventTimeline({ events }: { events: TLEvent[] }) {
+function EventTimeline({ events }: { events: TLEvent[] }) {
   const [now, setNow] = useState(Date.now());
   const [filter, setFilter] = useState<Phase | 'all'>('all');
 
   useEffect(() => {
-    const t = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(t);
+    // 残り時間を毎秒更新する。ただしタブが見えていないあいだは止める
+    // （裏で開きっぱなしにされたときに電池を使い続けないように）。
+    let t: number | undefined;
+    const start = () => {
+      stop();
+      setNow(Date.now());
+      t = window.setInterval(() => setNow(Date.now()), 1000);
+    };
+    const stop = () => {
+      if (t !== undefined) window.clearInterval(t);
+      t = undefined;
+    };
+    const onVisible = () => (document.hidden ? stop() : start());
+    start();
+    document.addEventListener('visibilitychange', onVisible);
+    return () => {
+      stop();
+      document.removeEventListener('visibilitychange', onVisible);
+    };
   }, []);
 
   const withPhase = events.map((e) => ({ ...e, phase: phaseOf(now, e.startMs, e.endMs) }));
@@ -179,3 +203,6 @@ export default function EventTimeline({ events }: { events: TLEvent[] }) {
     </div>
   );
 }
+
+/** 中で例外が出てもページが白くならないよう、エラーバウンダリで包んで公開する。 */
+export default withBoundary(EventTimeline);

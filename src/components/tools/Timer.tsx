@@ -122,7 +122,8 @@ export default function Timer() {
         <h3 class="mt-0">カウンター</h3>
         <p class="muted text-sm">周回数・素材数などを数える（自動保存）。</p>
         <div class="row" style={{ justifyContent: 'center', gap: '16px' }}>
-          <button class="btn btn-icon" type="button" onClick={() => setCount((c) => c - 1)} aria-label="減らす">
+          {/* 周回数・素材数を数えるものなので負にはしない */}
+          <button class="btn btn-icon" type="button" onClick={() => setCount((c) => Math.max(0, c - 1))} aria-label="減らす">
             −
           </button>
           <span class="big" style={{ minWidth: '3ch', textAlign: 'center' }}>{count}</span>

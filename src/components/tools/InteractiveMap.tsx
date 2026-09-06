@@ -7,6 +7,7 @@
 import { useRef, useState } from 'preact/hooks';
 import { useStore } from './useStore';
 import { uid } from '../../lib/store';
+import { withBoundary } from './withBoundary';
 
 interface Pin {
   id: string;
@@ -19,7 +20,7 @@ interface Pin {
 
 const CATS = ['宝箱', 'アノマリー', '電話ボックス', 'ビューポイント', 'その他'];
 
-export default function InteractiveMap() {
+function InteractiveMap() {
   const [pins, setPins] = useStore<Pin[]>('tool.map.pins', []);
   const [imgUrl, setImgUrl] = useStore<string>('tool.map.imgUrl', '');
   const [adding, setAdding] = useState(false);
@@ -160,3 +161,6 @@ function Schematic() {
     </svg>
   );
 }
+
+/** 中で例外が出てもページが白くならないよう、エラーバウンダリで包んで公開する。 */
+export default withBoundary(InteractiveMap);

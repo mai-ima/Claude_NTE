@@ -8,6 +8,7 @@ import { useStore } from './useStore';
 import { HBars } from './chart';
 import { cssVars } from '../../lib/css';
 import { elementMeta } from '../../lib/nav';
+import { withBoundary } from './withBoundary';
 
 export interface TeamChar {
   id: string;
@@ -34,7 +35,7 @@ const TRIO: { name: string; els: string[]; note: string }[] = [
 
 const ROLE_JA: Record<string, string> = { DPS: 'アタッカー', Survival: 'サバイバル', Buff: 'バフ' };
 
-export default function TeamBuilder({ characters }: { characters: TeamChar[] }) {
+function TeamBuilder({ characters }: { characters: TeamChar[] }) {
   const [team, setTeam] = useStore<string[]>('tool.teamBuilder', []);
 
   const picked = team.map((id) => characters.find((c) => c.id === id)).filter(Boolean) as TeamChar[];
@@ -201,3 +202,6 @@ export default function TeamBuilder({ characters }: { characters: TeamChar[] }) 
     </div>
   );
 }
+
+/** 中で例外が出てもページが白くならないよう、エラーバウンダリで包んで公開する。 */
+export default withBoundary(TeamBuilder);
