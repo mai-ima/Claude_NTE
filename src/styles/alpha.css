@@ -123,14 +123,6 @@ a:hover {
   outline-offset: 2px;
   border-radius: 6px;
 }
-.a-sr {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-}
 
 /* ---- シェル ------------------------------------------------------------ */
 .a-shell {

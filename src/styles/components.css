@@ -862,12 +862,6 @@
 .mt-0 {
   margin-top: 0;
 }
-.divider {
-  height: 1px;
-  background: var(--border);
-  border: 0;
-  margin: 20px 0;
-}
 
 /* =========================================================================
    追加: iPhone 最適化 / 下部ナビ / スポイラー / エンティティUI / ティア / マップ
@@ -1787,43 +1781,7 @@ body {
 }
 
 /* UI 切替（2択の大ボタン） */
-.ui-switch {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 14px;
-}
 @media (max-width: 520px) {
-  .ui-switch {
-    grid-template-columns: 1fr;
-  }
-}
-.ui-switch-opt {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  text-align: left;
-  padding: 14px;
-  border-radius: var(--radius-sm);
-  border: 1.5px solid var(--border);
-  background: var(--surface);
-  transition:
-    border-color 0.15s ease,
-    background 0.15s ease,
-    transform 0.06s ease;
-}
-.ui-switch-opt:hover {
-  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
-}
-.ui-switch-opt:active {
-  transform: translateY(1px);
-}
-.ui-switch-opt.is-active {
-  border-color: var(--accent);
-  background: var(--accent-weak);
-}
-.ui-switch-title {
-  font-weight: 700;
 }
 
 /* 表示の追加設定（トグルスイッチ） */
@@ -1960,34 +1918,6 @@ body {
 }
 
 /* テーマ選択 */
-.theme-grid {
-  display: grid;
-  gap: 8px;
-}
-.theme-opt {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  transition:
-    border-color 0.15s ease,
-    background 0.15s ease;
-}
-.theme-opt:hover {
-  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
-}
-.theme-opt.is-active {
-  border-color: var(--accent);
-  background: var(--accent-weak);
-}
-.theme-opt input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
 .theme-swatch {
   width: 34px;
   height: 34px;
@@ -2006,11 +1936,6 @@ body {
 }
 .sw-auto {
   background: linear-gradient(135deg, #fafafa 50%, #0f1115 50%);
-}
-.theme-opt .check {
-  color: var(--accent);
-  font-weight: 800;
-  flex: none;
 }
 
 /* ---- 「このページを編集」リンク ---------------------------------------- */

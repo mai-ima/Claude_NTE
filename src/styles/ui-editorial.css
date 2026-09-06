@@ -418,11 +418,6 @@ html[data-ui='editorial'] .callout {
 }
 
 /* ===== 設定・検索 ======================================================= */
-html[data-ui='editorial'] .ui-switch-opt.is-active,
-html[data-ui='editorial'] .theme-opt.is-active {
-  border-color: var(--ink);
-  box-shadow: var(--shadow-hard-sm);
-}
 html[data-ui='editorial'] .pagefind-ui input {
   border-radius: 2px !important;
   border: 1.5px solid var(--ink) !important;
@@ -533,8 +528,6 @@ html[data-ui='editorial'] .empty { border: 1.5px dashed var(--ink-soft); border-
 
 /* ===== v0.6.7 全体見直し: アバター/設定カード/トースト/ティア ===== */
 html[data-ui='editorial'] .avatar { border: 2px solid var(--ink); border-radius: 0; box-shadow: var(--shadow-hard-sm); }
-html[data-ui='editorial'] .ui-switch-opt, html[data-ui='editorial'] .theme-opt { border-radius: 0; border: 1.5px solid var(--ink-soft); }
-html[data-ui='editorial'] .ui-switch-opt.is-active, html[data-ui='editorial'] .theme-opt.is-active { border-color: var(--ink); box-shadow: var(--shadow-hard-sm); }
 html[data-ui='editorial'] .toast { border-radius: 0; border: 2px solid var(--ink); box-shadow: var(--shadow-hard); }
 html[data-ui='editorial'] .tier-badge { border-radius: 0; }
 html[data-ui='editorial'] .char-meta { border-top: 1.5px solid var(--ink-soft); }

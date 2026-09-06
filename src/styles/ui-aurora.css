@@ -540,11 +540,6 @@ html[data-ui='aurora'] .nav-group-title {
 html[data-ui='aurora'] .beta-pill {
   box-shadow: 0 2px 10px color-mix(in srgb, #6366f1 50%, transparent);
 }
-html[data-ui='aurora'] .ui-switch-opt.is-active,
-html[data-ui='aurora'] .theme-opt.is-active {
-  border-color: transparent;
-  box-shadow: 0 0 0 2px var(--accent), var(--beta-glow);
-}
 html[data-ui='aurora'] .pagefind-ui input {
   border-radius: 999px !important;
 }
@@ -759,6 +754,5 @@ html[data-ui='terminal'] .stat-num {
 
 /* ===== v0.6.7 全体見直し ===== */
 html[data-ui='aurora'] .avatar { box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 45%, transparent); }
-html[data-ui='aurora'] .ui-switch-opt.is-active, html[data-ui='aurora'] .theme-opt.is-active { border-color: transparent; box-shadow: 0 0 0 2px var(--accent), var(--beta-glow); }
 html[data-ui='aurora'] .toast { box-shadow: var(--beta-glow-strong); }
 html[data-ui='aurora'] .tier-badge { box-shadow: 0 0 10px -3px color-mix(in srgb, var(--accent) 50%, transparent); }

@@ -230,8 +230,6 @@ html[data-ui='terminal'] .empty { border: 1px dashed var(--term-line); border-ra
 
 /* ===== 全体見直し ===== */
 html[data-ui='terminal'] .avatar { border: 1px solid var(--term-line); border-radius: 0; }
-html[data-ui='terminal'] .ui-switch-opt, html[data-ui='terminal'] .theme-opt { border-radius: 0; border: 1px solid var(--term-line); font-family: var(--font-mono); }
-html[data-ui='terminal'] .ui-switch-opt.is-active, html[data-ui='terminal'] .theme-opt.is-active { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
 html[data-ui='terminal'] .toast { border-radius: 0; border: 1px solid var(--accent); font-family: var(--font-mono); }
 html[data-ui='terminal'] .tier-badge { border-radius: 0; font-family: var(--font-mono); }
 html[data-ui='terminal'] .char-meta { font-family: var(--font-mono); }

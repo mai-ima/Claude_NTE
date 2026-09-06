@@ -418,19 +418,6 @@ html[data-ui='liquid'] .drawer-panel {
 html[data-ui='liquid'] .avatar {
   box-shadow: var(--lq-edge);
 }
-html[data-ui='liquid'] .ui-switch-opt,
-html[data-ui='liquid'] .theme-opt {
-  border: none;
-  background: var(--lq-surface-thick);
-  backdrop-filter: var(--lq-blur);
-  -webkit-backdrop-filter: var(--lq-blur);
-  box-shadow: var(--lq-edge);
-}
-html[data-ui='liquid'] .ui-switch-opt.is-active,
-html[data-ui='liquid'] .theme-opt.is-active {
-  border-color: transparent;
-  box-shadow: var(--lq-edge), 0 0 0 2px var(--accent);
-}
 html[data-ui='liquid'] .filterbar .chip {
   border: none;
   border-radius: var(--radius-pill);
