@@ -18,6 +18,13 @@
 *::after {
   box-sizing: border-box;
 }
+
+/* `hidden` 属性を必ず効かせる。ブラウザ既定の `[hidden] { display: none }` は
+   詳細度が最低で、`.card { display: flex }` のようなクラス指定に負ける。
+   NTE 側（base.css）にも同じ規則があるが、α は alpha.css しか読まないので個別に持つ。 */
+[hidden] {
+  display: none !important;
+}
 * {
   margin: 0;
 }

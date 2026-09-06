@@ -100,6 +100,14 @@ pre {
   background: var(--accent-weak);
 }
 
+/* `hidden` 属性を必ず効かせる。
+   ブラウザ既定の `[hidden] { display: none }` は詳細度が最低なので、
+   `.nav-link { display: grid }` のようなクラス指定に**負ける**。
+   実際、サイドバーの絞り込みで hidden を付けたリンクが消えなかった。 */
+[hidden] {
+  display: none !important;
+}
+
 /* スクリーンリーダー専用 */
 .sr-only {
   position: absolute;

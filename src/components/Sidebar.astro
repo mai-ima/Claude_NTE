@@ -17,13 +17,30 @@ const sections = await loadNavSections(wiki(wikiId).sections);
 ---
 
 <aside class="sidebar" aria-label="サイトナビゲーション">
+  {/*
+    259件のリンクを縦に並べているので、目で探すのがつらい。
+    その場で絞り込めるようにする（検索ページへ飛ばずに済むのが要点）。
+    JS が動かない環境でも、絞り込み欄が出ないだけでナビは普通に使える。
+  */}
+  <div class="nav-filter" hidden>
+    <label class="sr-only" for="nav-filter-input">ナビの絞り込み</label>
+    <input
+      id="nav-filter-input"
+      class="input input-sm"
+      type="search"
+      placeholder="ナビ内を絞り込む"
+      autocomplete="off"
+      enterkeyhint="search"
+    />
+    <p class="nav-filter-count muted text-sm" role="status" aria-live="polite" hidden></p>
+  </div>
   {
     sections.map((section) => (
       <details class="nav-section" open={section.collection === currentCollection}>
         <summary>
           <Icon name={`lucide:${section.icon}`} />
           <span>{section.label}</span>
-          <span class="badge" style="height:18px;padding:0 7px;">{section.items.length}</span>
+          <span class="badge nav-count">{section.items.length}</span>
           <Icon name="lucide:chevron-right" class="chev" />
         </summary>
         <div class="nav-sub">
@@ -33,17 +50,15 @@ const sections = await loadNavSections(wiki(wikiId).sections);
               href={item.href}
               aria-current={item.id === currentId && section.collection === currentCollection ? 'page' : undefined}
             >
-              {item.el ? (
-                <span class="el-dot" style={`--el:${elementMeta(item.el).hue}`} />
-              ) : (
-                <Icon name={`lucide:${section.icon}`} />
-              )}
-              <span style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{item.title}</span>
-              {item.rarity && (
-                <span class:list={['badge', `badge-rarity-${item.rarity}`]} style="height:16px;padding:0 6px;font-size:0.62rem;">
-                  {item.rarity}
-                </span>
-              )}
+              {/*
+                以前はここにセクションと同じアイコンを毎行出していたが、
+                **259行すべてが同じ絵**で情報を持たないうえ、`<svg>` の繰り返しだけで
+                全ページ 33KB を占めていた。属性のドット（情報を持つ）だけ残す。
+                行が揃うよう、CSS 側で1列目の幅を固定している（`.nav-link`）。
+              */}
+              {item.el && <span class="el-dot" style={`--el:${elementMeta(item.el).hue}`} />}
+              <span class="nav-link-title">{item.title}</span>
+              {item.rarity && <span class:list={['badge', 'nav-rarity', `badge-rarity-${item.rarity}`]}>{item.rarity}</span>}
             </a>
           ))}
         </div>
@@ -51,3 +66,71 @@ const sections = await loadNavSections(wiki(wikiId).sections);
     ))
   }
 </aside>
+
+<script>
+  /**
+   * サイドバーのその場絞り込み。
+   *
+   * - 記事名の**部分一致**（大文字小文字を無視）。読みでの検索は Pagefind の全文検索に任せる。
+   * - 一致した記事があるセクションだけを開き、無いセクションは丸ごと隠す。
+   * - 空にしたら元の開閉状態へ戻す（現在地のセクションが開いた状態）。
+   *
+   * View Transitions で本文が差し替わってもサイドバーごと入れ替わるため、
+   * `astro:page-load` で毎回つなぎ直す。
+   */
+  function setupNavFilter() {
+    const box = document.querySelector<HTMLElement>('.nav-filter');
+    const input = document.querySelector<HTMLInputElement>('#nav-filter-input');
+    const count = document.querySelector<HTMLElement>('.nav-filter-count');
+    if (!box || !input || !count) return;
+
+    const sections = Array.from(document.querySelectorAll<HTMLDetailsElement>('.sidebar .nav-section'));
+    if (sections.length === 0) return;
+
+    // JS が動いたときだけ出す（動かない環境に空の入力欄を見せない）
+    box.hidden = false;
+
+    // 元の開閉状態を覚えておき、絞り込みを消したときに戻す
+    const wasOpen = new Map(sections.map((s) => [s, s.open]));
+
+    const apply = () => {
+      const q = input.value.trim().toLowerCase();
+      if (!q) {
+        for (const s of sections) {
+          s.hidden = false;
+          s.open = wasOpen.get(s) ?? false;
+          for (const a of s.querySelectorAll<HTMLElement>('.nav-link')) a.hidden = false;
+        }
+        count.hidden = true;
+        return;
+      }
+      let hit = 0;
+      for (const s of sections) {
+        let hitInSection = 0;
+        for (const a of s.querySelectorAll<HTMLElement>('.nav-link')) {
+          const match = (a.textContent ?? '').toLowerCase().includes(q);
+          a.hidden = !match;
+          if (match) hitInSection++;
+        }
+        s.hidden = hitInSection === 0;
+        s.open = hitInSection > 0;
+        hit += hitInSection;
+      }
+      count.hidden = false;
+      count.textContent = hit === 0 ? '一致なし' : `${hit}件`;
+    };
+
+    input.addEventListener('input', apply);
+    // Esc で消す（キーボードだけで抜けられるように）
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        input.value = '';
+        apply();
+      }
+    });
+    apply();
+  }
+
+  setupNavFilter();
+  document.addEventListener('astro:page-load', setupNavFilter);
+</script>
