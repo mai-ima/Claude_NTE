@@ -291,7 +291,9 @@ themes.css → base.css → components.css
 
 - NTE: `src/pages/` 直下（各セクションの `index.astro` と `[slug].astro`）
 - α: `src/pages/alpha/` 配下（同じ構成）
-- 単独ページ: `index` / `settings` / `release-notes` / `404` / `og/[...slug].png.ts`
+- 単独ページ: `index` / `wikis`（wiki 一覧＝ハブ）/ `settings` / `release-notes` / `404` /
+  `og/[...slug].png.ts`
+  - `wikis.astro` は `WIKI_LIST` から中身を組み立てるので、wiki を足しても**触らなくてよい**
 - ツール: `tools/index` / `tools/[id]` ＋ 専用 5 ページ
 
 ---

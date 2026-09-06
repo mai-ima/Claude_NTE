@@ -1,0 +1,270 @@
+---
+/**
+ * wiki 一覧（ハブ）。
+ *
+ * このサイトは複数ゲームの wiki を並置できる。その「入口」がここ。
+ * 中身はすべて src/lib/wikis.ts の WIKI_LIST から組み立てるので、
+ * wiki を1つ足したら**このページは何も直さなくても**追従する。
+ *
+ * レイアウトは NTE の BaseLayout をそのまま使う（ヘッダー・検索・テーマを
+ * 二重管理しないため）。ページの中身だけ、どの wiki にも寄らない見せ方にしている。
+ *
+ * 「よく見る wiki」を設定していても**自動で移動はしない**。
+ * ハブは選ぶための画面なので、勝手に飛ぶと存在意義が消えるし、
+ * 戻るボタンでループする（過去に α のナビで似た事故を起こしている）。
+ */
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../lib/path';
+import { WIKI_LIST, DEFAULT_WIKI } from '../lib/wikis';
+import { loadNavSections, recentEntries } from '../lib/content';
+
+/** wiki ごとの表示用データをまとめて用意する */
+const cards = await Promise.all(
+  WIKI_LIST.map(async (w) => {
+    const navSections = await loadNavSections(w.sections);
+    const counts = new Map(navSections.map((s) => [s.collection, s.items.length]));
+    const total = navSections.reduce((sum, s) => sum + s.items.length, 0);
+    const recent = await recentEntries(2, w.sections);
+    return {
+      w,
+      home: w.base ? `${w.base}/` : '/',
+      total,
+      // 記事が1本もないセクションはハブに出さない（空振りのリンクを作らない）
+      sections: w.sections.filter((s) => (counts.get(s.collection) ?? 0) > 0),
+      counts,
+      recent,
+    };
+  }),
+);
+
+/** 全 wiki 横断の「最近更新」。どの wiki のものか分かるようにバッジを添える */
+const crossRecent = (
+  await Promise.all(
+    WIKI_LIST.map(async (w) =>
+      (await recentEntries(6, w.sections)).map((e) => ({ ...e, wiki: w })),
+    ),
+  )
+)
+  .flat()
+  .sort((a, b) => b.updated.getTime() - a.updated.getTime())
+  .slice(0, 6);
+
+const totalAll = cards.reduce((sum, c) => sum + c.total, 0);
+---
+
+<BaseLayout
+  title="wiki 一覧"
+  description="このサイトに置かれている wiki の一覧。ゲームごとに記事データ・URL・画面のつくりが分かれています。"
+>
+  <div class="layout">
+    <div class="content">
+      <section class="page-head">
+        <p class="eyebrow">マルチwiki</p>
+        <h1>wiki を選ぶ</h1>
+        <p class="lead">
+          このサイトは、複数のゲームの wiki を1つのサイトに並べて置いています。
+          記事データ・URL・ナビゲーション・用語の自動リンクは wiki ごとに完全に分かれていて、
+          片方の更新がもう片方に影響することはありません。
+        </p>
+        <div class="stat-band" style="margin-top:18px;">
+          <div class="stat">
+            <span class="stat-num">{WIKI_LIST.length}</span>
+            <span class="muted text-sm">wiki</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">{totalAll}</span>
+            <span class="muted text-sm">記事（合計）</span>
+          </div>
+        </div>
+      </section>
+
+      {/* 「よく見る wiki」に選ばれているカードへ、クライアント側で印を付ける */}
+      <p class="hint" data-homewiki-note hidden>
+        <Icon name="lucide:bookmark" />
+        <span data-homewiki-label></span>
+        <a href={withBase('/settings/')}>設定で変更</a>
+      </p>
+
+      <div class="wiki-cards">
+        {
+          cards.map(({ w, home, total, sections, counts, recent }) => (
+            <article
+              class="card card-pad wiki-card"
+              style={`--wiki-accent:${w.accent}`}
+              data-wiki-card={w.id}
+            >
+              <div class="wiki-card-head">
+                <span class="brand-mark wiki-card-mark">{w.mark}</span>
+                <div class="wiki-card-title">
+                  <h2>
+                    <a
+                      href={withBase(home)}
+                      {...(w.id === DEFAULT_WIKI ? {} : { 'data-astro-reload': true })}
+                    >
+                      {w.siteName}
+                    </a>
+                  </h2>
+                  <p class="muted text-sm">{w.tagline}</p>
+                </div>
+                <span class="wiki-card-badges">
+                  {w.kind === 'sample' && <span class="badge">サンプル</span>}
+                  <span class="badge badge-accent">{total} 記事</span>
+                </span>
+              </div>
+
+              <p class="muted text-sm wiki-card-desc">{w.description}</p>
+
+              {sections.length > 0 && (
+                <div class="cluster wiki-card-sections">
+                  {sections.map((s) => (
+                    <a
+                      class="chip"
+                      href={withBase(s.href)}
+                      {...(w.id === DEFAULT_WIKI ? {} : { 'data-astro-reload': true })}
+                    >
+                      <Icon name={`lucide:${s.icon}`} />
+                      {s.label}
+                      <span class="muted">{counts.get(s.collection) ?? 0}</span>
+                    </a>
+                  ))}
+                </div>
+              )}
+
+              {recent.length > 0 && (
+                <div class="wiki-card-recent">
+                  <p class="wiki-card-recent-title">最近更新した記事</p>
+                  <ul>
+                    {recent.map((e) => (
+                      <li>
+                        <a
+                          href={e.href}
+                          {...(w.id === DEFAULT_WIKI ? {} : { 'data-astro-reload': true })}
+                        >
+                          {e.title}
+                        </a>
+                        <span class="muted text-sm">
+                          {e.sectionLabel} ·{' '}
+                          {e.updated.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' })}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <a
+                class="btn btn-primary wiki-card-go"
+                href={withBase(home)}
+                {...(w.id === DEFAULT_WIKI ? {} : { 'data-astro-reload': true })}
+              >
+                この wiki を開く
+                <Icon name="lucide:arrow-right" />
+              </a>
+            </article>
+          ))
+        }
+      </div>
+
+      {
+        crossRecent.length > 0 && (
+          <section style="margin-top:40px;">
+            <h2>すべての wiki の最新更新</h2>
+            <p class="muted text-sm" style="margin-top:4px;">
+              wiki をまたいで、更新の新しい順に並べています。
+            </p>
+            <div class="grid grid-cards" style="margin-top:16px;">
+              {crossRecent.map((e) => (
+                <a
+                  class="card card-pad card-link"
+                  href={e.href}
+                  {...(e.wiki.id === DEFAULT_WIKI ? {} : { 'data-astro-reload': true })}
+                >
+                  <div class="row row-between" style="align-items:flex-start;gap:8px;">
+                    <span style="font-weight:700;">{e.title}</span>
+                    <span class="badge">{e.wiki.mark}</span>
+                  </div>
+                  <div class="cluster" style="margin-top:8px;">
+                    <span class="badge">{e.sectionLabel}</span>
+                    <span class="muted text-sm">
+                      {e.updated.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' })}
+                    </span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      <section style="margin-top:40px;">
+        <h2>wiki はどう分かれているのか</h2>
+        <div class="grid grid-cards" style="margin-top:16px;">
+          <div class="card card-pad">
+            <div class="row" style="gap:8px;">
+              <Icon name="lucide:database" style="width:18px;height:18px;color:var(--accent);" />
+              <strong>記事データ</strong>
+            </div>
+            <p class="muted text-sm" style="margin-top:6px;">
+              wiki ごとに別のコレクションに保存しています。検索や「関連記事」も、
+              その wiki の中だけを対象にします。
+            </p>
+          </div>
+          <div class="card card-pad">
+            <div class="row" style="gap:8px;">
+              <Icon name="lucide:link" style="width:18px;height:18px;color:var(--accent);" />
+              <strong>URL とナビ</strong>
+            </div>
+            <p class="muted text-sm" style="margin-top:6px;">
+              URL の接頭辞で分かれています。各 wiki のメニューは、その wiki の中だけを指します。
+            </p>
+          </div>
+          <div class="card card-pad">
+            <div class="row" style="gap:8px;">
+              <Icon name="lucide:palette" style="width:18px;height:18px;color:var(--accent);" />
+              <strong>画面のつくり</strong>
+            </div>
+            <p class="muted text-sm" style="margin-top:6px;">
+              wiki ごとに別のデザインを持てます。αテストwiki は NTE とは
+              まったく別のレイアウト・配色で動いています。
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  // 「よく見る wiki」に選ばれている wiki のカードに印を付ける。
+  // 自動で移動はしない（選ぶための画面なので、勝手に飛ばさない）。
+  function markHomeWiki() {
+    const note = document.querySelector<HTMLElement>('[data-homewiki-note]');
+    const label = document.querySelector<HTMLElement>('[data-homewiki-label]');
+    if (!note || !label) return;
+    for (const el of Array.from(document.querySelectorAll('[data-wiki-card]'))) {
+      el.classList.remove('is-home');
+    }
+    let pick: string | null = null;
+    try {
+      pick = localStorage.getItem('nte.homewiki');
+    } catch {
+      /* 読めなくてもページは成立する */
+    }
+    if (!pick || pick === 'ask') {
+      note.hidden = true;
+      return;
+    }
+    const card = document.querySelector<HTMLElement>(`[data-wiki-card="${pick}"]`);
+    if (!card) {
+      note.hidden = true;
+      return;
+    }
+    card.classList.add('is-home');
+    const name = card.querySelector('.wiki-card-title h2')?.textContent?.trim() ?? '';
+    label.textContent = `よく見る wiki は「${name}」に設定されています。`;
+    note.hidden = false;
+  }
+  markHomeWiki();
+  document.addEventListener('astro:page-load', markHomeWiki);
+</script>

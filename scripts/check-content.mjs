@@ -48,6 +48,7 @@ const STATIC_PAGES = new Set([
   '/tools/',
   '/settings/',
   '/release-notes/',
+  '/wikis/',
   '/alpha/',
   ...Object.values(URL_BASE),
   '/tools/tier-list/',

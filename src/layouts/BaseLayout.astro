@@ -271,6 +271,11 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
                 </a>
               ))
             }
+            {/* ハブは NTE 配下のページなので、フルロード指定は要らない */}
+            <a class="wiki-switch-all" href={withBase('/wikis/')}>
+              <Icon name="lucide:library" />
+              <span>すべての wiki を見る</span>
+            </a>
           </div>
         </details>
 
@@ -333,6 +338,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
               </a>
             ))
           }
+          <a href={withBase('/wikis/')}>wiki 一覧</a>
         </p>
       </footer>
 

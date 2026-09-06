@@ -2068,3 +2068,125 @@ html[data-wiki]:not([data-wiki='nte']) {
     min-height: 40px;
   }
 }
+
+/* =========================================================================
+   wiki 一覧（/wikis/）のカード
+   wiki ごとの色は --wiki-accent（WikiMeta.accent）で差し替える。
+   ========================================================================= */
+.wiki-cards {
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
+}
+@media (min-width: 900px) {
+  .wiki-cards {
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  }
+}
+.wiki-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  border-top: 3px solid var(--wiki-accent, var(--accent));
+}
+/* 「よく見る wiki」に選ばれているカード */
+.wiki-card.is-home {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--wiki-accent, var(--accent)) 45%, transparent);
+}
+.wiki-card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.wiki-card-mark {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  background: var(--wiki-accent, var(--accent));
+}
+.wiki-card-title {
+  flex: 1;
+  min-width: 0;
+}
+.wiki-card-title h2 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+.wiki-card-title h2 a {
+  color: inherit;
+}
+.wiki-card-badges {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex: none;
+}
+.wiki-card-desc {
+  margin: 0;
+}
+.wiki-card-sections {
+  gap: 6px;
+}
+.wiki-card-sections .chip {
+  gap: 5px;
+  font-size: 0.78rem;
+}
+.wiki-card-sections .chip svg {
+  width: 14px;
+  height: 14px;
+}
+.wiki-card-recent-title {
+  margin: 0 0 6px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: color-mix(in srgb, var(--text) 55%, transparent);
+}
+.wiki-card-recent ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 6px;
+}
+.wiki-card-recent li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+}
+.wiki-card-go {
+  align-self: flex-start;
+  margin-top: auto;
+  background: var(--wiki-accent, var(--accent));
+  border-color: var(--wiki-accent, var(--accent));
+}
+.wiki-card-go svg {
+  width: 16px;
+  height: 16px;
+}
+/* 「よく見る wiki」の案内 */
+[data-homewiki-note] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: 0.86rem;
+}
+[data-homewiki-note] svg {
+  width: 16px;
+  height: 16px;
+  color: var(--accent);
+  flex: none;
+}
+[data-homewiki-note] span {
+  flex: 1;
+  min-width: 0;
+}

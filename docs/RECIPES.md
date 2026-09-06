@@ -72,8 +72,14 @@ pnpm verify
 
 ### 何もしなくてよいもの
 
+- **wiki 一覧（`/wikis/`）は `WIKI_LIST` から組み立てている**ので、追記不要で新 wiki が並びます
+  （記事数・セクションの内訳・最近の更新まで自動）。
+- ヘッダーの wiki 切替・フッター・モバイルドロワーも `WIKI_LIST` から出ます。
 - `wikiOfCollection` / `wikiOfPath` / `sectionByCollection` は定義から自動で追従します。
 - トップページ末尾の「ほかの wiki」も `WIKI_LIST` から自動生成されます。
+
+新 wiki が「実在しないゲームのサンプル」なら `WikiMeta` に `kind: 'sample'` を付けると、
+ハブのカードに「サンプル」バッジが出ます（省略時は `'live'`）。
 
 ### 落とし穴
 

@@ -270,6 +270,9 @@ export default function SettingsPanel() {
           このサイトは複数ゲームの wiki を並べて置けます。記事データは wiki ごとに完全に分かれています。
         </p>
         <div class="pref-list" style={{ marginTop: '10px' }}>{groupOf('wiki').map(renderRow)}</div>
+        <p class="hint" style={{ marginTop: '10px' }}>
+          <a href="/wikis/">wiki 一覧を開く</a> — 各 wiki の記事数や最近の更新をまとめて見られます。
+        </p>
       </section>
 
       {/* タッチ操作（iPhone / iPad のときだけ出す） */}

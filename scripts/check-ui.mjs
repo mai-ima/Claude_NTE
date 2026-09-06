@@ -91,8 +91,9 @@ for (const file of files) {
       for (const m of block.matchAll(/<a\b[^>]*\shref="([^"]+)"/g)) {
         const href = m[1];
         if (href.startsWith('/alpha/')) continue;
-        // サイドの「ほかの wiki」だけは NTE を指してよい（明示的な導線）
-        if (block.includes('a-side') && href === '/') continue;
+        // サイドの「ほかの wiki」だけは α の外を指してよい（利用者が選んで押す導線）。
+        // 許すのは NTE のホームと wiki 一覧（ハブ）だけ。記事ページへは飛ばさない。
+        if (block.includes('a-side') && (href === '/' || href === '/wikis/')) continue;
         problems.push(`${rel}: α のナビが α の外を指しています → ${href}`);
       }
     }

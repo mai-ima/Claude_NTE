@@ -49,6 +49,12 @@ export interface WikiMeta {
   bottomNav: WikiNavItem[];
   /** OG画像を /og/ に生成しているか（未生成の wiki では既定アイコンを使う） */
   hasOgImages: boolean;
+  /**
+   * wiki 一覧（/wikis/）での位置づけ。
+   * 'sample' は「実在しないゲームのダミーデータ」であることをハブで明示するために使う。
+   * 省略時は 'live'（通常運用の wiki）。
+   */
+  kind?: 'live' | 'sample';
 }
 
 const NTE: WikiMeta = {
@@ -64,6 +70,7 @@ const NTE: WikiMeta = {
   footer:
     'NTE 完全攻略wiki — 非公式ファンサイト。各記事は出典を明記し、未確認情報には「要確認」を付しています。ゲーム内画像・地図等の権利はすべて Hotta Studio / Perfect World Games に帰属します。',
   sections: SECTIONS,
+  kind: 'live',
   primaryNav: [
     { label: 'ホーム', href: '/', icon: 'home' },
     { label: 'ガチャ/イベント', href: '/events/', icon: 'calendar-clock' },
@@ -72,6 +79,7 @@ const NTE: WikiMeta = {
     { label: 'ツール', href: '/tools/', icon: 'wrench' },
     { label: 'ティア表', href: '/tools/tier-list/', icon: 'bar-chart-3' },
     { label: '更新履歴', href: '/release-notes/', icon: 'history' },
+    { label: 'wiki 一覧', href: '/wikis/', icon: 'library' },
     { label: '設定', href: '/settings/', icon: 'settings' },
   ],
   bottomNav: [
@@ -96,6 +104,7 @@ const ALPHA: WikiMeta = {
   footer:
     'αテスト（仮）wiki — マルチwiki機能の検証用サンプルです。「αテスト（仮）」は実在のゲームではなく、記事の内容もすべてサンプルデータです。NTE の情報とは切り離して管理しています。',
   sections: ALPHA_SECTIONS,
+  kind: 'sample',
   // 注意: ここに**他 wiki のページを混ぜない**こと。混ざると α のタブやナビから
   // NTE 側へ飛ばされてしまう（実際に一度そうなった）。テストでも検査している。
   primaryNav: [

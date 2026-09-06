@@ -114,9 +114,10 @@ NTE は View Transitions（`ClientRouter`）、α は独立レイアウトなの
 - 非 α のページに `class="a-shell"` / `class="a-tabs"` があると NG
 - `<nav class="a-tabs">` / `<nav class="a-side">` の中の `<a href>` は `/alpha/` 始まりのみ許可
 
-**許可されている例外**（`scripts/check-ui.mjs:93-95` 付近）:
-`.a-side` ブロック内の `href="/"`（NTE への明示的な導線）だけ。
+**許可されている例外**（`scripts/check-ui.mjs:93-96` 付近）:
+`.a-side` ブロック内の `href="/"`（NTE のホーム）と `href="/wikis/"`（wiki ハブ）だけ。
 α から別の NTE 側ページへ導線を出したくなったら、ここに 1 件足します。
+**記事ページへ直接飛ばす導線は足さないこと**（利用者が「別 wiki に来た」と気づけないため）。
 **`.a-foot`（フッター）は検査対象外**なので、フッターへの追加は無検査で通ります。
 
 ### 4-4. wiki ごとのスタイルの混線（インライン `<style>` のみ検査）

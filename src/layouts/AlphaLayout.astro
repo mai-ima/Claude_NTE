@@ -148,6 +148,10 @@ const crumbItems = [{ name: 'αテストwiki', href: withBase('/alpha/') }, ...b
             <Icon name="lucide:book-open" />
             <span>NTE 完全攻略wiki</span>
           </a>
+          <a href={withBase('/wikis/')}>
+            <Icon name="lucide:library" />
+            <span>wiki 一覧</span>
+          </a>
         </div>
       </nav>
 
@@ -177,6 +181,8 @@ const crumbItems = [{ name: 'αテストwiki', href: withBase('/alpha/') }, ...b
         <p>{w.footer}</p>
         <p>
           <a href={withBase('/')}>NTE 完全攻略wiki へ移動</a>
+          <span aria-hidden="true"> / </span>
+          <a href={withBase('/wikis/')}>wiki 一覧</a>
         </p>
       </footer>
 

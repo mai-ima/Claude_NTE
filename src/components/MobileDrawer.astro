@@ -86,6 +86,11 @@ const drawerActive = activeHref(currentPath, allHrefs);
           </a>
         ))
       }
+      {/* ハブは NTE 配下のページなので、フルロード指定は要らない */}
+      <a class="nav-link" href={withBase('/wikis/')} data-drawer-close>
+        <Icon name="lucide:library" />
+        <span>wiki 一覧</span>
+      </a>
     </div>
   </nav>
 </div>
