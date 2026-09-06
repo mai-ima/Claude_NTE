@@ -6,7 +6,9 @@
  * 方針:
  * - 辞書は src/content/<collection>/*.md の frontmatter（nameJa/title/aliases）から構築。
  * - href は `/<collection>/<slug>/`。
- * - 1ページ・1フレーズにつき最初の1回だけリンク化（リンクの過剰を防ぐ）。
+ * - **1ページ・1宛先につき最初の1回だけ**リンク化（リンクの過剰を防ぐ）。
+ *   以前はフレーズ単位で数えていたため、別名を持つ用語（例:「ボード」と「盤面」、
+ *   「クリティカル」と「会心」）が同じ記事へ2〜3回リンクされ、本文が青だらけになっていた。
  * - 既存リンク(a)・コード(code/pre)・見出し(h1〜h3)の中はリンクしない。
  * - 長いフレーズを優先（「異象管理局」を「異象」より先に処理）。
  * - エンティティ自身のページへの自己リンクは張らない。
@@ -75,6 +77,34 @@ function cleanName(s) {
     .trim();
 }
 
+const unquote = (s) => s.replace(/^\s*["']?/, '').replace(/["']?\s*$/, '').trim();
+
+/**
+ * frontmatter から aliases を取り出す。
+ * `aliases: ["a", "b"]` の1行形式と、
+ * ```
+ * aliases:
+ *   - "a"
+ *   - "b"
+ * ```
+ * の複数行形式の**両方**に対応する。
+ * （以前は1行形式しか読めず、複数行で書くと自動リンクが無言で効かなくなる状態だった）
+ */
+function parseAliases(front) {
+  const inline = front.match(/^aliases:\s*\[(.*)\]/m);
+  if (inline) return inline[1].split(',').map(unquote).filter(Boolean);
+
+  const block = front.match(/^aliases:\s*$\n((?:[ \t]+-[ \t]*.+\n?)+)/m);
+  if (block) {
+    return block[1]
+      .split('\n')
+      .map((l) => l.replace(/^[ \t]*-[ \t]*/, ''))
+      .map(unquote)
+      .filter(Boolean);
+  }
+  return [];
+}
+
 function buildDict(group) {
   const entries = [];
   for (const { dir: dirName, base } of group.collections) {
@@ -99,11 +129,7 @@ function buildDict(group) {
       const front = fm[1];
       const title = (front.match(/^title:\s*["']?(.+?)["']?\s*$/m) || [])[1] || '';
       const nameJa = (front.match(/^nameJa:\s*["']?(.+?)["']?\s*$/m) || [])[1] || '';
-      const aliasesLine = (front.match(/^aliases:\s*\[(.*)\]/m) || [])[1] || '';
-      const aliases = aliasesLine
-        .split(',')
-        .map((s) => s.replace(/^\s*["']?/, '').replace(/["']?\s*$/, '').trim())
-        .filter(Boolean);
+      const aliases = parseAliases(front);
       const phrases = new Set();
       // 主フレーズは nameJa 優先（キャラの表示名）、無ければ title
       const primary = cleanName(nameJa || title);
@@ -187,8 +213,10 @@ function linkify(text, selfKey, dict, seen) {
   let nodes = [{ type: 'text', value: text }];
   let changed = false;
   for (const { phrase, dir, base, slug, ascii } of dict) {
-    if (selfKey && `${dir}/${slug}` === selfKey) continue;
-    if (seen.has(phrase)) continue;
+    const target = `${dir}/${slug}`;
+    if (selfKey && target === selfKey) continue;
+    // 同じ記事へは1ページ1回だけ（別名で何度もリンクしない）
+    if (seen.has(target)) continue;
     for (let n = 0; n < nodes.length; n++) {
       const nd = nodes[n];
       if (nd.type !== 'text') continue;
@@ -212,7 +240,7 @@ function linkify(text, selfKey, dict, seen) {
       repl.push(link);
       if (after) repl.push({ type: 'text', value: after });
       nodes.splice(n, 1, ...repl);
-      seen.add(phrase);
+      seen.add(target);
       changed = true;
       break;
     }
