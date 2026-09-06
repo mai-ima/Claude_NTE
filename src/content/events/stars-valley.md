@@ -4,6 +4,7 @@ kind: "event"
 featured: ["星暮保護区"]
 version: "v1.3"
 start: 2026-08-19
+end: 2026-09-29
 order: 20
 description: "Ver.1.3 の夏イベント。星沈湾のビーチで 2vs2 のビーチバレーに挑む。ステージごとの星獲得条件を満たすと円石などが手に入る。"
 status: "verified"
@@ -17,6 +18,8 @@ sources:
 ---
 
 ## 概要
+
+**開催期間: 2026年8月19日（アップデート後）〜 9月30日 06:59（JST）**
 
 **スターズ・バレー** は Ver.1.3 の夏イベント。[星暮保護区](/locations/hoshigure-sanctuary/)のビーチを舞台に、**2vs2 のビーチバレー**を遊ぶPvEコンテンツ。
 

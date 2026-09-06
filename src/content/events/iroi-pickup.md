@@ -4,16 +4,19 @@ kind: "banner"
 featured: ["イロヒ"]
 version: "v1.2"
 start: 2026-07-29
+end: 2026-08-18
 order: 11
 description: "Ver.1.2後半（7/29〜）の限定バナー。無敵付与・回復・蘇生をこなす霊属性サポート「イロヒ」がピックアップ。"
 status: "verified"
-updated: 2026-07-20
+updated: 2026-09-06
 tags: ["ガチャ", "限定", "イロヒ", "v1.2"]
 sources:
   - label: "AppMedia — イロヒの性能と声優"
     url: "https://appmedia.jp/nte/80067481"
   - label: "ゲームウィズ — イロヒの実装時期と性能"
     url: "https://gamewith.jp/nte/563075"
+  - label: "gaming-st — Ver.1.2後半の新キャラ「イロヒ」（限定ボードは8月19日まで）"
+    url: "https://gaming-st.com/news/nte-ver12-irohi-lamb-healer-2026-jul/"
 ---
 
 ## 概要
@@ -22,4 +25,8 @@ sources:
 
 イロヒは**霊（Anima）属性のヒーラー兼バッファー**で、味方を無敵の「トランス」状態にし、EXレール終結で全体回復・蘇生までこなす万能サポート。「**創生（光＋霊）**」編成と好相性で、幅広いパーティに入れられる。
 
-> 前半の「[夜明けの刻](/events/shinku-pickup/)」（真紅）から切り替わる。天井・ボード状態は引き継がれる（[ガチャ仕様](/systems/gacha/)）。終了日はゲーム内告知で確認してください。
+**開催期間: 2026年7月29日（メンテナンス終了後）〜 8月19日 06:59（JST）**。期間限定キャラクターのため、終了後は入手できない（次の復刻を待つことになる）。
+
+> 前半の「[夜明けの刻](/events/shinku-pickup/)」（真紅）から切り替わる。天井・ボード状態は引き継がれる（[ガチャ仕様](/systems/gacha/)）。
+>
+> ※ 2026-09-06 時点でこのバナーは**終了済み**（現行は [Ver.1.3](/events/ver13-update/)）。当時の情報として残している。
