@@ -7,6 +7,7 @@ order: 49
 description: "Ver.1.2 で雀荘「ジャン」に追加された日本式麻雀ルール。誰かがアガった時点で局が終了する通常ルールで、従来の血流麻雀と選べる。"
 status: "verified"
 updated: 2026-07-20
+checked: 2026-09-06
 tags: ["v1.2", "ミニゲーム", "シティライフ"]
 aliases: ["日本式麻雀", "Riichi Mahjong"]
 sources:

@@ -6,6 +6,7 @@ order: 36
 description: "都市用スタミナ。上限200・毎分回復せず毎週月曜04:00(UTC+8)に全回復。ホビーに消費しファンスを得る。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["スタミナ", "シティライフ"]
 aliases: ["City Stamina", "都市スタミナ"]
 sources:

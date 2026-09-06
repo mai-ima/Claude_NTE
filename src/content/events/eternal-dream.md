@@ -9,6 +9,7 @@ order: 10
 description: "Ver.1.1前半の限定ピックアップ。看板Sランク「レクイエム（闇）」が排出アップ。"
 status: "verified"
 updated: 2026-06-09
+checked: 2026-09-06
 tags: ["ガチャ", "限定", "レクイエム", "v1.1"]
 sources:
   - label: "NTE公式 — Ver.1.1「夢巡る回廊」アップデート"

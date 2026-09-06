@@ -6,6 +6,7 @@ order: 80
 description: "Ver.1.2 の常設モード「九百九十九夜」の舞台となる、卓上RPG風のファンタジー大陸。メェメェ村から赤竜の古城を目指す。"
 status: "verified"
 updated: 2026-07-24
+checked: 2026-09-06
 tags: ["ウォーレン大陸", "九百九十九夜", "v1.2"]
 sources:
   - label: "神ゲー攻略 — 九百九十九夜の進め方"

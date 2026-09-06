@@ -74,6 +74,7 @@ export function baseDetailProps(collection: string, entry: AnyEntry, prev: AnyEn
     lead: d.description as string | undefined,
     status: d.status as 'verified' | 'draft',
     updated: d.updated as Date | undefined,
+    checked: d.checked as Date | undefined,
     tags: d.tags as string[] | undefined,
     sources: d.sources as { label: string; url: string }[] | undefined,
     prev: prev ? { href: hrefOf(collection, prev.id), title: titleOf(prev) } : null,

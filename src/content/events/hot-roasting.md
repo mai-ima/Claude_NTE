@@ -9,6 +9,7 @@ order: 40
 description: "ゲーム内SNS「ベーグル」でジャムポイントを稼ぐ期間限定ミッション。報酬に円石など。"
 status: "draft"
 updated: 2026-06-09
+checked: 2026-09-06
 tags: ["イベント", "ベーグル", "v1.1"]
 sources:
   - label: "NTE公式 — 正式リリース記念イベント"

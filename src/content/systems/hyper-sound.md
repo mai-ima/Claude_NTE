@@ -5,6 +5,7 @@ order: 64
 description: "4つのスネアドラムを叩いて遊ぶリズムゲームのシティライフ。スコアに応じてファンスや報酬が得られる。ボス「音ゲー魔王」とは別物。"
 status: "verified"
 updated: 2026-06-15
+checked: 2026-09-06
 tags: ["シティライフ", "音ゲー", "リズム", "ファンス"]
 sources:
   - label: "AppMedia — シティライフ一覧とやり方"

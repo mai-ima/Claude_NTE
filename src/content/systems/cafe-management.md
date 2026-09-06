@@ -5,6 +5,7 @@ order: 62
 description: "カフェ店舗を経営するシティライフ。店舗は最大5店舗で、それぞれ2人の従業員を配置できる。経営して収入を得る都市生活コンテンツ。"
 status: "verified"
 updated: 2026-06-15
+checked: 2026-09-06
 tags: ["シティライフ", "経営", "カフェ", "ファンス"]
 sources:
   - label: "AppMedia — シティライフ一覧とやり方"

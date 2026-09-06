@@ -6,6 +6,7 @@ order: 49
 description: "橋間地にある下町風の街区。主人公の拠点エイボン骨董品店があり、アーケード等が集まる物語序盤からの生活圏。"
 status: "draft"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["地名", "橋間地"]
 aliases: ["Hankaku Street"]
 sources:

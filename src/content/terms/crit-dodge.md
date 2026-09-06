@@ -6,6 +6,7 @@ order: 29
 description: "敵の攻撃の予兆（赤い合図）の瞬間に回避を合わせると発動する精密回避。無敵（iフレーム）を得て連環値も大きく稼ぐ。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["戦闘", "回避"]
 aliases: ["Critical Dodge", "ジャスト回避", "完璧な回避"]
 sources:

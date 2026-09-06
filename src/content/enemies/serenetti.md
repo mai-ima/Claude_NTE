@@ -7,6 +7,7 @@ order: 20
 description: "据置型のワールドボス。移動せずレールカウンターも無いため、純粋な回避と攻防が要。弱点は呪(Incantation)。"
 status: "verified"
 updated: 2026-06-08
+checked: 2026-09-06
 tags: ["ボス", "ワールドボス", "呪"]
 sources:
   - label: "ゲームウィズ — セレニティ"

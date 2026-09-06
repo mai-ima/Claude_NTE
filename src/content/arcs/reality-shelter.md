@@ -9,6 +9,7 @@ order: 20
 description: "無課金で入手できるSランク弧盤。異象依頼「映画を見に行こう」をクリアすると獲得できる。"
 status: "verified"
 updated: 2026-06-13
+checked: 2026-09-06
 tags: ["弧盤", "S", "無課金", "武器"]
 sources:
   - label: "ゲームエイト — 無課金Sランク弧盤の無料入手方法"

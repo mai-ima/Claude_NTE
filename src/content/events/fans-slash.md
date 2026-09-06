@@ -9,6 +9,7 @@ order: 42
 description: "期間中、シティスタミナ消費で得られるファンスの獲得量が2倍になるボーナス期間。"
 status: "draft"
 updated: 2026-06-09
+checked: 2026-09-06
 tags: ["イベント", "ボーナス", "ファンス", "v1.1"]
 sources:
   - label: "用語: ファンス"

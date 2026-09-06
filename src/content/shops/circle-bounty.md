@@ -7,6 +7,7 @@ order: 60
 description: "NTE のバトルパス。任務でポイントを貯めてレベルを上げ、無料/有料トラックの報酬（円石・サイコロ・育成素材等）を獲得する。"
 status: "draft"
 updated: 2026-06-13
+checked: 2026-09-06
 tags: ["バトルパス", "サークル", "懸賞"]
 sources:
   - label: "カノウィキ — 用語集"

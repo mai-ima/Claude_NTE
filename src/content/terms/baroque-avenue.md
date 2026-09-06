@@ -6,6 +6,7 @@ order: 54
 description: "絵空町にある大通り。沿道の公園にワールドボス「音ゲー魔王（Beat King）」が出現する探索スポット。"
 status: "verified"
 updated: 2026-06-14
+checked: 2026-09-06
 tags: ["地名", "絵空町", "ボス"]
 aliases: ["Baroque Avenue", "バロック通り"]
 sources:

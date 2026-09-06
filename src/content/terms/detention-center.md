@@ -6,6 +6,7 @@ order: 56
 description: "新ボス・トルネードが出現するエリア。討伐するとファイトクラブが解放される。"
 status: "draft"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["地名", "ボス", "ファイトクラブ"]
 aliases: ["Detention Center"]
 sources:

@@ -6,6 +6,7 @@ order: 31
 description: "駆動ブロックの入手に使う通貨。「ウサギの穴」で入手できるとされる。"
 status: "draft"
 updated: 2026-06-13
+checked: 2026-09-06
 tags: ["通貨", "ギア"]
 sources:
   - label: "神ゲー攻略 — 駆動ブロックの入手方法と使い道"

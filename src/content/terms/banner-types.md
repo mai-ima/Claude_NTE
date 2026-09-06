@@ -6,6 +6,7 @@ order: 21
 description: "NTE ガチャの2系統。期間限定の注目キャラを狙う限定ボードと、いつでも引ける恒常ボードの違い。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["ガチャ", "限定", "恒常"]
 aliases: ["限定ガチャ", "恒常ガチャ", "ピックアップ"]
 sources:

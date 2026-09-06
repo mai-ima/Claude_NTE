@@ -6,6 +6,7 @@ order: 46
 description: "幽霊列車モチーフの高難度エンドコンテンツ。未明・ジョイント・黎明の3環状線で構成され、円石の主要供給源となる育成の主軸。ミゲル区からアクセス、ハンターLv12解放。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["エンドコンテンツ", "高難度"]
 aliases: ["Beyond the Rails"]
 sources:

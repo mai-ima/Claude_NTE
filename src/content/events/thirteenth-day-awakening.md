@@ -9,6 +9,7 @@ order: 50
 description: "新エリア「ヒナタ島」でレクイエムに遭遇する期間限定ストーリーイベント。"
 status: "verified"
 updated: 2026-06-09
+checked: 2026-09-06
 tags: ["イベント", "ヒナタ島", "レクイエム", "v1.1"]
 sources:
   - label: "NTE公式 — Ver.1.1「夢巡る回廊」アップデート"

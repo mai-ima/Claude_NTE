@@ -6,6 +6,7 @@ order: 70
 description: "本性ピクセルで挑む素材周回用のインスタンス。ヘテロシティに5か所。"
 status: "verified"
 updated: 2026-06-08
+checked: 2026-09-06
 tags: ["周回", "素材"]
 sources:
   - label: "GameWith — Anomaly Zones"

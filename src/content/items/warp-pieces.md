@@ -6,6 +6,7 @@ order: 40
 description: "所持済みのキャラ/Arcを引いた際に自動付与される重複保護通貨。"
 status: "verified"
 updated: 2026-06-08
+checked: 2026-09-06
 tags: ["通貨", "凸"]
 sources:
   - label: "Icy Veins — gacha"

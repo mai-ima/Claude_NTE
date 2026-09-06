@@ -7,6 +7,7 @@ order: 13
 description: "常設モード「九百九十九夜」専用の通貨。探検ガイド・特殊挑戦・装備売却などで入手し、商人メェメェでの装備購入・鑑定に使う。"
 status: "verified"
 updated: 2026-07-20
+checked: 2026-09-06
 tags: ["通貨", "九百九十九夜", "v1.2"]
 aliases: ["Warren Coin"]
 sources:

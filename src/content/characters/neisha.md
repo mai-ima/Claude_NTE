@@ -7,6 +7,7 @@ faction: "E.T.D 第6小隊"
 description: "実装予定（告知済み）のキャラ。異象管理局 E.T.D 第6小隊の予備メンバー。属性・レア度・性能は要確認。"
 status: "draft"
 updated: 2026-06-15
+checked: 2026-09-06
 tags: ["実装予定", "E.T.D", "BAC"]
 sources:
   - label: "ゲームウィズ — 新キャラ・未実装キャラ一覧"

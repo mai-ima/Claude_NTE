@@ -131,7 +131,8 @@ pnpm verify
 title: "記事タイトル"        # characters コレクションだけ name
 description: "一覧やSEOに使う説明"
 status: "verified"          # verified（出典で裏が取れた） | draft（要確認バッジ）
-updated: 2026-09-06
+updated: 2026-09-06         # 本文を書き換えた日
+checked: 2026-09-06         # 任意。書き換えずに「現行版でも正しい」と確認した日
 sources:
   - label: "出典名"
     url: "https://..."

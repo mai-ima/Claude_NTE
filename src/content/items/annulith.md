@@ -6,6 +6,7 @@ order: 10
 description: "主要通貨。円石160個＝サイコロ1個（円石加工）。Beyond the Railsが主要供給源。"
 status: "verified"
 updated: 2026-06-08
+checked: 2026-09-06
 tags: ["通貨", "ガチャ"]
 sources:
   - label: "ゲームウィズ（日本版）— アイテム"

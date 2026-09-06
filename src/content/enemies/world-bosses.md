@@ -5,6 +5,7 @@ order: 40
 description: "ワールド/ストーリー/巡礼ボスの日本語名と弱点属性の早見表。"
 status: "verified"
 updated: 2026-06-16
+checked: 2026-09-06
 tags: ["ボス", "一覧", "弱点"]
 sources:
   - label: "ゲームウィズ — ボス攻略まとめ"

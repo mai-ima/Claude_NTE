@@ -7,6 +7,7 @@ order: 55
 description: "ヘテロシティのエリアのひとつ。弱点が魂（Psyche）のワールドボス「音ゲー魔王（Beat King）」が出現する探索スポット。"
 status: "verified"
 updated: 2026-06-13
+checked: 2026-09-06
 tags: ["地名", "ボス"]
 aliases: ["Ekuusora"]
 sources:

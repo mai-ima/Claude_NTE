@@ -5,6 +5,7 @@ order: 10
 description: "ハンターレベル、キャラ凸（共鳴段階6＝心6個）、弧盤凸（ミキシング＝同名4本）、レベル上限解放（突破）の素材。"
 status: "verified"
 updated: 2026-06-16
+checked: 2026-09-06
 tags: ["育成", "進行", "凸"]
 sources:
   - label: "ゲームウィズ（日本版）— 育成"

@@ -6,6 +6,7 @@ order: 15
 description: "武器（弧盤）ガチャ専用の抽選アイテム。キャラ用サイコロ・円石とは別枠で、弧盤研究プロジェクトを10連単位（単発不可）で引くのに使う。"
 status: "verified"
 updated: 2026-06-16
+checked: 2026-09-06
 tags: ["ガチャ", "通貨", "弧盤"]
 aliases: ["Tri-Key"]
 sources:

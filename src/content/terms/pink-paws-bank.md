@@ -6,6 +6,7 @@ order: 54
 description: "ニューホランド（金融街）にある銀行。ちぃちゃんの所属先で、無料で大量のFonsが得られる「にくきゅう大強盗」に関連する。"
 status: "draft"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["地名", "ニューホランド", "銀行"]
 aliases: ["にくきゅう銀行", "にくきゅう本店", "Pink Paws Bank"]
 sources:

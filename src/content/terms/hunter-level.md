@@ -6,6 +6,7 @@ order: 31
 description: "アカウント全体のレベル。ストーリー・モード・機能の解放条件で、10ごとに鑑定レベルが1上がる進行度の土台。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["育成", "進行"]
 aliases: ["Hunter Level", "プレイヤーレベル"]
 sources:

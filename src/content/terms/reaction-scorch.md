@@ -6,6 +6,7 @@ order: 68
 description: "異能連環のDuo反応。呪と闇の隣接で成立し、継続ダメージ（DoT）でじわじわ削る。耐久の高い敵やボスに強い。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["反応", "連環", "戦闘"]
 aliases: ["Scorch", "濁燃反応"]
 sources:

@@ -6,6 +6,7 @@ order: 63
 description: "弧盤の突破素材（シアターチップ／数字記号）を集める異象界の一つ。本性ピクセルを1回40／倍取り80消費して周回する。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["異象界", "周回", "育成", "突破"]
 aliases: ["Fudini's Magic Show", "フディニ"]
 sources:

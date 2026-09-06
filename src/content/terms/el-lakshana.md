@@ -7,6 +7,7 @@ order: 65
 description: "異能連環の6属性のひとつ。リング上で魂と光に隣接し、魂と浸染・光と延滞の2反応を起こせる水色イメージの属性。ハソールやカオスが該当。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["属性", "戦闘"]
 aliases: ["Lakshana", "相属性"]
 sources:

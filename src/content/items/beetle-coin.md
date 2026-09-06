@@ -6,6 +6,7 @@ order: 30
 description: "ギア（駆動コア）の強化に使う通貨。探検ガイドのデイリークエスト報酬で毎日入手できる。"
 status: "verified"
 updated: 2026-06-13
+checked: 2026-09-06
 tags: ["通貨", "ギア", "育成"]
 sources:
   - label: "ゲームウィズ — 甲虫コインの入手方法と使い道"

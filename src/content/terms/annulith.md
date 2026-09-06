@@ -7,6 +7,7 @@ order: 10
 description: "NTE の主要ガチャ通貨。円石160個でサイコロ1個に加工してスカボロー市場を回す基幹リソース。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["通貨", "ガチャ"]
 aliases: ["Annulith"]
 sources:

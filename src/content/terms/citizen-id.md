@@ -6,6 +6,7 @@ order: 56
 description: "ヘテロシティに「定住」するための市民登録。探索やシティライフを進めて発行条件を満たすと市民IDカードが得られる、街への定着を象徴する到達目標。"
 status: "verified"
 updated: 2026-06-13
+checked: 2026-09-06
 tags: ["シティライフ", "世界観"]
 aliases: ["Citizen ID", "市民IDカード", "定住"]
 sources:

@@ -6,6 +6,7 @@ order: 66
 description: "軌道外領域の高難度環状線。14日ごとに再編成され、各ステーションのホームスタンプやアノマリーが変化する。後半は2チームが必要。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["軌道外領域", "環状線", "高難度", "エンドコンテンツ"]
 aliases: ["黎明環状線", "Reimei Loop Line"]
 sources:

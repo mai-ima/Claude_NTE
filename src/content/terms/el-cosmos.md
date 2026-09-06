@@ -7,6 +7,7 @@ order: 60
 description: "異能連環の6属性のひとつ。リング上で霊と相に隣接し、霊と創生・相と延滞の2反応を起こせる黄色イメージの属性。零やエドガーが該当。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["属性", "戦闘"]
 aliases: ["Cosmos", "光属性"]
 sources:

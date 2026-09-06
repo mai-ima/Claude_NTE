@@ -7,6 +7,7 @@ order: 43
 description: "プレイヤー自身の呼称・役割。エイボン骨董品店を拠点に、エスパーを率いて異象を見極め対処していく主人公（既定名・零）。BACや異象ハンターと関わりながら物語を進める。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["世界観", "プレイヤー"]
 aliases: ["Appraiser", "プレイヤー"]
 sources:

@@ -6,6 +6,7 @@ order: 5
 description: "常設の恒常ピックアップガチャ。標準ボードで回し、初回の累計で恒常Sランクを1体交換できる。"
 status: "verified"
 updated: 2026-06-09
+checked: 2026-09-06
 tags: ["ガチャ", "恒常", "常設"]
 sources:
   - label: "神ゲー攻略 — ガチャの種類と仕様"

@@ -6,6 +6,7 @@ order: 57
 description: "ヘテロシティに点在する電話ボックス型のファストトラベル（転送）地点。Wertheimerタワーと並ぶ移動拠点。"
 status: "draft"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["地名", "ファストトラベル", "ランドマーク"]
 aliases: ["ReroRero Phonebox"]
 sources:

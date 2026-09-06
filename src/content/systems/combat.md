@@ -5,6 +5,7 @@ order: 10
 description: "4人編成・自由スワップ・クリティカルドッジ/リポスト・ブレイク（スタッガー）の基礎。"
 status: "verified"
 updated: 2026-06-08
+checked: 2026-09-06
 tags: ["戦闘", "基本"]
 sources:
   - label: "Mobalytics — Combat Basics"

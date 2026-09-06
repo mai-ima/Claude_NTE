@@ -9,6 +9,7 @@ order: 41
 description: "ヒナタ島を舞台にした外伝（異聞録）。クリアで円石などの報酬を獲得できる v1.1 の期間限定エピソード。"
 status: "draft"
 updated: 2026-06-09
+checked: 2026-09-06
 tags: ["イベント", "ストーリー", "ヒナタ島", "v1.1"]
 sources:
   - label: "GameWith — Sunward Island"

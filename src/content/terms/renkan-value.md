@@ -7,6 +7,7 @@ order: 26
 description: "戦闘行動でたまる円形メーター。通常攻撃で微量・スキルで中量・パリィや完璧回避で大量にたまり、満タンでスワップ反応・サイクルパッシブ・アルティメットを発動する火力の起点。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["戦闘", "連環", "メーター"]
 aliases: ["連環ゲージ", "Cycle Meter"]
 sources:

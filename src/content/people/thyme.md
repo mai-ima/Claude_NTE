@@ -8,6 +8,7 @@ order: 12
 description: "v1.1で追加された5章の舞台「夢巡る回廊」を生み出した人物であり、章のボスでもある（弱点は魂/Psyche）。英名 Thyme。日本語表記は要確認。ストーリーのネタバレを含む。"
 status: "draft"
 updated: 2026-06-16
+checked: 2026-09-06
 tags: ["登場人物", "5章", "夢巡る回廊", "ボス", "ネタバレ"]
 aliases: ["Thyme", "タイム"]
 sources:

@@ -6,6 +6,7 @@ order: 70
 description: "異能連環のDuo反応。魂と相の隣接で成立し、敵の被ダメージを増加させて味方全体の火力を底上げする補助反応。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["反応", "連環", "戦闘"]
 aliases: ["Stain", "浸染反応"]
 sources:

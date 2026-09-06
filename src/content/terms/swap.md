@@ -6,6 +6,7 @@ order: 31
 description: "控えキャラへ無償・クールタイム無しで即座に交代するシステム。属性反応を繋ぐ NTE 戦闘の核。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["戦闘", "編成"]
 aliases: ["Swap", "キャラ交代", "スワップ反応"]
 sources:

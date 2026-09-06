@@ -7,6 +7,7 @@ order: 10
 description: "主人公（鑑定士）たちが拠点とする骨董品店。クルーの勤務先であり、アノマリー関連の依頼や交流の起点。"
 status: "verified"
 updated: 2026-06-09
+checked: 2026-09-06
 tags: ["拠点", "エイボン", "橋間地"]
 sources:
   - label: "カノウィキ — 用語集"

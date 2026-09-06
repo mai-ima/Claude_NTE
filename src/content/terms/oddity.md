@@ -6,6 +6,7 @@ order: 50
 description: "超渦由来でありながら平和的に共存できる異象。BACの居住許可を得てヘテロシティで暮らす。「怪異が隣人として暮らす街」というNTEの空気を支える制度。"
 status: "draft"
 updated: 2026-06-13
+checked: 2026-09-06
 tags: ["世界観", "設定", "アノマリー"]
 aliases: ["Oddity"]
 sources:

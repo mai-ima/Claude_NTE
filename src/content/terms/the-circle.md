@@ -6,6 +6,7 @@ order: 45
 description: "物語に関わる組織。異象を悪用する勢力としてBAC・鑑定士・異象ハンターと対峙する立場にあり、定期バトルパス「サークル懸賞」の名称の由来でもある。"
 status: "draft"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["組織", "世界観"]
 aliases: ["The Circle"]
 sources:

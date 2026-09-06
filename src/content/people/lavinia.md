@@ -7,6 +7,7 @@ order: 14
 description: "メインストーリー4章に登場する人物で、橋間地の魔女クロバネに関わる。※ストーリーのネタバレを含む。"
 status: "draft"
 updated: 2026-06-16
+checked: 2026-09-06
 tags: ["登場人物", "4章", "魔女", "ネタバレ"]
 aliases: ["Lavinia", "ラヴィニア"]
 sources:

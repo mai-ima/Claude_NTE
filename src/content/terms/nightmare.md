@@ -6,6 +6,7 @@ order: 23
 description: "レクイエム固有の継続ダメージ（DoT）スタック機構。攻撃でスタックを積んで削り、ブレイクへつなぐ。名前が似ているが異能連環の反応名ではない点に注意。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["DoT", "悪夢", "レクイエム"]
 aliases: ["Nightmare", "DoT"]
 sources:

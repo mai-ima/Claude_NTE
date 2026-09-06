@@ -5,6 +5,7 @@ order: 10
 description: "幽霊列車をモチーフにした高難度エンドコンテンツ。日本語公式名「軌道外領域」。円石の主要供給源。"
 status: "verified"
 updated: 2026-06-09
+checked: 2026-09-06
 tags: ["エンドコンテンツ", "軌道外領域"]
 sources:
   - label: "ゲームウィズ（日本版）— NTE攻略"

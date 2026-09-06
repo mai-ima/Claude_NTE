@@ -6,6 +6,7 @@ order: 58
 description: "ヘテロシティ内の転送移動。ReroReroフォンボックスやWertheimerタワーを起点に各地へ瞬間移動できる。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["シティライフ", "探索", "移動"]
 aliases: ["Fast Travel", "ワープ", "転送"]
 sources:

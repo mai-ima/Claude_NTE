@@ -7,6 +7,7 @@ order: 50
 description: "ニューホランドのワールドボス。一定時間キャラを操作不能にする攻撃を持つ。弱点は闇(Chaos)。"
 status: "verified"
 updated: 2026-06-16
+checked: 2026-09-06
 tags: ["ボス", "ワールドボス", "闇"]
 sources:
   - label: "ゲームウィズ — ボス攻略まとめ"

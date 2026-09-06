@@ -6,6 +6,7 @@ order: 20
 description: "ゲーム内SNS「ベーグル」で貯まる交換用ポイント。SNS活動で稼ぎ、ベーグル商店で円石などの報酬や素材に交換する。"
 status: "verified"
 updated: 2026-06-13
+checked: 2026-09-06
 tags: ["通貨", "ベーグル", "SNS", "v1.1"]
 aliases: ["Jam Point"]
 sources:

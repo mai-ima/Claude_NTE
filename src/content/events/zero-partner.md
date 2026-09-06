@@ -9,6 +9,7 @@ order: 113
 description: "相棒キャラを選んで進めるポイント型の期間限定イベント。Ver.1.0 期間に開催。"
 status: "draft"
 updated: 2026-06-09
+checked: 2026-09-06
 tags: ["イベント", "ポイント", "v1.0", "終了"]
 sources:
   - label: "ゲームウィズ — ガチャ/イベントスケジュール"

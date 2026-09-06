@@ -7,6 +7,7 @@ order: 64
 description: "異能連環の6属性のひとつ。リング上で闇と相に隣接し、闇と暗星・相と浸染の2反応を起こせる桃色イメージの属性。ファルディーヤやハニアが該当。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["属性", "戦闘"]
 aliases: ["Psyche", "魂属性"]
 sources:

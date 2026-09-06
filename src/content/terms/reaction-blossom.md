@@ -6,6 +6,7 @@ order: 66
 description: "異能連環のDuo反応。光と霊の隣接で成立し、範囲（AoE）追撃ダメージを発生させる殲滅向きの反応。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["反応", "連環", "戦闘"]
 aliases: ["Blossom", "創生反応"]
 sources:

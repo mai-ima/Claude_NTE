@@ -6,6 +6,7 @@ order: 61
 description: "育成通貨「甲虫コイン」を効率的に集める異象界（アノマリーワールド）。本性ピクセルを1回40／倍取り80消費して周回する、コイン専用の供給源。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["異象界", "周回", "育成"]
 aliases: ["Coin Chronicle"]
 sources:

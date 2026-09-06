@@ -6,6 +6,7 @@ order: 69
 description: "異象界周回でドロップする装備系の素材／アイテム。育成リソースの一つだが、具体的な使用先・段階などの詳細仕様は要確認。"
 status: "draft"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["育成", "素材", "装備"]
 aliases: ["Console", "コンソール"]
 sources:

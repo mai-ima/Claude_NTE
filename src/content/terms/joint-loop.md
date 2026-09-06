@@ -6,6 +6,7 @@ order: 65
 description: "軌道外領域の常時解放の環状線。全10ステーションで、第10ステーション報酬として無料キャラ・ハニアが得られる。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["軌道外領域", "環状線", "エンドコンテンツ"]
 aliases: ["ジョイント環状線", "Joint Loop Line"]
 sources:

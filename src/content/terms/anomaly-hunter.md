@@ -6,6 +6,7 @@ order: 44
 description: "異象に現場で対処する者たちの呼称。エイボン骨董品店のクルーもこれにあたり、ハンターレベルが各コンテンツの解放条件になる。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["世界観", "組織"]
 aliases: ["Anomaly Hunter"]
 sources:

@@ -6,6 +6,7 @@ order: 54
 description: "2026/6/3 のVer.1.1アップデート名。新リージョンのヒナタ島やSランク・レクイエム、SNSベーグル、ファイトクラブなどを追加した正式リリース後初の大型更新。後半6/24にカオスが控える。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["アップデート", "v1.1"]
 aliases: ["Dreamwalk Corridor", "Ver.1.1", "v1.1"]
 sources:

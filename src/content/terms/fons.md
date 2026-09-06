@@ -7,6 +7,7 @@ order: 17
 description: "ヘテロシティのソフト通貨。シティスタミナを使う「ヘテロシティ・ホビー」で稼ぎ、物件・家具・交換所での素材購入に使う。ガチャ用円石とは別系統。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["通貨", "シティライフ"]
 aliases: ["Fons"]
 sources:

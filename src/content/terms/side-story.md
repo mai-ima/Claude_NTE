@@ -7,6 +7,7 @@ order: 57
 description: "メインストーリーとは別枠の外伝エピソード。キャラや地域に焦点を当て、クリアで円石などの報酬が得られる。v1.1のヒナタ島「日向旅行記」が一例。"
 status: "verified"
 updated: 2026-06-13
+checked: 2026-09-06
 tags: ["ストーリー", "イベント"]
 aliases: ["異聞", "外伝", "Side Story"]
 sources:

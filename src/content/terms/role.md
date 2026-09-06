@@ -6,6 +6,7 @@ order: 67
 description: "各エスパーが担う戦闘上の役割。アタッカー（DPS）・サバイバル（回復・防御）・バッファー（支援）の3系統で、4人編成のバランス指標になる。属性と並ぶ編成の二本柱。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["戦闘", "編成", "ロール"]
 aliases: ["Role", "役割"]
 sources:

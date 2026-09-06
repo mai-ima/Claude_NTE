@@ -6,6 +6,7 @@ order: 50
 description: "戦闘中の復帰に使う消費アイテム。シティ内のコンビニやキャンディーショップでファンスを払って購入できる。"
 status: "verified"
 updated: 2026-06-13
+checked: 2026-09-06
 tags: ["消費アイテム", "戦闘"]
 sources:
   - label: "ゲームウィズ — 復活アイテム一覧と入手方法"

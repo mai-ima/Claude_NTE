@@ -6,6 +6,7 @@ order: 34
 description: "キャラのEXP素材であり、デイリー任務の枠組みでもある二面性を持つ要素。日課で甲虫コインやアクティブ度が得られる。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["デイリー", "育成"]
 aliases: ["Hunter Guides", "デイリー"]
 sources:

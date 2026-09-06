@@ -6,6 +6,7 @@ order: 40
 description: "ハンターガイドのデイリー等で貯まる甲虫コインを、育成素材やガチャ素材に交換する窓口。"
 status: "verified"
 updated: 2026-06-09
+checked: 2026-09-06
 tags: ["交換所", "甲虫コイン", "デイリー"]
 sources:
   - label: "ゲームウィズ — 甲虫コインの入手方法と使い道"

@@ -6,6 +6,7 @@ order: 20
 description: "都会の喧騒から離れた沿岸エリア。市内随一と称される海の眺め。"
 status: "verified"
 updated: 2026-06-08
+checked: 2026-09-06
 tags: ["区", "沿岸"]
 sources:
   - label: "GameWith — Heterocity Map"

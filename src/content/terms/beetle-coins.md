@@ -6,6 +6,7 @@ order: 33
 description: "育成全般に使う汎用通貨。ハンターガイドの日課・アクティブ度20/40/60/80（計20,000枚）・コインクロニクルで集め、突破で大量消費する。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["通貨", "育成", "デイリー"]
 aliases: ["Beetle Coins"]
 sources:

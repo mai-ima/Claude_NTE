@@ -6,6 +6,7 @@ order: 30
 description: "敵攻撃を精密にパリィ（受け流し）して出すカウンター。ブレイク値を削り、キャラ固有の演出を持つ。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["戦闘", "パリィ"]
 aliases: ["Critical Riposte", "パリィ", "ジャストパリィ"]
 sources:

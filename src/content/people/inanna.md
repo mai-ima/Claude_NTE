@@ -8,6 +8,7 @@ order: 10
 description: "組織「緋文字（スカーレット・レター）」を率いる人物。メインストーリー5章「夢巡る回廊」に登場する。※ストーリーのネタバレを含む。"
 status: "verified"
 updated: 2026-06-14
+checked: 2026-09-06
 tags: ["登場人物", "緋文字", "5章", "ネタバレ"]
 aliases: ["Inanna", "イナンナ"]
 sources:

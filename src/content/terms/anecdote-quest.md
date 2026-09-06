@@ -7,6 +7,7 @@ order: 58
 description: "マップ上で条件を満たすと発生する隠しクエスト。クリアで隠し実績や報酬が得られ、探索のやり込み要素になる。メインや異聞録とは別枠。"
 status: "verified"
 updated: 2026-06-14
+checked: 2026-09-06
 tags: ["クエスト", "隠し要素", "探索", "実績"]
 aliases: ["Anecdote Quest", "隠しクエスト", "逸話"]
 sources:

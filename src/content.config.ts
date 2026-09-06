@@ -30,6 +30,16 @@ const base = {
   order: z.number().default(100),
   tags: z.array(z.string()).default([]),
   updated: z.coerce.date(),
+  /**
+   * 最終「確認」日。内容は変えていないが、出典に当たり直して
+   * **現行バージョンでも正しいと確かめた**日を入れる。
+   *
+   * `updated`（＝本文を書き換えた日）と分けているのは誠実さのため。
+   * 確認しただけの記事の `updated` を今日にすると「書き直した」と誤解され、
+   * 逆に何も書かないと「3ヶ月前の情報」に見えてしまう。両方を持てば
+   * 「6/11 に書き、9/6 に現行版でも正しいと確認した」と正確に言える。
+   */
+  checked: z.coerce.date().optional(),
   sources: z.array(source).default([]),
   draft: z.boolean().default(false), // ビルドから完全除外したい場合
 };

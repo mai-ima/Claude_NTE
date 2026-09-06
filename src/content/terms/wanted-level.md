@@ -7,6 +7,7 @@ order: 51
 description: "街で迷惑行為を重ねると上がる指名手配度。一定以上で一般車両を強奪して乗れるようになる、オープンワールドのサンドボックス要素。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["シティライフ", "乗り物"]
 aliases: ["Warrant Value", "指名手配"]
 sources:

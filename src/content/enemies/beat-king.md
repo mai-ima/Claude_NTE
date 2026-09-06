@@ -7,6 +7,7 @@ order: 52
 description: "絵空町のワールドボス。戦闘中に音ゲー風のギミックがある。弱点は魂(Psyche)。"
 status: "verified"
 updated: 2026-06-08
+checked: 2026-09-06
 tags: ["ボス", "ワールドボス", "魂"]
 sources:
   - label: "ゲームウィズ — 音ゲー魔王"

@@ -6,6 +6,7 @@ order: 50
 description: "未聞浦にある沿岸の地区。クリアビュー丘駅を中心に、市内随一とも称される海辺の景観を望む。"
 status: "draft"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["地名", "未聞浦", "駅"]
 aliases: ["Clearview", "クリアビュー丘駅"]
 sources:

@@ -6,6 +6,7 @@ order: 11
 description: "すごろく式ガチャでコマを進める専用アイテム。限定用の本質サイコロと標準用の虚質サイコロの2種に分かれる。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["ガチャ", "通貨"]
 aliases: ["本質サイコロ", "虚質サイコロ", "Fabricated Dice", "Solid Dice"]
 sources:

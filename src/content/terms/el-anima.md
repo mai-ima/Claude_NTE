@@ -7,6 +7,7 @@ order: 61
 description: "異能連環の6属性のひとつ。リング上で光と呪に隣接し、光と創生・呪と覆紋の2反応を起こせる緑色イメージの属性。九原やミントが該当。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["属性", "戦闘"]
 aliases: ["Anima", "霊属性"]
 sources:

@@ -7,6 +7,7 @@ order: 26
 description: "イロヒ固有の状態。バイレールスキル長押しで味方3人を無敵の自動攻撃状態にし、召喚した3匹の子羊がイロヒの攻撃ステータスの一部を継承して攻撃する。"
 status: "verified"
 updated: 2026-07-20
+checked: 2026-09-06
 tags: ["v1.2", "イロヒ", "状態"]
 aliases: ["Trance"]
 sources:

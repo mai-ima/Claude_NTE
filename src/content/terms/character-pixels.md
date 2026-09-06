@@ -6,6 +6,7 @@ order: 32
 description: "戦闘スタミナ。上限240・約6分で1回復し、アノマリーゾーン1周回40（倍取り80）で素材を集めるのに消費する。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["スタミナ", "育成"]
 aliases: ["Character Pixels", "戦闘スタミナ", "本性ピクセル"]
 sources:

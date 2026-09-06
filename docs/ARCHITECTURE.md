@@ -307,7 +307,19 @@ themes.css → base.css → components.css
 | story | 4 | | **α（4種 × 2本）** | 8 |
 
 スキーマは `src/content.config.ts`（zod）。共通の `base`（`description` / `status` / `updated` /
-`sources` / `tags`）＋コレクション固有項目。α は `alphaBase` を使う。
+`checked` / `sources` / `tags`）＋コレクション固有項目。α は `alphaBase` を使う。
+
+`updated` と `checked` の違い（重要）:
+
+| 項目 | 意味 | 必須 |
+| --- | --- | --- |
+| `updated` | **本文を書き換えた**日 | 必須 |
+| `checked` | 本文は変えていないが、**出典に当たり直して現行版でも正しいと確かめた**日 | 任意 |
+
+分けている理由: 確認しただけの記事の `updated` を今日にすると「書き直した」と誤解され、
+何も書かないと「3ヶ月前の情報」に見える。両方持てば「6/11 に書き、9/6 に再確認」と正確に言える。
+記事ページの見出し下には `更新: …` の隣に `確認: …` が出る（`checked > updated` のときだけ）。
+`pnpm test:content` の鮮度サマリーも新しい方を見る。
 
 ### ページ
 

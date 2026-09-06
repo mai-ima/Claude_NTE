@@ -6,6 +6,7 @@ order: 50
 description: "都市のソフト通貨。物件・家具・素材交換に使う。シティスタミナ(ホビー)で稼ぐ。"
 status: "verified"
 updated: 2026-06-08
+checked: 2026-09-06
 tags: ["通貨", "都市"]
 sources:
   - label: "thegamer — Fons"

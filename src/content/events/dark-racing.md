@@ -9,6 +9,7 @@ order: 40
 description: "最大6人で競う無制限レーシングの期間限定イベント。"
 status: "verified"
 updated: 2026-06-09
+checked: 2026-09-06
 tags: ["イベント", "レース", "v1.1"]
 sources:
   - label: "NTE公式 — Ver.1.1「夢巡る回廊」アップデート"

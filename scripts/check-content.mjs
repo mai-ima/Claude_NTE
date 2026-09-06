@@ -140,11 +140,26 @@ for (const a of articles) {
   }
 
   // 陳腐化しやすい表現 × 古い更新日
+  //
+  // 鮮度は updated（本文を書き換えた日）だけでなく checked（内容は変えていないが
+  // 現行バージョンでも正しいと確かめた日）も見る。確認しただけの記事の updated を
+  // 今日にすると「書き直した」と誤解されるため、2つを分けて持っている。
+  if (f.checked) {
+    const cDays = Math.round((TODAY - new Date(f.checked)) / 86_400_000);
+    if (cDays < 0) add('warn', a.file, `checked が未来の日付です（${f.checked}）`);
+    if (f.updated && new Date(f.checked) < new Date(f.updated)) {
+      add('warn', a.file, `checked（${f.checked}）が updated（${f.updated}）より古いです。書き換えたなら確認日も同日以降にしてください`);
+    }
+  }
   if (f.updated) {
-    const days = Math.round((TODAY - new Date(f.updated)) / 86_400_000);
+    const freshest = f.checked && new Date(f.checked) > new Date(f.updated) ? f.checked : f.updated;
+    const days = Math.round((TODAY - new Date(freshest)) / 86_400_000);
     // 未来の日付は入力ミス（コピペや年の打ち間違い）。放置すると「最新」に見えてしまう
-    if (days < 0) add('warn', a.file, `updated が未来の日付です（${f.updated}）`);
+    if (Math.round((TODAY - new Date(f.updated)) / 86_400_000) < 0) {
+      add('warn', a.file, `updated が未来の日付です（${f.updated}）`);
+    }
     a.staleDays = days;
+    a.freshest = String(freshest);
     for (const word of VOLATILE) {
       if (a.body.includes(word) && days > 90) {
         add('warn', a.file, `「${word}」を含むのに ${days} 日更新されていません（陳腐化の可能性）`);
@@ -194,7 +209,7 @@ const dated = articles.filter((a) => typeof a.staleDays === 'number');
 if (dated.length) {
   const byMonth = {};
   for (const a of dated) {
-    const ym = String(a.front.updated).slice(0, 7);
+    const ym = String(a.freshest ?? a.front.updated).slice(0, 7);
     byMonth[ym] = (byMonth[ym] ?? 0) + 1;
   }
   const dist = Object.entries(byMonth)
@@ -202,7 +217,8 @@ if (dated.length) {
     .map(([ym, n]) => `${ym} ${n}件`)
     .join(' / ');
   const oldest = Math.max(...dated.map((a) => a.staleDays));
-  console.log(`更新月: ${dist}（最古 ${oldest}日前）`);
+  // 「最後に触れた月」＝ updated と checked の新しい方。確認だけした記事も鮮度に数える。
+  console.log(`鮮度（更新or確認の月）: ${dist}（最古 ${oldest}日前）`);
 
   const stale = dated.filter((a) => a.staleDays > REVIEW_DAYS);
   if (stale.length) {

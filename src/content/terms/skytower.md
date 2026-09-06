@@ -6,6 +6,7 @@ order: 51
 description: "ミゲル区にそびえる市内最高のランドマーク。山辺の景勝を見下ろす高層タワーで、区を象徴する目印。"
 status: "draft"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["地名", "ミゲル区", "ランドマーク"]
 aliases: ["Heterocity Skytower", "Skytower"]
 sources:

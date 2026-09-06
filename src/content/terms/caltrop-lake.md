@@ -6,6 +6,7 @@ order: 52
 description: "ミゲル区にある景勝地の湖。山辺の風光明媚な区を彩る見どころのひとつ。"
 status: "draft"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["地名", "ミゲル区", "景勝"]
 aliases: ["Caltrop Lake"]
 sources:

@@ -5,6 +5,7 @@ order: 10
 description: "主力DPS→サポート→サブの順。スタミナは溢れさせない。"
 status: "verified"
 updated: 2026-06-08
+checked: 2026-09-06
 tags: ["育成", "素材"]
 sources:
   - label: "games.gg — Ascend"

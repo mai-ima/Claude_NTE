@@ -7,6 +7,7 @@ order: 30
 description: "空中を浮遊し続けるワールドボス。近接が当てづらい。弱点は霊(Anima)。"
 status: "verified"
 updated: 2026-06-08
+checked: 2026-09-06
 tags: ["ボス", "ワールドボス", "霊"]
 sources:
   - label: "ゲームウィズ — ボス攻略まとめ"

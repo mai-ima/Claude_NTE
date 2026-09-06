@@ -8,6 +8,7 @@ order: 35
 description: "Porsche コラボ「エバードライブ」の限定報酬車。実在のスーパーカー Porsche 918 Spyder を、コラボ期間中のブラインドボックスで入手できる。"
 status: "verified"
 updated: 2026-06-13
+checked: 2026-09-06
 tags: ["車", "コラボ", "報酬", "v1.1"]
 sources:
   - label: "ゲームウィズ — ポルシェの性能と特徴"

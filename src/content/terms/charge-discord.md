@@ -6,6 +6,7 @@ order: 22
 description: "3属性が絡んで成立する上位のトリオ反応。充蓄はアルティメットのエネルギーを獲得し、失諧は敵のブレイク値を削る。編成方針を二分する核となる。"
 status: "verified"
 updated: 2026-06-14
+checked: 2026-09-06
 tags: ["反応", "トリオ", "戦闘"]
 aliases: ["Charge", "Discord", "トリオ反応"]
 sources:

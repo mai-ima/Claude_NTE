@@ -6,6 +6,7 @@ order: 64
 description: "軌道外領域のメイン高難度ステージとなる環状線。ミゲル区からアクセス・ハンターLv12解放で、円石の主要供給源。育成した戦力を試す中心的な挑戦コンテンツ。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["軌道外領域", "環状線", "高難度", "エンドコンテンツ"]
 aliases: ["未明の環状線", "Mumei Loop Line"]
 sources:

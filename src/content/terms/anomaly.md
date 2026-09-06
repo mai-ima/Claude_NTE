@@ -6,6 +6,7 @@ order: 40
 description: "現実の都市に現れる超常存在・現象の総称。管理するBAC・対処する異象ハンター・見極める鑑定士の三者を軸に、戦闘・探索・物語すべてが回るNTEの中心概念。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["世界観", "アノマリー"]
 aliases: ["Anomaly", "アノマリー"]
 sources:

@@ -42,6 +42,8 @@ interface Props {
   rows?: Row[];
   status: 'verified' | 'draft';
   updated?: Date;
+  /** 本文は変えていないが、出典に当たり直して現行版でも正しいと確かめた日 */
+  checked?: Date;
   tags?: string[];
   sources?: { label: string; url: string }[];
   headings: { depth: number; slug: string; text: string }[];
@@ -70,6 +72,7 @@ const {
   rows = [],
   status,
   updated,
+  checked,
   tags = [],
   sources = [],
   headings,
@@ -150,6 +153,13 @@ const editHref = editPath ? editUrl(editPath) : editUrlFor(collection, currentId
                 <StatusBadge status={status} />
                 {updated && (
                   <span class="muted text-sm">更新: {updated.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' })}</span>
+                )}
+                {/* 本文を書き換えていなくても「今の版で正しいと確かめた日」があれば出す。
+                    これが無いと、内容が正しいまま古い更新日だけが目に入り「放置された記事」に見える。 */}
+                {checked && (!updated || checked > updated) && (
+                  <span class="muted text-sm" title="本文は変えていないが、出典に当たり直して現行バージョンでも正しいと確認した日">
+                    確認: {checked.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' })}
+                  </span>
                 )}
                 {tags.map((t) => (
                   <span class="badge" data-pagefind-filter="tag">#{t}</span>

@@ -6,6 +6,7 @@ order: 28
 description: "NTE の戦闘に登場するダメージの分類。通常ダメージのほか、メンタル・ブレイク・付着といった特殊ダメージがある。"
 status: "draft"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["戦闘", "ダメージ"]
 aliases: ["Damage Types", "ダメージ属性"]
 sources:

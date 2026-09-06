@@ -9,6 +9,7 @@ order: 20
 description: "Ver.1.1前半の武器（弧盤）ピックアップ。レクイエムの専用弧盤「ラストローズ」が排出アップ。"
 status: "draft"
 updated: 2026-06-16
+checked: 2026-09-06
 tags: ["ガチャ", "弧盤", "武器", "v1.1"]
 sources:
   - label: "NTE公式 — Ver.1.1「夢巡る回廊」アップデート"

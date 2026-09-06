@@ -6,6 +6,7 @@ order: 21
 description: "異能を持つプレイアブルキャラの総称。各キャラは6属性のいずれかとロールを持ち、4人編成・無償スワップで連環反応を繋いで戦う、NTE戦闘の基本単位。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["キャラ", "戦闘"]
 aliases: ["Esper", "異能者"]
 sources:

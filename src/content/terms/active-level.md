@@ -6,6 +6,7 @@ order: 38
 description: "日課（デイリー任務）をこなして上がる活動度。20/40/60/80のマイルストーンで甲虫コインを各5,000枚＝計20,000枚もらえる、毎日のリソース回収の要。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["デイリー", "育成"]
 aliases: ["Active Level", "活動度"]
 sources:

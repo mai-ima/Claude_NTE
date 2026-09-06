@@ -9,6 +9,7 @@ order: 110
 description: "正式リリース（Ver.1.0）最初の初回限定ピックアップ。霊属性アタッカーのナナリが対象。"
 status: "verified"
 updated: 2026-06-09
+checked: 2026-09-06
 tags: ["ガチャ", "限定", "ナナリ", "v1.0", "終了"]
 sources:
   - label: "ゲームウィズ — ガチャスケジュール"

@@ -6,6 +6,7 @@ order: 70
 description: "シティスタミナ（上限200・週リセット）を消費する都市アクティビティの総称。都市通貨ファンスを稼ぐ主手段で、目安は1ポイント≒約1,000 Fons。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["都市", "アクティビティ", "通貨"]
 aliases: ["Heterocity Hobby", "ホビー"]
 sources:

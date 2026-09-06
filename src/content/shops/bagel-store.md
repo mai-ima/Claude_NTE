@@ -7,6 +7,7 @@ order: 50
 description: "ゲーム内SNS「ベーグル」で貯めたジャムポイントを各種報酬に交換する商店。v1.1イベント『ホットに焙煎中』と連動。"
 status: "draft"
 updated: 2026-06-13
+checked: 2026-09-06
 tags: ["交換所", "ベーグル", "ジャムポイント", "v1.1"]
 sources:
   - label: "NTE公式 — 正式リリース記念イベント"

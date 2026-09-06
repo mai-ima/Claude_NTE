@@ -6,6 +6,7 @@ order: 20
 description: "光霊呪闇魂相の6属性が固定リングで並び、隣接属性同士だけが反応する属性反応システム。6種のDuo反応と2種のTrio反応で火力・ブレイク・アルティメットエネルギーを生む、NTE戦闘の根幹。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["属性", "反応", "戦闘"]
 aliases: ["連環", "属性反応"]
 sources:

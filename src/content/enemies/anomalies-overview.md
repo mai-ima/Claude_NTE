@@ -5,6 +5,7 @@ order: 10
 description: "ヘテロシティに現れる超常現象・存在の総称。委託・ゾーン・ハント・巡礼など多様な形で登場。"
 status: "verified"
 updated: 2026-06-16
+checked: 2026-09-06
 tags: ["アノマリー", "概要"]
 sources:
   - label: "neverness.gg — Anomalies"

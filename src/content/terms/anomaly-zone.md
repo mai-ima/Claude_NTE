@@ -6,6 +6,7 @@ order: 42
 description: "異象が生み出す特殊空間。本性ピクセルを消費して周回する育成・ボス戦の舞台で、ヘテロシティ各所に5か所存在する。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["世界観", "地名", "周回"]
 aliases: ["Anomaly Zone", "異象界"]
 sources:

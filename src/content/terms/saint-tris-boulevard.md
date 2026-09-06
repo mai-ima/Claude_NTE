@@ -6,6 +6,7 @@ order: 48
 description: "ミゲル区にある秋葉原モチーフの電気街。看板やショップにパロディネタが点在する人気の探索スポット。"
 status: "draft"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["地名", "ミゲル区", "パロディ"]
 aliases: ["Saint Tris Boulevard"]
 sources:

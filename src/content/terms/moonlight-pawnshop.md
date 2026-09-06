@@ -6,6 +6,7 @@ order: 55
 description: "異象依頼「月光質屋」の進行先。クリアすると弱点・光（Cosmos）の周回ボス「モルフィクス」が解放される、異象狩り関連の場所。"
 status: "draft"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["地名", "異象狩り", "質屋"]
 aliases: ["Moonlight Pawnshop"]
 sources:

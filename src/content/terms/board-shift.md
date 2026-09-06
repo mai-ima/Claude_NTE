@@ -6,6 +6,7 @@ order: 14
 description: "NTE ガチャの盤面。サイコロでマスを進めて報酬を得る。限定=本質サイコロ/標準=虚質サイコロで使い分け、70連で確率上昇する「ボード転換」が起こる。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["ガチャ", "ボード"]
 aliases: ["盤面", "すごろく"]
 sources:

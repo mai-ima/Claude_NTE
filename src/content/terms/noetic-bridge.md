@@ -6,6 +6,7 @@ order: 53
 description: "ミゲル区のショッピング街。区の商業の中心となる繁華なエリア。"
 status: "draft"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["地名", "ミゲル区", "商業"]
 aliases: ["Noetic Bridge"]
 sources:

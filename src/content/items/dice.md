@@ -6,6 +6,7 @@ order: 30
 description: "ガチャの抽選通貨。1個=1ロール。限定は本質サイコロ、標準は虚質サイコロ、武器はトリプルキー。"
 status: "verified"
 updated: 2026-06-08
+checked: 2026-09-06
 tags: ["通貨", "ガチャ"]
 sources:
   - label: "AppMedia — 虚質サイコロ"

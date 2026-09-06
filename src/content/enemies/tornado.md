@@ -6,6 +6,7 @@ order: 50
 description: "拘置所エリアの新ボス。討伐すると拳闘コンテンツ「ファイトクラブ」が解放される。"
 status: "verified"
 updated: 2026-06-13
+checked: 2026-09-06
 tags: ["ボス", "拘置所", "ファイトクラブ"]
 sources:
   - label: "ゲームウィズ — ファイトクラブの詳細と解放条件"

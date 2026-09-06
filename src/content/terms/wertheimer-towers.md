@@ -6,6 +6,7 @@ order: 58
 description: "ヘテロシティのファストトラベル（転送）地点となる高層建築のランドマーク。ReroReroフォンボックスと並ぶ移動拠点。"
 status: "draft"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["地名", "ファストトラベル", "ランドマーク"]
 aliases: ["Wertheimer Towers"]
 sources:

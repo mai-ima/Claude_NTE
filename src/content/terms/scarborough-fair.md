@@ -6,6 +6,7 @@ order: 12
 description: "NTE のキャラガチャの呼称。サイコロでマスを進めるすごろく式で、天井と盤面の進捗が次回ボードへ持ち越される。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["ガチャ"]
 aliases: ["Scarborough Fair", "ガチャ"]
 sources:

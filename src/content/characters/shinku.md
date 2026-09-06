@@ -13,6 +13,7 @@ weapon: "弧盤: 専用「紅き蜃気楼」（Blushing Mirage）"
 description: "Ver.1.2 前半の限定S。ゲーム初の限定・光属性メインアタッカー。通常⇔逆鱗解放（暴走）の2形態を切り替え、充蓄編成で高火力を出すリセマラ最優先クラス。"
 status: "verified"
 updated: 2026-07-24
+checked: 2026-09-06
 tags: ["光", "アタッカー", "v1.2", "リセマラ", "充蓄"]
 sources:
   - label: "Game8 — 真紅の評価とスキル"

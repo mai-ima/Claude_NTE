@@ -7,6 +7,7 @@ order: 63
 description: "異能連環の6属性のひとつ。リング上で呪と魂に隣接し、呪と濁燃・魂と暗星の2反応を起こせる属性。レクイエムやダフォディールが該当。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["属性", "戦闘"]
 aliases: ["Chaos", "闇属性"]
 sources:

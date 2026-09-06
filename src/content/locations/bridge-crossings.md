@@ -6,6 +6,7 @@ order: 30
 description: "アーケードや電話ボックスなどのランドマークを擁する区。エイボン骨董品店の所在地。"
 status: "verified"
 updated: 2026-06-16
+checked: 2026-09-06
 tags: ["区", "エイボン"]
 sources:
   - label: "GameWith — 橋間地 Map"

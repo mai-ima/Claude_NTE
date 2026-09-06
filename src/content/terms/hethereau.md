@@ -6,6 +6,7 @@ order: 47
 description: "本作の舞台となる巨大都市。4区＋絵空町から成り、ロード無しのシームレス探索とシティライフ（乗り物・タクシー・市民ID）の中心。v1.1でヒナタ島が追加。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["地名", "都市"]
 aliases: ["Hethereau", "Heterocity"]
 sources:

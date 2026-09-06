@@ -6,6 +6,7 @@ order: 47
 description: "ヘテロシティ市内を走る無料の電車。駅のホームで待って乗車する。序盤の移動やファストトラベル地点の解放に便利。"
 status: "verified"
 updated: 2026-06-15
+checked: 2026-09-06
 tags: ["移動", "電車", "駅", "交通"]
 aliases: ["City Train", "電車", "市内交通"]
 sources:

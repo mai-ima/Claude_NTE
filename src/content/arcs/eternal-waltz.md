@@ -9,6 +9,7 @@ order: 32
 description: "ファルディーヤのモチーフSランク弧盤。ガチャではなく世界ボス「踊りだせアラクネ」撃破で無料入手できる。"
 status: "verified"
 updated: 2026-06-16
+checked: 2026-09-06
 tags: ["弧盤", "S", "無課金", "モチーフ", "ファルディーヤ"]
 sources:
   - label: "AppMedia — 最強武器ランキング｜キャラ別おすすめ"

@@ -5,6 +5,7 @@ order: 10
 description: "戦闘用「本性ピクセル」（240/6分回復）と、都市用「シティスタミナ」（200/週リセット）の2系統。"
 status: "verified"
 updated: 2026-06-08
+checked: 2026-09-06
 tags: ["スタミナ", "周回"]
 sources:
   - label: "Game8 — City Stamina"

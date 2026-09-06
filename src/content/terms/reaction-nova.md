@@ -6,6 +6,7 @@ order: 69
 description: "異能連環のDuo反応。闇と魂の隣接で成立し、遅延して爆発しメンタルダメージを与える。爆発に火力を重ねやすい反応。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["反応", "連環", "戦闘"]
 aliases: ["Nova", "暗星反応"]
 sources:

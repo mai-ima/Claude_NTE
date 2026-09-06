@@ -9,6 +9,7 @@ order: 10
 description: "Ver.1.2前半（7/8〜7/28）の限定バナー。初の限定・光属性メインアタッカー「真紅」がピックアップ。"
 status: "verified"
 updated: 2026-07-20
+checked: 2026-09-06
 tags: ["ガチャ", "限定", "真紅", "v1.2"]
 sources:
   - label: "PixMofu — Ver.1.2 九百九十九夜 7月8日実装"

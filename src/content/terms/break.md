@@ -6,6 +6,7 @@ order: 24
 description: "敵HPバー下のゲージを満タンにして発生するスタン状態。被ダメージが大幅上昇し、アルティメットや大技を叩き込む最大の好機になる。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["戦闘", "ブレイク"]
 aliases: ["Break", "スタッガー"]
 sources:

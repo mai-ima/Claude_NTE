@@ -6,6 +6,7 @@ order: 10
 description: "ハンターガイド(EXP)、甲虫コイン、弧盤の突破素材「シアターチップ」「数字記号」など。"
 status: "verified"
 updated: 2026-06-09
+checked: 2026-09-06
 tags: ["素材", "育成"]
 sources:
   - label: "神ゲー攻略 — 育成優先度"

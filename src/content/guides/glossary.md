@@ -5,6 +5,7 @@ order: 90
 description: "属性・通貨・地名・組織などの日本版公式表記と英語表記の対応表。"
 status: "verified"
 updated: 2026-06-08
+checked: 2026-09-06
 tags: ["用語集", "対応表"]
 sources:
   - label: "Game8（日本版）— 属性"

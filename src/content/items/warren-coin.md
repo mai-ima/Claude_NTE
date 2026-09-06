@@ -6,6 +6,7 @@ order: 60
 description: "常設モード「九百九十九夜」専用の通貨。商人メェメェでの装備・アイテム購入や装備鑑定に使う。"
 status: "verified"
 updated: 2026-07-20
+checked: 2026-09-06
 tags: ["通貨", "九百九十九夜", "v1.2"]
 sources:
   - label: "ゲームウィズ — ウォーレン金貨の入手と使い道"

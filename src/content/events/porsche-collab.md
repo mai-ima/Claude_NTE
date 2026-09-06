@@ -8,6 +8,7 @@ version: "v1.1"
 description: "実在の自動車ブランド Porsche とのコラボ。ブラインドボックスで新車「Porsche 918 Spyder」・鑑定士（零）の限定コスチューム・新物件「ペガサス・レジデンス」などを入手できる期間限定コラボ。"
 status: "verified"
 updated: 2026-06-16
+checked: 2026-09-06
 tags: ["コラボ", "v1.1", "ビークル", "ガチャ"]
 sources:
   - label: "ゲームウィズ — ポルシェガチャの引き方／天井に必要なファンス"

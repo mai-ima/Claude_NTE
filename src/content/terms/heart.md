@@ -7,6 +7,7 @@ order: 35
 description: "キャラの凸（共鳴）に使う核素材。完凸＝共鳴段階6には本体1体＋心が計6個必要。弧盤の凸とは別系統。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["育成", "素材", "凸"]
 aliases: ["Heart"]
 sources:

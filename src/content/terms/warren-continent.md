@@ -7,6 +7,7 @@ order: 48
 description: "常設モード「九百九十九夜」の舞台となる卓上RPG風のファンタジー大陸。メェメェ村から赤竜の古城を目指す。専用通貨ウォーレン金貨を使う。"
 status: "verified"
 updated: 2026-07-20
+checked: 2026-09-06
 tags: ["九百九十九夜", "v1.2", "地名"]
 aliases: ["Warren Continent"]
 sources:

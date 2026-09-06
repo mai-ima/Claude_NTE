@@ -6,6 +6,7 @@ order: 30
 description: "同名キャラ・弧盤を重ねる「凸（共鳴）」と、レベル上限を解放する「突破」。完凸はキャラ共鳴段階6、弧盤は同名4本。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["育成", "凸"]
 aliases: ["完凸", "突破", "重ね", "共鳴"]
 sources:

@@ -7,6 +7,7 @@ order: 62
 description: "異能連環の6属性のひとつ。リング上で霊と闇に隣接し、霊と覆紋・闇と濁燃の2反応を起こせる紫色イメージの属性。白蔵やアドレーが該当。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["属性", "戦闘"]
 aliases: ["Incantation", "呪属性"]
 sources:

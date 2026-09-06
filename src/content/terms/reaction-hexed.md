@@ -6,6 +6,7 @@ order: 67
 description: "異能連環のDuo反応。霊と呪の隣接で成立し、一定時間ダメージを記録してまとめて一括解放するバースト集約型の反応。"
 status: "verified"
 updated: 2026-06-11
+checked: 2026-09-06
 tags: ["反応", "連環", "戦闘"]
 aliases: ["Hexed", "覆紋反応"]
 sources:

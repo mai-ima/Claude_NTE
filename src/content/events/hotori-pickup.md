@@ -9,6 +9,7 @@ order: 111
 description: "Ver.1.0 後半のピックアップ。時間操作系のサポート、潯（ほとり）が対象だった。"
 status: "verified"
 updated: 2026-06-09
+checked: 2026-09-06
 tags: ["ガチャ", "限定", "潯", "v1.0", "終了"]
 sources:
   - label: "ゲームウィズ — 潯ピックアップガチャシミュレーター"
