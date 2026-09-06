@@ -4,7 +4,7 @@ category: "シティライフ"
 order: 40
 description: "NTE のゲーム内SNS。写真・動画の投稿やいいね/フォローでジャムポイントが貯まり、ベーグル商店で交換できる。"
 status: "verified"
-updated: 2026-06-13
+updated: 2026-09-06
 tags: ["SNS", "ベーグル", "ジャムポイント", "v1.1"]
 sources:
   - label: "ゲームウィズ — ベーグルでできることと使い方"
@@ -13,6 +13,10 @@ sources:
     url: "https://kamigame.jp/nte/page/424435118359187233.html"
   - label: "NTE公式 — 正式リリース記念イベント"
     url: "https://nte.perfectworld.com/jp/article/news/gameevent/20260422/261901.html"
+  - label: "NTE公式 — Ver1.2「九百九十九夜」アップデートのお知らせ"
+    url: "https://nte.perfectworld.com/jp/article/news/gamenews/20260706/263026.html"
+  - label: "NTE公式 — Ver.1.3「霧月夜に星還りて」アップデートのお知らせ"
+    url: "https://nte.perfectworld.com/jp/article/news/gamenews/20260817/263606.html"
 ---
 
 ## 概要
@@ -28,3 +32,10 @@ v1.1 のイベント「[ホットに焙煎中](/events/hot-roasting/)」（〜7/
 - フォトモード／探索（[探索・シティライフ](/systems/exploration/)）と相性がよい。
 
 > 1日あたりの獲得上限など一部の数値仕様はアップデートで変動するため、最新値はゲーム内告知を優先。
+
+## 版ごとの変更
+
+| 版 | 変わったこと |
+| --- | --- |
+| Ver.1.2（2026-07-08） | 全体の最適化 |
+| Ver.1.3（2026-08-19） | **タグ分類**を追加／**キャラクターステータスの共有**に対応／通知設定画面の表示崩れを修正 |

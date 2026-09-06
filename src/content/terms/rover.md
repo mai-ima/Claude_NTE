@@ -13,6 +13,8 @@ sources:
     url: "https://gamewith.net/nte/"
   - label: "NTE公式 — Ver.1.3「霧月夜に星還りて」アップデートのお知らせ"
     url: "https://nte.perfectworld.com/jp/article/news/gamenews/20260817/263606.html"
+  - label: "NTE公式 — Ver1.2「九百九十九夜」アップデートのお知らせ"
+    url: "https://nte.perfectworld.com/jp/article/news/gamenews/20260706/263026.html"
 ---
 
 **乗り物（ビークル）** は、広大な[ヘテロシティ](/terms/hethereau/)を移動するための車両。最初に手に入るのがスクーター「**ローバーA1（Rover A1）**」で、ここから多彩な車両へ広がる。ロード無しのシームレスな街を快適に巡るための基盤要素。
@@ -41,6 +43,13 @@ sources:
 | [サウザン](/vehicles/thousand/) | ビーチバギー | カーショップ「TerraX」4,000,000ファンス（恒常） |
 | [ノスタルジー号](/vehicles/nostalgie/) | 自転車（相乗り可） | ファンスで購入（価格・場所は要確認） |
 
-あわせて「[市内配達](/terms/swift-taxi/)」が**自動運転に対応**し、**助手席への同乗**もできるようになった。
+あわせて「[市内配達](/terms/swift-taxi/)」が**自動運転に対応**した。
+
+## Ver.1.2 での変更（2026-07-08）
+
+- キャラを**降車させても車のオープンカー状態が維持**されるようになった。
+- **助手席への搭乗**（[真紅](/characters/shinku/)の絆コンテンツに含まれる形で追加）。
+- モバイル版に**半オートアクセル入力モード**が追加された。
+- 釣り上げた**レアな魚を車のリアに展示**できるようになった（→[海釣り](/systems/fishing/)）。
 
 関連: [ビークル一覧](/vehicles/) ／ [スイフトTAXI／配達](/terms/swift-taxi/) ／ [手配度](/terms/wanted-level/) ／ [探索・乗り物](/systems/exploration/) ／ [零](/characters/zero/)

@@ -6,7 +6,7 @@ category: "世界観・組織・地名"
 order: 59
 description: "にくきゅう銀行本店を舞台にした銀行強盗ミニゲーム。シティ名声Lv10で解放。財宝を集めて制限時間内に脱出すると大量のファンスを稼げる、無料・無制限の金策コンテンツ。"
 status: "verified"
-updated: 2026-06-13
+updated: 2026-09-06
 tags: ["シティライフ", "ファンス", "金策"]
 aliases: ["にくきゅう大強盗", "Pink Paws Heist", "銀行強盗"]
 sources:
@@ -14,6 +14,8 @@ sources:
     url: "https://kamigame.jp/nte/page/420683882363398254.html"
   - label: "ゲームウィズ — 金庫の場所一覧と行き方"
     url: "https://gamewith.jp/nte/560087"
+  - label: "NTE公式 — Ver.1.3「霧月夜に星還りて」アップデートのお知らせ"
+    url: "https://nte.perfectworld.com/jp/article/news/gamenews/20260817/263606.html"
 ---
 
 **にくきゅう大強盗（Pink Paws Heist）** は、[にくきゅう銀行](/terms/pink-paws-bank/)本店を舞台にした**銀行強盗ミニゲーム**。財宝を集めて制限時間内に脱出することで、都市通貨[ファンス](/terms/fons/)を**まとめて大量に**稼げる、屈指の金策コンテンツ。
@@ -36,5 +38,9 @@ sources:
 
 - 出口は複数あり、**封鎖される出口**があるため、ルートと脱出口を事前に把握しておくとクリア失敗を防げる。
 - 物件購入・交換所での素材購入などで[ファンス](/terms/fons/)が不足しがちなとき、最優先の補給手段になる。
+
+## Ver.1.3 での変更（2026-08-19）
+
+- **ミニマップが追加**された。上の「ルートと脱出口を事前に把握」がやりやすくなっている。
 
 関連: [ファンス](/terms/fons/) ／ [にくきゅう銀行](/terms/pink-paws-bank/) ／ [ヘテロシティ・ホビー](/terms/heterocity-hobby/) ／ [ちぃちゃん](/characters/chiz/)

@@ -32,5 +32,6 @@ sources:
 ## Ver.1.3 での変更（2026-08-19）
 
 - **「市内配達」が自動運転に対応**した。目的地までの運転を任せられる。
+- スイフトTAXI・市内配達とも **新エリア[星暮保護区](/locations/hoshigure-sanctuary/)に対応**した。
 
 関連: [乗り物（ローバー）](/terms/rover/) ／ [ファンス](/terms/fons/) ／ [ヘテロシティ・ホビー](/terms/heterocity-hobby/) ／ [探索・乗り物](/systems/exploration/)

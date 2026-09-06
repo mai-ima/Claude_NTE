@@ -5,12 +5,14 @@ category: "育成"
 order: 68
 description: "ハンターレベル10ごとに1上がるプレイヤーの階級。各種コンテンツ・機能解放の段階的な指標になる。"
 status: "verified"
-updated: 2026-06-11
+updated: 2026-09-06
 tags: ["育成", "進行", "階級"]
 aliases: ["Appraiser Level", "鑑定レベル"]
 sources:
   - label: "カノウィキ — 用語集"
     url: "https://wiki.kanotype.net/ja/NTE/%E7%94%A8%E8%AA%9E%E9%9B%86"
+  - label: "NTE公式 — Ver1.2「九百九十九夜」アップデートのお知らせ"
+    url: "https://nte.perfectworld.com/jp/article/news/gamenews/20260706/263026.html"
 ---
 
 **鑑定レベル** は、プレイヤー（[鑑定士](/terms/appraiser/)）の**階級**を表す指標。[ハンターレベル](/terms/hunter-level/)の上昇に連動して上がり、各種コンテンツや機能の解放目安として参照される。ハンターレベルを10刻みでまとめた「大きな区切り」にあたる値。
@@ -43,5 +45,9 @@ sources:
 
 - **キャラ個別のレベルとは無関係**。鑑定レベルはアカウント全体に紐づく[ハンターレベル](/terms/hunter-level/)から決まるもので、特定キャラを育てても上がらない。
 - 鑑定レベルそのものに経験値ゲージがあるわけではなく、ハンターレベルの「10の節目」を超えた瞬間に1上がる、という点を取り違えないこと。
+
+## Ver.1.2 での変更（2026-07-08）
+
+- **鑑定レベル5以上の異象狩りの難易度が引き下げ**られた。高鑑定レベル帯の[異象依頼](/terms/anomaly-request/)周回が以前より楽になっている。
 
 関連: [ハンターレベル](/terms/hunter-level/) ／ [鑑定士](/terms/appraiser/) ／ [育成と進行](/systems/progression/)
