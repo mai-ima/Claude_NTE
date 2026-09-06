@@ -4,13 +4,15 @@ category: "シティライフ"
 order: 60
 description: "ヘテロシティの移動手段の総まとめ。徒歩・電車・乗り物・スイフトTAXI・ファストトラベルの使い分けと、序盤に効率よく回るコツ。"
 status: "verified"
-updated: 2026-06-15
+updated: 2026-09-06
 tags: ["移動", "交通", "電車", "乗り物", "ファストトラベル"]
 sources:
   - label: "ゲームウィズ — 移動方法まとめ"
     url: "https://gamewith.jp/nte/555593"
   - label: "AppMedia — 電車の乗り方とメリット"
     url: "https://appmedia.jp/nte/79991953"
+  - label: "NTE公式 — Ver.1.3「霧月夜に星還りて」アップデートのお知らせ"
+    url: "https://nte.perfectworld.com/jp/article/news/gamenews/20260817/263606.html"
 ---
 
 ## 概要
@@ -37,5 +39,12 @@ sources:
 - **「バス」など、上記以外の公共交通は日本版で確認できていません**。確認できない交通手段は本サイトでは記載しません（出典が取れ次第追記）。
 - 電車の全駅名・路線の正確な接続は[電車（市内交通）](/terms/city-train/)のとおり一部のみ判明（**要確認**）。
 - [軌道外領域](/terms/beyond-the-rails/)の「○駅」は移動用の駅ではなく、エンドコンテンツの段階ステージ（別物）。
+
+## Ver.1.3 で増えた移動手段（2026-08-19）
+
+- **水上バイク [Tide](/vehicles/tide/)** … 海・湖で呼び出せる。陸路では回れない[星暮保護区](/locations/hoshigure-sanctuary/)の沿岸を移動できる。
+- **ビーチバギー [サウザン](/vehicles/thousand/)** … 舗装されていない道向け。
+- **自転車 [ノスタルジー号](/vehicles/nostalgie/)** … 相乗りができる。
+- **[市内配達](/terms/swift-taxi/)が自動運転に対応**し、スイフトTAXI・市内配達とも新エリアに対応した。
 
 関連: [電車（市内交通）](/terms/city-train/) ／ [乗り物](/terms/rover/) ／ [ファストトラベル](/terms/fast-travel/) ／ [スイフトTAXI](/terms/swift-taxi/) ／ [シティライフ](/systems/city-life/)

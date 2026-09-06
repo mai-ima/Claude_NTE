@@ -6,7 +6,7 @@ perk: "「暴走プレイヤー」で色替え・性能アップグレード／�
 order: 20
 description: "車・バイクの購入・保管・改造・レースの仕組み総説。3つのカーショップ(テラX/シンエツオート/レガリア)でファンスで購入し、暴走プレイヤーで改造する。"
 status: "verified"
-updated: 2026-06-13
+updated: 2026-09-06
 tags: ["車", "バイク", "都市生活", "ファンス", "ガレージ"]
 sources:
   - label: "ゲームウィズ — 車・バイクの購入方法とおすすめ車両"
@@ -15,6 +15,8 @@ sources:
     url: "https://game8.jp/nte/783395"
   - label: "AppMedia — 車のカスタム(改造)方法とチューンのコツ"
     url: "https://appmedia.jp/nte/79990576"
+  - label: "NTE公式 — Ver.1.3「霧月夜に星還りて」アップデートのお知らせ"
+    url: "https://nte.perfectworld.com/jp/article/news/gamenews/20260817/263606.html"
 ---
 
 ## 概要
@@ -51,5 +53,11 @@ sources:
 - まずは安価なバイク（[ノヴィス ST-X 950](/vehicles/novis-stx950/)）で機動力を確保 → コスパ車（[ST79](/vehicles/st79/)）→ 最終的に最強車（[ペンドラゴン](/vehicles/pendragon/)）が目標。
 - ファンス稼ぎは[にくきゅう大強盗](/terms/pink-paws-heist/)・[ヘテロシティ・ホビー](/terms/heterocity-hobby/)・[配達/タクシー](/terms/swift-taxi/)で（→[シティスキル](/terms/city-skill/)）。
 - ※**バイクはレーシングに使えない**点に注意。
+
+## Ver.1.3 でのレーシング関連の変更（2026-08-19）
+
+- **レーシング - チームチャレンジ**に、**新エリアのコース**と**チーム4種**が追加された。
+- **レーシング - オンライン対戦**に**複数の新コース**が追加された。
+- 新しい乗り物として [サウザン](/vehicles/thousand/)（ビーチバギー／TerraX・4,000,000ファンス）、[Tide](/vehicles/tide/)（水上バイク）、[ノスタルジー号](/vehicles/nostalgie/)（自転車）が加わった。
 
 関連: [ビークル一覧](/vehicles/) ／ [ペンドラゴン](/vehicles/pendragon/) ／ [ST79](/vehicles/st79/) ／ [ノヴィス ST-X 950](/vehicles/novis-stx950/) ／ [ファンス](/terms/fons/)
