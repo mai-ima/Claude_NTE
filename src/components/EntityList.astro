@@ -87,12 +87,23 @@ const showFilter = !!filterField && filterValues.length > 1;
 // 設定「一覧の並び順」は CSS の order で切り替える（JS を持ち込まない）。
 // .grid-cards は CSS Grid だがグリッドアイテムにも order は効くので、
 // ここで埋めた順位を prefs.css が拾えば並び替えになる。
-const updatedMs = (e: Item) => {
-  const u = (e.data as Record<string, unknown>).updated;
-  return u instanceof Date ? u.getTime() : 0;
+/**
+ * 記事の「鮮度」。`updated`（本文を書き換えた日）と `checked`（内容は変えていないが
+ * 現行バージョンでも正しいと確かめた日）の**新しい方**を使う。
+ * `updated` だけで並べると、9/6 に確認した記事が 6月扱いで最後に来てしまう。
+ */
+const freshOf = (e: Item) => {
+  const d = e.data as Record<string, unknown>;
+  const u = d.updated instanceof Date ? d.updated : null;
+  const c = d.checked instanceof Date ? d.checked : null;
+  if (u && c) return c > u ? { date: c, kind: '確認' as const } : { date: u, kind: '更新' as const };
+  if (c) return { date: c, kind: '確認' as const };
+  if (u) return { date: u, kind: '更新' as const };
+  return null;
 };
+const freshMs = (e: Item) => freshOf(e)?.date.getTime() ?? 0;
 const ordUpdated = new Map(
-  [...entries].sort((a, b) => updatedMs(b) - updatedMs(a)).map((e, i) => [e.id, i]),
+  [...entries].sort((a, b) => freshMs(b) - freshMs(a)).map((e, i) => [e.id, i]),
 );
 const ordName = new Map(
   [...entries]
@@ -158,6 +169,9 @@ const ordVars = (item: Item) =>
                 {group.items.map((item) => {
                   const d: any = item.data;
                   const el = d.element ? elementMeta(d.element) : null;
+                  // 「いつ時点の情報か」は一覧でも分かるようにする（誠実性ルール）。
+                  // 開かないと分からないと、古い記事と確認済みの記事が見分けられない。
+                  const fresh = freshOf(item);
                   return (
                     <a
                       class="card card-pad card-link js-card"
@@ -192,6 +206,11 @@ const ordVars = (item: Item) =>
                         {d.currency && <span class="badge badge-accent">{d.currency}</span>}
                         {d.unlock && <span class="badge">解放: {d.unlock}</span>}
                       </div>
+                      {fresh && (
+                        <p class="muted text-sm card-fresh">
+                          {fresh.kind} {fresh.date.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' })}
+                        </p>
+                      )}
                     </a>
                   );
                 })}

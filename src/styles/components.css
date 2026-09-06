@@ -384,6 +384,13 @@
   box-shadow: var(--shadow);
   border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
 }
+/* 一覧カードの「更新 / 確認」。開かなくても「いつ時点の情報か」が分かるように出す。
+   主役ではないので小さく、下に離して置く。 */
+.card-fresh {
+  margin-top: 10px;
+  font-size: 0.74rem;
+  opacity: 0.75;
+}
 .grid {
   display: grid;
   gap: 16px;

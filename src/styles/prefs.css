@@ -79,8 +79,9 @@ html[data-listview='compact'] .grid-cards {
 html[data-listview='compact'] .grid-cards > .card-link {
   padding: 11px 14px;
 }
-/* 説明文だけ隠す。属性バッジ（.cluster）は識別に要るので残す */
-html[data-listview='compact'] .grid-cards > .card-link > p {
+/* 説明文だけ隠す。属性バッジ（.cluster）は識別に要るので残す。
+   鮮度（.card-fresh）も「いつ時点の情報か」を示すので隠さない。 */
+html[data-listview='compact'] .grid-cards > .card-link > p:not(.card-fresh) {
   display: none;
 }
 html[data-listview='compact'] .grid-cards > .card-link > .cluster {
