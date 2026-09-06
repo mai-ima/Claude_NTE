@@ -13,10 +13,58 @@ const SYNC_EVENT = 'nte:store-sync';
 
 type Updater<T> = T | ((prev: T) => T);
 
-export function useStore<T>(name: string, initial: T): [T, (v: Updater<T>) => void] {
+interface Options {
+  /**
+   * localStorage への**書き込みだけ**を遅らせるミリ秒。画面の表示は即座に変わる。
+   *
+   * メモのように1文字ごとに更新が走るものは、そのたびに全件を JSON 化して
+   * localStorage に書き、他アイランドへ通知していた。長文だと打鍵のたびに重くなる。
+   *
+   * 遅延中にページを離れると保存されないので、**アンマウントと `pagehide` で必ず書き出す**。
+   */
+  debounceMs?: number;
+}
+
+export function useStore<T>(
+  name: string,
+  initial: T,
+  opts: Options = {},
+): [T, (v: Updater<T>) => void] {
   const [value, setValue] = useState<T>(initial);
   const valueRef = useRef<T>(initial);
   valueRef.current = value;
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  /** 書き出し待ちの値。null は「待ちなし」 */
+  const pending = useRef<{ v: T } | null>(null);
+
+  /** 待っている値があれば今すぐ localStorage へ書き、他インスタンスへ知らせる */
+  const flush = useRef(() => {});
+  flush.current = () => {
+    if (timer.current) {
+      clearTimeout(timer.current);
+      timer.current = null;
+    }
+    if (!pending.current) return;
+    const v = pending.current.v;
+    pending.current = null;
+    save(name, v);
+    window.dispatchEvent(new CustomEvent(SYNC_EVENT, { detail: { key: name, value: v } }));
+  };
+
+  // 遅延保存を使うときは、ページを離れる前に必ず書き出す。
+  // `beforeunload` ではなく `pagehide` を使うのは、iOS Safari が
+  // タブを閉じる/戻るときに beforeunload を飛ばすことがあるため。
+  useEffect(() => {
+    if (!opts.debounceMs) return;
+    const onHide = () => flush.current();
+    window.addEventListener('pagehide', onHide);
+    document.addEventListener('visibilitychange', onHide);
+    return () => {
+      window.removeEventListener('pagehide', onHide);
+      document.removeEventListener('visibilitychange', onHide);
+      flush.current(); // アンマウント時にも書き出す
+    };
+  }, [opts.debounceMs]);
 
   useEffect(() => {
     // マウント時に最新値を読み込む（SSR初期値からの引き継ぎ）
@@ -53,10 +101,16 @@ export function useStore<T>(name: string, initial: T): [T, (v: Updater<T>) => vo
     const next =
       typeof updater === 'function' ? (updater as (prev: T) => T)(valueRef.current) : updater;
     valueRef.current = next;
-    setValue(next);
-    save(name, next);
-    // 他インスタンスへ通知（自分は既に setValue 済みなのでループしない）
-    window.dispatchEvent(new CustomEvent(SYNC_EVENT, { detail: { key: name, value: next } }));
+    setValue(next); // 画面は常に即座に反映する
+    if (!opts.debounceMs) {
+      save(name, next);
+      // 他インスタンスへ通知（自分は既に setValue 済みなのでループしない）
+      window.dispatchEvent(new CustomEvent(SYNC_EVENT, { detail: { key: name, value: next } }));
+      return;
+    }
+    pending.current = { v: next };
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = setTimeout(() => flush.current(), opts.debounceMs);
   };
 
   return [value, set];

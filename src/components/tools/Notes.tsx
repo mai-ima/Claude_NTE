@@ -10,7 +10,9 @@ interface Note {
 }
 
 export default function Notes() {
-  const [notes, setNotes] = useStore<Note[]>('tool.notes', []);
+  // メモは1文字打つたびに更新が走る。全件を JSON 化して書き込むのは打鍵のたびには重いので、
+  // 書き込みだけ 500ms 遅らせる（画面の表示は即座に変わる。ページを離れる前に必ず書き出される）。
+  const [notes, setNotes] = useStore<Note[]>('tool.notes', [], { debounceMs: 500 });
   const [draft, setDraft] = useState('');
 
   function add() {

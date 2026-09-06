@@ -637,6 +637,26 @@
   color: var(--accent);
   font-variant-numeric: tabular-nums;
 }
+/* タイマーが鳴り終わった状態。色だけに頼らず、下に文章の合図も出している。
+   点滅は「モーションを軽減」とOSの設定で止まる（発作の誘発を避ける）。 */
+.tool-result.is-done {
+  background: color-mix(in srgb, var(--success, #2f855a) 14%, var(--surface));
+  border-color: color-mix(in srgb, var(--success, #2f855a) 45%, transparent);
+  animation: tool-done-pulse 1s ease-in-out 3;
+}
+.tool-result.is-done .big {
+  color: var(--success, #2f855a);
+}
+@keyframes tool-done-pulse {
+  50% {
+    background: color-mix(in srgb, var(--success, #2f855a) 32%, var(--surface));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tool-result.is-done {
+    animation: none;
+  }
+}
 /* 異能連環リングの属性ノード。キーボードで選べるので、フォーカスが見えるようにする */
 .rc-node:focus-visible {
   outline: 2px solid var(--accent);

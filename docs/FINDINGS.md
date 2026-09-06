@@ -316,3 +316,51 @@ const leftSafe = `min(${left}, calc(100% - 44px))`;
 
 **教訓**: 「重いページ」を見つけたら、そのページ固有の要素ではなく
 **全ページ共通の部分**の実測から始める。内訳は正規表現でタグごとに測れば数分で出る。
+
+---
+
+## `class:list` は Astro の記法。Preact のアイランドでは使えない
+
+```
+[vite:preact-jsx] Namespace tags are not supported by default.
+> <div class:list={['tool-result', { 'is-done': done }]}>
+```
+
+`.astro` ファイルでは使えるが、`.tsx`（Preact アイランド）ではビルドが落ちる。
+テンプレートリテラルで組む:
+
+```tsx
+<div class={`tool-result${done ? ' is-done' : ''}`}>
+```
+
+---
+
+## localStorage への書き込みは「遅らせる」だけでは足りない
+
+メモは1文字打つたびに全件を JSON 化して localStorage へ書き、
+他アイランドへイベントを飛ばしていた。長文だと打鍵のたびに重い。
+
+`useStore(name, initial, { debounceMs: 500 })` を足して**書き込みだけ**遅らせた
+（画面の表示は即座に変わる）。ただし遅延には必ず落とし穴がある:
+
+- **遅延中にページを離れると保存されない。** アンマウントと `pagehide` で必ず書き出す
+- `beforeunload` ではなく **`pagehide`** を使う。iOS Safari はタブを閉じる/戻るときに
+  `beforeunload` を飛ばすことがある
+- `visibilitychange` も拾う（アプリを切り替えたまま戻らない場合に備える）
+
+検証は「80ms 編集してすぐ reload」で行った（debounce の 500ms より短い間隔）。
+これが通れば `pagehide` の書き出しが効いている。
+
+---
+
+## Playwright で「値が残っているか」を `page.content()` で見てはいけない
+
+```js
+// 誤: textarea の value は HTML には出ない（Preact がプロパティで設定する）
+(await p.content()).includes('テスト用のメモ');
+
+// 正
+await p.locator('textarea').first().inputValue();
+```
+
+実装は正しいのにテストだけが落ちて、しばらく実装を疑ってしまった。
