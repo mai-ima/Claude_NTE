@@ -16,6 +16,7 @@ import { ClientRouter } from 'astro:transitions';
 import { Icon } from 'astro-icon/components';
 import { withBase, activeHref } from '../lib/path';
 import { wiki as wikiMeta, WIKI_LIST, type WikiId } from '../lib/wikis';
+import { prefBootData } from '../lib/prefs';
 import MobileDrawer from '../components/MobileDrawer.astro';
 import ThemeMenu from '../components/ThemeMenu';
 import Search from 'astro-pagefind/components/Search';
@@ -49,6 +50,9 @@ const {
 } = Astro.props;
 
 const w = wikiMeta(wikiId);
+// 描画前に適用する設定の一覧。src/lib/prefs.ts の PREFS から生成するので、
+// 設定を増やしてもこのレイアウトを直す必要はない。
+const prefBoot = prefBootData();
 const description = Astro.props.description ?? w.description;
 const siteName = w.siteName;
 const PRIMARY_NAV = w.primaryNav;
@@ -144,7 +148,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
 
     {/* テーマ＆UIモードを描画前に適用（チラつき防止）。is:inline なのでバンドルされない素のJS。
         data-astro-rerun: View Transitions の swap 後も再実行し、theme/ui/prefs を再適用する。 */}
-    <script is:inline data-astro-rerun>
+    <script is:inline data-astro-rerun define:vars={{ prefBoot }}>
       (function () {
         try {
           var t = localStorage.getItem('nte.theme');
@@ -173,18 +177,22 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
           var uiValid = ['classic', 'new-classic', 'editorial', 'liquid', 'aurora', 'apple', 'terminal', 'clay', 'blueprint'];
           if (uiValid.indexOf(ui) === -1) ui = 'classic';
           document.documentElement.setAttribute('data-ui', ui);
-          // 表示の追加設定（ベータ）。src/lib/prefs.ts の PREFS と並びを揃えること。
-          var prefs = [
-            ['nte.motion', 'motion', 'reduce'],
-            ['nte.autoterm', 'autoterm', 'off'],
-            ['nte.spoiler', 'spoiler', 'open'],
-            ['nte.width', 'width', 'wide'],
-            ['nte.draftmark', 'draftmark', 'on'],
-            ['nte.edit', 'edit', 'on'],
-          ];
-          for (var i = 0; i < prefs.length; i++) {
-            if (localStorage.getItem(prefs[i][0]) === '1') {
-              document.documentElement.setAttribute('data-' + prefs[i][1], prefs[i][2]);
+          // 表示・操作の追加設定。prefBoot は src/lib/prefs.ts の PREFS から生成される。
+          // 効いていない状態では属性を消す（View Transitions の swap 後に、
+          // 前のページの見た目を引きずらないようにするため）。
+          for (var i = 0; i < prefBoot.length; i++) {
+            var p = prefBoot[i];
+            var name = 'data-' + p.a;
+            var raw = localStorage.getItem(p.k);
+            if (p.on !== undefined) {
+              // ON/OFF
+              if (raw === '1') document.documentElement.setAttribute(name, p.on);
+              else document.documentElement.removeAttribute(name);
+            } else {
+              // 3〜4段階から選ぶもの。既定値なら属性を書かない（CSS の素の状態）
+              var v = p.vals.indexOf(raw) === -1 ? p.def : raw;
+              if (v === p.def) document.documentElement.removeAttribute(name);
+              else document.documentElement.setAttribute(name, v);
             }
           }
         } catch (e) {}

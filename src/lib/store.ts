@@ -5,6 +5,10 @@
  * - エクスポート/インポートで端末間バックアップ可能。
  */
 
+import { PREFS } from './prefs';
+import { THEME_KEY } from './theme';
+import { UI_KEY } from './ui';
+
 export const STORE_PREFIX = 'nte.';
 export const SCHEMA_VERSION = 1;
 
@@ -112,17 +116,9 @@ export function importAll(json: string): ImportResult {
 }
 
 /** 初期化しても残す「設定」キー（テーマ・UIモード・表示の追加設定）。
- *  メモ/ツール等の「データ」だけを消し、表示の好みは保持する。 */
-const KEEP_ON_CLEAR = new Set([
-  'nte.theme',
-  'nte.ui',
-  'nte.motion',
-  'nte.autoterm',
-  'nte.spoiler',
-  'nte.width',
-  'nte.draftmark',
-  'nte.edit',
-]);
+ *  メモ/ツール等の「データ」だけを消し、表示の好みは保持する。
+ *  定義元から導出しているので、設定を増やしてもここを直す必要はない。 */
+const KEEP_ON_CLEAR = new Set<string>([THEME_KEY, UI_KEY, ...PREFS.map((p) => p.key)]);
 
 /** nte.* のデータを全消去（テーマ・UI・表示設定は保持） */
 export function clearAll(): number {

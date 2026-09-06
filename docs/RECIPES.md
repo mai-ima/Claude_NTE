@@ -17,17 +17,37 @@
 | --- | --- | --- | --- |
 | 1 | `src/lib/prefs.ts` | `PREFS` に 1 件足す | そもそも出ない |
 | 2 | `src/components/SettingsPanel.tsx` の `ICON_PATHS` | `icon` に対応する SVG パスを足す | **無言で空アイコン**（`?? ''` で握りつぶされる） |
-| 3 | `src/styles/prefs.css`（iOS 専用なら `ios.css`） | `html[data-<attr>='<on>']` で効果を書く | トグルは動くが**何も起きない** |
-| 4 | `src/layouts/BaseLayout.astro` の起動スクリプト内 `var prefs = [[…]]` | 同じ並びで 1 行足す | **初回描画で効かない**（再読み込みするまで反映されない／チラつく） |
-| 5 | `src/lib/store.ts` の `KEEP_ON_CLEAR` | キーを足す | **「データを初期化」で新設定だけ消える** |
+| 3 | `src/styles/prefs.css`（iOS 専用なら `ios.css`） | `html[data-<attr>='<on>']` で効果を書く | 切り替わるが**何も起きない** |
 
-### 型
+**触るのはこの 3 箇所だけ**です。以前は 5 箇所（BaseLayout の起動スクリプトと
+`store.ts` の `KEEP_ON_CLEAR`）を手で同期する必要がありましたが、
+どちらも `PREFS` から自動生成／導出するようになったので**もう不要**です。
+
+### 型（2種類ある）
 
 ```ts
-{ key: 'nte.xxx', attr: 'xxx', on: 'on', label, hint, group: 'display' | 'feature', icon }
+// ON/OFF。保存は '1' / '0'
+{ type: 'toggle', key: 'nte.xxx', attr: 'xxx', on: 'on', label, hint, group, icon }
+
+// 3〜4段階から選ぶ。保存は value をそのまま
+{ type: 'choice', key: 'nte.xxx', attr: 'xxx', def: 'm',
+  choices: [{ value: 's', label: '小' }, { value: 'm', label: '標準' }], label, hint, group, icon }
 ```
 
-**保存形式**は `'1'` / `'0'`。効果は `html[data-xxx='on']` を CSS で拾って実装します。
+- `group` は `'reading' | 'list' | 'wiki' | 'touch' | 'feature'`。設定パネルのカード分けに使います。
+- `attr` を**省略**すると `<html>` に属性を書きません（JS から読むだけの設定に使う）。
+- choice は「**`def` と同じ値のときは属性を書かない**」＝ CSS 側は素の状態を既定として書けます。
+- 効いていない状態では属性を**消す**（遷移後に前ページの見た目を引きずらないため）。
+
+### API
+
+```ts
+getPref(key): boolean        // toggle 用
+getPrefValue(key): string    // choice 用。未保存・不正値は def
+setPref(key, val)            // 保存して即反映（val は boolean か value 文字列）
+applyPref(key, val) / applyAllPrefs()
+prefDef(key) / prefBootData()  // 後者は起動スクリプト用（BaseLayout が使う）
+```
 
 ### 確認
 

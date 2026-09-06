@@ -211,7 +211,7 @@ export default function SettingsPanel() {
         </p>
 
         <p class="pref-group-title">表示・読みやすさ</p>
-        <div class="pref-list">{PREFS.filter((p) => p.group === 'display').map(renderRow)}</div>
+        <div class="pref-list">{PREFS.filter((p) => p.group === 'reading').map(renderRow)}</div>
 
         <p class="pref-group-title">機能（ベータ）</p>
         <div class="pref-list">{PREFS.filter((p) => p.group === 'feature').map(renderRow)}</div>

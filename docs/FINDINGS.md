@@ -11,23 +11,25 @@
 
 ## 1. 設定（pref）まわり
 
-### 「静かに壊れる」箇所が 2 つある
+### 「静かに壊れる」箇所（v0.10.0 で 2 → 1 に減らした）
 
 | 忘れた場所 | 何が起きるか | 気づき方 |
 | --- | --- | --- |
 | `SettingsPanel.tsx` の `ICON_PATHS` | `ICON_PATHS[name] ?? ''` で握りつぶされ、**アイコンが空白になるだけ**。エラーは出ない | 目視するしかない |
-| `store.ts` の `KEEP_ON_CLEAR` | 「データを初期化」を押したとき、**その設定だけが消える**。他は残るので原因が分かりにくい | 初期化を実際に試す |
+| ~~`store.ts` の `KEEP_ON_CLEAR`~~ | ~~「データを初期化」でその設定だけ消える~~ | **解消済**（`PREFS` から導出） |
 
-`pnpm verify` は**どちらも検出できません**。手で確認する必要があります。
+`pnpm verify` は `ICON_PATHS` の欠落を**検出できません**。手で確認する必要があります。
 
-### `applyPref` は「消す」処理を持っているが、起動スクリプトは持っていない
+### 起動スクリプトの二重管理は解消した（v0.10.0）
 
-`src/lib/prefs.ts` の `applyPref` は偽なら `removeAttribute` します。
-一方 `BaseLayout.astro` の起動スクリプトは **`'1'` のとき付けるだけ**で、消していません。
+以前は `BaseLayout.astro` に `var prefs = [['nte.motion','motion','reduce'], …]` が
+べた書きされていて、`prefs.ts` と手で並びを揃える約束でした。
+いまは `prefBootData()`（`prefs.ts`）を `define:vars` で流し込んでいます。
 
-同じスクリプト内でも `data-theme` と `data-ios` は `removeAttribute` しているのに、
-prefs だけ非対称です。`data-astro-rerun` で毎遷移に再実行されるため、
-理屈の上では前ページの属性が残り得ます。
+- **Astro の `define:vars` は `<script>` の中身を IIFE で包む**ので、`data-astro-rerun` で
+  再実行されても `const` の再宣言エラーにはなりません（実機で確認済み）。
+- 併せて、**効いていない設定では `removeAttribute` する**ようにしました。
+  以前は「`'1'` なら付ける」だけで消しておらず、`data-theme` / `data-ios` とは非対称でした。
 
 ### 効果はすべて CSS 側にある
 
