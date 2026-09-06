@@ -1,0 +1,115 @@
+/* =========================================================================
+   iPhone / iOS 最適化
+   ------------------------------------------------------------------------
+   iOS Safari だけで起きる操作上の引っかかりを潰す。判定は BaseLayout の
+   起動スクリプトが <html data-ios="1"> を付けることで行い、iOS 以外の
+   環境には一切影響しない（誤判定しても見た目が壊れないものだけを入れる）。
+
+   参考にした実挙動:
+   - 入力欄の文字が 16px 未満だとフォーカス時に自動ズームする
+   - タップ時の灰色ハイライトが残ってネイティブ感を損なう
+   - ダイアログ/ドロワー内のスクロールが背面に連鎖する
+   - ホームバー・ノッチ分の安全領域は env(safe-area-inset-*) で確保する
+   - 100dvh はツールバーの出入りで高さが揺れるため、svh を優先する
+   ========================================================================= */
+
+/* ---- 1. タップ時の灰色ハイライトを消し、代わりに自前の押下感を出す ---- */
+html[data-ios] * {
+  -webkit-tap-highlight-color: transparent;
+}
+/* ハイライトを消したままだと「押した感触」が無くなるので、主要な操作要素に
+   わずかな押し込みを付ける（モーション軽減時は無効）。 */
+html[data-ios]:not([data-motion='reduce']) .btn:active,
+html[data-ios]:not([data-motion='reduce']) .card-link:active,
+html[data-ios]:not([data-motion='reduce']) .nav-link:active,
+html[data-ios]:not([data-motion='reduce']) .chip:active,
+html[data-ios]:not([data-motion='reduce']) .bottom-nav a:active {
+  transform: scale(0.975);
+  transition: transform 0.06s ease-out;
+}
+
+/* ---- 2. ダブルタップズームによる 300ms 遅延をなくす ---- */
+html[data-ios] a,
+html[data-ios] button,
+html[data-ios] summary,
+html[data-ios] .chip,
+html[data-ios] label {
+  touch-action: manipulation;
+}
+
+/* ---- 3. 入力欄のフォーカス自動ズームを防ぐ（16px 未満にしない） ----
+   maximum-scale=1 でピンチズームを殺す方法は取らない（アクセシビリティ上
+   ユーザーの拡大を奪わないため）。文字サイズで回避するのが正攻法。 */
+html[data-ios] input,
+html[data-ios] select,
+html[data-ios] textarea,
+html[data-ios] .pagefind-ui input,
+html[data-ios] .pagefind-ui__search-input {
+  font-size: max(16px, 1rem);
+}
+
+/* ---- 4. スクロールの連鎖（背面が一緒に動く）を止める ---- */
+html[data-ios] .search-modal,
+html[data-ios] .drawer-panel,
+html[data-ios] .sidebar,
+html[data-ios] .toc {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ---- 5. 安全領域（ノッチ・ホームバー・横向きの丸み） ---- */
+html[data-ios] .app-main,
+html[data-ios] .app-footer {
+  padding-left: max(0px, env(safe-area-inset-left, 0px));
+  padding-right: max(0px, env(safe-area-inset-right, 0px));
+}
+/* 下部ナビがある画面では、本文の末尾がナビに隠れないよう余白を足す */
+@media (max-width: 959px) {
+  html[data-ios] .app-main {
+    padding-bottom: calc(58px + env(safe-area-inset-bottom, 0px));
+  }
+  html[data-ios] .app-footer {
+    padding-bottom: calc(24px + 58px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* ---- 6. 高さ: 100dvh はツールバー開閉で揺れるので svh を優先 ---- */
+@supports (height: 100svh) {
+  html[data-ios] body,
+  html[data-ios] .app {
+    min-height: 100svh;
+  }
+}
+
+/* ---- 7. 検索ダイアログを画面内に収める（キーボード表示を見越して） ---- */
+html[data-ios] .search-modal {
+  max-height: min(72svh, 640px);
+  margin-top: max(6svh, env(safe-area-inset-top, 0px));
+}
+
+/* ---- 8. ホーム画面に追加した時（standalone）の調整 ---- */
+@media (display-mode: standalone) {
+  /* ブラウザのツールバーが無いぶん、ヘッダーが直接ノッチに接する */
+  .app-header {
+    height: calc(52px + env(safe-area-inset-top, 0px));
+  }
+  /* 戻る操作がないので、下部ナビは常に出しておく（960px 未満の既定と同じ） */
+  .app-footer {
+    padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* ---- 9. 文字選択の意図しない発生を抑える（ナビ・ボタン） ---- */
+html[data-ios] .bottom-nav,
+html[data-ios] .app-header,
+html[data-ios] .btn,
+html[data-ios] .chip {
+  -webkit-user-select: none;
+  user-select: none;
+}
+/* 本文は当然選択できるままにする */
+html[data-ios] .prose,
+html[data-ios] .prose * {
+  -webkit-user-select: text;
+  user-select: text;
+}

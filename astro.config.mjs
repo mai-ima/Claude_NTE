@@ -6,6 +6,7 @@ import sitemap from '@astrojs/sitemap';
 import icon from 'astro-icon';
 import pagefind from 'astro-pagefind';
 import { unified } from '@astrojs/markdown-remark';
+import remarkCjkFriendly from 'remark-cjk-friendly';
 import rehypeTermLinks from './src/lib/rehype-term-links.mjs';
 
 // --- Deploy configuration ---------------------------------------------------
@@ -28,9 +29,18 @@ export default defineConfig({
     // 実態（レクイエム弧盤PU）と食い違っていた旧スラッグを救済。
     '/events/road-of-no-return/': '/events/lacrimosa-arc-pickup/',
   },
-  // 本文中の用語を、その用語ページへ自動リンク（Wikipedia風の青リンク化）。
-  // Astro 6 では markdown.rehypePlugins が非推奨のため、unified() のプロセッサへ直接渡す。
-  markdown: { processor: unified({ rehypePlugins: [rehypeTermLinks] }) },
+  // Markdown の処理系。Astro 6 では markdown.remark/rehypePlugins が非推奨のため、
+  // unified() のプロセッサへ直接渡す。
+  //  - remarkCjkFriendly: CommonMark は「**強調**です」のように閉じ記号の前が
+  //    全角の括弧・句読点だと強調として認識しない。日本語の本文では頻出するため、
+  //    CJK に配慮した判定へ拡張する（英語などの挙動は変わらない）。
+  //  - rehypeTermLinks: 本文中の用語をその用語ページへ自動リンク（Wikipedia風）。
+  markdown: {
+    processor: unified({
+      remarkPlugins: [remarkCjkFriendly],
+      rehypePlugins: [rehypeTermLinks],
+    }),
+  },
   // 注: Markdown/MDX 内部リンクは「相対リンク」で記述しているため base 付与の
   // 変換プラグインは不要（Astro のバージョン更新にも壊れにくい）。
   integrations: [preact({ compat: true }), mdx(), icon(), pagefind(), sitemap()],

@@ -1,0 +1,190 @@
+---
+/**
+ * αテストwiki の一覧ページ本体。
+ *
+ * NTE 側の EntityList とは別物で、少数の記事を「絞り込みながら素早く探す」
+ * ことに寄せている。Pagefind（全文検索）は使わず、**その場で効くクライアント
+ * 側フィルタ**にしているのが要点：
+ *   - タイトル・説明・タグを対象に部分一致
+ *   - 分類チップとの AND 条件
+ *   - 入力のたびに件数を返し、0件なら空状態を出す
+ * 記事数が少ないうちはこの方が体感が速く、オフラインでも効く。
+ */
+import { Icon } from 'astro-icon/components';
+import AlphaLayout from '../../layouts/AlphaLayout.astro';
+import { publishedEntries, titleOf, hrefOf } from '../../lib/content';
+
+interface Props {
+  collection: string;
+  title: string;
+  lead: string;
+  /** 絞り込みチップに使う frontmatter のキー（例: 'category' / 'role'） */
+  facet?: string;
+}
+const { collection, title, lead, facet } = Astro.props;
+
+const entries = await publishedEntries(collection);
+type Item = (typeof entries)[number];
+const dataOf = (e: Item) => e.data as Record<string, any>;
+
+const facetValues = facet
+  ? [...new Set(entries.map((e) => String(dataOf(e)[facet] ?? '')).filter(Boolean))].sort((a, b) =>
+      a.localeCompare(b, 'ja'),
+    )
+  : [];
+const showFacet = facetValues.length > 1;
+
+/** 検索対象の文字列（タイトル＋説明＋タグ＋facet 値）を1本にまとめる */
+const searchKey = (e: Item) => {
+  const d = dataOf(e);
+  return [titleOf(e), d.description, ...(d.tags ?? []), d.category, d.role, d.en, d.reading]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase();
+};
+---
+
+<AlphaLayout title={title} description={lead} breadcrumbs={[{ name: title, href: '#' }]}>
+  <header>
+    <p class="a-eyebrow">αテストwiki</p>
+    <h1 class="a-h1">{title}</h1>
+    <p class="a-lead">{lead}</p>
+  </header>
+
+  {
+    entries.length > 3 && (
+      <div class="a-search">
+        <Icon name="lucide:search" class="a-search-icon" />
+        <input
+          type="search"
+          inputmode="search"
+          enterkeyhint="search"
+          placeholder="このページ内を絞り込む"
+          aria-label="このページ内を絞り込む"
+          data-a-filter
+          autocomplete="off"
+        />
+        <button class="a-search-clear" type="button" data-a-filter-clear aria-label="入力を消す" hidden>
+          <Icon name="lucide:x" />
+        </button>
+      </div>
+    )
+  }
+
+  {
+    showFacet && (
+      <div class="a-chips" role="group" aria-label="分類で絞り込む">
+        <button class="a-chip" type="button" data-a-facet="" aria-pressed="true">
+          すべて
+        </button>
+        {facetValues.map((v) => (
+          <button class="a-chip" type="button" data-a-facet={v} aria-pressed="false">
+            {v}
+          </button>
+        ))}
+      </div>
+    )
+  }
+
+  <p class="a-search-count" data-a-count hidden></p>
+
+  <div class="a-grid" data-a-list>
+    {
+      entries.map((e) => {
+        const d = dataOf(e);
+        return (
+          <a
+            class="a-card"
+            href={hrefOf(collection, e.id)}
+            data-a-item
+            data-a-key={searchKey(e)}
+            data-a-facet-value={facet ? String(d[facet] ?? '') : ''}
+          >
+            <span class="a-card-title">{titleOf(e)}</span>
+            {d.description && <span class="a-card-desc">{d.description}</span>}
+            <span class="a-badges">
+              {d.category && <span class="a-badge">{d.category}</span>}
+              {d.role && <span class="a-badge a-badge-accent">{d.role}</span>}
+              {d.rarity && <span class="a-badge a-badge-accent">{d.rarity}</span>}
+              {d.element && <span class="a-badge">{d.element}</span>}
+              {d.build && <span class="a-badge">{d.build}</span>}
+              {d.status === 'draft' && <span class="a-badge a-badge-warn">要確認</span>}
+            </span>
+          </a>
+        );
+      })
+    }
+  </div>
+
+  <p class="a-empty" data-a-empty hidden>
+    条件に合う記事がありません。キーワードを短くするか、分類を「すべて」に戻してみてください。
+  </p>
+
+  {
+    entries.length === 0 && (
+      <p class="a-empty">このセクションにはまだ記事がありません。</p>
+    )
+  }
+</AlphaLayout>
+
+<script>
+  // 一覧の絞り込み（入力＋分類チップの AND）。記事数が少ないので DOM 走査で十分速い。
+  (() => {
+    const list = document.querySelector<HTMLElement>('[data-a-list]');
+    if (!list) return;
+    const items = Array.from(list.querySelectorAll<HTMLElement>('[data-a-item]'));
+    const input = document.querySelector<HTMLInputElement>('[data-a-filter]');
+    const clear = document.querySelector<HTMLElement>('[data-a-filter-clear]');
+    const chips = Array.from(document.querySelectorAll<HTMLElement>('[data-a-facet]'));
+    const count = document.querySelector<HTMLElement>('[data-a-count]');
+    const empty = document.querySelector<HTMLElement>('[data-a-empty]');
+
+    let text = '';
+    let facet = '';
+
+    const apply = () => {
+      let shown = 0;
+      for (const el of items) {
+        const key = el.dataset.aKey ?? '';
+        const val = el.dataset.aFacetValue ?? '';
+        const ok = (!text || key.includes(text)) && (!facet || val === facet);
+        el.hidden = !ok;
+        if (ok) shown++;
+      }
+      if (count) {
+        const filtering = Boolean(text || facet);
+        count.hidden = !filtering;
+        count.textContent = filtering ? `${shown} / ${items.length} 件を表示` : '';
+      }
+      if (empty) empty.hidden = shown !== 0 || items.length === 0;
+      if (clear) clear.hidden = !text;
+    };
+
+    input?.addEventListener('input', () => {
+      text = (input.value || '').trim().toLowerCase();
+      apply();
+    });
+    clear?.addEventListener('click', () => {
+      if (!input) return;
+      input.value = '';
+      text = '';
+      apply();
+      input.focus();
+    });
+    for (const chip of chips) {
+      chip.addEventListener('click', () => {
+        facet = chip.dataset.aFacet ?? '';
+        for (const c of chips) c.setAttribute('aria-pressed', String(c === chip));
+        apply();
+      });
+    }
+    // Esc で絞り込みを解除（キーボード操作の逃げ道）
+    input?.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && input.value) {
+        input.value = '';
+        text = '';
+        apply();
+      }
+    });
+  })();
+</script>

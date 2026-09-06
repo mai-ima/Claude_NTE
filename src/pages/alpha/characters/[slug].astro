@@ -1,35 +1,28 @@
 ---
-import EntityDetail from '../../../components/EntityDetail.astro';
-import { detailPaths, renderEntry, baseDetailProps } from '../../../lib/detail';
-import type { Row, Pill } from '../../../components/EntityDetail.astro';
+import AlphaArticle from '../../../components/alpha/AlphaArticle.astro';
+import { detailPaths, renderEntry } from '../../../lib/detail';
+import { titleOf } from '../../../lib/content';
 
 export async function getStaticPaths() {
-  return detailPaths('alphaCharacters', { relatedBy: 'role' });
+  return detailPaths('alphaCharacters');
 }
-const { entry, prev, next, related } = Astro.props;
+const { entry, prev, next } = Astro.props;
 const { Content, headings } = await renderEntry(entry);
 const d = entry.data as any;
 
-const rows: Row[] = [];
-if (d.en) rows.push({ k: '英語表記', v: d.en });
-if (d.rarity) rows.push({ k: 'レア度', v: d.rarity });
-if (d.role) rows.push({ k: '役割', v: d.role });
-if (d.element) rows.push({ k: '属性', v: d.element });
-if (d.build) rows.push({ k: '実装ビルド', v: d.build });
-
-const pills: Pill[] = [];
-if (d.rarity) pills.push({ kind: 'rarity', value: d.rarity });
-if (d.role) pills.push({ kind: 'plain', value: d.role });
-if (d.element) pills.push({ kind: 'plain', value: d.element });
+const badges = [d.rarity, d.role, d.element, d.build, d.en].filter(Boolean) as string[];
 ---
-<EntityDetail
-  {...baseDetailProps('alphaCharacters', entry, prev, next)}
-  pills={pills}
-  rows={rows}
+<AlphaArticle
+  collection="alphaCharacters"
+  title={titleOf(entry)}
+  description={d.description}
   headings={headings}
-  editPath={(entry as any).filePath}
-  related={related}
-  relatedLabel="同じ役割のキャラ"
+  badges={badges}
+  status={d.status}
+  updated={d.updated}
+  sources={d.sources}
+  prev={prev ? { href: `/alpha/characters/${prev.id}/`, title: titleOf(prev) } : null}
+  next={next ? { href: `/alpha/characters/${next.id}/`, title: titleOf(next) } : null}
 >
   <Content />
-</EntityDetail>
+</AlphaArticle>

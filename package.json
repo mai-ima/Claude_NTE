@@ -11,7 +11,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:links": "node scripts/check-links.mjs",
-    "test:content": "node scripts/check-content.mjs"
+    "test:content": "node scripts/check-content.mjs",
+    "test:ui": "node scripts/check-ui.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^6.0.3",
@@ -27,6 +28,8 @@
     "@astrojs/markdown-remark": "7.2.0",
     "@iconify-json/lucide": "^1.2.112",
     "@resvg/resvg-js": "^2.6.2",
+    "playwright": "^1.62.1",
+    "remark-cjk-friendly": "^2.3.1",
     "satori": "^0.26.0",
     "sharp": "^0.35.1",
     "typescript": "^6.0.3",

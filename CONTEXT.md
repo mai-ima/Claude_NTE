@@ -6,7 +6,7 @@
 > 進行中の指示・保留事項を取りこぼさないこと。
 > 会話の言語は**必ず日本語**。
 
-最終更新: 2026-09-05
+最終更新: 2026-09-06
 
 ---
 
@@ -56,9 +56,19 @@ src/
     detail.ts              # 詳細ページ共通ロジック
     rehype-term-links.mjs  # 本文の自動リンク（wiki ごとに別辞書）
   components/              # EntityList / EntityDetail / Sidebar / MobileDrawer …
-  layouts/BaseLayout.astro # 共通レイアウト（wikiId prop で切替）
+    alpha/                 # αテスト専用（AlphaList / AlphaArticle）
+  layouts/
+    BaseLayout.astro       # NTE のレイアウト（wikiId prop を持つ）
+    AlphaLayout.astro      # ★αテスト専用レイアウト（NTE の CSS を読み込まない）
+  styles/
+    alpha.css              # ★αテスト専用のデザインシステム（--a-* トークン）
+    ios.css                # ★iPhone 最適化（html[data-ios] のときだけ効く）
   pages/                   # NTE は直下、αテストは pages/alpha/ 配下
   data/releaseNotes.ts     # サイトの更新履歴（リリースノート）
+scripts/
+  check-links.mjs          # 内部リンク切れ（ビルド後）
+  check-content.mjs        # 記事の体裁・誠実性ルール（ビルド不要）
+  check-ui.mjs             # ★アイコン参照切れ / wiki跨ぎリンク / ナビ混入（ビルド後）
 ```
 
 ### wiki を1つ増やす手順（4ステップ）
@@ -78,8 +88,8 @@ src/
   - 新キャラ: 残虹（呪・DoT・CV井上喜久子）／リンコ（霊・追撃・CV小倉唯・9/9 実装予定）
   - 新エリア: 星暮保護区／本編第6章「霧の巣遊戯」
   - 章番号の逆転（第7章「赤竜討伐譚」が Ver.1.2 で先行、第6章が Ver.1.3）に注意
-- **サイトのリリース**: `beta v0.9.1`（記事は全264件、うち draft 52件）
-- **αテストwiki**: `/alpha/` に新設（サンプル記事8本）
+- **サイトのリリース**: `beta v0.9.2`（記事は全264件、うち draft 52件）
+- **αテストwiki**: `/alpha/` に新設（サンプル記事8本）。**NTE とは別UI**（AlphaLayout + alpha.css）
 
 ### 既知の注意点・保留
 
@@ -90,6 +100,12 @@ src/
 - リンコは 9/9 実装予定のため `status: "draft"`。実装後に確定データへ更新すること。
 - 恒常S級6体の内訳は Ver.1.1 時点の確認。恒常追加の有無は未確認（要確認のまま）。
 - 弧盤の総数「44種」は Ver.1.1 時点。以降は増えるので断定しない。
+- **wiki のナビ定義に別 wiki のページを混ぜない**（α のタブから NTE へ飛ぶ事故になる）。
+  `test/wikis.test.ts` が検査している。
+- **wiki をまたぐリンクには `data-astro-reload` を付ける**。NTE は View Transitions、
+  α は独立レイアウトのため、部分入れ替えされると画面が壊れる。`pnpm test:ui` が検査している。
+- 日本語本文で `**強調**` の閉じ記号の直前が全角括弧・句読点でも効くのは
+  `remark-cjk-friendly` を入れているから。外すと 77 ページ規模で壊れる。
 
 ---
 
@@ -97,6 +113,18 @@ src/
 
 > **運用ルール**: まとまった作業を終えたら、ここに1〜3行で「何をしたか／何が残っているか」を追記する。
 > 長い作業の途中でも、区切り（コミット前など）ごとにこのファイルを読み直して方針を確認すること。
+
+### 2026-09-06 — iPhone最適化・α専用UI・不具合修正（beta v0.9.2）
+
+- **日本語の強調が壊れていた**: CommonMark は閉じの `**` の直前が全角括弧・句読点だと強調と認識しない。
+  77ページで `**` が生のまま出ていた。`remark-cjk-friendly` を入れて記事を書き換えずに解消。
+- **α のナビから NTE へ飛ばされる**: `wikis.ts` の ALPHA ナビに `/settings/`（NTE のページ）が
+  混ざっていたのが原因。除去し、混入を防ぐテストを追加した。
+- **wiki 跨ぎでアイコンが消える**: NTE は View Transitions、α は独立レイアウトなので、
+  跨ぐリンクを ClientRouter に横取りさせると壊れる。`data-astro-reload` を付けてフルロードにした。
+- α 専用UI（`AlphaLayout.astro` + `alpha.css`）と iPhone 最適化（`ios.css`）を追加。
+- `scripts/check-ui.mjs`（`pnpm test:ui`）を追加。上記3種の不具合を機械検出できる。
+- 検証は Playwright（/opt/pw-browsers/chromium-1194）で iPhone 14 Pro 相当を実操作して行った。
 
 ### 2026-09-05 — 全記事の手動点検（beta v0.9.1）
 
@@ -124,11 +152,12 @@ pnpm dev            # 開発サーバ
 pnpm test           # vitest（31テスト）
 pnpm build          # 本番ビルド（dist/ に出力）
 pnpm test:content   # 記事の品質検査（出典・更新日・リンク記法・重複。ビルド不要）
+pnpm test:ui        # UI検査（アイコン参照切れ・wiki跨ぎリンク・ナビ混入。build の後）
 node scripts/check-links.mjs   # 内部リンク切れ検査（build の後に実行）
 ```
 
-**変更したら必ず `pnpm test` → `pnpm test:content` → `pnpm build` → `check-links.mjs` を
-通してからコミットする。**
+**変更したら必ず `pnpm test` → `pnpm test:content` → `pnpm build` → `pnpm test:ui`
+→ `check-links.mjs` を通してからコミットする。**
 
 コミット後は `git push -u origin claude/claude-nte-audit-E1OnP`。
 
@@ -136,5 +165,6 @@ node scripts/check-links.mjs   # 内部リンク切れ検査（build の後に�
 
 ## 7. 更新履歴（このファイル自体の）
 
+- 2026-09-06: α専用UI・iPhone最適化・不具合修正（v0.9.2）を反映。検証手順に `pnpm test:ui` を追加。
 - 2026-09-05: 作業ログ節（第5節）を追加。区切りごとに追記する運用に変更。
 - 2026-09-05: 新規作成。マルチwiki基盤の追加、Ver.1.3 対応、記事の誤り修正と同時に整備。

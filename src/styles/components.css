@@ -1980,3 +1980,38 @@ html[data-wiki]:not([data-wiki='nte']) {
   margin-top: 8px;
   font-size: 0.8rem;
 }
+
+/* =========================================================================
+   タップ操作の当たり判定（モバイルでの押しやすさ）
+   ------------------------------------------------------------------------
+   文字サイズは変えずに、押せる範囲だけを広げる。実機（iPhone 14 Pro 相当）で
+   高さ 40px を下回っていた補助リンク類を対象にしている。
+   ========================================================================= */
+@media (max-width: 959px) {
+  /* 「すべて見る」などのセクション補助リンク */
+  .row-between > a.text-sm {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding-inline: 4px;
+  }
+  /* パンくず */
+  nav[aria-label='パンくず'] a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding-inline: 2px;
+  }
+  /* 記事内の目次 */
+  .toc a {
+    display: block;
+    min-height: 40px;
+    padding-block: 8px;
+  }
+  /* フッターの wiki 切替 */
+  .wiki-footer-nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+  }
+}

@@ -96,19 +96,21 @@ const ALPHA: WikiMeta = {
   footer:
     'αテスト（仮）wiki — マルチwiki機能の検証用サンプルです。「αテスト（仮）」は実在のゲームではなく、記事の内容もすべてサンプルデータです。NTE の情報とは切り離して管理しています。',
   sections: ALPHA_SECTIONS,
+  // 注意: ここに**他 wiki のページを混ぜない**こと。混ざると α のタブやナビから
+  // NTE 側へ飛ばされてしまう（実際に一度そうなった）。テストでも検査している。
   primaryNav: [
-    { label: 'αホーム', href: '/alpha/', icon: 'home' },
-    { label: 'キャラ', href: '/alpha/characters/', icon: 'users' },
+    { label: 'ホーム', href: '/alpha/', icon: 'home' },
+    { label: 'キャラクター', href: '/alpha/characters/', icon: 'users' },
     { label: 'システム', href: '/alpha/systems/', icon: 'settings-2' },
     { label: 'ガイド', href: '/alpha/guides/', icon: 'compass' },
     { label: '用語集', href: '/alpha/terms/', icon: 'book-a' },
-    { label: '設定', href: '/settings/', icon: 'settings' },
   ],
   bottomNav: [
-    { label: 'αホーム', href: '/alpha/', icon: 'home' },
-    { label: 'キャラ', href: '/alpha/characters/', icon: 'users' },
+    { label: 'ホーム', href: '/alpha/', icon: 'home' },
+    { label: 'キャラクター', href: '/alpha/characters/', icon: 'users' },
+    { label: 'システム', href: '/alpha/systems/', icon: 'settings-2' },
     { label: 'ガイド', href: '/alpha/guides/', icon: 'compass' },
-    { label: '設定', href: '/settings/', icon: 'settings' },
+    { label: '用語集', href: '/alpha/terms/', icon: 'book-a' },
   ],
   hasOgImages: false,
 };

@@ -76,6 +76,7 @@ const drawerActive = activeHref(currentPath, allHrefs);
             href={withBase(target.base ? `${target.base}/` : '/')}
             data-drawer-close
             aria-current={target.id === w.id ? 'true' : undefined}
+            {...(target.id === w.id ? {} : { 'data-astro-reload': true })}
           >
             <span class="brand-mark" style="width:22px;height:22px;font-size:0.6rem;">{target.mark}</span>
             <span style="flex:1;min-width:0;">

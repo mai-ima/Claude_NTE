@@ -1,13 +1,9 @@
 ---
-import EntityList from '../../../components/EntityList.astro';
-import { sectionByCollection } from '../../../lib/nav';
-const s = sectionByCollection('alphaSystems')!;
+import AlphaList from '../../../components/alpha/AlphaList.astro';
 ---
-<EntityList
+<AlphaList
   collection="alphaSystems"
-  title="システム（αテスト）"
-  eyebrow="αテスト（仮）wiki"
-  lead="戦闘・育成など、αテスト版の仕組みをまとめたサンプル記事です。"
-  icon={s.icon}
-  groupField="category"
+  title="システム"
+  lead="戦闘・育成など、αテスト版の仕組みをまとめたページです。"
+  facet="category"
 />

@@ -80,15 +80,19 @@ describe('セクション定義', () => {
     }
   });
 
-  it('各 wiki のナビは自分の base 配下か共通ページを指す', () => {
+  it('各 wiki のナビは自分の wiki の中だけを指す（他 wiki のページを混ぜない）', () => {
+    // ここが緩いと、α のタブやナビから NTE 側へ飛ばされる事故が起きる（実際に起きた）。
     for (const w of WIKI_LIST) {
       for (const item of [...w.primaryNav, ...w.bottomNav]) {
-        const ok =
-          item.href === '/' ||
-          item.href.startsWith('/settings') ||
-          item.href.startsWith(w.base ? `${w.base}/` : '/');
-        expect(ok, `${w.id}: ${item.href}`).toBe(true);
+        expect(wikiOfPath(item.href).id, `${w.id} のナビ: ${item.href}`).toBe(w.id);
       }
+    }
+  });
+
+  it('α のナビに NTE 専用ページ（/settings/ など）が混ざっていない', () => {
+    const alphaHrefs = [...WIKIS.alpha.primaryNav, ...WIKIS.alpha.bottomNav].map((n) => n.href);
+    for (const href of alphaHrefs) {
+      expect(href.startsWith('/alpha/'), `α のナビ: ${href}`).toBe(true);
     }
   });
 });

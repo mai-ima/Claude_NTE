@@ -11,6 +11,7 @@ import '../styles/ui-terminal.css';
 import '../styles/ui-clay.css';
 import '../styles/ui-blueprint.css';
 import '../styles/prefs.css';
+import '../styles/ios.css';
 import { ClientRouter } from 'astro:transitions';
 import { Icon } from 'astro-icon/components';
 import { withBase, activeHref } from '../lib/path';
@@ -115,6 +116,12 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
     <link rel="canonical" href={canonical} />
     <link rel="icon" href={withBase('favicon.svg')} type="image/svg+xml" />
     <link rel="apple-touch-icon" href={withBase('icons/icon-192.png')} />
+    {/* ホーム画面に追加したときの表示（iOS）。ステータスバーを背景になじませる。 */}
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content={siteName} />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
@@ -152,6 +159,15 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
           }
           var meta = document.querySelector('meta[name="theme-color"]');
           if (meta && color) meta.setAttribute('content', color);
+          // iPhone / iPad（iPadOS は Mac を名乗るため touch 有無で見分ける）を判定し、
+          // iOS 専用の最適化（src/styles/ios.css）を有効にする。
+          var ua = navigator.userAgent || '';
+          var isIOS =
+            /iPad|iPhone|iPod/.test(ua) ||
+            (ua.indexOf('Macintosh') !== -1 && navigator.maxTouchPoints > 1);
+          if (isIOS) document.documentElement.setAttribute('data-ios', '1');
+          else document.documentElement.removeAttribute('data-ios');
+
           var ui = localStorage.getItem('nte.ui');
           if (ui === 'beta') ui = 'editorial'; // 旧ベータからの移行
           var uiValid = ['classic', 'new-classic', 'editorial', 'liquid', 'aurora', 'apple', 'terminal', 'clay', 'blueprint'];
@@ -236,6 +252,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
                   class:list={['wiki-switch-item', { 'is-current': target.id === w.id }]}
                   href={withBase(target.base ? `${target.base}/` : '/')}
                   aria-current={target.id === w.id ? 'true' : undefined}
+                  {...(target.id === w.id ? {} : { 'data-astro-reload': true })}
                 >
                   <span class="brand-mark">{target.mark}</span>
                   <span>
@@ -300,7 +317,12 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
         <p class="wiki-footer-nav">
           {
             WIKI_LIST.map((target) => (
-              <a href={withBase(target.base ? `${target.base}/` : '/')}>{target.siteName}</a>
+              <a
+                href={withBase(target.base ? `${target.base}/` : '/')}
+                {...(target.id === w.id ? {} : { 'data-astro-reload': true })}
+              >
+                {target.siteName}
+              </a>
             ))
           }
         </p>
