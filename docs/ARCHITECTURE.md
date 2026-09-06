@@ -32,10 +32,26 @@ Astro 6 の**静的サイト**。1サイトに**複数ゲームの wiki を並�
 | `CONTEXT.md` | **記憶ファイル**（現在の状態・作業ログ・守るルール） |
 | `README.md` | 利用者・貢献者向けの説明 |
 | `docs/` | このディレクトリ（構造の知識） |
-| `scripts/` | 検査スクリプト（`check-content` / `check-links` / `check-ui`）と `gen-icons.mjs` |
+| `scripts/` | 検査スクリプト（`check-content` / `check-links` / `check-ui` / `audit-browser`）と `gen-icons.mjs` |
 | `test/` | vitest（`wikis` / `nav` / `path` / `content` / `lib-misc`） |
 | `.github/workflows/verify.yml` | push ごとに `pnpm verify` 相当を実行 |
-| `.claude/` | `settings.json` と `hooks/load-context.sh`（セッション開始・圧縮時に CONTEXT.md を出力） |
+| `.claude/` | フックと**作業状態**（下表） |
+
+### `.claude/` — コンテキスト圧縮への備え
+
+| パス | 役割 | 書き方 |
+| --- | --- | --- |
+| `settings.json` | `SessionStart`（`startup\|resume\|compact`）と `PreCompact` でフックを起動 | — |
+| `hooks/load-context.sh` | **DECISIONS → NOW → CONTEXT → git の状況**の順に標準出力へ流す。`compact` のときは冒頭に警告を出す | — |
+| `state/DECISIONS.md` | 利用者が決めたこと（**原文つき**）。迷ったらここが正 | 追記のみ |
+| `state/NOW.md` | いまどこか・次の一手・つまずきやすい所 | **丸ごと上書き**・40行以内 |
+| `state/SESSION-LOG.md` | セッションごとに1〜3行 | 追記のみ |
+
+**出す順番に理由がある**。短くて失われると困るものから先に出す。以前は `CONTEXT.md`（267行）
+だけを流していたが、復帰に本当に要るのは「いま何をしているか」の30行程度で、
+長いぶんそれ自体が圧縮の対象になっていた。
+
+フックは `set -euo pipefail` なので、`state/*.md` が無くても落ちないよう `[[ -f ]]` で囲ってある。
 
 ---
 

@@ -65,6 +65,16 @@
 > | [docs/FINDINGS.md](./docs/FINDINGS.md) | 読んで確かめた知見と、過去にやった勘違いの「誤 → 正」 |
 >
 > このファイル（CONTEXT.md）は「**今どうなっているか・何をしたか**」に専念する。
+>
+> **「いま何をしている途中か」は `.claude/state/` にある**（圧縮対策。短く保つ）:
+>
+> | ファイル | 役割 | 書き方 |
+> | --- | --- | --- |
+> | [.claude/state/DECISIONS.md](./.claude/state/DECISIONS.md) | 利用者が決めたこと（原文つき）。**迷ったらここが正** | 追記のみ |
+> | [.claude/state/NOW.md](./.claude/state/NOW.md) | いまどこか・次の一手 | **丸ごと上書き**・40行以内 |
+> | [.claude/state/SESSION-LOG.md](./.claude/state/SESSION-LOG.md) | セッションごとに1〜3行 | 追記のみ |
+>
+> `.claude/hooks/load-context.sh` が DECISIONS → NOW → CONTEXT の順に自動で流し込む。
 
 ```
 astro.config.mjs           # サイト設定・旧URLのリダイレクト

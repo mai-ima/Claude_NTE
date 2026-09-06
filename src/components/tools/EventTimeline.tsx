@@ -120,16 +120,24 @@ function EventTimeline({ events }: { events: TLEvent[] }) {
                 const left = pct(e.startMs as number);
                 const right = 100 - parseFloat(pct(e.endMs as number));
                 const hue = KIND[e.kind].hue;
+                // バーには最低幅（44px＝指で押せる大きさ）がある。開始が右端に近いと
+                // 「左端＋44px」がトラックをはみ出して**ページ全体が横スクロール**するので、
+                // 左端の位置を「トラック幅 − 44px」で頭打ちにする。
+                const leftSafe = `min(${left}, calc(100% - 44px))`;
                 return (
-                  <a
-                    href={e.href}
-                    key={e.id}
-                    class="tl-bar"
-                    style={cssVars({ '--hue': hue }, { left, right: `${right}%` })}
-                    title={`${e.title}（${fmtDate(e.startMs)}〜${fmtDate(e.endMs)}）`}
-                  >
-                    <span class="tl-bar-label">{e.title}</span>
-                  </a>
+                  // 1本＝1行。行が高さを持ち、バーはその中で絶対配置される。
+                  // 以前はバー自身が position:relative のまま left/right を持っていたため、
+                  // right が効かず（relative では移動しない）右へ押し出されていた。
+                  <div class="tl-row" key={e.id}>
+                    <a
+                      href={e.href}
+                      class="tl-bar"
+                      style={cssVars({ '--hue': hue }, { left: leftSafe, right: `${right}%` })}
+                      title={`${e.title}（${fmtDate(e.startMs)}〜${fmtDate(e.endMs)}）`}
+                    >
+                      <span class="tl-bar-label">{e.title}</span>
+                    </a>
+                  </div>
                 );
               })}
           </div>

@@ -142,7 +142,49 @@ NTE は View Transitions（`ClientRouter`）、α は独立レイアウトなの
 
 ---
 
-## 6. 落ちたときに真っ先に疑うこと
+## 6. `pnpm test:browser`（`scripts/audit-browser.mjs`） — 実機相当のブラウザ検査
+
+**`pnpm verify` には含まれない**（Chromium を起動するので重い）。ビルド後に手で回す。
+
+```bash
+pnpm build && pnpm test:browser
+```
+
+40ページ × 2端末（iPhone 14 Pro / デスクトップ 1280×900）で次を見ます。
+静的な検査（`test:ui` / `test:links`）では絶対に出ない種類の問題を捕まえる担当です。
+
+| 見るもの | 落ちる条件 |
+| --- | --- |
+| JS エラー | `pageerror` か `console.error` が1件でも出た |
+| **横あふれ** | `documentElement.scrollWidth > clientWidth`（ページ全体が横スクロールする） |
+| HTTP 応答 | 400 以上 |
+| 極端な入力 | ツールの数値欄に `0` / `-1` / `999999999` を入れて `NaN`・`Infinity`・`undefined%` が出た |
+| 保存と復元 | ガチャ天井トラッカーに値を入れ、再読み込みで戻らない |
+
+配信サーバは**スクリプトが自分で立てて閉じる**（`node:http` の最小実装・外部依存なし）。
+存在しないパスは **404 を返す**。SPA のように `index.html` を返すと、
+リンク切れが 200 に見えて検査の意味が無くなるためです。
+
+| 指摘 | 直し方 |
+| --- | --- |
+| `横あふれ N>M` | はみ出している要素を探す。**`left`/`right` を持つ要素が `position: relative` のまま**でないか（`.tl-bar` で実際に起きた） |
+| `入力 999999999 で表示崩れ` | 0除算・上限の取り扱い。`Number.isFinite` で弾く |
+| `再読込で復元されない` | `store.ts` のキーと、`<details>` の中にある入力を見落としていないか |
+
+> ⚠ サーバを止めるのに **`pkill` を使わない**（自分のシェルを kill して exit 144 になった実績あり）。
+
+はみ出している要素を特定するには:
+
+```js
+for (const el of document.querySelectorAll('*')) {
+  const r = el.getBoundingClientRect();
+  if (r.right > innerWidth + 1) console.log(el.tagName, el.className, r.left, r.right);
+}
+```
+
+---
+
+## 7. 落ちたときに真っ先に疑うこと
 
 | 症状 | まず見るところ |
 | --- | --- |
@@ -153,3 +195,4 @@ NTE は View Transitions（`ClientRouter`）、α は独立レイアウトなの
 | **直したのに本番が変わらない** | **`main` にマージされているか**（作業ブランチは本番に出ない） |
 | 設定が「データ初期化」で消える | `store.ts` の `KEEP_ON_CLEAR`（現在は `PREFS` から自動導出） |
 | 設定パネルのアイコンが空白 | `SettingsPanel.tsx` の `ICON_PATHS` に足し忘れ |
+| スマホで横にスクロールしてしまう | `pnpm test:browser` を回す。`left`/`right` を持つ要素の `position` を疑う |

@@ -759,8 +759,17 @@
   padding: 14px 0 4px;
   min-height: 60px;
 }
-.tl-bar {
+/* ガントの1行。バーの絶対配置の基準になり、行の高さもここで確保する。 */
+.tl-row {
   position: relative;
+  height: 34px;
+}
+/* 期間の帯。left/right（%）でトラック上の位置と長さを決めるので **absolute** が要る。
+   relative のままだと right が効かず、left のぶんだけ右へ押し出されて
+   ページ全体が横スクロールしていた（実際に起きた）。 */
+.tl-bar {
+  position: absolute;
+  top: 0;
   display: flex;
   align-items: center;
   height: 34px;

@@ -13,6 +13,7 @@
     "test:links": "node scripts/check-links.mjs",
     "test:content": "node scripts/check-content.mjs",
     "test:ui": "node scripts/check-ui.mjs",
+    "test:browser": "node scripts/audit-browser.mjs",
     "verify": "pnpm test && pnpm test:content && pnpm check && pnpm build && pnpm test:ui && pnpm test:links"
   },
   "dependencies": {

@@ -232,3 +232,38 @@ rm -rf .astro node_modules/.astro dist && pnpm build
 - 記事の読みは攻略サイト間で揺れます（白蔵＝ばいざん/はくぞう、九原＝じょえん/くはら、
   海月＝みつき/くらげ、翳＝えい/かげ）。本サイトは **GameWith / Game8 系**を採用。
   神ゲー攻略の読みは自動生成らしく不正確なことがあるため、**安易に書き換えない**。
+
+---
+
+## `left`/`right` を書いたのに効かない — `position: relative` の罠
+
+イベントタイムライン（`/tools/calendar/`）のガントバーが、
+**デスクトップで 1522px（画面 1280px）まではみ出してページ全体を横スクロールさせていた**。
+
+```css
+.tl-bar {
+  position: relative;   /* ← これ */
+  min-width: 44px;
+}
+```
+
+```jsx
+<a class="tl-bar" style={{ left: '50%', right: '20%' }} />
+```
+
+- **誤**: `left`/`right` を % で書けばトラック上の位置と長さになる
+- **正**: `position: relative` では `left` は**元の位置からのずれ**でしかなく、
+  **`right` は無視される**（LTR では `left` が勝つ）。幅は縮まないまま右へ押し出される
+
+**直し方**: 行のラッパー（`position: relative; height: 34px`）を1枚挟み、
+バーを `position: absolute` にする。これで `left`/`right` の両方が効いて幅が決まる。
+
+さらに `min-width: 44px`（指で押せる大きさ）があるため、開始が右端に近いと
+「左端＋44px」がトラックを超える。インラインスタイル側で頭打ちにする:
+
+```js
+const leftSafe = `min(${left}, calc(100% - 44px))`;
+```
+
+**この種の不具合は静的な検査では出ない。** `pnpm test:browser`
+（`documentElement.scrollWidth > clientWidth` を見る）で初めて見つかった。
