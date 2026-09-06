@@ -256,10 +256,32 @@ themes.css → base.css → components.css
 | `themes.css` | `html[data-theme]` | 4 テーマの CSS 変数 |
 | `base.css` | — | リセットと土台 |
 | `components.css` | — | **本体（43KB）**。ヘッダー・カード・一覧・下部ナビ・wiki切替など |
-| `ui-*.css`（8種） | `html[data-ui]` | 新UIの見た目 |
+| `ui-*.css`（9種） | `html[data-ui]` | 新UIの見た目。**`ui-new.css` だけは骨組みも変える**（下記） |
 | `prefs.css` | `html[data-<pref>]` | 表示の追加設定の効果 |
 | `ios.css` | `html[data-ios]` | iPhone / iPad 向けの調整（**BaseLayout でのみ読む**） |
 | `alpha.css` | — | **α 専用**のデザインシステム（`--a-*` トークン）。末尾に α 用の `html[data-ios]` あり |
+
+### UIモード（`html[data-ui]`）の作り分け
+
+`ui-editorial` / `ui-liquid` / `ui-aurora` / `ui-apple` / `ui-terminal` / `ui-clay` /
+`ui-blueprint` / `ui-new-classic` は「質感・タイポ・色」を塗り替えるレイヤーで、
+**画面の骨組み（`.app` のグリッド）は classic のまま**です。
+
+**`ui-new.css`（次期ベース候補）だけは構成そのものを変えます**:
+
+- パソコン（960px 以上）: `.app` の `grid-template-areas` を `'rail main' / 'rail footer'` に変え、
+  `.app-header` を**左端の縦レール**（幅 `--n-rail`）にする。ヘッダーの中身
+  （ブランド／wiki切替／グローバルナビ／検索／テーマ）を縦に積み替える。
+- スマホ: `.bottom-nav` を画面端から浮かせた**ドック**にする。
+- モーションは scroll-driven animations（`animation-timeline: scroll() / view()`）で、
+  `@supports` で囲って対応ブラウザだけに効かせる（非対応では既存の JS リビールが動く）。
+- 動きは `prefers-reduced-motion` と `html[data-motion='reduce']` の**両方**で止まる。
+
+骨組みを変える都合で、次の2つは他モードにも影響する形で整理してあります:
+
+- `ThemeMenu` のポップの位置は**インラインスタイルではなく `.theme-menu-pop`**（CSS）にある
+  （レールでは出す向きを変える必要があるため）
+- 起動スクリプトの UIモード一覧は `UI_MODES` から `define:vars` で流し込む（配列を書き写さない）
 
 `components.css` の目印:
 

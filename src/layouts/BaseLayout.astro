@@ -2,6 +2,7 @@
 import '../styles/themes.css';
 import '../styles/base.css';
 import '../styles/components.css';
+import '../styles/ui-new.css';
 import '../styles/ui-new-classic.css';
 import '../styles/ui-editorial.css';
 import '../styles/ui-liquid.css';
@@ -17,6 +18,7 @@ import { Icon } from 'astro-icon/components';
 import { withBase, activeHref } from '../lib/path';
 import { wiki as wikiMeta, WIKI_LIST, type WikiId } from '../lib/wikis';
 import { prefBootData } from '../lib/prefs';
+import { UI_MODES } from '../lib/ui';
 import MobileDrawer from '../components/MobileDrawer.astro';
 import ThemeMenu from '../components/ThemeMenu';
 import Search from 'astro-pagefind/components/Search';
@@ -53,6 +55,8 @@ const w = wikiMeta(wikiId);
 // 描画前に適用する設定の一覧。src/lib/prefs.ts の PREFS から生成するので、
 // 設定を増やしてもこのレイアウトを直す必要はない。
 const prefBoot = prefBootData();
+// UIモードの一覧も定義元（src/lib/ui.ts）から渡す。ここで配列を書き写さない。
+const uiValues = UI_MODES.map((m) => m.value);
 const description = Astro.props.description ?? w.description;
 const siteName = w.siteName;
 const PRIMARY_NAV = w.primaryNav;
@@ -148,7 +152,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
 
     {/* テーマ＆UIモードを描画前に適用（チラつき防止）。is:inline なのでバンドルされない素のJS。
         data-astro-rerun: View Transitions の swap 後も再実行し、theme/ui/prefs を再適用する。 */}
-    <script is:inline data-astro-rerun define:vars={{ prefBoot }}>
+    <script is:inline data-astro-rerun define:vars={{ prefBoot, uiValues }}>
       (function () {
         try {
           var t = localStorage.getItem('nte.theme');
@@ -174,8 +178,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
 
           var ui = localStorage.getItem('nte.ui');
           if (ui === 'beta') ui = 'editorial'; // 旧ベータからの移行
-          var uiValid = ['classic', 'new-classic', 'editorial', 'liquid', 'aurora', 'apple', 'terminal', 'clay', 'blueprint'];
-          if (uiValid.indexOf(ui) === -1) ui = 'classic';
+          if (uiValues.indexOf(ui) === -1) ui = 'classic';
           document.documentElement.setAttribute('data-ui', ui);
           // 表示・操作の追加設定。prefBoot は src/lib/prefs.ts の PREFS から生成される。
           // 効いていない状態では属性を消す（View Transitions の swap 後に、

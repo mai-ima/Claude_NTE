@@ -1,6 +1,8 @@
 /**
  * UIモード（ベータ機能）の定義と適用ロジック。
  * - 'classic'  : 従来のUI（既定）
+ * - 'new'      : ★次期ベース候補。画面の構成そのものを変えるフルチェンジ
+ *                （デスクトップは左の縦レール、モバイルは浮かぶドック）
  * - 'new-classic': 従来UIを近代化した非ベータの新デザイン
  * - 'editorial': 紙の特集記事風（太罫線・ハードシャドウ・活字タイポ）
  * - 'liquid'   : 本格リキッドグラス（厚い曇りガラス・カプセル形状）
@@ -11,6 +13,7 @@
 
 export type UIMode =
   | 'classic'
+  | 'new'
   | 'new-classic'
   | 'editorial'
   | 'liquid'
@@ -25,6 +28,12 @@ const DEFAULT_UI: UIMode = 'classic';
 
 export const UI_MODES: { value: UIMode; label: string; hint: string; beta: boolean }[] = [
   { value: 'classic', label: '従来UI', hint: 'これまでのシンプルな表示', beta: false },
+  {
+    value: 'new',
+    label: 'New（次期ベース）',
+    hint: '画面の構成から作り直した新しい土台。パソコンは左の縦メニュー、スマホは浮かぶタブ',
+    beta: true,
+  },
   { value: 'new-classic', label: 'New Classic', hint: '従来UIを近代化した非ベータの新デザイン（洗練タイポ・やわらか影）', beta: false },
   { value: 'editorial', label: 'Editorial', hint: '紙の特集記事風。太い罫線とハードシャドウ', beta: true },
   { value: 'liquid', label: 'Liquid Glass', hint: '本格リキッドグラス。厚い曇りガラスとカプセル', beta: true },

@@ -153,7 +153,11 @@
   display: inline-grid;
 }
 @media (min-width: 960px) {
-  .drawer-toggle {
+  /* パソコンではサイドバーがあるのでドロワーは要らない。
+     セレクタを `.app-header .drawer-toggle` にしているのは詳細度のため。
+     `.drawer-toggle` 単体だと、後ろにある `.btn { display: inline-flex }` に
+     同じ詳細度で負けて、パソコンでもハンバーガーが出てしまう（実際に出ていた）。 */
+  .app-header .drawer-toggle {
     display: none;
   }
 }
@@ -1593,11 +1597,143 @@ body {
 .settings h2 {
   font-size: 1.15rem;
 }
+/* =========================================================================
+   設定ページ
+   項目が増えても見渡せるよう、セクションは折りたためる <details> にし、
+   閉じたままでも「今の値」が summary から読めるようにしている。
+   ========================================================================= */
+.setting-toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+.setting-toc .chip {
+  font-size: 0.78rem;
+}
+
+.setting-card {
+  padding: 0;
+  overflow: hidden;
+}
 .setting-head {
   display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  align-items: flex-start;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 16px;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+.setting-head::-webkit-details-marker {
+  display: none;
+}
+.setting-head:hover {
+  background: var(--surface-2);
+}
+.setting-head-title {
+  font-weight: 700;
+  font-size: 0.98rem;
+  flex: none;
+}
+/* 閉じていても現在の設定値が分かるようにする（開かずに確かめられる） */
+.setting-head-sum {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: right;
+}
+.setting-head-caret {
+  flex: none;
+  color: var(--muted);
+  transition: rotate 0.18s ease;
+}
+.setting-card[open] > .setting-head {
+  border-bottom: 1px solid var(--border);
+}
+.setting-card[open] > .setting-head .setting-head-caret {
+  rotate: 180deg;
+}
+.setting-card[open] > .setting-head .setting-head-sum {
+  display: none;
+}
+.setting-body {
+  padding: 4px 16px 16px;
+}
+.setting-body > .hint {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* 配色テーマ: 横に並ぶ小さなタイル（縦積みのリストより場所を取らない） */
+.theme-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+  gap: 6px;
+  margin-top: 6px;
+}
+.theme-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 6px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.theme-tile:hover {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--border));
+}
+.theme-tile.is-active {
+  border-color: var(--accent);
+  background: var(--accent-weak);
+  color: var(--accent);
+}
+
+/* UIモード: 説明を1行に抑えたタイル。10個並んでも縦に伸びすぎない */
+.ui-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 6px;
+  margin-top: 6px;
+}
+.ui-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+  padding: 10px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  cursor: pointer;
+}
+.ui-tile:hover {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+}
+.ui-tile.is-active {
+  border-color: var(--accent);
+  background: var(--accent-weak);
+}
+.ui-tile-name {
+  font-weight: 700;
+  font-size: 0.86rem;
+}
+.ui-tile-hint {
+  font-size: 0.72rem;
+  line-height: 1.4;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 /* トースト通知 */
@@ -1705,9 +1841,14 @@ body {
 .pref-row {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 4px;
+  gap: 10px;
+  padding: 10px 0;
   border-bottom: 1px solid var(--border);
+}
+/* 説明は行の密度を下げるので、少し小さく詰めて出す */
+.pref-hint {
+  font-size: 0.76rem;
+  line-height: 1.45;
 }
 .pref-row:last-child {
   border-bottom: 0;
@@ -1975,6 +2116,21 @@ html[data-wiki]:not([data-wiki='nte']) {
   background: var(--surface-2);
   color: var(--text);
 }
+/* ヘッダーのテーマ切替（ThemeMenu）。位置を CSS に持たせているのは、
+   UIモードによってヘッダーが左の縦レールになり、出す向きが変わるため。 */
+.theme-menu {
+  position: relative;
+}
+.theme-menu-pop {
+  position: absolute;
+  right: 0;
+  top: 46px;
+  width: 240px;
+  padding: 6px;
+  box-shadow: var(--shadow-lg);
+  z-index: 50;
+}
+
 .wiki-switch-menu {
   position: absolute;
   z-index: 70;

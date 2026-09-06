@@ -1,4 +1,12 @@
-/** 設定パネル: 外観（テーマ・新UI）／読みやすさ／一覧／wiki／タッチ操作／機能／データ。 */
+/**
+ * 設定パネル。
+ *
+ * 項目が増えて縦に長くなったため、次の3点で「探せる」状態を保っている:
+ *   1. 上部のジャンプリンクで、目的のセクションへ直接飛べる
+ *   2. 各セクションは折りたためる（<details>）。開閉は端末に覚えさせる
+ *   3. 行の密度を上げ、説明は必要なときだけ読ませる
+ */
+import type { ComponentChildren } from 'preact';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { THEMES, getStoredTheme, setTheme, applyTheme, type Theme } from '../lib/theme';
 import { getStoredUI, setUI, applyUI, UI_MODES, type UIMode } from '../lib/ui';
@@ -32,8 +40,8 @@ function PrefIcon({ name }: { name: string }) {
     <svg
       class="pref-icon"
       viewBox="0 0 24 24"
-      width="18"
-      height="18"
+      width="17"
+      height="17"
       fill="none"
       stroke="currentColor"
       stroke-width="2"
@@ -52,12 +60,89 @@ if (import.meta.env.DEV) {
   if (missing.length) console.warn('[SettingsPanel] ICON_PATHS に無いアイコン:', missing.join(', '));
 }
 
+/** セクションの並び。ジャンプリンクにもそのまま使う */
+const SECTIONS = [
+  { id: 'look', label: '外観' },
+  { id: 'reading', label: '読みやすさ' },
+  { id: 'list', label: '一覧' },
+  { id: 'wiki', label: 'wiki' },
+  { id: 'touch', label: 'タッチ操作' },
+  { id: 'feature', label: '機能' },
+  { id: 'data', label: 'データ' },
+] as const;
+
+const OPEN_KEY = 'nte.settings.closed';
+
+/**
+ * 折りたためるセクション。summary に「今の値」を出し、開かずに確かめられるようにする。
+ *
+ * ※ このコンポーネントは**モジュールのトップレベルに置くこと**。
+ *   親の描画関数の中で定義すると、描画のたびに別物のコンポーネントとして
+ *   作り直され、<details> が毎回マウントし直されて toggle が発火し続ける
+ *   （＝状態更新→再描画→toggle…の無限ループでページが固まる。実際に踏んだ）。
+ */
+function Section({
+  id,
+  title,
+  summary,
+  beta,
+  open,
+  onToggle,
+  children,
+}: {
+  id: string;
+  title: string;
+  summary?: string;
+  beta?: boolean;
+  open: boolean;
+  onToggle: (id: string, open: boolean) => void;
+  children: ComponentChildren;
+}) {
+  return (
+    <details
+      class="card setting-card"
+      id={`set-${id}`}
+      open={open}
+      onToggle={(e) => {
+        const next = (e.currentTarget as HTMLDetailsElement).open;
+        if (next !== open) onToggle(id, next);
+      }}
+    >
+      <summary class="setting-head">
+        <span class="setting-head-title">
+          {title}
+          {beta && <span class="beta-pill">BETA</span>}
+        </span>
+        {summary && <span class="muted text-sm setting-head-sum">{summary}</span>}
+        <svg
+          class="setting-head-caret"
+          viewBox="0 0 24 24"
+          width="18"
+          height="18"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </summary>
+      <div class="setting-body">{children}</div>
+    </details>
+  );
+}
+
 export default function SettingsPanel() {
   const [theme, setThemeState] = useState<Theme>('minimal');
   const [ui, setUIState] = useState<UIMode>('classic');
   /** toggle は boolean、choice は選択中の value を持つ */
   const [prefs, setPrefsState] = useState<Record<string, boolean | string>>({});
   const [isIOS, setIsIOS] = useState(false);
+  /** 閉じているセクションの id。開いている方ではなく閉じている方を覚える
+      （設定が増えたとき、既定で開いている状態を保てる） */
+  const [closed, setClosed] = useState<string[]>([]);
   const [msg, setMsg] = useState<Msg>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const flashTimer = useRef<number | undefined>(undefined);
@@ -71,23 +156,39 @@ export default function SettingsPanel() {
       ),
     );
     setIsIOS(document.documentElement.hasAttribute('data-ios'));
+    try {
+      const raw = localStorage.getItem(OPEN_KEY);
+      if (raw) setClosed(JSON.parse(raw));
+    } catch {
+      /* 読めなければ全部開いた状態で始める */
+    }
     return () => {
       if (flashTimer.current !== undefined) window.clearTimeout(flashTimer.current);
     };
   }, []);
+
+  function toggleSection(id: string, open: boolean) {
+    const next = open ? closed.filter((x) => x !== id) : [...new Set([...closed, id])];
+    setClosed(next);
+    try {
+      localStorage.setItem(OPEN_KEY, JSON.stringify(next));
+    } catch {
+      /* 覚えられなくても開閉そのものは動く */
+    }
+  }
 
   function change(key: string, next: boolean | string) {
     setPref(key, next);
     setPrefsState((s) => ({ ...s, [key]: next }));
   }
 
-  /** 設定1件を描画する（ON/OFF はスイッチ、多値はセグメンテッドコントロール） */
+  /** 設定1件（ON/OFF はスイッチ、多値はセグメンテッドコントロール） */
   const renderRow = (p: PrefDef) => (
     <div key={p.key} class={`pref-row ${p.type === 'choice' ? 'pref-row-choice' : ''}`}>
       <PrefIcon name={p.icon} />
       <span class="pref-text">
         <span class="pref-title">{p.label}</span>
-        <span class="muted text-sm">{p.hint}</span>
+        <span class="muted text-sm pref-hint">{p.hint}</span>
       </span>
       {p.type === 'toggle' ? (
         <button
@@ -138,7 +239,7 @@ export default function SettingsPanel() {
     setUIState(mode);
     applyUI(mode);
     const m = UI_MODES.find((x) => x.value === mode);
-    flash('ok', mode === 'classic' ? '従来UIに戻しました。' : `新UI「${m?.label}」に切り替えました。`);
+    flash('ok', mode === 'classic' ? '従来UIに戻しました。' : `UIを「${m?.label}」に切り替えました。`);
   }
 
   function doExport() {
@@ -178,8 +279,21 @@ export default function SettingsPanel() {
     flash('ok', `${n} 件のデータを削除しました。`);
   }
 
+  /** summary に出す「今の値」 */
+  const valueOf = (key: string) => {
+    const def = PREFS.find((p) => p.key === key);
+    if (!def || def.type !== 'choice') return '';
+    return def.choices.find((c) => c.value === prefs[key])?.label ?? '';
+  };
+  const onCount = (g: PrefGroup) =>
+    groupOf(g).filter((p) => (p.type === 'toggle' ? prefs[p.key] === true : false)).length;
+
+  const themeLabel = THEMES.find((t) => t.value === theme)?.label ?? '';
+  const uiLabel = UI_MODES.find((m) => m.value === ui)?.label ?? '';
+  const sections = SECTIONS.filter((s) => s.id !== 'touch' || isIOS);
+
   return (
-    <div class="settings stack" style={{ gap: '20px' }}>
+    <div class="settings stack" style={{ gap: '10px' }}>
       {msg && (
         <div class={`toast ${msg.kind === 'ok' ? 'toast-ok' : 'toast-err'}`} role="status">
           <span aria-hidden="true">{msg.kind === 'ok' ? '✓' : '!'}</span>
@@ -187,129 +301,134 @@ export default function SettingsPanel() {
         </div>
       )}
 
-      {/* 配色テーマ */}
-      <section class="card card-pad setting-card">
-        <h2 class="mt-0">配色テーマ</h2>
-        <p class="muted text-sm">サイト全体の配色を選べます。</p>
-        <div class="theme-grid" style={{ marginTop: '12px' }}>
+      {/* 目的のセクションへ直接飛ぶ。項目が増えても上から順に探さずに済む */}
+      <nav class="setting-toc" aria-label="設定の項目">
+        {sections.map((s) => (
+          <a key={s.id} class="chip" href={`#set-${s.id}`}>
+            {s.label}
+          </a>
+        ))}
+      </nav>
+
+      {/* 外観（テーマ＋UI） */}
+      <Section
+        id="look"
+        open={!closed.includes('look')}
+        onToggle={toggleSection} title="外観" summary={`${themeLabel} / ${uiLabel}`}>
+        <p class="pref-group-title">配色テーマ</p>
+        <div class="theme-row" role="radiogroup" aria-label="配色テーマ">
           {THEMES.map((t) => (
-            <label key={t.value} class={`theme-opt ${theme === t.value ? 'is-active' : ''}`}>
-              <input
-                type="radio"
-                name="theme"
-                checked={theme === t.value}
-                onChange={() => choose(t.value)}
-              />
+            <button
+              key={t.value}
+              type="button"
+              role="radio"
+              aria-checked={theme === t.value}
+              class={`theme-tile ${theme === t.value ? 'is-active' : ''}`}
+              onClick={() => choose(t.value)}
+              title={`${t.label} — ${t.hint}`}
+            >
               <span class={`theme-swatch sw-${t.value}`} aria-hidden="true" />
-              <span style={{ flex: 1 }}>
-                <span style={{ display: 'block', fontWeight: 600 }}>{t.label}</span>
-                <span class="muted text-sm">{t.hint}</span>
-              </span>
-              {theme === t.value && <span class="check" aria-hidden="true">✓</span>}
-            </label>
+              {/* タイルは幅が狭いので、「ミニマル / クリーン」のような
+                  併記ラベルは先頭だけ出す（全文は title で読める） */}
+              <span>{t.label.split(/\s*[/（(]/)[0]}</span>
+            </button>
           ))}
         </div>
-      </section>
 
-      {/* 新UI（ベータ） */}
-      <section class="card card-pad setting-card">
-        <div class="setting-head">
-          <div>
-            <h2 class="mt-0">
-              新UI <span class="beta-pill">BETA</span>
-            </h2>
-            <p class="muted text-sm">
-              8種類の新デザインを試せます。配色テーマとは別に、全ページのレイアウト・質感を切り替えます。
-            </p>
-          </div>
-        </div>
-        <div class="ui-switch" role="radiogroup" aria-label="UIモード">
+        <p class="pref-group-title">
+          UIモード <span class="beta-pill">BETA</span>
+        </p>
+        <p class="muted text-sm" style={{ marginTop: '-2px' }}>
+          配色とは別に、画面のつくりそのものを切り替えます。いつでも従来UIに戻せます。
+        </p>
+        <div class="ui-tiles" role="radiogroup" aria-label="UIモード">
           {UI_MODES.map((m) => (
             <button
               key={m.value}
               type="button"
-              class={`ui-switch-opt ${ui === m.value ? 'is-active' : ''}`}
-              aria-pressed={ui === m.value}
+              role="radio"
+              aria-checked={ui === m.value}
+              class={`ui-tile ${ui === m.value ? 'is-active' : ''}`}
               onClick={() => chooseUI(m.value)}
+              title={m.hint}
             >
-              <span class="ui-switch-title">
-                {m.label} {m.beta && <span class="beta-pill">BETA</span>}
-              </span>
-              <span class="muted text-sm">{m.hint}</span>
+              <span class="ui-tile-name">{m.label}</span>
+              <span class="muted ui-tile-hint">{m.hint}</span>
             </button>
           ))}
         </div>
-        <p class="hint" style={{ marginTop: '10px' }}>
-          ベータのため一部表示が崩れる場合があります。いつでも従来UIに戻せます。
-        </p>
-      </section>
+      </Section>
 
       {/* 読みやすさ */}
-      <section class="card card-pad setting-card">
-        <h2 class="mt-0">読みやすさ</h2>
-        <p class="muted text-sm">
-          記事本文の見え方を調整します。文字サイズと行間は本文だけに効くので、
-          ナビや一覧のレイアウトは崩れません。
-        </p>
-        <div class="pref-list" style={{ marginTop: '10px' }}>{groupOf('reading').map(renderRow)}</div>
-      </section>
+      <Section
+        id="reading"
+        open={!closed.includes('reading')}
+        onToggle={toggleSection}
+        title="読みやすさ"
+        summary={`文字 ${valueOf('nte.fontsize')} / 行間 ${valueOf('nte.lineheight')}`}
+      >
+        <div class="pref-list">{groupOf('reading').map(renderRow)}</div>
+      </Section>
 
-      {/* 一覧の表示 */}
-      <section class="card card-pad setting-card">
-        <h2 class="mt-0">一覧の表示</h2>
-        <p class="muted text-sm">
-          キャラクターや用語などの一覧ページの見せ方を選べます。
-        </p>
-        <div class="pref-list" style={{ marginTop: '10px' }}>{groupOf('list').map(renderRow)}</div>
-      </section>
+      {/* 一覧 */}
+      <Section
+        id="list"
+        open={!closed.includes('list')}
+        onToggle={toggleSection}
+        title="一覧の表示"
+        summary={`${valueOf('nte.listview')} / ${valueOf('nte.listsort')}`}
+      >
+        <div class="pref-list">{groupOf('list').map(renderRow)}</div>
+      </Section>
 
       {/* wiki */}
-      <section class="card card-pad setting-card">
-        <h2 class="mt-0">wiki</h2>
-        <p class="muted text-sm">
-          このサイトは複数ゲームの wiki を並べて置けます。記事データは wiki ごとに完全に分かれています。
-        </p>
-        <div class="pref-list" style={{ marginTop: '10px' }}>{groupOf('wiki').map(renderRow)}</div>
-        <p class="hint" style={{ marginTop: '10px' }}>
+      <Section
+        id="wiki"
+        open={!closed.includes('wiki')}
+        onToggle={toggleSection} title="wiki" summary={valueOf('nte.homewiki')}>
+        <div class="pref-list">{groupOf('wiki').map(renderRow)}</div>
+        <p class="hint">
           <a href="/wikis/">wiki 一覧を開く</a> — 各 wiki の記事数や最近の更新をまとめて見られます。
         </p>
-      </section>
+      </Section>
 
-      {/* タッチ操作（iPhone / iPad のときだけ出す） */}
+      {/* タッチ操作（iPhone / iPad のときだけ） */}
       {isIOS && (
-        <section class="card card-pad setting-card">
-          <h2 class="mt-0">タッチ操作</h2>
-          <p class="muted text-sm">
-            iPhone / iPad で開いているときの操作感を調整します。
-          </p>
-          <div class="pref-list" style={{ marginTop: '10px' }}>{groupOf('touch').map(renderRow)}</div>
-        </section>
+        <Section
+        id="touch"
+        open={!closed.includes('touch')}
+        onToggle={toggleSection} title="タッチ操作" summary={`反応 ${valueOf('nte.tapfx')}`}>
+          <div class="pref-list">{groupOf('touch').map(renderRow)}</div>
+        </Section>
       )}
 
-      {/* 機能（ベータ） */}
-      <section class="card card-pad setting-card">
-        <h2 class="mt-0">
-          機能 <span class="beta-pill">BETA</span>
-        </h2>
-        <div class="pref-list" style={{ marginTop: '10px' }}>{groupOf('feature').map(renderRow)}</div>
-        <p class="hint" style={{ marginTop: '10px' }}>
-          設定はこの端末に保存され、バックアップ（書き出し）にも含まれます。
-        </p>
-      </section>
+      {/* 機能 */}
+      <Section
+        id="feature"
+        open={!closed.includes('feature')}
+        onToggle={toggleSection}
+        title="機能"
+        beta
+        summary={onCount('feature') > 0 ? `${onCount('feature')} 件オン` : 'すべてオフ'}
+      >
+        <div class="pref-list">{groupOf('feature').map(renderRow)}</div>
+      </Section>
 
       {/* データ */}
-      <section class="card card-pad setting-card">
-        <h2 class="mt-0">データのバックアップ</h2>
+      <Section
+        id="data"
+        open={!closed.includes('data')}
+        onToggle={toggleSection} title="データのバックアップ" summary="書き出し / 取り込み / 初期化">
         <p class="muted text-sm">
           メモ・チェックリスト・個人メモなどは、この端末（localStorage）に保存されます。
-          端末間で移す場合や消える前に、JSONで書き出してください。
+          端末間で移す場合や消える前に、JSONで書き出してください。設定そのものも含まれます。
         </p>
-        <div class="cluster" style={{ marginTop: '14px' }}>
+        <div class="cluster" style={{ marginTop: '12px' }}>
           <button class="btn btn-primary" type="button" onClick={doExport}>
-            エクスポート（書き出し）
+            エクスポート
           </button>
           <button class="btn" type="button" onClick={() => fileRef.current?.click()}>
-            インポート（取り込み）
+            インポート
           </button>
           <input
             ref={fileRef}
@@ -322,7 +441,8 @@ export default function SettingsPanel() {
             データを初期化
           </button>
         </div>
-      </section>
+        <p class="hint">「初期化」で消えるのはメモなどのデータだけです。設定は残ります。</p>
+      </Section>
     </div>
   );
 }

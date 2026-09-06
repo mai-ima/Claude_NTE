@@ -42,7 +42,7 @@ export default function ThemeMenu() {
   }
 
   return (
-    <div ref={ref} style={{ position: 'relative' }}>
+    <div class="theme-menu" ref={ref}>
       <button
         class="btn btn-icon btn-ghost"
         type="button"
@@ -55,20 +55,10 @@ export default function ThemeMenu() {
           <path d={ICON[current]} />
         </svg>
       </button>
+      {/* ポップの位置はインラインで書かず CSS（.theme-menu-pop）に持たせている。
+          UIモードによってはヘッダーが左の縦レールになり、出す向きが変わるため。 */}
       {open && (
-        <div
-          role="menu"
-          class="card"
-          style={{
-            position: 'absolute',
-            right: 0,
-            top: '46px',
-            width: '240px',
-            padding: '6px',
-            boxShadow: 'var(--shadow-lg)',
-            zIndex: 50,
-          }}
-        >
+        <div role="menu" class="card theme-menu-pop">
           {THEMES.map((t) => (
             <button
               key={t.value}

@@ -1,0 +1,519 @@
+/* =========================================================================
+   新UI「New」 — <html data-ui="new"> のときだけ適用。**次期ベース候補**。
+
+   これまでの新UI（editorial / liquid / aurora …）は、質感やタイポを塗り替える
+   「見た目のレイヤー」で、画面の骨組みは classic のままだった。
+   こちらは**構成そのものを作り替える**のが目的:
+
+     ・パソコン: 上部の横バーをやめ、**左端の縦レール**に集約する。
+       ヘッダーの中身（ブランド／wiki切替／グローバルナビ／検索／テーマ）を
+       縦に積み、本文の横幅を取り戻す。
+     ・スマホ: 下部ナビを画面端から浮かせた**ドック**にし、
+       ヘッダーはスクロールに応じて薄くなる。
+
+   意匠の方針（2026年の実務的な流れに合わせた）:
+     ・機能的ミニマリズム … 影と装飾を削り、罫線・余白・階層で読ませる
+     ・意味のあるモーション … 「今どこにいて、何が起きたか」を伝える動きだけ
+     ・dark-first で成立 … 色は既存のテーマ変数から導出（4テーマすべてで成立）
+     ・アクセシビリティは前提 … 動きは prefers-reduced-motion と
+       サイト設定（data-motion="reduce"）の**両方**で止まる。
+       タップ領域は縮めない。色だけに意味を持たせない。
+
+   スクロール連動アニメーションは対応ブラウザだけで動かす
+   （@supports で囲む＝非対応環境は既存の JS リビールがそのまま効く）。
+   classic には一切影響しない。
+   ========================================================================= */
+
+html[data-ui='new'] {
+  --radius: 12px;
+  --radius-sm: 9px;
+  --radius-lg: 18px;
+
+  /* 左レールの幅（本文の横幅計算にも使う）。
+     アイコンの下に日本語ラベルを2行まで置ける幅にしてある。 */
+  --n-rail: 92px;
+  /* 罫線。影に頼らず、この2段階で階層を作る */
+  --n-line: color-mix(in srgb, var(--text) 11%, transparent);
+  --n-line-strong: color-mix(in srgb, var(--text) 20%, transparent);
+  /* 面。背景よりわずかに浮かせる程度に留める */
+  --n-surface: color-mix(in srgb, var(--surface) 94%, var(--bg));
+  --n-raise: color-mix(in srgb, var(--surface) 100%, transparent);
+  --n-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --n-dur: 0.22s;
+}
+
+html[data-ui='new'] body {
+  background:
+    radial-gradient(
+      120% 60% at 50% -10%,
+      color-mix(in srgb, var(--accent) 7%, transparent),
+      transparent 60%
+    ),
+    var(--bg);
+  letter-spacing: 0.004em;
+}
+
+/* 見出しは字間を締めて、本文との差を「太さ」ではなく「密度」で出す */
+html[data-ui='new'] h1,
+html[data-ui='new'] h2,
+html[data-ui='new'] h3 {
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+html[data-ui='new'] .prose p,
+html[data-ui='new'] .lead {
+  text-wrap: pretty;
+}
+
+/* =========================================================================
+   1. パソコン: ヘッダーを左の縦レールに組み替える
+   ========================================================================= */
+@media (min-width: 960px) {
+  html[data-ui='new'] .app {
+    grid-template-columns: var(--n-rail) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'rail main'
+      'rail footer';
+  }
+
+  html[data-ui='new'] .app-header {
+    grid-area: rail;
+    align-self: start;
+    position: sticky;
+    top: 0;
+    height: 100dvh;
+    width: var(--n-rail);
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 16px 8px 16px;
+    background: var(--n-surface);
+    border-bottom: 0;
+    border-right: 1px solid var(--n-line);
+    backdrop-filter: none;
+  }
+  @supports (height: 100svh) {
+    html[data-ui='new'] .app-header {
+      height: 100svh;
+    }
+  }
+
+  /* 既定の header-spacer は brand の直後にあり、そのままだとナビを
+     画面の下半分まで押し下げてしまう。ナビは上に置き、
+     検索とテーマだけを下へ寄せたいので、押し下げ役を入れ替える。 */
+  html[data-ui='new'] .app-header .header-spacer {
+    display: none;
+  }
+  html[data-ui='new'] .app-header nav[aria-label='グローバルナビ'] {
+    margin-top: 10px;
+    margin-bottom: auto;
+  }
+
+  /* ブランドはマークだけ。名前はレール幅に入らないので隠す */
+  html[data-ui='new'] .app-header .brand {
+    flex-direction: column;
+    gap: 0;
+  }
+  html[data-ui='new'] .app-header .brand span:last-child {
+    display: none;
+  }
+  html[data-ui='new'] .app-header .brand-mark {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    font-size: 0.82rem;
+  }
+
+  /* wiki 切替・テーマのポップオーバーはレールの右側に出す
+     （そのままだと画面外や下に潜り込む）。
+     基準を details ではなくレール自体にするため position を外す。
+     details 基準のままだと、レールの中央から生えてレールに重なってしまう。 */
+  html[data-ui='new'] .app-header .wiki-switch {
+    position: static;
+  }
+  html[data-ui='new'] .app-header .wiki-switch-menu {
+    top: 14px;
+    left: calc(100% + 10px);
+  }
+  html[data-ui='new'] .app-header .theme-menu-pop {
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: calc(100% + 10px);
+  }
+
+  /* グローバルナビ: アイコンの下に小さなラベル。行き先が読めるようにする
+     （アイコンだけのレールは意味が伝わらず、押し間違いが増える） */
+  html[data-ui='new'] .app-header nav[aria-label='グローバルナビ'] {
+    flex-direction: column;
+    width: 100%;
+    gap: 2px;
+  }
+  html[data-ui='new'] .app-header .nav-link {
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    width: 100%;
+    padding: 9px 2px !important;
+    border-radius: 12px;
+    font-size: 0.6rem;
+    font-weight: 600;
+    line-height: 1.15;
+    text-align: center;
+    color: var(--muted);
+  }
+  /* ラベルは2行まで折り返す。「ガチャ/イベント」「wiki 一覧」のような
+     長いラベルが「ガチャイベ…」と切れると行き先が読めなくなるため。 */
+  html[data-ui='new'] .app-header .nav-link .sm-show {
+    display: block;
+    width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  html[data-ui='new'] .app-header .nav-link svg {
+    width: 21px;
+    height: 21px;
+  }
+  html[data-ui='new'] .app-header .nav-link:hover {
+    color: var(--text);
+    background: color-mix(in srgb, var(--text) 6%, transparent);
+  }
+  /* 現在地は「色」だけでなく左端のバーでも示す（色覚に依存させない） */
+  html[data-ui='new'] .app-header .nav-link[aria-current='page'] {
+    color: var(--accent);
+    background: var(--accent-weak);
+  }
+  html[data-ui='new'] .app-header .nav-link[aria-current='page']::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 50%;
+    width: 3px;
+    height: 22px;
+    translate: 0 -50%;
+    border-radius: 0 3px 3px 0;
+    background: var(--accent);
+  }
+
+  /* 検索とテーマはレールの下に寄せる（header-spacer が押し下げる） */
+  html[data-ui='new'] .app-header > .btn-icon,
+  html[data-ui='new'] .app-header .theme-menu > .btn-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+  }
+
+  /* 本文はレールぶん広く使える。読み幅は .prose 側で担保されている */
+  html[data-ui='new'] .layout {
+    max-width: 1360px;
+    padding-inline: 28px;
+  }
+  html[data-ui='new'] .layout.has-sidebar {
+    grid-template-columns: 248px minmax(0, 1fr);
+    gap: 40px;
+    padding-inline: 28px;
+  }
+  html[data-ui='new'] .sidebar {
+    top: 24px;
+    max-height: calc(100dvh - 48px);
+  }
+  html[data-ui='new'] .content {
+    padding-block: 36px 96px;
+  }
+}
+
+/* =========================================================================
+   2. スマホ: 浮かぶドックと、薄くなるヘッダー
+   ========================================================================= */
+@media (max-width: 959px) {
+  html[data-ui='new'] .app-header {
+    height: calc(52px + env(safe-area-inset-top, 0px));
+    background: color-mix(in srgb, var(--surface) 82%, transparent);
+    backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--n-line);
+  }
+
+  /* 下部ナビを画面端から浮かせて「島」にする */
+  html[data-ui='new'] .bottom-nav {
+    left: 10px;
+    right: 10px;
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    height: 58px;
+    padding-bottom: 0;
+    border: 1px solid var(--n-line-strong);
+    border-radius: 20px;
+    background: color-mix(in srgb, var(--surface) 90%, transparent);
+    backdrop-filter: saturate(180%) blur(18px);
+    box-shadow: 0 8px 28px color-mix(in srgb, var(--text) 14%, transparent);
+    overflow: hidden;
+  }
+  html[data-ui='new'] .bottom-nav a {
+    position: relative;
+    gap: 3px;
+    font-size: 0.63rem;
+  }
+  /* 現在地は上辺のバーで示す（ドックの中で位置が分かる） */
+  html[data-ui='new'] .bottom-nav a[aria-current='page']::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 22%;
+    right: 22%;
+    height: 3px;
+    border-radius: 0 0 3px 3px;
+    background: var(--accent);
+  }
+
+  /* ドックが浮いたぶん、本文の下余白を足す。
+     iOS では ios.css が同じ詳細度で後から 58px を指定してくるので、
+     [data-ios] を併記して上回る必要がある（併記しないと余白が足りず
+     ドックが本文の末尾に重なる）。 */
+  html[data-ui='new'] .app-main,
+  html[data-ui='new'][data-ios] .app-main {
+    padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+  }
+  html[data-ui='new'] .app-footer,
+  html[data-ui='new'][data-ios] .app-footer {
+    padding-bottom: calc(24px + 76px + env(safe-area-inset-bottom, 0px));
+  }
+  /* タブバーを隠す設定のときは、その余白も戻す */
+  html[data-ui='new'][data-tabbar='hide'] .app-main {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html[data-ui='new'][data-tabbar='hide'] .app-footer {
+    padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* =========================================================================
+   3. 面と境界 — 影をやめ、罫線と余白で階層を作る
+   ========================================================================= */
+html[data-ui='new'] .card {
+  background: var(--n-raise);
+  border: 1px solid var(--n-line);
+  box-shadow: none;
+}
+html[data-ui='new'] .card-pad {
+  padding: 18px;
+}
+html[data-ui='new'] .card-link {
+  transition:
+    border-color var(--n-dur) var(--n-ease),
+    background var(--n-dur) var(--n-ease),
+    translate var(--n-dur) var(--n-ease);
+}
+html[data-ui='new'] .card-link:hover {
+  border-color: var(--n-line-strong);
+  background: color-mix(in srgb, var(--accent) 4%, var(--n-raise));
+  text-decoration: none;
+}
+html[data-ui='new'] .card-link:active {
+  translate: 0 1px;
+}
+
+/* 見出し帯: 上に細い罫を置いて「区切り」を明示する */
+html[data-ui='new'] .page-head {
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--n-line);
+}
+html[data-ui='new'] .page-head .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+html[data-ui='new'] .page-head .eyebrow::before {
+  content: '';
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+}
+html[data-ui='new'] .page-head h1 {
+  margin-top: 6px;
+}
+html[data-ui='new'] .page-head .lead {
+  max-width: 68ch;
+  color: var(--muted);
+}
+
+html[data-ui='new'] .prose h2 {
+  padding-bottom: 0.35em;
+  border-bottom: 1px solid var(--n-line);
+}
+html[data-ui='new'] .prose blockquote {
+  border-left: 2px solid var(--accent);
+  padding-left: 14px;
+  color: var(--muted);
+}
+html[data-ui='new'] .prose pre,
+html[data-ui='new'] .prose table {
+  border: 1px solid var(--n-line);
+  border-radius: var(--radius-sm);
+}
+
+/* 操作要素: 面で押せることを示し、影は使わない */
+html[data-ui='new'] .btn {
+  border-radius: 11px;
+  border: 1px solid var(--n-line-strong);
+  box-shadow: none;
+  font-weight: 600;
+  transition:
+    background var(--n-dur) var(--n-ease),
+    border-color var(--n-dur) var(--n-ease);
+}
+html[data-ui='new'] .btn-primary {
+  border-color: transparent;
+}
+html[data-ui='new'] .chip {
+  border-radius: 999px;
+  border: 1px solid var(--n-line);
+  font-weight: 600;
+}
+html[data-ui='new'] .chip.is-on {
+  border-color: transparent;
+}
+html[data-ui='new'] .badge {
+  border-radius: 7px;
+  border: 1px solid var(--n-line);
+  background: transparent;
+}
+
+/* サイドバー: 罫線で区切らず、余白とラベルで見せる */
+html[data-ui='new'] .nav-group-title {
+  font-size: 0.68rem;
+  letter-spacing: 0.09em;
+  color: color-mix(in srgb, var(--text) 50%, transparent);
+}
+html[data-ui='new'] .sidebar .nav-link[aria-current='page'],
+html[data-ui='new'] .sidebar .nav-link.is-active,
+html[data-ui='new'] .drawer-panel .nav-link[aria-current='page'] {
+  background: var(--accent-weak);
+  color: var(--accent);
+}
+
+/* =========================================================================
+   4. モーション — 「今どこにいるか」「何が現れたか」だけを伝える
+   ------------------------------------------------------------------------
+   すべて prefers-reduced-motion と、サイト設定 data-motion="reduce" の
+   両方で止まるように囲ってある。装飾のための動きは入れない。
+   ========================================================================= */
+@media (prefers-reduced-motion: no-preference) {
+  /* --- 読み進み度。スクロール連動なので JS を持たない ------------------- */
+  @supports (animation-timeline: scroll()) {
+    html[data-ui='new']:not([data-motion='reduce']) .app-header::after {
+      content: '';
+      position: absolute;
+      background: var(--accent);
+      transform-origin: 0 0;
+      animation: n-progress linear both;
+      animation-timeline: scroll(root block);
+    }
+    /* パソコン: レールの右端を縦に伸びるバーにする */
+    @media (min-width: 960px) {
+      html[data-ui='new']:not([data-motion='reduce']) .app-header::after {
+        top: 0;
+        right: -1px;
+        width: 2px;
+        height: 100%;
+        scale: 1 0;
+      }
+      @keyframes n-progress {
+        to {
+          scale: 1 1;
+        }
+      }
+    }
+    /* スマホ: ヘッダー下端を横に伸びるバーにする */
+    @media (max-width: 959px) {
+      html[data-ui='new']:not([data-motion='reduce']) .app-header::after {
+        left: 0;
+        bottom: -1px;
+        height: 2px;
+        width: 100%;
+        scale: 0 1;
+      }
+      @keyframes n-progress {
+        to {
+          scale: 1 1;
+        }
+      }
+    }
+  }
+
+  /* --- カードの現れ方 ---------------------------------------------------
+     既存の JS リビール（data-reveal）は、対応ブラウザではこちらに置き換える。
+     view() は「その要素が視界に入った量」で進むので、スクロールを戻すと
+     きちんと戻る＝スクロール位置と動きがズレない。 */
+  @supports (animation-timeline: view()) {
+    html[data-ui='new']:not([data-motion='reduce']) .grid-cards > *,
+    html[data-ui='new']:not([data-motion='reduce']) .stat-band > .stat,
+    html[data-ui='new']:not([data-motion='reduce']) .wiki-cards > * {
+      opacity: 1;
+      translate: none;
+      animation: n-enter linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 60%;
+    }
+    /* JS 側のリビールが二重に効かないよう、こちらで確定させる */
+    html[data-ui='new'][data-reveal='1']:not([data-motion='reduce'])
+      :is(.grid-cards > *, .stat-band > .stat) {
+      opacity: 1;
+    }
+    @keyframes n-enter {
+      from {
+        opacity: 0;
+        translate: 0 14px;
+      }
+      to {
+        opacity: 1;
+        translate: 0 0;
+      }
+    }
+  }
+
+  /* --- ページ遷移（View Transitions）------------------------------------
+     前後関係が分かるよう、内容だけ短く差し替える。派手な演出はしない。 */
+  html[data-ui='new']:not([data-motion='reduce'])::view-transition-old(root) {
+    animation: n-out 0.16s var(--n-ease) both;
+  }
+  html[data-ui='new']:not([data-motion='reduce'])::view-transition-new(root) {
+    animation: n-in 0.24s var(--n-ease) both;
+  }
+  @keyframes n-out {
+    to {
+      opacity: 0;
+      translate: 0 -6px;
+    }
+  }
+  @keyframes n-in {
+    from {
+      opacity: 0;
+      translate: 0 10px;
+    }
+  }
+}
+
+/* =========================================================================
+   5. iPhone まわりの上乗せ
+   ========================================================================= */
+html[data-ui='new'][data-ios] .bottom-nav {
+  /* ドックは浮いているので、押し込みは弱めにして揺れて見えないようにする */
+  --tap-scale: 0.985;
+}
+
+/* 印刷では左レールもドックも不要 */
+@media print {
+  html[data-ui='new'] .app {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'main' 'footer';
+  }
+  html[data-ui='new'] .app-header,
+  html[data-ui='new'] .bottom-nav {
+    display: none;
+  }
+}
