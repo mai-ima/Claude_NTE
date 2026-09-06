@@ -4,7 +4,7 @@ category: "シティライフ"
 order: 60
 description: "ヘテロシティ各地の釣り場で魚を釣るシティライフ。釣り場ごとに釣れる魚が異なり、スコアに応じてファンスや円石などの報酬が得られる。"
 status: "verified"
-updated: 2026-06-15
+updated: 2026-09-06
 tags: ["シティライフ", "釣り", "ファンス", "報酬"]
 sources:
   - label: "AppMedia — シティライフ一覧とやり方"
@@ -15,6 +15,8 @@ sources:
     url: "https://kamigame.jp/nte/page/429369728490829034.html"
   - label: "ゲームウィズ — 日本式麻雀の解放と遊び方"
     url: "https://gamewith.jp/nte/566889"
+  - label: "NTE公式 — Ver.1.3「霧月夜に星還りて」アップデートのお知らせ"
+    url: "https://nte.perfectworld.com/jp/article/news/gamenews/20260817/263606.html"
 ---
 
 ## 概要
@@ -37,5 +39,9 @@ Ver.1.2 で、釣った魚を自宅の**アクアリウム**で飼育・鑑賞�
 - **釣り上げたレア魚を車の後部に装着して飾る**こともできる。
 
 あわせて雀荘「ジャン」に日本式の[リーチ麻雀](/terms/riichi-mahjong/)が追加された。
+
+## Ver.1.3 での変更（2026-08-19）
+
+- **おさかなボックスの画面にクイックロック機能**が追加された。売却・整理のときに残したい魚を素早く守れる。
 
 関連: [シティライフ](/systems/city-life/) ／ [ヘテロシティ・ホビー](/terms/heterocity-hobby/) ／ [ファンス](/terms/fons/) ／ [リーチ麻雀](/terms/riichi-mahjong/) ／ [探索・シティライフ](/systems/exploration/)

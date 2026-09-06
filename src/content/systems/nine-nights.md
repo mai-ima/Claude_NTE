@@ -4,7 +4,7 @@ category: "エンドコンテンツ"
 order: 15
 description: "Ver.1.2 実装の常設ハクスラ／卓上RPG風モード。ウォーレン大陸を職業別の4人で冒険し、メェメェ村から赤竜の古城を目指す。専用のレベル・装備・鑑定・通貨・特殊挑戦を持つ。"
 status: "verified"
-updated: 2026-07-24
+updated: 2026-09-06
 tags: ["エンドコンテンツ", "九百九十九夜", "v1.2", "ハクスラ", "ウォーレン大陸"]
 sources:
   - label: "ゲームウィズ — 九百九十九夜の効率的な進め方"
@@ -17,6 +17,8 @@ sources:
     url: "https://gamewith.jp/nte/566890"
   - label: "Game8 — How to Identify Equipment"
     url: "https://game8.co/games/Neverness-to-Everness/archives/610181"
+  - label: "NTE公式 — Ver.1.3「霧月夜に星還りて」アップデートのお知らせ"
+    url: "https://nte.perfectworld.com/jp/article/news/gamenews/20260817/263606.html"
 ---
 
 ## 概要
@@ -82,5 +84,12 @@ sources:
 - まず本編「赤竜討伐譚」を進めて解放し、メェメェ村周辺の探検ガイドで金貨と装備を整える。
 - 装備は**レベル数値だけで入れ替えずセット効果を維持**する（ステ画面で有効を確認）。
 - 裏ボス [？？？（真紅）](/enemies/crimson-shinku/) は全キャラLv100が条件かつ999最強格。装備鑑定で性能を伸ばし、白焔DoTで被弾を抑えて挑む。
+
+## Ver.1.3 での変更（2026-08-19）
+
+- **[階層チャレンジ（真竜試練）](/systems/floor-challenge/)** が追加された。ウォーレン大陸北部のダンジョンから挑戦でき、最大99フロア。敵の密度が高く、装備と[ふしぎなボタン](/items/mystery-button/)の周回先として優秀。
+- **装備の1回の回収上限が 50** に引き上げられた（それまでは上限が低く、周回のたびに回収し直す必要があった）。
+
+> これより上の記述は Ver.1.2 実装時点〜Ver.1.2 期間中の情報。仕様は版で調整されうる。
 
 関連: [ウォーレン大陸](/locations/warren-continent/) ／ [ウォーレン金貨](/items/warren-coin/) ／ [商人メェメェ](/shops/warren-meme-merchant/) ／ [赤竜](/enemies/red-dragon/) ／ [裏ボス 真紅](/enemies/crimson-shinku/)
