@@ -55,6 +55,17 @@
 
 ## 3. ディレクトリの地図
 
+> **詳細は [docs/](./docs/) にある。コードを読み直す前にそちらを見ること。**
+>
+> | ファイル | 何が書いてあるか |
+> | --- | --- |
+> | [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) | 全ファイルの役割・lib の関数シグネチャ・CSS の読み込み順・localStorage のキー |
+> | [docs/RECIPES.md](./docs/RECIPES.md) | 「〜を足すとき触るファイル」の全リスト（設定 / wiki / ツール / 記事 / 静的ページ） |
+> | [docs/CHECKS.md](./docs/CHECKS.md) | `pnpm verify` の各検査が禁じていること。落ちたときの直し方 |
+> | [docs/FINDINGS.md](./docs/FINDINGS.md) | 読んで確かめた知見と、過去にやった勘違いの「誤 → 正」 |
+>
+> このファイル（CONTEXT.md）は「**今どうなっているか・何をしたか**」に専念する。
+
 ```
 astro.config.mjs           # サイト設定・旧URLのリダイレクト
 src/
@@ -91,6 +102,9 @@ scripts/
 4. `src/pages/<base>/` にページを置く（既存の `pages/alpha/` をコピーするのが早い）
 
 `rehype-term-links.mjs` の `WIKI_GROUPS` にも同じディレクトリを追加する（自動リンク用）。
+
+→ **検査スクリプト側の追記も要る**。抜け漏れのない全手順は
+[docs/RECIPES.md](./docs/RECIPES.md#2-wiki-を1つ足す) にある。
 
 ---
 

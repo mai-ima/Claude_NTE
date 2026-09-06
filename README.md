@@ -13,7 +13,10 @@
 記事データ（コレクション）・URL・ナビゲーション・用語の自動リンク辞書は wiki ごとに分離されており、
 片方の更新がもう片方に影響することはありません。wiki を増やす手順は [CONTEXT.md](./CONTEXT.md) を参照。
 
-> 開発時の方針・現在の状態は **[CONTEXT.md](./CONTEXT.md)**（このリポジトリの記憶ファイル）にまとまっています。
+> 開発時の方針・現在の状態は **[CONTEXT.md](./CONTEXT.md)**（このリポジトリの記憶ファイル）に、
+> 構造の詳細・作業手順・検査ルールは **[docs/](./docs/)** にまとまっています
+> （[ARCHITECTURE](./docs/ARCHITECTURE.md) / [RECIPES](./docs/RECIPES.md) /
+> [CHECKS](./docs/CHECKS.md) / [FINDINGS](./docs/FINDINGS.md)）。
 
 > 各記事は Web 調査に基づき**出典を明記**し、未確認の数値・仕様には「要確認」を付しています。
 > ゲーム内画像・地図等の権利はすべて Hotta Studio / Perfect World Games に帰属します（当サイトは公式アートを同梱しません）。
