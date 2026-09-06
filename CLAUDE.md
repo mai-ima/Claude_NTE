@@ -18,8 +18,10 @@
 - **捏造しない**。出典で裏が取れた内容だけを `status: "verified"`、未検証は `status: "draft"` と
   本文の「要確認」で明示する。全記事に `sources` と `updated` を付ける。
 - **過去バージョンの情報は消さない**。古い記述は「いつ時点の情報か」を添えて残す。
-- 変更したら `pnpm test` → `pnpm build` → `node scripts/check-links.mjs` を通す。
+- 変更したら `pnpm verify` を通す（test → 記事検査 → 型 → build → UI検査 → リンク検査）。
 - 作業ブランチは `claude/claude-nte-audit-E1OnP`。
+- **本番に出るのは `main` だけ**。作業ブランチへのプッシュは本番 URL に反映されない。
+  「直したのに直っていない」と言われたら、まず `git log --oneline origin/main..HEAD` を確認する。
 
 ## 作業が一区切りしたら
 

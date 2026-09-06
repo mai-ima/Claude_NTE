@@ -16,6 +16,9 @@
  *  3. wiki のページに別 wiki のナビが混ざっていないか
  *     α のページから NTE のタブ・ヘッダーが出ていると、そこから NTE へ飛ばされる。
  *
+ *  4. wiki ごとのスタイルが混ざっていないか
+ *     α は独自のデザインシステムで動く約束。NTE のクラス定義が来ていたら分離が崩れている。
+ *
  * 使い方: pnpm build のあとに `node scripts/check-ui.mjs`
  */
 import fs from 'node:fs';
@@ -98,6 +101,28 @@ for (const file of files) {
       problems.push(`${rel}: NTE のページに α のシェル／タブが含まれています`);
     }
   }
+
+  // --- 4. wiki ごとのスタイルが混ざっていないか --------------------------
+  // α は独自のデザインシステムで動く約束なので、NTE 側のクラス定義が
+  // 読み込まれていたら分離が崩れている（逆も同じ）。
+  const styleHrefs = [...html.matchAll(/<link[^>]+rel="stylesheet"[^>]+href="([^"]+)"/g)].map(
+    (m) => m[1],
+  );
+  const inlineCss = [...html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)]
+    .map((m) => m[1])
+    .join('\n');
+  const cssText = inlineCss;
+  if (isAlphaPage) {
+    // NTE 固有のクラス（.app-header / .bottom-nav / .drawer-panel）が来ていたら混線
+    for (const cls of ['.app-header', '.bottom-nav', '.drawer-panel']) {
+      if (cssText.includes(cls)) {
+        problems.push(`${rel}: α のページに NTE のスタイル（${cls}）が混ざっています`);
+      }
+    }
+  } else if (cssText.includes('.a-shell') || cssText.includes('.a-tabs{')) {
+    problems.push(`${rel}: NTE のページに α のスタイルが混ざっています`);
+  }
+  void styleHrefs;
 }
 
 console.log(`HTML ${files.length} ファイル / アイコン参照 ${checkedUses} 件 / wiki跨ぎリンク ${crossLinks} 件を検査`);

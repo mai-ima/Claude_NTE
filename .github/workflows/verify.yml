@@ -1,0 +1,49 @@
+# 変更のたびに、ローカルと同じ検証をひと通り走らせる。
+#
+# ここが緑でないものは本番（main）に入れない、という運用のための土台。
+# 実行内容は CONTEXT.md「6. 作業のやり方」と同じ並びにしてある。
+name: verify
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      # Playwright は検証用の任意依存。CI では入れずに済むよう --ignore-scripts は使わない。
+      - name: 依存をインストール
+        run: pnpm install --frozen-lockfile
+
+      - name: 単体テスト
+        run: pnpm test
+
+      - name: 記事の品質検査（出典・更新日・リンク記法・重複）
+        run: pnpm test:content
+
+      - name: 型チェック
+        run: pnpm check
+
+      - name: 本番ビルド
+        run: pnpm build
+
+      - name: UI検査（アイコン参照切れ・wiki跨ぎリンク・ナビ混入）
+        run: pnpm test:ui
+
+      - name: 内部リンク切れ検査
+        run: pnpm test:links
