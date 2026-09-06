@@ -118,8 +118,12 @@ for (const dir of Object.keys(URL_BASE)) {
 const knownUrls = new Set(articles.map((a) => a.url));
 
 // --- 1件ずつ検査 ------------------------------------------------------------
-const TODAY = new Date('2026-09-05');
+// 実行した日を基準にする。以前は日付をベタ書きしていたため、日が経つほど
+// 「何日更新されていないか」の判定が実態からずれていった。
+const TODAY = new Date();
 const STALE_DAYS = 240;
+/** この日数を超えた記事は「そろそろ見直したい」としてサマリーに出す */
+const REVIEW_DAYS = 90;
 const VOLATILE = ['実装予定', '最新章', '現在の最新', '近日', '予定です'];
 
 for (const a of articles) {
@@ -138,6 +142,9 @@ for (const a of articles) {
   // 陳腐化しやすい表現 × 古い更新日
   if (f.updated) {
     const days = Math.round((TODAY - new Date(f.updated)) / 86_400_000);
+    // 未来の日付は入力ミス（コピペや年の打ち間違い）。放置すると「最新」に見えてしまう
+    if (days < 0) add('warn', a.file, `updated が未来の日付です（${f.updated}）`);
+    a.staleDays = days;
     for (const word of VOLATILE) {
       if (a.body.includes(word) && days > 90) {
         add('warn', a.file, `「${word}」を含むのに ${days} 日更新されていません（陳腐化の可能性）`);
@@ -179,6 +186,36 @@ for (const a of articles) {
 const draft = articles.filter((a) => a.front.status === 'draft').length;
 console.log(`記事: ${articles.length}件（draft ${draft}件 / verified ${articles.length - draft}件）`);
 console.log(`検査: 出典・更新日・内部リンク記法・リンク先・重複・陳腐化`);
+
+// 鮮度の見通し。「直したのに updated を上げていない記事」と「本当に古い記事」が
+// 混ざると読者から区別できないので、更新月の分布を毎回出す。
+// 日数のしきい値だと、ゲームの更新周期（約6週間）と噛み合わず実態が見えなかった。
+const dated = articles.filter((a) => typeof a.staleDays === 'number');
+if (dated.length) {
+  const byMonth = {};
+  for (const a of dated) {
+    const ym = String(a.front.updated).slice(0, 7);
+    byMonth[ym] = (byMonth[ym] ?? 0) + 1;
+  }
+  const dist = Object.entries(byMonth)
+    .sort()
+    .map(([ym, n]) => `${ym} ${n}件`)
+    .join(' / ');
+  const oldest = Math.max(...dated.map((a) => a.staleDays));
+  console.log(`更新月: ${dist}（最古 ${oldest}日前）`);
+
+  const stale = dated.filter((a) => a.staleDays > REVIEW_DAYS);
+  if (stale.length) {
+    const byDir = {};
+    for (const a of stale) byDir[a.dir] = (byDir[a.dir] ?? 0) + 1;
+    const top = Object.entries(byDir)
+      .sort((x, y) => y[1] - x[1])
+      .slice(0, 5)
+      .map(([d, n]) => `${d} ${n}`)
+      .join(' / ');
+    console.log(`  ${REVIEW_DAYS}日超: ${stale.length}件 — 多い順: ${top}`);
+  }
+}
 console.log('');
 
 if (problems.length === 0) console.log('✓ 問題は見つかりませんでした');

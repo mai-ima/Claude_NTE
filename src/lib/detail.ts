@@ -78,5 +78,13 @@ export function baseDetailProps(collection: string, entry: AnyEntry, prev: AnyEn
     sources: d.sources as { label: string; url: string }[] | undefined,
     prev: prev ? { href: hrefOf(collection, prev.id), title: titleOf(prev) } : null,
     next: next ? { href: hrefOf(collection, next.id), title: titleOf(next) } : null,
+    /**
+     * 「このページを編集」の宛先になる実ファイルパス。
+     * これが無いと EntityDetail は拡張子を .md と決め打ちするため、
+     * **.mdx の記事で編集リンクが存在しないファイルを指す**。
+     * 以前は一部のページだけが個別に渡しており、.mdx を足す場所によっては
+     * 壊れる状態だったので、ここで全コレクション分をまとめて渡す。
+     */
+    editPath: (entry as unknown as { filePath?: string }).filePath,
   };
 }

@@ -33,9 +33,36 @@ for (const file of files) {
 }
 
 console.log(`internal links checked: ${checked} | MISSING: ${missing.size}`);
+
+// --- 「このページを編集」リンクが実在のファイルを指しているか ---------------
+// 記事は .md と .mdx が混在する。編集リンクの組み立てで拡張子を決め打ちすると、
+// 片方の記事だけ存在しないファイルを指す（GitHub で 404 か新規作成画面になる）。
+// 見た目には分からないので、ここで機械的に確かめる。
+const editRe = /href="https:\/\/github\.com\/[^/]+\/[^/]+\/edit\/[^/]+\/(src\/content\/[^"]+)"/g;
+const badEdit = new Map(); // 実在しないパス -> それを出しているHTML
+let editChecked = 0;
+for (const file of files) {
+  const html = readFileSync(file, 'utf8');
+  let m;
+  while ((m = editRe.exec(html)) !== null) {
+    editChecked++;
+    const rel = decodeURIComponent(m[1]);
+    if (!existsSync(rel)) {
+      if (!badEdit.has(rel)) badEdit.set(rel, file);
+    }
+  }
+}
+console.log(`edit links checked: ${editChecked} | MISSING: ${badEdit.size}`);
+
 if (missing.size > 0) {
   for (const [href, srcs] of [...missing].slice(0, 40)) {
     console.log(`  ${href}  <- ${[...srcs][0]}`);
   }
-  process.exit(1);
 }
+if (badEdit.size > 0) {
+  console.log('編集リンクの宛先が存在しません:');
+  for (const [rel, file] of [...badEdit].slice(0, 20)) {
+    console.log(`  ${rel}  <- ${file}`);
+  }
+}
+if (missing.size > 0 || badEdit.size > 0) process.exit(1);
