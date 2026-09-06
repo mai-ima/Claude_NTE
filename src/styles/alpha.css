@@ -808,6 +808,46 @@ html[data-ios] .a-chips {
     transition: transform 0.06s ease-out;
   }
 }
+/* ダブルタップズームの 300ms 遅延をなくす（NTE 側の ios.css と同じ考え方） */
+html[data-ios] a,
+html[data-ios] button,
+html[data-ios] summary,
+html[data-ios] label {
+  touch-action: manipulation;
+}
+/* 長押しで出る iOS のメニューを、ナビ・操作要素だけ止める。
+   本文（.a-prose）は必ず除外する（画像の保存やコピーを奪わないため）。 */
+html[data-ios] .a-top,
+html[data-ios] .a-tabs,
+html[data-ios] .a-side,
+html[data-ios] .a-chip,
+html[data-ios] .a-icon-btn,
+html[data-ios] .a-card {
+  -webkit-touch-callout: none;
+}
+html[data-ios] .a-prose,
+html[data-ios] .a-prose * {
+  -webkit-touch-callout: default;
+}
+/* ナビの文字が選択されるのを防ぐ（本文は当然選べるまま） */
+html[data-ios] .a-top,
+html[data-ios] .a-tabs,
+html[data-ios] .a-chip {
+  -webkit-user-select: none;
+  user-select: none;
+}
+html[data-ios] .a-prose,
+html[data-ios] .a-prose * {
+  -webkit-user-select: text;
+  user-select: text;
+}
+/* ホーム画面に追加したとき（standalone）はブラウザのツールバーが無く、
+   ヘッダーが直接ノッチに接する。NTE 側の ios.css の 8 と同じ調整。 */
+@media (display-mode: standalone) {
+  html[data-ios] .a-top {
+    height: calc(50px + env(safe-area-inset-top, 0px));
+  }
+}
 
 /* ---- モーション軽減 ---------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {

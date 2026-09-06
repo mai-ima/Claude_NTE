@@ -48,13 +48,20 @@
 | 「`.bottom-nav` に safe-area 対応が無い」 | **`components.css:883-896` で対応済み**。`height: calc(58px + env(safe-area-inset-bottom))` ＋ `padding-bottom`。`ios.css` に無いのは重複を避けているから |
 | 「α 側には iOS 最適化が一切効いていない」 | **`alpha.css:788-810` に独自の `html[data-ios]` セクションがある**（タップハイライト除去・入力 16px・overscroll・押下スケール）。ただし `ios.css` より項目は少ない |
 
-### 本当に未対応だったもの
+### 未対応だったもの（v0.10.0 で対応済み）
 
-- **`-webkit-touch-callout` はリポジトリ全体で 0 件**。
-  画像・カードを長押しすると iOS の共有シート／プレビューが出ます。
-- **スクロール位置の復元に手を入れていない**。`astro:after-swap`（`BaseLayout.astro:515`）は
-  `data-reveal` を外しているだけ。`history.scrollRestoration` への言及も 0 件。
-  ※ Astro の `ClientRouter` は既定でスクロール復元を持つので、**壊れていると確かめるまで触らない**こと。
+- ~~`-webkit-touch-callout` はリポジトリ全体で 0 件~~ → NTE・α 双方に入れました。
+  ナビ・ボタン・カードは `none`、**本文は `default`**（画像の保存やコピーを奪わないため）。
+  本文も抑制したい人は設定（`nte.callout`）で選べます。
+  **`-webkit-touch-callout` は Safari 専用で Chromium は未実装**なので、
+  Playwright の `getComputedStyle` では確かめられません（`undefined` が返る）。
+  ビルド後の CSS（`dist/_astro/*.css`）に出ているかで確認してください。
+- **スクロール位置の復元は自前で持っていないが、それで正しい**（v0.10.0 で実測して確認）。
+  - NTE 側は `ClientRouter` が管理（`history.scrollRestoration` は `manual` になる）
+  - α 側はブラウザの標準復元（`auto`）。どちらも「一覧 → 記事 → 戻る」で元の位置に戻る
+  - **測り方に注意**: Playwright の `click()` は対象要素まで自動スクロールするので、
+    「離れる直前の位置」が変わって復元が壊れているように見える。`goto()` で遷移して測ること。
+    これで一度「α の復元が壊れている」と誤診し、不要な保険コードを入れかけた。
 - `visualViewport` 未使用（キーボード表示時の追随なし）。検索ダイアログは
   `max-height: min(72svh, 640px)`（`ios.css:85-88`）で実用上は収まっています。
 - `@media (display-mode: standalone)` のブロックだけ **`html[data-ios]` スコープの外**にあり、

@@ -223,6 +223,10 @@ const crumbItems = [{ name: 'αテストwiki', href: withBase('/alpha/') }, ...b
           ?.setAttribute('content', dark ? '#0e0e14' : '#f7f7fb');
       });
 
+      // ※ スクロール位置の復元は自前で持たない。α は素のページ遷移なので
+      //    ブラウザの標準復元（history.scrollRestoration = 'auto'）が効く。
+      //    実測でも「一覧 → 記事 → 戻る」で元の位置に戻ることを確認済み。
+
       // 横に長い表はスクロールできるようラップする（スマホで崩れないように）
       for (const table of Array.from(document.querySelectorAll('.a-prose table'))) {
         if (table.parentElement?.classList.contains('a-table-scroll')) continue;
