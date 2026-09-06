@@ -5,12 +5,14 @@ category: "世界観・組織・地名"
 order: 52
 description: "ヘテロシティを走る車両。最初のスクーター「ローバーA1」から、数十台規模の車を購入・フルカスタムできる。タクシー・配達などシティライフの足にもなる。"
 status: "verified"
-updated: 2026-06-11
+updated: 2026-09-06
 tags: ["シティライフ", "乗り物"]
 aliases: ["Rover A1", "ローバー", "ビークル", "車"]
 sources:
   - label: "GameWith — 探索/乗り物"
     url: "https://gamewith.net/nte/"
+  - label: "NTE公式 — Ver.1.3「霧月夜に星還りて」アップデートのお知らせ"
+    url: "https://nte.perfectworld.com/jp/article/news/gamenews/20260817/263606.html"
 ---
 
 **乗り物（ビークル）** は、広大な[ヘテロシティ](/terms/hethereau/)を移動するための車両。最初に手に入るのがスクーター「**ローバーA1（Rover A1）**」で、ここから多彩な車両へ広がる。ロード無しのシームレスな街を快適に巡るための基盤要素。
@@ -28,5 +30,17 @@ sources:
 - **収入・定住への波及**: 都市アクティビティ[ヘテロシティ・ホビー](/terms/heterocity-hobby/)や[市民ID](/terms/citizen-id/)（定住）など、街の進行と相性がよい。
 
 - **車両ごとの詳細**は[ビークル一覧](/vehicles/)（[スクーター](/vehicles/rover-a1/)・[市販車/バイク](/vehicles/market-car/)・[青い炎のバイク](/vehicles/blue-flame-bike/)）にまとめている。
+
+## Ver.1.3 での追加（2026-08-19）
+
+陸上以外の乗り物が初めて加わり、種類が3つ増えた。
+
+| 乗り物 | 種別 | 入手 |
+| --- | --- | --- |
+| [Tide](/vehicles/tide/) | 水上バイク | ブラインドボックス「閃光サーフ」（期間限定） |
+| [サウザン](/vehicles/thousand/) | ビーチバギー | カーショップ「TerraX」4,000,000ファンス（恒常） |
+| [ノスタルジー号](/vehicles/nostalgie/) | 自転車（相乗り可） | ファンスで購入（価格・場所は要確認） |
+
+あわせて「[市内配達](/terms/swift-taxi/)」が**自動運転に対応**し、**助手席への同乗**もできるようになった。
 
 関連: [ビークル一覧](/vehicles/) ／ [スイフトTAXI／配達](/terms/swift-taxi/) ／ [手配度](/terms/wanted-level/) ／ [探索・乗り物](/systems/exploration/) ／ [零](/characters/zero/)
