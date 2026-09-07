@@ -43,5 +43,14 @@ export default defineConfig({
   },
   // 注: Markdown/MDX 内部リンクは「相対リンク」で記述しているため base 付与の
   // 変換プラグインは不要（Astro のバージョン更新にも壊れにくい）。
-  integrations: [preact({ compat: true }), mdx(), icon(), pagefind(), sitemap()],
+  integrations: [
+    preact({ compat: true }),
+    mdx(),
+    icon(),
+    pagefind(),
+    // 準備中の wiki（原神 / 鳴潮 / 崩壊：スターレイル）と検証用サンプル（α）は
+    // まだ中身が無い・実在しないゲームなので、sitemap に載せない。
+    // ページ側でも noindex にしてあり、ここは二重の歯止め。
+    sitemap({ filter: (page) => !/\/(genshin|wuwa|hsr|alpha)\//.test(page) }),
+  ],
 });

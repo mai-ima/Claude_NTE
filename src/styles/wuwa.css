@@ -1,0 +1,235 @@
+/* =========================================================================
+   鳴潮（Wuthering Waves）攻略wiki（準備中）専用スタイル
+   ------------------------------------------------------------------------
+   NTE / α / エンドフィールド / 原神 とは**一切共有しない**独立したスタイル。
+   トークンは --ww-* に閉じる。
+
+   根拠（docs/UI-RESEARCH.md）:
+   - 公式サイト（wutheringwaves.kurogames.com）の HTML に `background: #000` を実測。
+     取得できた CSS の色は暗色階調のみ（#181818 / #222222 / #282828 / #2c3e50）で、
+     アクセント色は**取れなかった**（見た目は JS が動的に作るため）。
+   - メディア記事より、世界観は **SF・ポストアポカリプス**。
+   → ここから「黒地・高コントラスト・鋭角の切り欠き・シアンの差し色」として**解釈**した。
+     実物を確認できたら docs/UI-RESEARCH.md を更新してから直すこと。
+
+   ※ 公式の画像・ロゴ・フォントは同梱しない。装飾は CSS で作る。
+   ========================================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+[hidden] {
+  display: none !important;
+}
+
+:root {
+  --ww-bg: #000000; /* 実測（公式サイトの inline） */
+  --ww-bg-2: #0e0e0f;
+  --ww-panel: #181818; /* 実測（公式CSSの暗色階調） */
+  --ww-line: #2c2c2e;
+  --ww-line-soft: #1c1c1e;
+  --ww-text: #f2f2f2;
+  --ww-text-2: #b9bcc0;
+  --ww-muted: #7d8288;
+  --ww-accent: #2dd4bf; /* 解釈（実測できず） */
+  --ww-accent-deep: #14b8a6;
+  --ww-font:
+    ui-sans-serif, system-ui, -apple-system, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP',
+    sans-serif;
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--ww-bg);
+  /* 走査線のような細い横縞。SF調の解釈（極薄にして本文の可読性を落とさない） */
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.014) 0 1px,
+    transparent 1px 4px
+  );
+  color: var(--ww-text);
+  font-family: var(--ww-font);
+  font-size: 16px;
+  line-height: 1.85;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: var(--ww-accent);
+}
+:focus-visible {
+  outline: 2px solid var(--ww-accent);
+  outline-offset: 3px;
+}
+
+.ww-shell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+/* ---- ヘッダー: 左寄せ、下に細いシアンの線 ------------------------------ */
+.ww-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--ww-line);
+  position: relative;
+}
+/* 下辺の一部だけシアンを走らせる（全幅にしないのがSF調の要点） */
+.ww-head::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 120px;
+  height: 1px;
+  background: var(--ww-accent);
+}
+.ww-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex: none;
+  background: var(--ww-accent);
+  color: #04211d;
+  font-weight: 900;
+  /* 左上と右下を鋭角に落とす */
+  clip-path: polygon(22% 0, 100% 0, 100% 78%, 78% 100%, 0 100%, 0 22%);
+}
+.ww-brand {
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+/* ---- 本体 ---------------------------------------------------------------- */
+.ww-main {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 48px 20px 64px;
+}
+.ww-card {
+  width: 100%;
+  max-width: 620px;
+  background: var(--ww-panel);
+  border: 1px solid var(--ww-line);
+  padding: 36px 26px 30px;
+  position: relative;
+  /* 右上を大きく斜めに落とす。角丸は使わない */
+  clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%);
+}
+/* 左肩にシアンの短い帯 */
+.ww-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 64px;
+  height: 3px;
+  background: var(--ww-accent);
+}
+
+.ww-eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ww-accent);
+}
+.ww-title {
+  margin: 0 0 14px;
+  font-size: clamp(1.5rem, 5vw, 1.95rem);
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+.ww-lead {
+  margin: 0 0 22px;
+  color: var(--ww-text-2);
+}
+.ww-note {
+  margin: 0 0 24px;
+  padding: 14px 16px;
+  background: var(--ww-bg-2);
+  border-left: 2px solid var(--ww-accent);
+  font-size: 0.88rem;
+  color: var(--ww-text-2);
+}
+.ww-note strong {
+  color: var(--ww-text);
+}
+
+.ww-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.ww-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 0 20px;
+  border: 1px solid var(--ww-line);
+  background: transparent;
+  color: var(--ww-text);
+  font-size: 0.88rem;
+  text-decoration: none;
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+}
+.ww-btn:hover {
+  border-color: var(--ww-accent);
+  color: var(--ww-accent);
+}
+.ww-btn.is-primary {
+  background: var(--ww-accent);
+  border-color: var(--ww-accent);
+  color: #04211d;
+  font-weight: 700;
+}
+.ww-btn.is-primary:hover {
+  background: var(--ww-accent-deep);
+  color: #04211d;
+}
+.ww-btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* ---- フッター ------------------------------------------------------------ */
+.ww-foot {
+  border-top: 1px solid var(--ww-line);
+  padding: 20px 20px 32px;
+  font-size: 0.76rem;
+  line-height: 1.8;
+  color: var(--ww-muted);
+}
+.ww-foot p {
+  margin: 0 0 6px;
+}
+.ww-foot a {
+  color: var(--ww-text-2);
+}
+.ww-foot a:hover {
+  color: var(--ww-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

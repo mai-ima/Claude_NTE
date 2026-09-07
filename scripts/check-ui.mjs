@@ -17,7 +17,8 @@
  *     α のページから NTE のタブ・ヘッダーが出ていると、そこから NTE へ飛ばされる。
  *
  *  4. wiki ごとのスタイルが混ざっていないか
- *     α は独自のデザインシステムで動く約束。NTE のクラス定義が来ていたら分離が崩れている。
+ *     独自UIの wiki はそれぞれ独立したデザインシステムで動く約束。
+ *     他 wiki のクラス定義が来ていたら分離が崩れている。
  *
  * 使い方: pnpm build のあとに `node scripts/check-ui.mjs`
  */
@@ -26,6 +27,34 @@ import path from 'node:path';
 
 const DIST = path.resolve(process.cwd(), 'dist');
 const problems = [];
+
+/**
+ * NTE の共通レイアウト（BaseLayout）を使わない wiki の base。
+ *
+ * 以前はここが `alpha` の**文字列決め打ち**で、wiki が増えるたびに検査が素通りしていた。
+ * wiki を足したら**必ずここに base を足す**こと（src/lib/wikis.ts と対応させる）。
+ */
+const INDEPENDENT_BASES = ['endfield', 'genshin', 'wuwa', 'hsr', 'alpha'];
+
+/**
+ * 独自UIの wiki が「自分のスタイルだけ」を持っていることを検査するための目印。
+ * 値は**そのレイアウトにしか出てこないクラス名**。
+ * 自分の目印は在ってよく、**他 wiki の目印が混ざっていたら失敗**とする。
+ */
+const STYLE_MARKS = {
+  nte: ['.app-header', '.bottom-nav', '.drawer-panel'],
+  alpha: ['.a-shell', '.a-tabs'],
+  endfield: ['.ef-shell', '.ef-rail'],
+  genshin: ['.gs-shell'],
+  wuwa: ['.ww-shell'],
+  hsr: ['.hsr-shell'],
+};
+
+/** dist の相対パスから、どの wiki のページかを返す（'nte' か INDEPENDENT_BASES のどれか） */
+function wikiOfFile(rel) {
+  const first = rel.split(path.sep)[0];
+  return INDEPENDENT_BASES.includes(first) ? first : 'nte';
+}
 
 /** dist 配下の index.html をすべて集める */
 function htmlFiles(dir) {
@@ -50,7 +79,8 @@ let crossLinks = 0;
 for (const file of files) {
   const rel = path.relative(DIST, file);
   const html = fs.readFileSync(file, 'utf8');
-  const isAlphaPage = rel === 'alpha/index.html' || rel.startsWith(`alpha${path.sep}`);
+  const pageWiki = wikiOfFile(rel);
+  const isIndependent = pageWiki !== 'nte';
 
   // --- 1. アイコンの参照切れ -------------------------------------------
   const symbols = new Set([...html.matchAll(/<symbol[^>]*\sid="([^"]+)"/g)].map((m) => m[1]));
@@ -62,9 +92,14 @@ for (const file of files) {
   }
 
   // --- 2. wiki をまたぐリンクに data-astro-reload があるか ---------------
-  // NTE のページから /alpha/ へのリンクが対象（α 側は ClientRouter を積んでいない）。
-  if (!isAlphaPage) {
-    for (const m of html.matchAll(/<a\b([^>]*\shref="\/alpha\/[^"]*")([^>]*)>/g)) {
+  // NTE のページから独自UIの wiki へのリンクが対象。
+  // 独自UI側は ClientRouter を積んでいないので、View Transitions で部分入れ替えされると壊れる。
+  if (!isIndependent) {
+    const pattern = new RegExp(
+      `<a\\b([^>]*\\shref="/(?:${INDEPENDENT_BASES.join('|')})/[^"]*")([^>]*)>`,
+      'g',
+    );
+    for (const m of html.matchAll(pattern)) {
       const attrs = m[1] + m[2];
       crossLinks++;
       if (!attrs.includes('data-astro-reload')) {
@@ -77,53 +112,45 @@ for (const file of files) {
   }
 
   // --- 3. wiki のページに別 wiki のナビが出ていないか --------------------
-  if (isAlphaPage) {
+  // 独自UIの wiki に NTE のヘッダー／下部ナビが出ていたら、そこから NTE へ飛ばされる。
+  if (isIndependent) {
     if (html.includes('class="app-header"') || html.includes('class="bottom-nav"')) {
-      problems.push(`${rel}: αのページに NTE のヘッダー／下部ナビが含まれています`);
+      problems.push(`${rel}: ${pageWiki} のページに NTE のヘッダー／下部ナビが含まれています`);
     }
-    // α のタブ・サイドナビのリンクが /alpha/ の外を向いていないか
-    const navBlocks = [
-      ...html.matchAll(/<nav class="a-tabs"[\s\S]*?<\/nav>/g),
-      ...html.matchAll(/<nav class="a-side"[\s\S]*?<\/nav>/g),
-    ].map((m) => m[0]);
-    for (const block of navBlocks) {
-      // <a href> だけを見る（<use href="#ai:…"> はアイコンの参照なので対象外）
-      for (const m of block.matchAll(/<a\b[^>]*\shref="([^"]+)"/g)) {
+    // 独自UIの wiki のナビ（<nav>）が自分の base の外を指していないか。
+    // 「ほかの wiki」への導線だけは例外（利用者が選んで押すもの）。
+    const myBase = `/${pageWiki}/`;
+    for (const navBlock of [...html.matchAll(/<nav\b[^>]*>[\s\S]*?<\/nav>/g)].map((m) => m[0])) {
+      for (const m of navBlock.matchAll(/<a\b[^>]*\shref="([^"]+)"/g)) {
         const href = m[1];
-        if (href.startsWith('/alpha/')) continue;
-        // サイドの「ほかの wiki」だけは α の外を指してよい（利用者が選んで押す導線）。
-        // 許すのは NTE のホームと wiki 一覧（ハブ）だけ。記事ページへは飛ばさない。
-        if (block.includes('a-side') && (href === '/' || href === '/wikis/')) continue;
-        problems.push(`${rel}: α のナビが α の外を指しています → ${href}`);
+        if (href.startsWith(myBase)) continue;
+        // NTE のホームと wiki 一覧（ハブ）だけは、どの wiki からも指してよい
+        if (href === '/' || href === '/wikis/') continue;
+        // 外部リンク（公式サイトなど）は対象外
+        if (/^https?:\/\//.test(href)) continue;
+        problems.push(`${rel}: ${pageWiki} のナビが ${myBase} の外を指しています → ${href}`);
       }
     }
-  } else {
-    if (html.includes('class="a-shell"') || html.includes('class="a-tabs"')) {
-      problems.push(`${rel}: NTE のページに α のシェル／タブが含まれています`);
-    }
+  }
+  // NTE のページに独自UI wiki のシェルが混ざっていないか（逆向きの検査）
+  if (!isIndependent && (html.includes('class="a-shell"') || html.includes('class="ef-shell"'))) {
+    problems.push(`${rel}: NTE のページに他 wiki のシェルが含まれています`);
   }
 
   // --- 4. wiki ごとのスタイルが混ざっていないか --------------------------
-  // α は独自のデザインシステムで動く約束なので、NTE 側のクラス定義が
-  // 読み込まれていたら分離が崩れている（逆も同じ）。
-  const styleHrefs = [...html.matchAll(/<link[^>]+rel="stylesheet"[^>]+href="([^"]+)"/g)].map(
-    (m) => m[1],
-  );
-  const inlineCss = [...html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)]
+  // 独自UIの wiki はそれぞれ独立したデザインシステムで動く約束。
+  // **自分以外の目印**が CSS に来ていたら分離が崩れている。
+  const cssText = [...html.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)]
     .map((m) => m[1])
     .join('\n');
-  const cssText = inlineCss;
-  if (isAlphaPage) {
-    // NTE 固有のクラス（.app-header / .bottom-nav / .drawer-panel）が来ていたら混線
-    for (const cls of ['.app-header', '.bottom-nav', '.drawer-panel']) {
+  for (const [owner, marks] of Object.entries(STYLE_MARKS)) {
+    if (owner === pageWiki) continue; // 自分の目印は在ってよい
+    for (const cls of marks) {
       if (cssText.includes(cls)) {
-        problems.push(`${rel}: α のページに NTE のスタイル（${cls}）が混ざっています`);
+        problems.push(`${rel}: ${pageWiki} のページに ${owner} のスタイル（${cls}）が混ざっています`);
       }
     }
-  } else if (cssText.includes('.a-shell') || cssText.includes('.a-tabs{')) {
-    problems.push(`${rel}: NTE のページに α のスタイルが混ざっています`);
   }
-  void styleHrefs;
 }
 
 console.log(`HTML ${files.length} ファイル / アイコン参照 ${checkedUses} 件 / wiki跨ぎリンク ${crossLinks} 件を検査`);

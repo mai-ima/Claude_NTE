@@ -263,6 +263,190 @@ const people = defineCollection({
 });
 
 // ---------------------------------------------------------------------------
+// アークナイツ：エンドフィールド wiki のコレクション（12種）。
+//
+// NTE 側と同じ `base`（description / status / updated / checked / sources / tags）を使う。
+// 誠実性ルール（出典で裏が取れた事実だけ verified・未検証は draft ＋本文に「要確認」）を
+// 新しい wiki にも同じ形で効かせるため、ここは共有する。
+//
+// コレクション名は**全 wiki 横断で一意**（test/wikis.test.ts が検査）。
+// ディレクトリは src/content/endfield-*/。
+// ---------------------------------------------------------------------------
+
+/** エンドフィールドのレア度 */
+export const EF_RARITIES = ['★6', '★5', '★4', '★3'] as const;
+
+const endfieldOperators = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/endfield-operators' }),
+  schema: () =>
+    z.object({
+      ...base,
+      title: z.string(), // 日本版の表示名
+      en: z.string().optional(),
+      reading: z.string().optional(),
+      rarity: z.enum(EF_RARITIES).optional(),
+      class: z.string().optional(), // 職分（クラス）
+      element: z.string().optional(), // 属性
+      weaponType: z.string().optional(), // 片手剣 / 大剣 / 長柄武器 / 拳銃 / アーツユニット
+      faction: z.string().optional(),
+      cv: z.string().optional(),
+      version: z.string().optional(), // 実装バージョン
+      implemented: z.boolean().default(true), // false = 実装予定（告知済み）
+      aliases: z.array(z.string()).default([]),
+    }),
+});
+
+const endfieldWeapons = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/endfield-weapons' }),
+  schema: () =>
+    z.object({
+      ...base,
+      title: z.string(),
+      en: z.string().optional(),
+      rarity: z.enum(EF_RARITIES).optional(),
+      type: z.string().optional(), // 武器種
+      acquisition: z.string().optional(), // 入手方法
+      recommendedFor: z.string().optional(),
+      aliases: z.array(z.string()).default([]),
+    }),
+});
+
+const endfieldGear = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/endfield-gear' }),
+  schema: () =>
+    z.object({
+      ...base,
+      title: z.string(),
+      slot: z.string().optional(), // 胴 / 腕 / アクセサリー
+      quality: z.string().optional(),
+      setName: z.string().optional(), // セット名
+      acquisition: z.string().optional(),
+      aliases: z.array(z.string()).default([]),
+    }),
+});
+
+/** 集成工業システム（AIC）の設備・生産ライン。本作の看板なので独立させた。 */
+const endfieldIndustry = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/endfield-industry' }),
+  schema: () =>
+    z.object({
+      ...base,
+      title: z.string(),
+      en: z.string().optional(),
+      category: z.string().default('設備'), // 設備 / 生産ライン / 電力 / 図面
+      unlock: z.string().optional(),
+      aliases: z.array(z.string()).default([]),
+    }),
+});
+
+const endfieldEnemies = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/endfield-enemies' }),
+  schema: () =>
+    z.object({
+      ...base,
+      title: z.string(),
+      en: z.string().optional(),
+      type: z.string().default('雑魚'), // アンゲロス / ランドブレーカー / 野生生物 / ボス
+      weakness: z.string().optional(),
+      area: z.string().optional(),
+      aliases: z.array(z.string()).default([]),
+    }),
+});
+
+const endfieldAreas = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/endfield-areas' }),
+  schema: () =>
+    z.object({
+      ...base,
+      title: z.string(),
+      en: z.string().optional(),
+      type: z.string().default('エリア'),
+      unlock: z.string().optional(),
+      version: z.string().optional(),
+      aliases: z.array(z.string()).default([]),
+    }),
+});
+
+const endfieldSystems = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/endfield-systems' }),
+  schema: () =>
+    z.object({
+      ...base,
+      title: z.string(),
+      category: z.string().default('システム'),
+      aliases: z.array(z.string()).default([]),
+    }),
+});
+
+const endfieldItems = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/endfield-items' }),
+  schema: () =>
+    z.object({
+      ...base,
+      title: z.string(),
+      en: z.string().optional(),
+      type: z.string().default('素材'), // 素材 / 昇進素材 / 武器素材 / スキル素材 / プレゼント / 通貨
+      usedFor: z.string().optional(),
+      acquisition: z.string().optional(),
+      aliases: z.array(z.string()).default([]),
+    }),
+});
+
+/**
+ * バージョン更新・特別スカウト・期間限定イベント。
+ * `start` / `end` は NTE の events と**同じ意味**で持つ（`phaseOf` が開催状況を出す）。
+ * ⚠ `end` を空にすると**永久に「開催中」と表示される**（NTE で実際に起きた）。
+ *    終了日が未告知なら本文に「終了日は未告知」と書くこと。
+ */
+const endfieldEvents = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/endfield-events' }),
+  schema: () =>
+    z.object({
+      ...base,
+      title: z.string(),
+      kind: z.enum(['version', 'banner', 'event']).default('event'),
+      featured: z.array(z.string()).default([]),
+      start: z.coerce.date().optional(),
+      end: z.coerce.date().optional(),
+      version: z.string().optional(),
+    }),
+});
+
+const endfieldStory = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/endfield-story' }),
+  schema: () =>
+    z.object({
+      ...base,
+      title: z.string(),
+      chapter: z.string().optional(),
+      spoiler: z.boolean().default(false),
+    }),
+});
+
+const endfieldGuides = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/endfield-guides' }),
+  schema: () =>
+    z.object({
+      ...base,
+      title: z.string(),
+      category: z.string().default('ガイド'),
+    }),
+});
+
+const endfieldTerms = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/endfield-terms' }),
+  schema: () =>
+    z.object({
+      ...base,
+      title: z.string(),
+      reading: z.string().optional(),
+      en: z.string().optional(),
+      category: z.string().default('用語'),
+      aliases: z.array(z.string()).default([]),
+    }),
+});
+
+// ---------------------------------------------------------------------------
 // αテスト（仮）wiki のコレクション。
 //
 // 別ゲームの wiki を同じサイトに並置できるかを検証するためのサンプル。
@@ -339,6 +523,19 @@ export const collections = {
   vehicles,
   arcs,
   people,
+  // アークナイツ：エンドフィールド wiki
+  endfieldOperators,
+  endfieldWeapons,
+  endfieldGear,
+  endfieldIndustry,
+  endfieldEnemies,
+  endfieldAreas,
+  endfieldSystems,
+  endfieldItems,
+  endfieldEvents,
+  endfieldStory,
+  endfieldGuides,
+  endfieldTerms,
   // αテスト（仮）wiki
   alphaCharacters,
   alphaSystems,

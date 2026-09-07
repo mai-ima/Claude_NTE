@@ -1,0 +1,801 @@
+/* =========================================================================
+   アークナイツ：エンドフィールド wiki 専用スタイル
+   ------------------------------------------------------------------------
+   NTE 側（base/components/themes/ui-*.css）とも α（alpha.css）とも**一切共有しない**
+   独立したデザインシステム。読み込むのは EndfieldLayout だけ。
+
+   配色と形は**公式サイトの CSS を実測して決めた**（docs/UI-RESEARCH.md）:
+     #191919（85回・最多）= 主背景 / #fff = 文字 / #fffa00（57回）= アクセント
+     #35373c = 面の灰 / #d9d9d9・#999 = 文字の階調
+     border-radius は 2〜4px が中心（角丸はごく小さい）
+     clip-path の多角形マスクを多用（斜めの切り欠き）
+     英字は幅広・大文字主体（Novecento sans wide 系）、字間は詰め気味
+
+   ※ 公式フォントは**同梱しない**（ライセンス不明）。system-ui 系に
+     letter-spacing と大文字化を効かせて雰囲気だけ寄せる。
+
+   設計方針:
+   - 暗色が既定（NTE と α は明色が既定なので、開いた瞬間に別物と分かる）
+   - 箱（カード）を使わず**罫線で区切る**
+   - 影を使わない。階層は面の明度差と罫線で出す
+   - 蛍光イエローは**面積を絞る**（黒地に大面積で置くと目に痛い）
+   - トークンは --ef-* に閉じる（NTE の --accent 等には依存しない）
+   ========================================================================= */
+
+/* ---- リセット（最小限） ------------------------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* `hidden` 属性を必ず効かせる。ブラウザ既定の `[hidden] { display: none }` は
+   詳細度が最低で、`.ef-x { display: flex }` のようなクラス指定に負ける
+   （NTE 側で実際に踏んだ罠。docs/FINDINGS.md）。 */
+[hidden] {
+  display: none !important;
+}
+
+:root {
+  /* 実測値をそのままトークンにする */
+  --ef-bg: #191919;
+  --ef-bg-2: #101010;
+  --ef-panel: #35373c;
+  --ef-line: #3a3d43;
+  --ef-line-soft: #2a2c30;
+  --ef-text: #ffffff;
+  --ef-text-2: #d9d9d9;
+  --ef-muted: #999999;
+  --ef-accent: #fffa00;
+  --ef-accent-ink: #191919; /* 黄の上に置く文字 */
+  --ef-ok: #00ffa2;
+  --ef-hot: #ff1aac;
+
+  --ef-radius: 3px;
+  --ef-gap: 16px;
+  --ef-measure: 720px; /* 本文の最大幅。装飾より可読性を優先する */
+  --ef-rail: 56px; /* 左の細いレールの幅 */
+  --ef-font:
+    ui-sans-serif, system-ui, -apple-system, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP',
+    Meiryo, sans-serif;
+  color-scheme: dark;
+}
+
+/* 明色は「利用者が手動で選んだとき」だけ。**OS 設定には追従しない。**
+ *
+ * NTE も α も明色が既定なので、ここまで暗色にしないと「別の wiki に来た」ことが
+ * 伝わらない。黒地に蛍光イエローがこのゲームの見た目そのもの（docs/UI-RESEARCH.md）。
+ * 明るい画面で読みたい人のために切替は残してある（ステータスバーのボタン）。
+ */
+:root[data-ef-theme='light'] {
+  --ef-bg: #f4f4f2;
+  --ef-bg-2: #ececea;
+  --ef-panel: #ffffff;
+  --ef-line: #cfcfc9;
+  --ef-line-soft: #e4e4e0;
+  --ef-text: #191919;
+  --ef-text-2: #35373c;
+  --ef-muted: #6b6b6b;
+  /* 蛍光イエローは白地だと文字として読めない。明色では**文字用に暗く落とし**、
+     「地」として使うとき（.is-accent）だけ元の黄色に戻す。 */
+  --ef-accent: #8a7400;
+  --ef-accent-flat: #fffa00;
+  --ef-accent-ink: #191919;
+  color-scheme: light;
+}
+/* 暗色では文字用と地用が同じ色でよい */
+:root {
+  --ef-accent-flat: var(--ef-accent);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--ef-bg);
+  color: var(--ef-text);
+  font-family: var(--ef-font);
+  font-size: 16px;
+  line-height: 1.85;
+  /* 罫線のグリッドを薄く敷いて「計器盤」の感じを出す。可読性を落とさない濃さに留める。 */
+  background-image:
+    linear-gradient(var(--ef-line-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--ef-line-soft) 1px, transparent 1px);
+  background-size: 72px 72px;
+  background-position: -1px -1px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+:focus-visible {
+  outline: 2px solid var(--ef-accent);
+  outline-offset: 2px;
+}
+
+/* =========================================================================
+   1. シェル（画面の骨組み）
+   ------------------------------------------------------------------------
+   PC   : 左端に幅56pxの細いレール（常時）＋ その右に本文
+   スマホ: レールは隠し、右下の丸ボタン → 全画面のセクションシート
+
+   NTE も α も「下部タブバー」を使っているので、ここでは**使わない**。
+   同じ形だと「別の wiki に来た」ことが伝わらないため。
+   ========================================================================= */
+.ef-shell {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- 上部のステータスバー ---------------------------------------------- */
+.ef-status {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 14px;
+  background: var(--ef-bg-2);
+  border-bottom: 1px solid var(--ef-line);
+  font-size: 0.78rem;
+}
+.ef-status-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  background: var(--ef-accent-flat);
+  color: var(--ef-accent-ink);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  /* 右下を斜めに落とす。公式で clip-path の多角形が多用されていた意匠を借りる */
+  clip-path: polygon(0 0, 100% 0, 100% 72%, 72% 100%, 0 100%);
+}
+.ef-status-brand {
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* 現在地。番号 → 名称 → 件数の順に出す（色だけに頼らず番号で示す） */
+.ef-status-here {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  color: var(--ef-text-2);
+  white-space: nowrap; /* 狭い幅で2行に折り返して溢れるのを防ぐ */
+  overflow: hidden;
+}
+.ef-status-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* 狭い幅ではブランド名を隠し、現在地（番号＋名称）に幅を譲る。
+   セクション名のほうが「今どこにいるか」を伝えるので優先度が高い。 */
+@media (max-width: 560px) {
+  .ef-status-brand {
+    display: none;
+  }
+  .ef-status-sep {
+    display: none;
+  }
+  .ef-status-count {
+    display: none;
+  }
+}
+.ef-status-no {
+  color: var(--ef-accent);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.ef-status-sep {
+  color: var(--ef-muted);
+}
+.ef-status-count {
+  color: var(--ef-muted);
+  font-variant-numeric: tabular-nums;
+}
+.ef-status-spacer {
+  flex: 1;
+}
+.ef-status-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 44px;
+  min-height: 36px;
+  padding: 0 10px;
+  background: transparent;
+  color: var(--ef-text-2);
+  border: 1px solid var(--ef-line);
+  border-radius: var(--ef-radius);
+  font: inherit;
+  font-size: 0.76rem;
+  cursor: pointer;
+}
+.ef-status-btn:hover {
+  color: var(--ef-text);
+  border-color: var(--ef-accent);
+  text-decoration: none;
+}
+.ef-status-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* ---- 本体（レール＋本文） ---------------------------------------------- */
+.ef-body {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+/* ---- 左の細いレール（PCのみ） -------------------------------------------
+   既定は幅56pxのアイコン列。ホバー or キーボードのフォーカスが入ると
+   名称が横に開く（:focus-within なのでキーボードだけでも開く）。 */
+.ef-rail {
+  display: none;
+}
+@media (min-width: 900px) {
+  .ef-rail {
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 48px;
+    align-self: flex-start;
+    height: calc(100dvh - 48px);
+    width: var(--ef-rail);
+    flex: none;
+    padding: 8px 0;
+    background: var(--ef-bg-2);
+    border-right: 1px solid var(--ef-line);
+    overflow: hidden auto;
+    transition: width 0.16s ease;
+    scrollbar-width: thin;
+  }
+  .ef-rail:hover,
+  .ef-rail:focus-within {
+    width: 260px;
+  }
+  .ef-rail-item {
+    display: grid;
+    grid-template-columns: var(--ef-rail) 1fr;
+    align-items: center;
+    min-height: 44px;
+    color: var(--ef-muted);
+    border-left: 3px solid transparent;
+    white-space: nowrap;
+  }
+  .ef-rail-item:hover {
+    color: var(--ef-text);
+    background: color-mix(in srgb, var(--ef-accent) 8%, transparent);
+    text-decoration: none;
+  }
+  /* 現在地は「色」「左の帯」「番号」の3つで示す（色覚に依らず分かるように） */
+  .ef-rail-item[aria-current='page'] {
+    color: var(--ef-accent);
+    border-left-color: var(--ef-accent);
+    background: color-mix(in srgb, var(--ef-accent) 12%, transparent);
+  }
+  .ef-rail-ico {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: -3px; /* border-left のぶんを戻して図形を中央に置く */
+  }
+  .ef-rail-ico svg {
+    width: 20px;
+    height: 20px;
+  }
+  .ef-rail-label {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding-right: 12px;
+    opacity: 0;
+    transition: opacity 0.12s ease;
+    overflow: hidden;
+  }
+  .ef-rail:hover .ef-rail-label,
+  .ef-rail:focus-within .ef-rail-label {
+    opacity: 1;
+  }
+  .ef-rail-no {
+    font-size: 0.68rem;
+    font-variant-numeric: tabular-nums;
+    color: var(--ef-muted);
+  }
+  .ef-rail-item[aria-current='page'] .ef-rail-no {
+    color: var(--ef-accent);
+  }
+  .ef-rail-name {
+    font-size: 0.86rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ef-rail-foot {
+    margin-top: auto;
+    padding: 10px 0;
+    border-top: 1px solid var(--ef-line-soft);
+  }
+}
+
+/* ---- 本文 ---------------------------------------------------------------- */
+.ef-main {
+  flex: 1;
+  min-width: 0;
+  padding: 24px 16px 96px;
+}
+.ef-wrap {
+  max-width: var(--ef-measure);
+  margin: 0 auto;
+}
+@media (min-width: 900px) {
+  .ef-main {
+    padding: 32px 32px 64px;
+  }
+  /* 一覧など横に広く使いたいページ用 */
+  .ef-wrap.is-wide {
+    max-width: 1080px;
+  }
+}
+
+/* ---- パンくず ------------------------------------------------------------ */
+.ef-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 18px;
+  font-size: 0.76rem;
+  color: var(--ef-muted);
+}
+.ef-crumbs a:hover {
+  color: var(--ef-accent);
+}
+.ef-crumbs svg {
+  width: 13px;
+  height: 13px;
+  opacity: 0.6;
+}
+
+/* =========================================================================
+   2. 見出しと区画
+   ------------------------------------------------------------------------
+   カードの箱を使わず、**罫線で区切る**。
+   見出しには「01 / OPERATORS」のような番号＋英字ラベルを添える。
+   ========================================================================= */
+.ef-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 6px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ef-accent);
+}
+.ef-eyebrow::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--ef-line);
+}
+.ef-title {
+  margin: 0 0 10px;
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+.ef-lead {
+  margin: 0 0 24px;
+  color: var(--ef-text-2);
+}
+
+/* 区画。上に1本罫線を引き、左肩に見出しを置く */
+.ef-block {
+  border-top: 1px solid var(--ef-line);
+  padding-top: 18px;
+  margin-top: 28px;
+}
+.ef-block > h2 {
+  margin: 0 0 12px;
+  font-size: 1.06rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+/* =========================================================================
+   3. 一覧（セクションと記事）
+   ========================================================================= */
+.ef-list {
+  display: grid;
+  gap: 1px;
+  background: var(--ef-line-soft); /* 隙間が罫線になる（1pxグリッド） */
+  border: 1px solid var(--ef-line);
+}
+@media (min-width: 700px) {
+  .ef-list.is-2col {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.ef-row {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 14px;
+  min-height: 56px;
+  background: var(--ef-bg);
+  color: var(--ef-text);
+}
+.ef-row:hover {
+  background: var(--ef-panel);
+  text-decoration: none;
+}
+.ef-row-no {
+  font-size: 0.72rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--ef-accent);
+  letter-spacing: 0.04em;
+}
+.ef-row-body {
+  min-width: 0;
+}
+.ef-row-name {
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ef-row-desc {
+  margin: 2px 0 0;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--ef-muted);
+}
+.ef-row-meta {
+  font-size: 0.72rem;
+  color: var(--ef-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.ef-row svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* 記事が無いときの表示。準備中であることをはっきり伝える。 */
+.ef-empty {
+  border: 1px dashed var(--ef-line);
+  padding: 28px 20px;
+  text-align: center;
+  color: var(--ef-muted);
+}
+.ef-empty strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--ef-text-2);
+  font-size: 1rem;
+}
+
+/* 注記（準備中のお知らせなど）。左に黄色の帯を立てる。 */
+.ef-note {
+  border-left: 3px solid var(--ef-accent);
+  background: var(--ef-bg-2);
+  padding: 12px 14px;
+  margin: 18px 0;
+  font-size: 0.88rem;
+  color: var(--ef-text-2);
+}
+.ef-note strong {
+  color: var(--ef-text);
+}
+
+/* バッジ（レア度・状態など） */
+.ef-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 8px;
+  border: 1px solid var(--ef-line);
+  border-radius: var(--ef-radius);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--ef-text-2);
+  white-space: nowrap;
+}
+.ef-badge.is-accent {
+  background: var(--ef-accent-flat);
+  border-color: var(--ef-accent-flat);
+  color: var(--ef-accent-ink);
+}
+.ef-badge.is-draft {
+  border-color: color-mix(in srgb, var(--ef-hot) 60%, transparent);
+  color: var(--ef-hot);
+}
+
+/* =========================================================================
+   4. 本文（記事）
+   ========================================================================= */
+.ef-prose {
+  font-size: 1rem;
+  line-height: 1.95;
+  color: var(--ef-text-2);
+}
+.ef-prose > *:first-child {
+  margin-top: 0;
+}
+.ef-prose h2 {
+  margin: 34px 0 12px;
+  padding-top: 14px;
+  border-top: 1px solid var(--ef-line);
+  font-size: 1.12rem;
+  font-weight: 800;
+  color: var(--ef-text);
+}
+.ef-prose h3 {
+  margin: 24px 0 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--ef-text);
+}
+.ef-prose p {
+  margin: 0 0 16px;
+}
+.ef-prose strong {
+  color: var(--ef-text);
+}
+.ef-prose a {
+  color: var(--ef-accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.ef-prose ul,
+.ef-prose ol {
+  margin: 0 0 16px;
+  padding-left: 1.3em;
+}
+.ef-prose li {
+  margin-bottom: 6px;
+}
+.ef-prose blockquote {
+  margin: 18px 0;
+  padding: 10px 14px;
+  border-left: 3px solid var(--ef-line);
+  color: var(--ef-muted);
+}
+.ef-prose code {
+  padding: 1px 5px;
+  background: var(--ef-bg-2);
+  border: 1px solid var(--ef-line-soft);
+  border-radius: 2px;
+  font-size: 0.9em;
+}
+.ef-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.ef-prose th,
+.ef-prose td {
+  border: 1px solid var(--ef-line);
+  padding: 8px 10px;
+  text-align: left;
+}
+.ef-prose th {
+  background: var(--ef-bg-2);
+  color: var(--ef-text);
+  font-weight: 700;
+}
+/* 横に長い表はスクロールさせる（レイアウト側の JS がこの箱で包む） */
+.ef-table-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--ef-line);
+  margin: 18px 0;
+}
+.ef-table-scroll table {
+  border: 0;
+}
+
+/* =========================================================================
+   5. スマホのセクションシート
+   ------------------------------------------------------------------------
+   右下の丸ボタンで開く全画面のメニュー。12セクションを一度に見渡せる。
+   （下部タブバーは NTE と α が使っているので、ここでは使わない）
+   ========================================================================= */
+.ef-fab {
+  position: fixed;
+  right: 16px;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 0 18px;
+  background: var(--ef-accent-flat);
+  color: var(--ef-accent-ink);
+  border: 0;
+  border-radius: 999px;
+  font: inherit;
+  font-weight: 800;
+  font-size: 0.86rem;
+  cursor: pointer;
+}
+.ef-fab svg {
+  width: 20px;
+  height: 20px;
+}
+@media (min-width: 900px) {
+  .ef-fab {
+    display: none; /* PC は左のレールがあるので要らない */
+  }
+}
+
+.ef-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  background: var(--ef-bg);
+}
+.ef-sheet[hidden] {
+  display: none;
+}
+.ef-sheet-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--ef-line);
+}
+.ef-sheet-title {
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: var(--ef-accent);
+}
+.ef-sheet-close {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  color: var(--ef-text);
+  border: 1px solid var(--ef-line);
+  border-radius: var(--ef-radius);
+  cursor: pointer;
+}
+.ef-sheet-close svg {
+  width: 20px;
+  height: 20px;
+}
+.ef-sheet-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 0 calc(24px + env(safe-area-inset-bottom, 0px));
+  -webkit-overflow-scrolling: touch;
+}
+.ef-sheet-item {
+  display: grid;
+  grid-template-columns: 34px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--ef-line-soft);
+  color: var(--ef-text);
+}
+.ef-sheet-item:hover,
+.ef-sheet-item:active {
+  background: var(--ef-panel);
+  text-decoration: none;
+}
+.ef-sheet-item[aria-current='page'] {
+  color: var(--ef-accent);
+  box-shadow: inset 3px 0 0 var(--ef-accent);
+}
+.ef-sheet-item svg {
+  width: 20px;
+  height: 20px;
+}
+.ef-sheet-no {
+  font-size: 0.68rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--ef-muted);
+}
+.ef-sheet-item[aria-current='page'] .ef-sheet-no {
+  color: var(--ef-accent);
+}
+
+/* シートを開いている間は背面をスクロールさせない */
+body.ef-sheet-open {
+  overflow: hidden;
+}
+
+/* =========================================================================
+   6. フッター
+   ========================================================================= */
+.ef-foot {
+  border-top: 1px solid var(--ef-line);
+  background: var(--ef-bg-2);
+  padding: 20px 16px calc(96px + env(safe-area-inset-bottom, 0px));
+  font-size: 0.76rem;
+  line-height: 1.8;
+  color: var(--ef-muted);
+}
+@media (min-width: 900px) {
+  .ef-foot {
+    padding-bottom: 24px;
+  }
+}
+.ef-foot-wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+.ef-foot p {
+  margin: 0 0 8px;
+}
+.ef-foot a {
+  color: var(--ef-text-2);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.ef-foot a:hover {
+  color: var(--ef-accent);
+}
+.ef-foot-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+/* =========================================================================
+   7. 動きは最小限に。OS の「視差効果を減らす」で必ず止まる。
+   ========================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* スクリーンリーダー専用 */
+.ef-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -1,0 +1,57 @@
+---
+/**
+ * 原神 攻略wiki（準備中）専用レイアウト。
+ *
+ * NTE / α / エンドフィールド のどれとも共有しない（読み込む CSS は genshin.css だけ）。
+ * 中身は「準備中」の1枚だけだが、**そのゲームらしい画面**にすることで
+ * 「原神の wiki がこれから建つ」と伝える（利用者の指示。DECISIONS.md 2026-09-07）。
+ *
+ * 意匠の根拠と、どこまでが解釈かは docs/UI-RESEARCH.md に書いてある。
+ * ※ 公式の画像・ロゴ・フォントは同梱しない。装飾は CSS と自前の SVG で作る。
+ */
+import '../styles/genshin.css';
+import { Icon } from 'astro-icon/components';
+import { withBase } from '../lib/path';
+import { wiki } from '../lib/wikis';
+
+const w = wiki('genshin');
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{w.siteName}</title>
+    <meta name="description" content={w.description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={withBase('favicon.svg')} type="image/svg+xml" />
+    <meta name="theme-color" content="#f3ece0" />
+    {/* 中身がまだ無いページを検索結果に載せない。sitemap からも除いてある。 */}
+    <meta name="robots" content="noindex, follow" />
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body>
+    <div class="gs-shell">
+      <header class="gs-head">
+        {/* マークは画像ではなく文字で作る（公式ロゴは使わない） */}
+        <span class="gs-mark" aria-hidden="true">原</span>
+        <span class="gs-brand">原神 攻略wiki</span>
+      </header>
+
+      <main class="gs-main">
+        <slot />
+      </main>
+
+      <footer class="gs-foot">
+        <p>{w.footer}</p>
+        <p>
+          <a href={withBase('/')} data-astro-reload>NTE 完全攻略wiki</a>
+          <span aria-hidden="true"> ／ </span>
+          <a href={withBase('/wikis/')} data-astro-reload>wiki 一覧</a>
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

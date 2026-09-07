@@ -1,0 +1,260 @@
+/* =========================================================================
+   原神 攻略wiki（準備中）専用スタイル
+   ------------------------------------------------------------------------
+   NTE / α / エンドフィールド とは**一切共有しない**独立したスタイル。
+   トークンは --gs-* に閉じる。
+
+   根拠（docs/UI-RESEARCH.md）:
+   - 公式サイトからは**色コードを取れなかった**（中身を JS が動的に作るため）。
+   - UI解説記事から確認できた特徴:
+       ・アイコンは「白ベタ一色」ではなく**白＋白の透明度のツートーン**
+       ・**透過表現を加えたフラットデザイン**（背景の美しさを邪魔しない）
+       ・パーティクル・影・フレア・歪みでリッチ感を足す
+       ・**アール・デコと有機的モチーフ**を織り交ぜた装飾
+   → ここから「明るい地・金の装飾枠・柔らかい曲線」として**解釈**して組んでいる。
+     実物を確認できたら docs/UI-RESEARCH.md を更新してから直すこと。
+
+   ※ 公式の画像・ロゴ・フォントは同梱しない。装飾は CSS と自前の SVG で作る。
+   ========================================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+[hidden] {
+  display: none !important;
+}
+
+:root {
+  --gs-bg: #f3ece0; /* 羊皮紙のような明るい地 */
+  --gs-bg-2: #e8dfcd;
+  --gs-panel: #fffdf8;
+  --gs-line: #d9c9a8;
+  --gs-gold: #c8a35a; /* 装飾の金 */
+  --gs-gold-deep: #8a6d33; /* 金の文字色（明るい地でも読める濃さ） */
+  --gs-text: #3b3226;
+  --gs-text-2: #5c5142;
+  --gs-muted: #857a68;
+  --gs-radius: 14px; /* 柔らかい曲線 */
+  --gs-font:
+    ui-serif, 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+  --gs-font-ui:
+    ui-sans-serif, system-ui, -apple-system, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP',
+    sans-serif;
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--gs-bg);
+  /* 淡い光のにじみ。透過を重ねる原神の作法から解釈した表現（自前のグラデーション） */
+  background-image:
+    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(255, 255, 255, 0.9), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 90% 110%, rgba(200, 163, 90, 0.18), transparent 70%);
+  color: var(--gs-text);
+  font-family: var(--gs-font-ui);
+  font-size: 16px;
+  line-height: 1.9;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: var(--gs-gold-deep);
+}
+:focus-visible {
+  outline: 2px solid var(--gs-gold-deep);
+  outline-offset: 3px;
+}
+
+.gs-shell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+/* ---- ヘッダー: 中央にブランド、細い金の罫線 ---------------------------- */
+.gs-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 18px 16px;
+  border-bottom: 1px solid var(--gs-line);
+  background: rgba(255, 253, 248, 0.7);
+}
+.gs-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: 50%;
+  border: 2px solid var(--gs-gold);
+  color: var(--gs-gold-deep);
+  font-family: var(--gs-font);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+.gs-brand {
+  font-family: var(--gs-font);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* ---- 本体 ---------------------------------------------------------------- */
+.gs-main {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 48px 20px 64px;
+}
+.gs-card {
+  width: 100%;
+  max-width: 640px;
+  background: var(--gs-panel);
+  border: 1px solid var(--gs-line);
+  border-radius: var(--gs-radius);
+  padding: 40px 28px 32px;
+  text-align: center;
+  position: relative;
+}
+/* 四隅の飾り。アール・デコ調の角当てを CSS だけで作る（画像は使わない） */
+.gs-card::before,
+.gs-card::after {
+  content: '';
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--gs-gold);
+}
+.gs-card::before {
+  top: 10px;
+  left: 10px;
+  border-right: 0;
+  border-bottom: 0;
+  border-top-left-radius: 8px;
+}
+.gs-card::after {
+  bottom: 10px;
+  right: 10px;
+  border-left: 0;
+  border-top: 0;
+  border-bottom-right-radius: 8px;
+}
+
+.gs-eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.74rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gs-gold-deep);
+}
+.gs-title {
+  margin: 0 0 8px;
+  font-family: var(--gs-font);
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 700;
+  line-height: 1.4;
+}
+/* 見出しの下の金の細線＋菱形 */
+.gs-rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 14px 0 20px;
+  color: var(--gs-gold);
+}
+.gs-rule::before,
+.gs-rule::after {
+  content: '';
+  width: 56px;
+  height: 1px;
+  background: currentColor;
+}
+.gs-rule span {
+  width: 8px;
+  height: 8px;
+  background: currentColor;
+  transform: rotate(45deg);
+}
+
+.gs-lead {
+  margin: 0 0 24px;
+  color: var(--gs-text-2);
+}
+.gs-note {
+  margin: 0 0 24px;
+  padding: 14px 16px;
+  background: var(--gs-bg-2);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: var(--gs-text-2);
+  text-align: left;
+}
+.gs-note strong {
+  color: var(--gs-text);
+}
+
+.gs-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.gs-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 999px;
+  border: 1px solid var(--gs-gold);
+  background: transparent;
+  color: var(--gs-gold-deep);
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+.gs-btn:hover {
+  background: rgba(200, 163, 90, 0.12);
+}
+.gs-btn.is-primary {
+  background: var(--gs-gold);
+  color: #fffdf8;
+  border-color: var(--gs-gold);
+}
+.gs-btn.is-primary:hover {
+  background: var(--gs-gold-deep);
+}
+.gs-btn svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* ---- フッター ------------------------------------------------------------ */
+.gs-foot {
+  border-top: 1px solid var(--gs-line);
+  padding: 20px 20px 32px;
+  text-align: center;
+  font-size: 0.76rem;
+  line-height: 1.8;
+  color: var(--gs-muted);
+}
+.gs-foot p {
+  margin: 0 0 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

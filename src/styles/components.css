@@ -429,6 +429,26 @@
   color: var(--accent);
   border-color: color-mix(in srgb, var(--accent) 30%, transparent);
 }
+/* 「準備中」など、まだ出来ていないことを示すバッジ。
+   .badge-draft と同じ色だが用途が違う（あちらは記事の検証状態）ので別名にしている。 */
+.badge-warning {
+  background: var(--warning-weak);
+  color: var(--warning);
+  border-color: color-mix(in srgb, var(--warning) 35%, transparent);
+}
+/* wiki 一覧のカードで、準備中の wiki から公式サイトへ出す導線 */
+.wiki-card-official {
+  margin-top: 10px;
+}
+.wiki-card-official a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.wiki-card-official svg {
+  width: 14px;
+  height: 14px;
+}
 
 .callout {
   display: flex;

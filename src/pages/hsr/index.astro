@@ -1,0 +1,37 @@
+---
+/** 崩壊：スターレイル 攻略wiki のトップ（準備中）。中身が無いことを隠さずに書く。 */
+import { Icon } from 'astro-icon/components';
+import HsrLayout from '../../layouts/HsrLayout.astro';
+import { withBase } from '../../lib/path';
+import { wiki } from '../../lib/wikis';
+
+const w = wiki('hsr');
+---
+
+<HsrLayout>
+  <article class="hsr-card">
+    <p class="hsr-eyebrow">Honkai: Star Rail</p>
+    <h1 class="hsr-title">崩壊：スターレイル 攻略wiki</h1>
+
+    <p class="hsr-lead">
+      この wiki は<strong>準備中</strong>です。まだ記事はありません。
+    </p>
+
+    <div class="hsr-note">
+      <p style="margin:0 0 8px;">
+        <strong>いつ公開するかは決まっていません。</strong>
+        できていないことを「近日公開」と書くのは正確ではないので、
+        分かった時点でこのページを書き換えます。
+      </p>
+      <p style="margin:0;">最新の情報や正確な仕様は、公式サイトでご確認ください。</p>
+    </div>
+
+    <div class="hsr-actions">
+      <a class="hsr-btn is-primary" href={w.officialUrl} target="_blank" rel="noopener noreferrer">
+        公式サイトを開く
+        <Icon name="lucide:external-link" />
+      </a>
+      <a class="hsr-btn" href={withBase('/wikis/')} data-astro-reload>wiki 一覧へ</a>
+    </div>
+  </article>
+</HsrLayout>

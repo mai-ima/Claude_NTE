@@ -1,0 +1,37 @@
+---
+/** 鳴潮 攻略wiki のトップ（準備中）。中身が無いことを隠さずに書く。 */
+import { Icon } from 'astro-icon/components';
+import WuwaLayout from '../../layouts/WuwaLayout.astro';
+import { withBase } from '../../lib/path';
+import { wiki } from '../../lib/wikis';
+
+const w = wiki('wuwa');
+---
+
+<WuwaLayout>
+  <article class="ww-card">
+    <p class="ww-eyebrow">Wuthering Waves</p>
+    <h1 class="ww-title">鳴潮 攻略wiki</h1>
+
+    <p class="ww-lead">
+      この wiki は<strong>準備中</strong>です。まだ記事はありません。
+    </p>
+
+    <div class="ww-note">
+      <p style="margin:0 0 8px;">
+        <strong>いつ公開するかは決まっていません。</strong>
+        できていないことを「近日公開」と書くのは正確ではないので、
+        分かった時点でこのページを書き換えます。
+      </p>
+      <p style="margin:0;">最新の情報や正確な仕様は、公式サイトでご確認ください。</p>
+    </div>
+
+    <div class="ww-actions">
+      <a class="ww-btn is-primary" href={w.officialUrl} target="_blank" rel="noopener noreferrer">
+        公式サイトを開く
+        <Icon name="lucide:external-link" />
+      </a>
+      <a class="ww-btn" href={withBase('/wikis/')} data-astro-reload>wiki 一覧へ</a>
+    </div>
+  </article>
+</WuwaLayout>

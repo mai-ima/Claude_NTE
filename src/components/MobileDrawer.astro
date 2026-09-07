@@ -83,6 +83,8 @@ const drawerActive = activeHref(currentPath, allHrefs);
               {target.siteName}
               <span class="muted text-sm" style="display:block;">{target.tagline}</span>
             </span>
+            {/* 押す前に「中身がまだ無い」と分かるようにする */}
+            {target.kind === 'planned' && <span class="badge badge-warning">準備中</span>}
           </a>
         ))
       }

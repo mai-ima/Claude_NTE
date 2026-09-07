@@ -1,0 +1,43 @@
+---
+/** 原神 攻略wiki のトップ（準備中）。中身が無いことを隠さずに書く。 */
+import { Icon } from 'astro-icon/components';
+import GenshinLayout from '../../layouts/GenshinLayout.astro';
+import { withBase } from '../../lib/path';
+import { wiki } from '../../lib/wikis';
+
+const w = wiki('genshin');
+---
+
+<GenshinLayout>
+  <article class="gs-card">
+    <p class="gs-eyebrow">Genshin Impact</p>
+    <h1 class="gs-title">原神 攻略wiki</h1>
+    <p class="gs-rule" aria-hidden="true"><span></span></p>
+
+    <p class="gs-lead">
+      この wiki は<strong>準備中</strong>です。<br />
+      まだ記事はありません。
+    </p>
+
+    <div class="gs-note">
+      <p style="margin:0 0 8px;">
+        <strong>いつ公開するかは決まっていません。</strong>
+        できていないことを「近日公開」と書くのは正確ではないので、
+        分かった時点でこのページを書き換えます。
+      </p>
+      <p style="margin:0;">
+        最新の情報や正確な仕様は、公式サイトでご確認ください。
+      </p>
+    </div>
+
+    <div class="gs-actions">
+      <a class="gs-btn is-primary" href={w.officialUrl} target="_blank" rel="noopener noreferrer">
+        公式サイトを開く
+        <Icon name="lucide:external-link" />
+      </a>
+      <a class="gs-btn" href={withBase('/wikis/')} data-astro-reload>
+        wiki 一覧へ
+      </a>
+    </div>
+  </article>
+</GenshinLayout>

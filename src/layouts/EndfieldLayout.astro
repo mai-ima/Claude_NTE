@@ -1,0 +1,309 @@
+---
+/**
+ * アークナイツ：エンドフィールド wiki 専用レイアウト。
+ *
+ * NTE 側の BaseLayout とも α の AlphaLayout とも**完全に独立**している
+ * （共通のCSS・ナビ・テーマを一切読み込まない）。
+ *
+ * 画面の作りも意図的に変えてある（docs/UI-RESEARCH.md の観察に基づく）:
+ *   - PC   : 左端に幅56pxの細いアイコンレール。ホバー/フォーカスで名称が開く
+ *   - スマホ: **下部タブバーを使わない**（NTE と α が既に使っており、
+ *            同じ形だと「別の wiki に来た」ことが伝わらないため）。
+ *            右下の丸ボタン → 全画面のセクションシート。12個を一度に見渡せる
+ *   - 上部 : ステータスバー1行（現在のセクション番号・名称・件数）
+ *
+ * - スタイル: src/styles/endfield.css のみ
+ * - テーマ: OS 連動 ＋ 手動切替（localStorage 'endfield.theme'／NTE・α とは別キー）
+ */
+import '../styles/endfield.css';
+import { Icon } from 'astro-icon/components';
+import { withBase, activeHref } from '../lib/path';
+import { wiki } from '../lib/wikis';
+import { loadNavSections } from '../lib/content';
+
+interface Crumb {
+  name: string;
+  href: string;
+}
+interface Props {
+  title?: string;
+  description?: string;
+  /** パンくず（ホームは自動で先頭に付く） */
+  breadcrumbs?: Crumb[];
+  /** 本文を広めに使うページ（一覧など） */
+  wide?: boolean;
+}
+const { title, description, breadcrumbs = [], wide = false } = Astro.props;
+
+const w = wiki('endfield');
+const siteName = w.siteName;
+const fullTitle = title ? `${title} | ${siteName}` : siteName;
+const desc = description ?? w.description;
+const currentPath = Astro.url.pathname;
+const canonical = new URL(currentPath, Astro.site).href;
+
+// 記事のあるセクションだけでなく**全セクション**をナビに出す（記事0件でも枠は見せる）。
+// 件数は loadNavSections から取る。
+const loaded = await loadNavSections(w.sections);
+const countOf = (c: string) => loaded.find((s) => s.collection === c)?.items.length ?? 0;
+
+const home = { label: 'ホーム', href: '/endfield/', icon: 'home' };
+const navItems = [
+  home,
+  ...w.sections.map((s) => ({ label: s.label, href: s.href, icon: s.icon, collection: s.collection })),
+];
+const activeNav = activeHref(currentPath, navItems.map((n) => n.href));
+
+/** 現在地の番号（01〜）。ホームは「00」。色だけに頼らず番号でも現在地を示す。 */
+const activeIndex = navItems.findIndex((n) => n.href === activeNav);
+const no = (i: number) => String(i).padStart(2, '0');
+const activeItem = activeIndex >= 0 ? navItems[activeIndex] : home;
+const activeCount =
+  activeIndex > 0 ? countOf((activeItem as { collection?: string }).collection ?? '') : null;
+
+const crumbItems = [{ name: 'エンドフィールド', href: withBase('/endfield/') }, ...breadcrumbs];
+---
+
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={desc} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href={withBase('favicon.svg')} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={withBase('icons/icon-192.png')} />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:locale" content="ja_JP" />
+    <meta name="generator" content={Astro.generator} />
+
+    {/* 描画前にテーマとテーマカラーを確定させる（チラつき防止）。
+        この wiki は**暗色が既定**なので、既定値は暗色側の色にする。 */}
+    <script is:inline>
+      (function () {
+        try {
+          var ua = navigator.userAgent || '';
+          if (
+            /iPad|iPhone|iPod/.test(ua) ||
+            (ua.indexOf('Macintosh') !== -1 && navigator.maxTouchPoints > 1)
+          ) {
+            document.documentElement.setAttribute('data-ios', '1');
+          }
+          var t = localStorage.getItem('endfield.theme');
+          if (t === 'dark' || t === 'light') {
+            document.documentElement.setAttribute('data-ef-theme', t);
+          }
+          // 既定は暗色。OS が明色でかつ手動指定が無いときだけ明色。
+          var light =
+            t === 'light' ||
+            (!t && window.matchMedia('(prefers-color-scheme: light)').matches);
+          var m = document.createElement('meta');
+          m.name = 'theme-color';
+          m.content = light ? '#f4f4f2' : '#191919';
+          document.head.appendChild(m);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+
+  <body>
+    <div class="ef-shell">
+      {/* ---- 上部ステータスバー: 現在地を番号・名称・件数で示す ---- */}
+      <header class="ef-status">
+        <a class="ef-status-mark" href={withBase('/endfield/')} aria-label="エンドフィールド攻略wiki ホーム">
+          EF
+        </a>
+        <span class="ef-status-brand">エンドフィールド攻略</span>
+        <span class="ef-status-here">
+          <span class="ef-status-sep" aria-hidden="true">/</span>
+          <span class="ef-status-no">{no(activeIndex >= 0 ? activeIndex : 0)}</span>
+          <span class="ef-status-name">{activeItem.label}</span>
+          {activeCount !== null && <span class="ef-status-count">（{activeCount}）</span>}
+        </span>
+        <span class="ef-status-spacer"></span>
+        <button class="ef-status-btn" type="button" data-ef-theme-toggle aria-label="配色を切り替え">
+          <Icon name="lucide:sun-moon" />
+        </button>
+        {/* 他 wiki への切替。行き先が分かるようラベルを添える（アイコンだけだと誤タップされる） */}
+        <a class="ef-status-btn" href={withBase('/wikis/')} aria-label="wiki 一覧へ移動">
+          <Icon name="lucide:library" />
+          <span>wiki</span>
+        </a>
+      </header>
+
+      <div class="ef-body">
+        {/* ---- 左の細いレール（PCのみ）。フォーカスでも開く ---- */}
+        <nav class="ef-rail" aria-label="エンドフィールド攻略wiki ナビゲーション">
+          {
+            navItems.map((item, i) => (
+              <a
+                class="ef-rail-item"
+                href={withBase(item.href)}
+                aria-current={item.href === activeNav ? 'page' : undefined}
+              >
+                <span class="ef-rail-ico">
+                  <Icon name={`lucide:${item.icon}`} />
+                </span>
+                <span class="ef-rail-label">
+                  <span class="ef-rail-no">{no(i)}</span>
+                  <span class="ef-rail-name">{item.label}</span>
+                </span>
+              </a>
+            ))
+          }
+          <div class="ef-rail-foot">
+            <a class="ef-rail-item" href={withBase('/')} data-astro-reload>
+              <span class="ef-rail-ico"><Icon name="lucide:arrow-left-right" /></span>
+              <span class="ef-rail-label"><span class="ef-rail-name">NTE wiki へ</span></span>
+            </a>
+          </div>
+        </nav>
+
+        <main class="ef-main">
+          <div class:list={['ef-wrap', { 'is-wide': wide }]}>
+            {
+              crumbItems.length > 1 && (
+                <nav class="ef-crumbs" aria-label="パンくず">
+                  {crumbItems.map((c, i) => (
+                    <>
+                      {i > 0 && <Icon name="lucide:chevron-right" />}
+                      {i === crumbItems.length - 1 ? (
+                        <span>{c.name}</span>
+                      ) : (
+                        <a href={c.href}>{c.name}</a>
+                      )}
+                    </>
+                  ))}
+                </nav>
+              )
+            }
+            <slot />
+          </div>
+        </main>
+      </div>
+
+      <footer class="ef-foot">
+        <div class="ef-foot-wrap">
+          <p>{w.footer}</p>
+          <p class="ef-foot-links">
+            <a href={w.officialUrl} target="_blank" rel="noopener noreferrer">公式サイト</a>
+            <a href={withBase('/')} data-astro-reload>NTE 完全攻略wiki</a>
+            <a href={withBase('/wikis/')} data-astro-reload>wiki 一覧</a>
+          </p>
+        </div>
+      </footer>
+
+      {/* ---- スマホ: 右下のボタン → 全画面のセクションシート ---- */}
+      <button class="ef-fab" type="button" data-ef-sheet-open aria-haspopup="dialog" aria-controls="ef-sheet">
+        <Icon name="lucide:layers" />
+        <span>セクション</span>
+      </button>
+
+      <div class="ef-sheet" id="ef-sheet" role="dialog" aria-modal="true" aria-label="セクション一覧" hidden>
+        <div class="ef-sheet-head">
+          <span class="ef-sheet-title">Sections</span>
+          <button class="ef-sheet-close" type="button" data-ef-sheet-close aria-label="閉じる">
+            <Icon name="lucide:x" />
+          </button>
+        </div>
+        <div class="ef-sheet-body">
+          {
+            navItems.map((item, i) => (
+              <a
+                class="ef-sheet-item"
+                href={withBase(item.href)}
+                aria-current={item.href === activeNav ? 'page' : undefined}
+              >
+                <Icon name={`lucide:${item.icon}`} />
+                <span>{item.label}</span>
+                <span class="ef-sheet-no">{no(i)}</span>
+              </a>
+            ))
+          }
+          <a class="ef-sheet-item" href={withBase('/')} data-astro-reload>
+            <Icon name="lucide:arrow-left-right" />
+            <span>NTE 完全攻略wiki へ</span>
+            <span class="ef-sheet-no">—</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // 配色の手動切替（OS 連動 → 明 → 暗 → OS 連動 …）。NTE・α とはキーを分ける。
+      document.addEventListener('click', (e) => {
+        const btn = (e.target as HTMLElement | null)?.closest('[data-ef-theme-toggle]');
+        if (!btn) return;
+        const root = document.documentElement;
+        const cur = root.getAttribute('data-ef-theme');
+        const next = cur === 'light' ? 'dark' : cur === 'dark' ? null : 'light';
+        if (next) root.setAttribute('data-ef-theme', next);
+        else root.removeAttribute('data-ef-theme');
+        try {
+          if (next) localStorage.setItem('endfield.theme', next);
+          else localStorage.removeItem('endfield.theme');
+        } catch {
+          /* 保存できなくても表示は切り替える */
+        }
+        const light =
+          next === 'light' ||
+          (!next && window.matchMedia('(prefers-color-scheme: light)').matches);
+        document
+          .querySelector('meta[name="theme-color"]')
+          ?.setAttribute('content', light ? '#f4f4f2' : '#191919');
+      });
+
+      // セクションシートの開閉。
+      // 開いている間は背面をスクロールさせず、Esc と背景タップで閉じる。
+      const sheet = document.getElementById('ef-sheet');
+      let lastFocus: HTMLElement | null = null;
+
+      function openSheet() {
+        if (!sheet) return;
+        lastFocus = document.activeElement as HTMLElement | null;
+        sheet.hidden = false;
+        document.body.classList.add('ef-sheet-open');
+        sheet.querySelector<HTMLElement>('[data-ef-sheet-close]')?.focus();
+      }
+      function closeSheet() {
+        if (!sheet || sheet.hidden) return;
+        sheet.hidden = true;
+        document.body.classList.remove('ef-sheet-open');
+        lastFocus?.focus();
+      }
+
+      document.addEventListener('click', (e) => {
+        const t = e.target as HTMLElement | null;
+        if (t?.closest('[data-ef-sheet-open]')) {
+          openSheet();
+          return;
+        }
+        if (t?.closest('[data-ef-sheet-close]')) {
+          closeSheet();
+          return;
+        }
+        // 背景（シート自身）を押したときだけ閉じる。中身の項目は素通しする。
+        if (t === sheet) closeSheet();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeSheet();
+      });
+
+      // 横に長い表はスクロールできるようラップする（スマホで崩れないように）
+      for (const table of Array.from(document.querySelectorAll('.ef-prose table'))) {
+        if (table.parentElement?.classList.contains('ef-table-scroll')) continue;
+        const box = document.createElement('div');
+        box.className = 'ef-table-scroll';
+        table.replaceWith(box);
+        box.appendChild(table);
+      }
+    </script>
+  </body>
+</html>

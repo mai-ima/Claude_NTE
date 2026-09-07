@@ -1,0 +1,104 @@
+---
+/**
+ * アークナイツ：エンドフィールド wiki のトップ。
+ *
+ * まだ記事が無い段階なので、**「これから作る」ことを隠さずに書く**。
+ * 何を扱う wiki なのか（セクション）と、公式サイトへの導線を先に用意しておく。
+ */
+import { Icon } from 'astro-icon/components';
+import EndfieldLayout from '../../layouts/EndfieldLayout.astro';
+import { withBase } from '../../lib/path';
+import { wiki } from '../../lib/wikis';
+import { loadNavSections } from '../../lib/content';
+
+const w = wiki('endfield');
+const loaded = await loadNavSections(w.sections);
+const countOf = (c: string) => loaded.find((s) => s.collection === c)?.items.length ?? 0;
+const total = w.sections.reduce((n, s) => n + countOf(s.collection), 0);
+const no = (i: number) => String(i + 1).padStart(2, '0');
+---
+
+<EndfieldLayout title="ホーム" wide>
+  <p class="ef-eyebrow">Arknights: Endfield</p>
+  <h1 class="ef-title">アークナイツ：エンドフィールド 攻略wiki</h1>
+  <p class="ef-lead">
+    惑星タロII の開拓を進めるための攻略・データベースです。
+    オペレーター・武器・装備・集成工業システム・エリアなどを、
+    出典を明記したうえでまとめていきます。
+  </p>
+
+  <p class="ef-note">
+    <strong>この wiki は準備中です（記事 {total} 件）。</strong>
+    枠組みだけを先に用意しました。記事は、公式のお知らせや信頼できる情報源で
+    <strong>裏が取れたものから順に</strong>追加していきます。
+    確かめられていない内容を先に置くことはしません。
+  </p>
+
+  <div class="ef-block">
+    <h2>収録する項目</h2>
+    <div class="ef-list is-2col">
+      {
+        w.sections.map((s, i) => (
+          <a class="ef-row" href={withBase(s.href)}>
+            <span class="ef-row-no">{no(i)}</span>
+            <span class="ef-row-body">
+              <span class="ef-row-name">{s.label}</span>
+              <p class="ef-row-desc">{s.blurb}</p>
+            </span>
+            <span class="ef-row-meta">{countOf(s.collection)}</span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="ef-block">
+    <h2>このゲームについて</h2>
+    <div class="ef-prose">
+      <p>
+        <strong>アークナイツ：エンドフィールド</strong>（Arknights: Endfield）は、
+        Hypergryph 傘下のスタジオ MOUNTAIN CONTOUR が開発した
+        <strong>3Dリアルタイム戦略RPG</strong>です。
+        <strong>2026年1月22日</strong>にサービスを開始しました。
+        対応機種は PC / PlayStation 5 / iOS / Android です。
+      </p>
+      <p>
+        舞台は惑星「テラ」から離れた自然衛星<strong>タロII</strong>。
+        最大4人のオペレーターでパーティを組んで戦うほか、
+        採掘機・発電所・製造プラントをベルトコンベアでつなぐ
+        <strong>集成工業システム</strong>で生産ラインを自分で設計できるのが大きな特徴です。
+      </p>
+      <p>
+        本 wiki は<strong>非公式のファンサイト</strong>です。
+        最新の情報や正確な仕様は
+        <a href={w.officialUrl} target="_blank" rel="noopener noreferrer">
+          公式サイト
+          <Icon name="lucide:external-link" style="width:13px;height:13px;margin-left:3px;" />
+        </a>
+        でご確認ください。
+      </p>
+    </div>
+  </div>
+
+  <div class="ef-block">
+    <h2>このサイトのほかの wiki</h2>
+    <div class="ef-list">
+      <a class="ef-row" href={withBase('/')} data-astro-reload>
+        <Icon name="lucide:arrow-left-right" />
+        <span class="ef-row-body">
+          <span class="ef-row-name">NTE 完全攻略wiki</span>
+          <p class="ef-row-desc">Neverness to Everness の攻略・データベースとツール。</p>
+        </span>
+        <span class="ef-row-meta">運用中</span>
+      </a>
+      <a class="ef-row" href={withBase('/wikis/')} data-astro-reload>
+        <Icon name="lucide:library" />
+        <span class="ef-row-body">
+          <span class="ef-row-name">wiki 一覧</span>
+          <p class="ef-row-desc">このサイトに置かれている wiki をまとめて見る。</p>
+        </span>
+        <span class="ef-row-meta">ハブ</span>
+      </a>
+    </div>
+  </div>
+</EndfieldLayout>

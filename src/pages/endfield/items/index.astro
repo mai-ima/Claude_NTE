@@ -1,0 +1,9 @@
+---
+import { getCollection } from "astro:content";
+import EndfieldList from "../../../components/endfield/EndfieldList.astro";
+
+// 下書き（draft: true）はビルドから除外する
+const entries = (await getCollection("endfieldItems")).filter((e) => !e.data.draft);
+---
+
+<EndfieldList collection="endfieldItems" entries={entries} eyebrow="ITEMS" />

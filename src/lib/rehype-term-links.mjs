@@ -45,6 +45,23 @@ const WIKI_GROUPS = [
     ],
   },
   {
+    // アークナイツ：エンドフィールド。**辞書は endfield の中だけで閉じる**。
+    // NTE のグループと混ぜると、エンドフィールドの本文から NTE の記事へリンクが張られる。
+    id: 'endfield',
+    collections: [
+      { dir: 'endfield-terms', base: '/endfield/terms/' },
+      { dir: 'endfield-operators', base: '/endfield/operators/' },
+      { dir: 'endfield-weapons', base: '/endfield/weapons/' },
+      { dir: 'endfield-gear', base: '/endfield/gear/' },
+      { dir: 'endfield-industry', base: '/endfield/industry/' },
+      { dir: 'endfield-enemies', base: '/endfield/enemies/' },
+      { dir: 'endfield-areas', base: '/endfield/areas/' },
+      { dir: 'endfield-systems', base: '/endfield/systems/' },
+      { dir: 'endfield-items', base: '/endfield/items/' },
+      { dir: 'endfield-events', base: '/endfield/events/' },
+    ],
+  },
+  {
     id: 'alpha',
     collections: [
       { dir: 'alpha-terms', base: '/alpha/terms/' },

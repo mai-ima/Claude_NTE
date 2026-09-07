@@ -150,9 +150,121 @@ export const ALPHA_SECTIONS: SectionMeta[] = [
   },
 ];
 
+/**
+ * アークナイツ：エンドフィールド wiki のセクション（11種）。
+ *
+ * 区分は**大手攻略サイトの分類と突き合わせて**決めた（オペレーター／武器／装備／設備／
+ * マップ／ストーリー／サブクエスト／拠点防衛／アイテム／モンスター）。
+ * このゲームは「集成工業システム（AIC）」という工場づくりが看板なので、
+ * それは systems に置き、組み方の手順は guides に置く。
+ *
+ * 並び順（order 相当）は**そのまま画面の番号**になる（01 / OPERATORS …）。
+ * URL は /endfield/ 配下に閉じること。
+ */
+export const ENDFIELD_SECTIONS: SectionMeta[] = [
+  {
+    collection: 'endfieldOperators',
+    dir: 'endfield-operators',
+    href: '/endfield/operators/',
+    label: 'オペレーター',
+    icon: 'users',
+    blurb: '★6/★5/★4 のオペレーター。職分・属性・武器種で引ける。',
+  },
+  {
+    collection: 'endfieldWeapons',
+    dir: 'endfield-weapons',
+    href: '/endfield/weapons/',
+    label: '武器',
+    icon: 'sword',
+    blurb: '片手剣・大剣・長柄武器・拳銃・アーツユニット。',
+  },
+  {
+    collection: 'endfieldGear',
+    dir: 'endfield-gear',
+    href: '/endfield/gear/',
+    label: '装備',
+    icon: 'shield',
+    blurb: '胴・腕・アクセサリーの装備とセット効果。',
+  },
+  {
+    collection: 'endfieldIndustry',
+    dir: 'endfield-industry',
+    href: '/endfield/industry/',
+    label: '集成工業',
+    icon: 'factory',
+    blurb: '生産ライン・設備・電力管理。本作の看板システム。',
+  },
+  {
+    collection: 'endfieldEnemies',
+    dir: 'endfield-enemies',
+    href: '/endfield/enemies/',
+    label: '敵・ボス',
+    icon: 'skull',
+    blurb: 'アンゲロス・ランドブレーカー・野生生物とボス。',
+  },
+  {
+    collection: 'endfieldAreas',
+    dir: 'endfield-areas',
+    href: '/endfield/areas/',
+    label: 'エリア',
+    icon: 'map',
+    blurb: '惑星タロII の各エリアと探索。',
+  },
+  {
+    collection: 'endfieldSystems',
+    dir: 'endfield-systems',
+    href: '/endfield/systems/',
+    label: 'システム',
+    icon: 'settings-2',
+    blurb: '戦闘・育成・スカウト（ガチャ）・拠点防衛の仕組み。',
+  },
+  {
+    collection: 'endfieldItems',
+    dir: 'endfield-items',
+    href: '/endfield/items/',
+    label: 'アイテム',
+    icon: 'package',
+    blurb: '昇進素材・武器素材・スキル強化素材など。',
+  },
+  {
+    collection: 'endfieldEvents',
+    dir: 'endfield-events',
+    href: '/endfield/events/',
+    label: 'バージョン/イベント',
+    icon: 'calendar-clock',
+    blurb: 'バージョン更新・特別スカウト・期間限定イベント。',
+  },
+  {
+    collection: 'endfieldStory',
+    dir: 'endfield-story',
+    href: '/endfield/story/',
+    label: 'ストーリー',
+    icon: 'book-open',
+    blurb: '本編の流れ（ネタバレは折りたたみ）。',
+  },
+  {
+    collection: 'endfieldGuides',
+    dir: 'endfield-guides',
+    href: '/endfield/guides/',
+    label: 'ガイド',
+    icon: 'compass',
+    blurb: 'はじめ方・日課・効率的な進め方。',
+  },
+  {
+    collection: 'endfieldTerms',
+    dir: 'endfield-terms',
+    href: '/endfield/terms/',
+    label: '用語集',
+    icon: 'book-a',
+    blurb: 'テラ・タロII・アンゲロス・源石など固有の用語。',
+  },
+];
+
 /** 全 wiki のセクションを横断した検索（コレクション名は wiki 間で重複しない）。 */
 export function sectionByCollection(collection: string): SectionMeta | undefined {
-  return [...SECTIONS, ...ALPHA_SECTIONS].find((s) => s.collection === collection);
+  return [...SECTIONS, ...ENDFIELD_SECTIONS, ...ALPHA_SECTIONS].find(
+    (s) => s.collection === collection,
+  );
 }
 
 /** 主要なグローバルナビ（ヘッダーアイコン＋ドロワー） */

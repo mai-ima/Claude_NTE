@@ -1,0 +1,89 @@
+---
+/**
+ * エンドフィールド wiki の一覧ページ。
+ *
+ * α の AlphaList とは別物として組んである（箱ではなく罫線で区切る／番号を振る）。
+ * **記事0件のときは「準備中」をはっきり出す**（空のページを黙って見せない）。
+ */
+import EndfieldLayout from '../../layouts/EndfieldLayout.astro';
+import { Icon } from 'astro-icon/components';
+import { withBase } from '../../lib/path';
+import { hrefOf, titleOf } from '../../lib/content';
+import { sectionByCollection } from '../../lib/nav';
+
+interface Props {
+  collection: string;
+  entries: { id: string; data: Record<string, unknown> }[];
+  /** 見出しの英字ラベル（01 / OPERATORS の右側） */
+  eyebrow: string;
+}
+const { collection, entries, eyebrow } = Astro.props;
+
+const section = sectionByCollection(collection)!;
+
+/** 記事の並びは order → 名前順。order が無い記事は後ろに寄せる。 */
+const sorted = [...entries].sort((a, b) => {
+  const oa = (a.data.order as number) ?? 100;
+  const ob = (b.data.order as number) ?? 100;
+  if (oa !== ob) return oa - ob;
+  return titleOf(a as never).localeCompare(titleOf(b as never), 'ja');
+});
+
+const no = (i: number) => String(i + 1).padStart(2, '0');
+const fmt = (d: unknown) =>
+  d instanceof Date ? d.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' }) : null;
+---
+
+<EndfieldLayout
+  title={section.label}
+  description={section.blurb}
+  breadcrumbs={[{ name: section.label, href: withBase(section.href) }]}
+  wide
+>
+  <p class="ef-eyebrow">{eyebrow}</p>
+  <h1 class="ef-title">{section.label}</h1>
+  <p class="ef-lead">{section.blurb}</p>
+
+  {
+    sorted.length === 0 ? (
+      <div class="ef-empty">
+        <strong>この項目はまだ準備中です</strong>
+        <p>
+          出典で裏が取れた内容から順に追加していきます。
+          現時点で載せられる確かな情報がないため、あえて空にしています。
+        </p>
+      </div>
+    ) : (
+      <div class="ef-list">
+        {sorted.map((e, i) => {
+          const d = e.data;
+          // 「いつ時点の情報か」は一覧でも分かるようにする（誠実性ルール）。
+          // checked（確認しただけの日）が updated より新しければそちらを出す。
+          const u = d.updated instanceof Date ? d.updated : null;
+          const c = d.checked instanceof Date ? d.checked : null;
+          const fresh = c && (!u || c > u) ? { kind: '確認', date: c } : u ? { kind: '更新', date: u } : null;
+          return (
+            <a class="ef-row" href={hrefOf(collection, e.id)}>
+              <span class="ef-row-no">{no(i)}</span>
+              <span class="ef-row-body">
+                <span class="ef-row-name">{titleOf(e as never)}</span>
+                {d.description && <p class="ef-row-desc">{d.description as string}</p>}
+              </span>
+              <span class="ef-row-meta">
+                {d.status === 'draft' && <span class="ef-badge is-draft">要確認</span>}
+                {fresh && ` ${fresh.kind} ${fmt(fresh.date)}`}
+              </span>
+            </a>
+          );
+        })}
+      </div>
+    )
+  }
+
+  <div class="ef-block">
+    <h2>ほかのセクション</h2>
+    <p class="ef-lead" style="margin-bottom:0;">
+      左のレール（パソコン）または右下の「セクション」ボタン（スマホ）から移動できます。
+    </p>
+  </div>
+</EndfieldLayout>

@@ -109,11 +109,23 @@ const totalAll = cards.reduce((sum, c) => sum + c.total, 0);
                 </div>
                 <span class="wiki-card-badges">
                   {w.kind === 'sample' && <span class="badge">サンプル</span>}
-                  <span class="badge badge-accent">{total} 記事</span>
+                  {w.kind === 'planned' && <span class="badge badge-warning">準備中</span>}
+                  {/* 準備中の wiki に「0 記事」と出しても意味が無いので、記事数は運用中だけ */}
+                  {w.kind !== 'planned' && <span class="badge badge-accent">{total} 記事</span>}
                 </span>
               </div>
 
               <p class="muted text-sm wiki-card-desc">{w.description}</p>
+
+              {/* 準備中は中身が無いぶん、公式サイトへの導線をここで出す */}
+              {w.kind === 'planned' && w.officialUrl && (
+                <p class="text-sm wiki-card-official">
+                  <a href={w.officialUrl} target="_blank" rel="noopener noreferrer">
+                    公式サイトを開く
+                    <Icon name="lucide:external-link" />
+                  </a>
+                </p>
+              )}
 
               {sections.length > 0 && (
                 <div class="cluster wiki-card-sections">

@@ -82,6 +82,13 @@ const PAGES = [
   '/systems/', '/guides/', '/shops/', '/people/', '/story/',
   '/alpha/', '/alpha/characters/', '/alpha/systems/', '/alpha/guides/', '/alpha/terms/',
   '/terms/annulith/', '/characters/zanko/', '/vehicles/tide/', '/events/iroi-pickup/',
+  // アークナイツ：エンドフィールド（独自UI）
+  '/endfield/', '/endfield/operators/', '/endfield/weapons/', '/endfield/gear/',
+  '/endfield/industry/', '/endfield/enemies/', '/endfield/areas/', '/endfield/systems/',
+  '/endfield/items/', '/endfield/events/', '/endfield/story/', '/endfield/guides/',
+  '/endfield/terms/',
+  // 準備中の wiki（それぞれ独自UI）
+  '/genshin/', '/wuwa/', '/hsr/',
 ];
 
 const problems = [];

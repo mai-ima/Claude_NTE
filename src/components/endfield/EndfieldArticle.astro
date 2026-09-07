@@ -1,0 +1,169 @@
+---
+/**
+ * エンドフィールド wiki の記事ページ本体。
+ *
+ * NTE の EntityDetail（情報パネル＋サイドバー＋個人メモ…）とも
+ * α の AlphaArticle（丸いカードの1カラム）とも別物として組む。
+ *   - 見出しに「01 / SECTION」の番号ラベル
+ *   - 要点は罫線で区切った定義リスト（箱を使わない）
+ *   - 本文のあとに出典・更新日・前後の記事
+ *
+ * `updated`（本文を書き換えた日）と `checked`（内容は変えずに現行版でも正しいと
+ * 確かめた日）を**分けて出す**。NTE 側と同じ誠実性ルール。
+ */
+import { Icon } from 'astro-icon/components';
+import EndfieldLayout from '../../layouts/EndfieldLayout.astro';
+import { withBase } from '../../lib/path';
+import { sectionByCollection } from '../../lib/nav';
+
+interface LinkRef {
+  href: string;
+  title: string;
+}
+interface Row {
+  label: string;
+  value: string;
+}
+interface Props {
+  collection: string;
+  title: string;
+  description?: string;
+  /** 見出し（目次用）。depth 2 のみ使う */
+  headings: { depth: number; slug: string; text: string }[];
+  /** 冒頭に出す要点（レア度・職分・属性など） */
+  rows?: Row[];
+  badges?: string[];
+  status?: 'verified' | 'draft';
+  updated?: Date;
+  checked?: Date;
+  sources?: { label: string; url: string }[];
+  prev?: LinkRef | null;
+  next?: LinkRef | null;
+}
+const {
+  collection,
+  title,
+  description,
+  headings,
+  rows = [],
+  badges = [],
+  status,
+  updated,
+  checked,
+  sources = [],
+  prev,
+  next,
+} = Astro.props;
+
+const section = sectionByCollection(collection);
+const toc = headings.filter((h) => h.depth === 2);
+const fmt = (d: Date) => d.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' });
+---
+
+<EndfieldLayout
+  title={title}
+  description={description}
+  breadcrumbs={[
+    ...(section ? [{ name: section.label, href: withBase(section.href) }] : []),
+    { name: title, href: '#' },
+  ]}
+>
+  {section && <p class="ef-eyebrow">{section.label}</p>}
+  <h1 class="ef-title">{title}</h1>
+  {description && <p class="ef-lead">{description}</p>}
+
+  <div class="ef-crumbs" style="margin-bottom:18px;">
+    {status === 'draft' && <span class="ef-badge is-draft">要確認（未検証）</span>}
+    {status === 'verified' && <span class="ef-badge">出典で確認済み</span>}
+    {badges.map((b) => <span class="ef-badge">{b}</span>)}
+    {updated && <span>更新 {fmt(updated)}</span>}
+    {/* 書き換えていないが現行版でも正しいと確かめた日。updated より新しいときだけ出す。 */}
+    {checked && (!updated || checked > updated) && <span>確認 {fmt(checked)}</span>}
+  </div>
+
+  {
+    status === 'draft' && (
+      <p class="ef-note">
+        <strong>この記事には未検証の情報が含まれます。</strong>
+        出典で裏が取れていない数値・仕様には本文中に「要確認」と付けています。
+        ゲーム内および公式のお知らせで最終確認してください。
+      </p>
+    )
+  }
+
+  {
+    rows.length > 0 && (
+      <div class="ef-list" style="margin-bottom:24px;">
+        {rows.map((r) => (
+          <div class="ef-row" style="grid-template-columns:120px 1fr;">
+            <span class="ef-row-meta">{r.label}</span>
+            <span class="ef-row-body">{r.value}</span>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  {
+    toc.length > 1 && (
+      <details class="ef-note" style="border-left-color:var(--ef-line);">
+        <summary style="cursor:pointer;font-weight:700;">目次</summary>
+        <ul style="margin:10px 0 0;padding-left:1.2em;">
+          {toc.map((h) => (
+            <li>
+              <a href={`#${h.slug}`}>{h.text}</a>
+            </li>
+          ))}
+        </ul>
+      </details>
+    )
+  }
+
+  <div class="ef-prose">
+    <slot />
+  </div>
+
+  {
+    sources.length > 0 && (
+      <div class="ef-block">
+        <h2>出典</h2>
+        <ul>
+          {sources.map((s) => (
+            <li>
+              <a href={s.url} target="_blank" rel="noopener noreferrer">
+                {s.label}
+                <Icon name="lucide:external-link" style="width:13px;height:13px;margin-left:4px;" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+
+  {
+    (prev || next) && (
+      <div class="ef-block">
+        <h2>この項目のほかの記事</h2>
+        <div class="ef-list">
+          {prev && (
+            <a class="ef-row" href={prev.href} style="grid-template-columns:20px 1fr;">
+              <Icon name="lucide:chevron-right" style="transform:rotate(180deg);" />
+              <span class="ef-row-body">
+                <span class="ef-row-name">{prev.title}</span>
+              </span>
+            </a>
+          )}
+          {next && (
+            <a class="ef-row" href={next.href} style="grid-template-columns:20px 1fr;">
+              <Icon name="lucide:chevron-right" />
+              <span class="ef-row-body">
+                <span class="ef-row-name">{next.title}</span>
+              </span>
+            </a>
+          )}
+        </div>
+      </div>
+    )
+  }
+</EndfieldLayout>

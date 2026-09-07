@@ -2,8 +2,17 @@
  * マルチwiki（複数ゲーム）の定義。
  *
  * このサイトは「1サイト＝1ゲーム」ではなく、**wiki を並置**できる構成にしてある。
- *  - NTE wiki      : ルート（/）に置く既定の wiki。
- *  - αテスト wiki  : /alpha/ 配下。NTE とはコレクション・ナビ・レイアウトを完全分離。
+ *
+ * | wiki | base | 状態 | UI |
+ * | --- | --- | --- | --- |
+ * | NTE                    | `/`         | 運用中 | 共通レイアウト（BaseLayout） |
+ * | アークナイツ：エンドフィールド | `/endfield/` | 運用中 | **専用**（EndfieldLayout + endfield.css） |
+ * | 原神                   | `/genshin/` | 準備中 | **専用**（GenshinLayout + genshin.css） |
+ * | 鳴潮                   | `/wuwa/`    | 準備中 | **専用**（WuwaLayout + wuwa.css） |
+ * | 崩壊：スターレイル       | `/hsr/`     | 準備中 | **専用**（HsrLayout + hsr.css） |
+ * | αテスト（仮）           | `/alpha/`   | サンプル | **専用**（AlphaLayout + alpha.css） |
+ *
+ * 一覧の正は docs/WIKIS.md。追加手順は docs/RECIPES.md「wiki を1つ足す」。
  *
  * 新しいゲームの wiki を足すときは
  *   1. src/lib/nav.ts に <GAME>_SECTIONS を定義（コレクション名は wiki 間で一意に）
@@ -11,11 +20,11 @@
  *   3. ここに WikiMeta を1件足す
  *   4. src/pages/<base>/ 配下にページを置く
  * の4手順で済む。共通コンポーネント（BaseLayout / EntityList / EntityDetail / Sidebar）は
- * すべて `wiki` prop で切り替わる。
+ * すべて `wiki` prop で切り替わる。**専用UIの wiki はそれらを使わず自前で組む。**
  */
-import { SECTIONS, ALPHA_SECTIONS, type SectionMeta } from './nav';
+import { SECTIONS, ALPHA_SECTIONS, ENDFIELD_SECTIONS, type SectionMeta } from './nav';
 
-export type WikiId = 'nte' | 'alpha';
+export type WikiId = 'nte' | 'endfield' | 'genshin' | 'wuwa' | 'hsr' | 'alpha';
 
 export interface WikiNavItem {
   label: string;
@@ -50,11 +59,20 @@ export interface WikiMeta {
   /** OG画像を /og/ に生成しているか（未生成の wiki では既定アイコンを使う） */
   hasOgImages: boolean;
   /**
-   * wiki 一覧（/wikis/）での位置づけ。
-   * 'sample' は「実在しないゲームのダミーデータ」であることをハブで明示するために使う。
-   * 省略時は 'live'（通常運用の wiki）。
+   * wiki 一覧（/wikis/）での位置づけ。省略時は 'live'。
+   *
+   *  - 'live'    : 通常運用の wiki
+   *  - 'planned' : **準備中**。ページは1枚だけで、記事コレクションを持たない（sections が空）
+   *  - 'sample'  : 実在しないゲームのダミーデータ（マルチwiki機能の検証用）
    */
-  kind?: 'live' | 'sample';
+  kind?: 'live' | 'planned' | 'sample';
+  /**
+   * そのゲームの公式サイト。準備中の wiki で「中身はまだ無いが公式はここ」と案内するために使う。
+   * **URL は実在を確認してから書くこと**（リンク切れは誠実さの問題になる）。
+   */
+  officialUrl?: string;
+  /** 権利表記に出す権利者名（開発・配信元） */
+  rightsHolder?: string;
 }
 
 const NTE: WikiMeta = {
@@ -124,10 +142,133 @@ const ALPHA: WikiMeta = {
   hasOgImages: false,
 };
 
-export const WIKIS: Record<WikiId, WikiMeta> = { nte: NTE, alpha: ALPHA };
+/**
+ * アークナイツ：エンドフィールド wiki。
+ * NTE の共通レイアウトは使わず、**EndfieldLayout + endfield.css** で独自に組む。
+ */
+const ENDFIELD: WikiMeta = {
+  id: 'endfield',
+  base: '/endfield',
+  mark: 'EF',
+  brand: 'エンドフィールド攻略',
+  siteName: 'アークナイツ：エンドフィールド 攻略wiki',
+  tagline: '惑星タロIIの開拓を進めるための攻略・データベース',
+  description:
+    'アークナイツ：エンドフィールド（Arknights: Endfield）の攻略・データベースをまとめた非公式ファンwiki。オペレーター・武器・集成工業システム・エリアなどを収録します。',
+  accent: '#f0a020',
+  footer:
+    'アークナイツ：エンドフィールド 攻略wiki — 非公式ファンサイトです。各記事は出典を明記し、未確認情報には「要確認」を付しています。ゲームの著作権はすべて Hypergryph / MOUNTAIN CONTOUR / GRYPHLINE に帰属します。',
+  sections: ENDFIELD_SECTIONS,
+  kind: 'live',
+  officialUrl: 'https://endfield.gryphline.com/ja-jp',
+  rightsHolder: 'Hypergryph / MOUNTAIN CONTOUR / GRYPHLINE',
+  // 他 wiki のページを混ぜないこと（test/wikis.test.ts が検査している）
+  primaryNav: [
+    { label: 'ホーム', href: '/endfield/', icon: 'home' },
+    { label: 'オペレーター', href: '/endfield/operators/', icon: 'users' },
+    { label: '武器', href: '/endfield/weapons/', icon: 'sword' },
+    { label: 'システム', href: '/endfield/systems/', icon: 'settings-2' },
+    { label: '用語集', href: '/endfield/terms/', icon: 'book-a' },
+  ],
+  bottomNav: [
+    { label: 'ホーム', href: '/endfield/', icon: 'home' },
+    { label: 'オペレーター', href: '/endfield/operators/', icon: 'users' },
+    { label: 'システム', href: '/endfield/systems/', icon: 'settings-2' },
+    { label: '用語集', href: '/endfield/terms/', icon: 'book-a' },
+  ],
+  hasOgImages: false,
+};
 
-/** 切替UIの表示順（ルート wiki が先） */
-export const WIKI_LIST: WikiMeta[] = [NTE, ALPHA];
+/**
+ * 準備中（`kind: 'planned'`）の wiki。
+ *
+ * - **記事コレクションを持たない**（`sections: []`）。ページはトップ1枚だけ
+ * - それぞれ**そのゲームのUIを再現した専用レイアウト**で表示する
+ *   （見た目だけ用意して中身が無い、ではなく「そのゲームの wiki がこれから建つ」と伝える）
+ * - `noindex` にし、sitemap からも外す（中身の無いページを検索に載せない）
+ * - 公式サイトの URL は **2026-09-07 に HTTP 200 を確認済み**
+ */
+const GENSHIN: WikiMeta = {
+  id: 'genshin',
+  base: '/genshin',
+  mark: '原',
+  brand: '原神攻略',
+  siteName: '原神 攻略wiki（準備中）',
+  tagline: '準備中 — これから作ります',
+  description:
+    '原神（Genshin Impact）の攻略wiki。現在準備中です。公式サイトへのご案内のみ掲載しています。',
+  accent: '#c8a35a',
+  footer:
+    '原神 攻略wiki（準備中）— 非公式ファンサイトです。ゲームの著作権はすべて COGNOSPHERE PTE. LTD. / miHoYo に帰属します。',
+  sections: [],
+  kind: 'planned',
+  officialUrl: 'https://genshin.hoyoverse.com/ja/',
+  rightsHolder: 'COGNOSPHERE PTE. LTD. / miHoYo',
+  primaryNav: [{ label: 'ホーム', href: '/genshin/', icon: 'home' }],
+  bottomNav: [{ label: 'ホーム', href: '/genshin/', icon: 'home' }],
+  hasOgImages: false,
+};
+
+const WUWA: WikiMeta = {
+  id: 'wuwa',
+  base: '/wuwa',
+  mark: '鳴',
+  brand: '鳴潮攻略',
+  siteName: '鳴潮 攻略wiki（準備中）',
+  tagline: '準備中 — これから作ります',
+  description:
+    '鳴潮（Wuthering Waves）の攻略wiki。現在準備中です。公式サイトへのご案内のみ掲載しています。',
+  accent: '#2dd4bf',
+  footer:
+    '鳴潮 攻略wiki（準備中）— 非公式ファンサイトです。ゲームの著作権はすべて KURO GAMES に帰属します。',
+  sections: [],
+  kind: 'planned',
+  officialUrl: 'https://wutheringwaves.kurogames.com/',
+  rightsHolder: 'KURO GAMES',
+  primaryNav: [{ label: 'ホーム', href: '/wuwa/', icon: 'home' }],
+  bottomNav: [{ label: 'ホーム', href: '/wuwa/', icon: 'home' }],
+  hasOgImages: false,
+};
+
+const HSR: WikiMeta = {
+  id: 'hsr',
+  base: '/hsr',
+  mark: '星',
+  brand: 'スターレイル攻略',
+  siteName: '崩壊：スターレイル 攻略wiki（準備中）',
+  tagline: '準備中 — これから作ります',
+  description:
+    '崩壊：スターレイル（Honkai: Star Rail）の攻略wiki。現在準備中です。公式サイトへのご案内のみ掲載しています。',
+  accent: '#8b7fd4',
+  footer:
+    '崩壊：スターレイル 攻略wiki（準備中）— 非公式ファンサイトです。ゲームの著作権はすべて COGNOSPHERE PTE. LTD. / miHoYo に帰属します。',
+  sections: [],
+  kind: 'planned',
+  officialUrl: 'https://hsr.hoyoverse.com/ja-jp/',
+  rightsHolder: 'COGNOSPHERE PTE. LTD. / miHoYo',
+  primaryNav: [{ label: 'ホーム', href: '/hsr/', icon: 'home' }],
+  bottomNav: [{ label: 'ホーム', href: '/hsr/', icon: 'home' }],
+  hasOgImages: false,
+};
+
+export const WIKIS: Record<WikiId, WikiMeta> = {
+  nte: NTE,
+  endfield: ENDFIELD,
+  genshin: GENSHIN,
+  wuwa: WUWA,
+  hsr: HSR,
+  alpha: ALPHA,
+};
+
+/**
+ * 切替UIの表示順。
+ * **先頭は必ずルート wiki（nte）**。運用中 → 準備中 → サンプルの順に並べ、
+ * α（実在しないゲームの検証用サンプル）を末尾に置く。
+ */
+export const WIKI_LIST: WikiMeta[] = [NTE, ENDFIELD, GENSHIN, WUWA, HSR, ALPHA];
+
+/** 通常運用中の wiki だけ（フッターの羅列など、全部並べると長すぎる場所で使う） */
+export const LIVE_WIKIS: WikiMeta[] = WIKI_LIST.filter((w) => (w.kind ?? 'live') === 'live');
 
 export const DEFAULT_WIKI: WikiId = 'nte';
 

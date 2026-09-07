@@ -16,7 +16,7 @@ import '../styles/ios.css';
 import { ClientRouter } from 'astro:transitions';
 import { Icon } from 'astro-icon/components';
 import { withBase, activeHref } from '../lib/path';
-import { wiki as wikiMeta, WIKI_LIST, type WikiId } from '../lib/wikis';
+import { wiki as wikiMeta, WIKI_LIST, LIVE_WIKIS, type WikiId } from '../lib/wikis';
 import { prefBootData } from '../lib/prefs';
 import { UI_MODES } from '../lib/ui';
 import MobileDrawer from '../components/MobileDrawer.astro';
@@ -271,6 +271,8 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
                     <span class="muted text-sm">{target.tagline}</span>
                   </span>
                   {target.id === w.id && <Icon name="lucide:check" />}
+                  {/* 押す前に「中身がまだ無い」と分かるようにする（開いてから気づくのは不親切） */}
+                  {target.kind === 'planned' && <span class="badge badge-warning">準備中</span>}
                 </a>
               ))
             }
@@ -330,9 +332,11 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
 
       <footer class="app-footer">
         <p>{w.footer}</p>
+        {/* wiki が6つになったので、フッターには**運用中だけ**を並べる。
+            準備中とサンプルは「wiki 一覧」から辿れる（全部並べると横に溢れる）。 */}
         <p class="wiki-footer-nav">
           {
-            WIKI_LIST.map((target) => (
+            LIVE_WIKIS.map((target) => (
               <a
                 href={withBase(target.base ? `${target.base}/` : '/')}
                 {...(target.id === w.id ? {} : { 'data-astro-reload': true })}
