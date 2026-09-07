@@ -58,7 +58,36 @@
   --ef-font:
     ui-sans-serif, system-ui, -apple-system, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP',
     Meiryo, sans-serif;
+
+  /* --- 2回目の解析で分かった「らしさ」の核（docs/UI-RESEARCH.md） --- */
+
+  /** 太い罫線。公式は `border-top: .375rem solid #35373c`（**6px**）を上下左右で使う。
+      1px の細線ではこのゲームの重さが出ない。要所だけこの太さにする。 */
+  --ef-bar: 6px;
+
+  /** 黄色の発光。公式の `box-shadow: 0 0 10px #fff000` から。
+      面で塗るだけでなく**光らせる**のが特徴。 */
+  --ef-glow: 0 0 10px color-mix(in srgb, var(--ef-accent) 70%, transparent);
+
+  /** 動きの速さ。公式は 0.2〜0.3 秒（background-color .2s / transform .3s）。 */
+  --ef-fast: 0.2s;
+  --ef-slow: 0.3s;
+
   color-scheme: dark;
+}
+
+/**
+ * 45度のハザードストライプ。
+ * 公式の `linear-gradient(-45deg, transparent, transparent 13.95%, black 0,
+ * black 36.05%, transparent 0, …)` を写したもの（工事現場の警告帯と同じ意匠）。
+ * 帯として使うので、**面積は小さく**保つ。
+ */
+.ef-hazard {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--ef-accent) 0 6px,
+    transparent 6px 14px
+  );
 }
 
 /* 明色は「利用者が手動で選んだとき」だけ。**OS 設定には追従しない。**
@@ -145,8 +174,20 @@ a:hover {
   min-height: 48px;
   padding: 0 14px;
   background: var(--ef-bg-2);
-  border-bottom: 1px solid var(--ef-line);
+  /* 公式が使う 6px の太い罫線。細線だとこのゲームの重さが出ない。 */
+  border-bottom: var(--ef-bar) solid var(--ef-panel);
   font-size: 0.78rem;
+  position: sticky; /* 上で指定済みだが、::after の基準として明示しておく */
+}
+/* バーの下端に黄色の短い帯を重ねる（全幅にせず、左肩だけ光らせる） */
+.ef-status::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: calc(var(--ef-bar) * -1);
+  width: 96px;
+  height: var(--ef-bar);
+  background: var(--ef-accent);
 }
 .ef-status-mark {
   display: inline-flex;
@@ -200,6 +241,9 @@ a:hover {
   color: var(--ef-accent);
   font-weight: 800;
   font-variant-numeric: tabular-nums;
+  /* 公式の `box-shadow: 0 0 10px #fff000` に倣い、黄色は**光らせる**。
+     文字なので text-shadow で。 */
+  text-shadow: var(--ef-glow);
 }
 .ef-status-sep {
   color: var(--ef-muted);
@@ -262,10 +306,15 @@ a:hover {
     flex: none;
     padding: 8px 0;
     background: var(--ef-bg-2);
-    border-right: 1px solid var(--ef-line);
+    border-right: var(--ef-bar) solid var(--ef-panel);
     overflow: hidden auto;
-    transition: width 0.16s ease;
-    scrollbar-width: thin;
+    transition: width var(--ef-slow) ease;
+    /* 公式は `::-webkit-scrollbar { display: none }` でスクロールバーを隠す。
+       レールは細いので同じ扱いにする（本文側は残す）。 */
+    scrollbar-width: none;
+  }
+  .ef-rail::-webkit-scrollbar {
+    display: none;
   }
   .ef-rail:hover,
   .ef-rail:focus-within {
@@ -277,8 +326,12 @@ a:hover {
     align-items: center;
     min-height: 44px;
     color: var(--ef-muted);
-    border-left: 3px solid transparent;
+    /* 現在地の帯。公式の太い罫線に合わせて 6px にする */
+    border-left: var(--ef-bar) solid transparent;
     white-space: nowrap;
+    transition:
+      background-color var(--ef-fast) ease,
+      color var(--ef-fast) ease;
   }
   .ef-rail-item:hover {
     color: var(--ef-text);
@@ -291,11 +344,14 @@ a:hover {
     border-left-color: var(--ef-accent);
     background: color-mix(in srgb, var(--ef-accent) 12%, transparent);
   }
+  .ef-rail-item[aria-current='page'] .ef-rail-no {
+    text-shadow: var(--ef-glow);
+  }
   .ef-rail-ico {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-left: -3px; /* border-left のぶんを戻して図形を中央に置く */
+    margin-left: calc(var(--ef-bar) * -1); /* border-left のぶんを戻して図形を中央に置く */
   }
   .ef-rail-ico svg {
     width: 20px;
@@ -393,8 +449,9 @@ a:hover {
 .ef-eyebrow::after {
   content: '';
   flex: 1;
-  height: 1px;
-  background: var(--ef-line);
+  height: 2px;
+  /* 見出しラベルの右へ伸びる線。右端に向けて消える（公式の 90deg マスクの発想） */
+  background: linear-gradient(90deg, var(--ef-line) 0%, transparent 100%);
 }
 .ef-title {
   margin: 0 0 10px;
@@ -408,17 +465,42 @@ a:hover {
   color: var(--ef-text-2);
 }
 
-/* 区画。上に1本罫線を引き、左肩に見出しを置く */
+/* 区画。上に**太い罫線**（公式の 6px）を引き、左肩に見出しを置く。
+   細線だと区画の境目が弱く、このゲームの重さが出ない。 */
 .ef-block {
-  border-top: 1px solid var(--ef-line);
+  position: relative;
+  border-top: var(--ef-bar) solid var(--ef-panel);
   padding-top: 18px;
-  margin-top: 28px;
+  margin-top: 32px;
+}
+/* 太い罫線の左端だけ黄色にする。全部を黄色にすると強すぎる。 */
+.ef-block::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--ef-bar) * -1);
+  left: 0;
+  width: 40px;
+  height: var(--ef-bar);
+  background: var(--ef-accent);
 }
 .ef-block > h2 {
   margin: 0 0 12px;
   font-size: 1.06rem;
   font-weight: 800;
   letter-spacing: 0.01em;
+}
+
+/* ---- 見出しの上に置くハザード帯 ------------------------------------------
+   45度の斜めストライプ（工事現場の警告帯）。公式が使う意匠だが、
+   面積を取ると読みにくくなるので**高さ6pxの帯**に絞る。 */
+.ef-hazard-bar {
+  height: var(--ef-bar);
+  margin-bottom: 14px;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--ef-accent) 0 6px,
+    transparent 6px 14px
+  );
 }
 
 /* =========================================================================
@@ -445,8 +527,17 @@ a:hover {
   background: var(--ef-bg);
   color: var(--ef-text);
 }
+.ef-row {
+  border-left: var(--ef-bar) solid transparent;
+  transition:
+    background-color var(--ef-fast) ease,
+    border-color var(--ef-fast) ease;
+}
+/* 押せる行だと分かるよう、触れたら**左に黄色の帯**が立つ。
+   色の変化だけでなく形が変わるので、色覚に依らず気づける。 */
 .ef-row:hover {
   background: var(--ef-panel);
+  border-left-color: var(--ef-accent);
   text-decoration: none;
 }
 .ef-row-no {
@@ -455,6 +546,9 @@ a:hover {
   font-variant-numeric: tabular-nums;
   color: var(--ef-accent);
   letter-spacing: 0.04em;
+}
+.ef-row:hover .ef-row-no {
+  text-shadow: var(--ef-glow);
 }
 .ef-row-body {
   min-width: 0;
@@ -639,6 +733,12 @@ a:hover {
   font-weight: 800;
   font-size: 0.86rem;
   cursor: pointer;
+  /* 黄色は光らせる（公式の box-shadow: 0 0 10px #fff000） */
+  box-shadow: var(--ef-glow);
+  transition: transform var(--ef-fast) ease;
+}
+.ef-fab:active {
+  transform: scale(0.96);
 }
 .ef-fab svg {
   width: 20px;
@@ -666,7 +766,23 @@ a:hover {
   align-items: center;
   gap: 10px;
   padding: 12px 14px;
-  border-bottom: 1px solid var(--ef-line);
+  border-bottom: var(--ef-bar) solid var(--ef-panel);
+  position: relative;
+}
+/* 見出しの下端に45度のハザード帯（工事現場の警告帯と同じ意匠）。
+   面積を取ると読みにくいので高さ 6px に絞る。 */
+.ef-sheet-head::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--ef-bar) * -1);
+  height: var(--ef-bar);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--ef-accent) 0 6px,
+    transparent 6px 14px
+  );
 }
 .ef-sheet-title {
   font-weight: 800;
@@ -715,7 +831,7 @@ a:hover {
 }
 .ef-sheet-item[aria-current='page'] {
   color: var(--ef-accent);
-  box-shadow: inset 3px 0 0 var(--ef-accent);
+  box-shadow: inset var(--ef-bar) 0 0 var(--ef-accent);
 }
 .ef-sheet-item svg {
   width: 20px;

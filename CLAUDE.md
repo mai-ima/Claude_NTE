@@ -28,6 +28,8 @@
 | [docs/RECIPES.md](./docs/RECIPES.md) | 「設定を1つ足す」「wiki を1つ足す」など、**触るファイルの全リスト** |
 | [docs/CHECKS.md](./docs/CHECKS.md) | `pnpm verify` の各検査が何を禁じているか。落ちたときの直し方 |
 | [docs/FINDINGS.md](./docs/FINDINGS.md) | 実際に読んで確かめたこと。**過去にやった勘違いの「誤 → 正」** |
+| [docs/WIKIS.md](./docs/WIKIS.md) | **wiki 一覧の正**。6つの wiki の URL・状態・UI・コレクション |
+| [docs/UI-RESEARCH.md](./docs/UI-RESEARCH.md) | 各ゲームのUIを観察した記録。**調べ方の手順つき** |
 
 新しく分かったことは、その場で該当ファイルに追記すること。
 
@@ -37,7 +39,8 @@
 
 ## 作業の要点（詳細は CONTEXT.md）
 
-- Astro 製の静的サイト。**複数ゲームの wiki を並置**する構成（NTE = `/`、αテスト = `/alpha/`）。
+- Astro 製の静的サイト。**複数ゲームの wiki を並置**する構成（6つ。→ [docs/WIKIS.md](./docs/WIKIS.md)）。
+  **wiki ごとに UI を完全に分ける**（それぞれ専用のレイアウトと CSS。混ぜない）。
 - **捏造しない**。出典で裏が取れた内容だけを `status: "verified"`、未検証は `status: "draft"` と
   本文の「要確認」で明示する。全記事に `sources` と `updated` を付ける。
 - **過去バージョンの情報は消さない**。古い記述は「いつ時点の情報か」を添えて残す。

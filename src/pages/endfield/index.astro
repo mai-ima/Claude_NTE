@@ -19,6 +19,8 @@ const no = (i: number) => String(i + 1).padStart(2, '0');
 ---
 
 <EndfieldLayout title="ホーム" wide>
+  {/* 45度のハザード帯。公式が使う意匠を高さ6pxに絞って敷く（docs/UI-RESEARCH.md） */}
+  <div class="ef-hazard-bar" aria-hidden="true"></div>
   <p class="ef-eyebrow">Arknights: Endfield</p>
   <h1 class="ef-title">アークナイツ：エンドフィールド 攻略wiki</h1>
   <p class="ef-lead">

@@ -68,6 +68,24 @@ grep -oE 'letter-spacing:[^;}]+' site.css | sort | uniq -c | sort -rn | head
 - `letter-spacing` は **-.02em 〜 -.03em（詰める）** が中心。
   一部に `1rem` / `.08em` の大きく開けた指定 → **開けるのはラベル用途**
 
+### 形の作り（2回目の解析で分かったこと）
+
+初回は色と角丸までしか見ていなかった。**作り込みのために掘り直したら、
+このゲームらしさの核はここにあった**:
+
+| 見つけたもの | 実測値 | どう効いているか |
+| --- | --- | --- |
+| **太い罫線** | `border-top: .375rem solid #35373c`（**6px**）ほか上下左右で6回 | 1px の細線ではなく**6px の厚い枠**。これが工業的な重さを出している |
+| **45度のハザードストライプ** | `linear-gradient(-45deg, transparent, transparent 13.95%, black 0, black 36.05%, transparent 0, …)` を3種 | 斜めの縞。工事現場の警告帯と同じ意匠 |
+| **黄色の発光** | `box-shadow: 0 0 10px #fff000` | 蛍光イエローを**光らせる**（面で塗るだけではない） |
+| 下方向のフェード | `linear-gradient(180deg, rgba(0,0,0,0) …)` を14回 | 画像や区画の下端を黒へ溶かす |
+| 横方向のマスク | `linear-gradient(90deg, transparent 0, transparent .25rem, black .5rem, black calc(100% - .5rem), …)` | 左右端だけ透かす |
+| 斜めの三角 | `clip-path: polygon(0 20%, 100% 50%, 0 80%, 0 80%)` | 矢印・インジケータの形 |
+| 大文字化 | `text-transform: uppercase` × 12 | 英字ラベルは**大文字**が基本 |
+| 太さ | `font-weight: 400`（12）/ `500`（5）/ `700`（3） | 本文は 400〜500。**700 は要所だけ** |
+| 動き | `transition: background-color .2s ease` / `transform .3s` / `color .3s` | **0.2〜0.3秒**。速すぎず遅すぎず |
+| スクロールバー | `::-webkit-scrollbar { display: none }` | **隠す** |
+
 ### 再現の方針（この観察に基づく）
 
 - 背景 `#191919` / 文字 `#fff` / アクセント `#fffa00` / 面 `#35373c`

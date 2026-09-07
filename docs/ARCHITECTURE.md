@@ -5,7 +5,7 @@
 > 「〜を足すときの手順」は [RECIPES.md](./RECIPES.md)、
 > 「検査が何を禁じているか」は [CHECKS.md](./CHECKS.md) にあります。
 >
-> 最終更新: 2026-09-06
+> 最終更新: 2026-09-07
 
 ---
 
@@ -13,10 +13,20 @@
 
 Astro 6 の**静的サイト**。1サイトに**複数ゲームの wiki を並置**する。
 
+**wiki は6つ。一覧の正は [WIKIS.md](./WIKIS.md)**（状態・記事数・権利者はそちら）。
+
 | wiki | URL | レイアウト | CSS | View Transitions |
 | --- | --- | --- | --- | --- |
 | NTE 完全攻略wiki（既定） | `/` | `BaseLayout.astro` | `themes/base/components/ui-*/prefs/ios` | **あり**（`ClientRouter`） |
+| アークナイツ：エンドフィールド | `/endfield/` | `EndfieldLayout.astro` | **`endfield.css` のみ** | なし |
+| 原神（準備中） | `/genshin/` | `GenshinLayout.astro` | **`genshin.css` のみ** | なし |
+| 鳴潮（準備中） | `/wuwa/` | `WuwaLayout.astro` | **`wuwa.css` のみ** | なし |
+| 崩壊：スターレイル（準備中） | `/hsr/` | `HsrLayout.astro` | **`hsr.css` のみ** | なし |
 | αテスト（仮）wiki | `/alpha/` | `AlphaLayout.astro` | **`alpha.css` のみ** | なし |
+
+**NTE 以外はすべて専用UI**。自分の CSS 1本だけを読み、他 wiki のトークンを参照しない
+（トークン名も `--ef-*` / `--gs-*` / `--ww-*` / `--hsr-*` / `--a-*` と別名にしてある）。
+`pnpm test:ui` の `STYLE_MARKS` が混線を検査する。
 
 - `trailingSlash: 'always'` / `base = "/"` / 出力は `dist/`（Vercel が配信）
 - **本番は `main` ブランチのみ**。作業ブランチは Vercel のプレビューURLにしか出ない。
@@ -31,7 +41,7 @@ Astro 6 の**静的サイト**。1サイトに**複数ゲームの wiki を並�
 | `CLAUDE.md` | 作業時の入口（最初に読むもの） |
 | `CONTEXT.md` | **記憶ファイル**（現在の状態・作業ログ・守るルール） |
 | `README.md` | 利用者・貢献者向けの説明 |
-| `docs/` | このディレクトリ（構造の知識） |
+| `docs/` | このディレクトリ（構造の知識）。**wiki 一覧の正は `docs/WIKIS.md`** |
 | `scripts/` | 検査スクリプト（`check-content` / `check-links` / `check-ui` / `audit-browser`）と `gen-icons.mjs` |
 | `test/` | vitest（`wikis` / `nav` / `path` / `content` / `lib-misc`） |
 | `.github/workflows/verify.yml` | push ごとに `pnpm verify` 相当を実行 |
@@ -62,7 +72,7 @@ Astro 6 の**静的サイト**。1サイトに**複数ゲームの wiki を並�
 ### `wikis.ts` — マルチwikiの定義（★ここが中心）
 
 ```ts
-type WikiId = 'nte' | 'alpha';
+type WikiId = 'nte' | 'endfield' | 'genshin' | 'wuwa' | 'hsr' | 'alpha';
 interface WikiNavItem { label: string; href: string; icon: string }
 interface WikiMeta {
   id; base;              // base はURL接頭辞。ルート wiki は ''（空文字）
@@ -73,10 +83,14 @@ interface WikiMeta {
   primaryNav: WikiNavItem[];   // ヘッダー／ドロワー
   bottomNav: WikiNavItem[];    // モバイル下部タブ
   hasOgImages: boolean;
+  kind?: 'live' | 'planned' | 'sample';  // planned = 準備中（sections が空・ページ1枚）
+  officialUrl?: string;  // 準備中の wiki で公式へ案内する。実在を確認してから書く
+  rightsHolder?: string; // 権利表記に出す開発・配信元
 }
 
-WIKIS: Record<WikiId, WikiMeta>    // { nte, alpha }
-WIKI_LIST: WikiMeta[]              // 表示順。[0] は必ずルート wiki（nte）
+WIKIS: Record<WikiId, WikiMeta>    // 6件
+WIKI_LIST: WikiMeta[]              // 表示順。[0] は必ずルート wiki（nte）、末尾は alpha
+LIVE_WIKIS: WikiMeta[]             // kind==='live' だけ（フッターの羅列用。6件は溢れる）
 DEFAULT_WIKI: WikiId               // 'nte'
 wiki(id?): WikiMeta                        // 未知の id は既定 wiki へフォールバック
 wikiOfCollection(collection): WikiMeta     // 'characters'→nte / 'alphaTerms'→alpha
@@ -99,8 +113,9 @@ interface SectionMeta {
   dir?;         // src/content 配下のディレクトリ名。既定はコレクション名と同じ
 }
 
-SECTIONS: SectionMeta[]        // NTE の 13 セクション（dir は全件 undefined）
-ALPHA_SECTIONS: SectionMeta[]  // α の 4 セクション（dir は全件ケバブ名）
+SECTIONS: SectionMeta[]           // NTE の 13 セクション（dir は全件 undefined）
+ENDFIELD_SECTIONS: SectionMeta[]  // エンドフィールドの 12 セクション（dir は endfield-* のケバブ名）
+ALPHA_SECTIONS: SectionMeta[]     // α の 4 セクション（dir は全件ケバブ名）
 sectionByCollection(collection) // 全 wiki 横断で引く
 ELEMENT_META / elementMeta(id)  // 光/霊/呪/闇/魂/相 の色・ラベル
 ELEMENT_RING / DUO_REACTIONS / reactionsFor(el)
@@ -324,6 +339,10 @@ themes.css → base.css → components.css
 
 スキーマは `src/content.config.ts`（zod）。共通の `base`（`description` / `status` / `updated` /
 `checked` / `sources` / `tags`）＋コレクション固有項目。α は `alphaBase` を使う。
+**エンドフィールドは `base` をそのまま使う**（誠実性ルールを同じ形で効かせるため）。
+
+wiki は6つある。一覧・状態・UI の対応は **[WIKIS.md](./WIKIS.md)** が正。
+各ゲームのUIを観察した記録は **[UI-RESEARCH.md](./UI-RESEARCH.md)**。
 
 `updated` と `checked` の違い（重要）:
 

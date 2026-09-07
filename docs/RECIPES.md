@@ -78,8 +78,34 @@ pnpm verify
 - `wikiOfCollection` / `wikiOfPath` / `sectionByCollection` は定義から自動で追従します。
 - トップページ末尾の「ほかの wiki」も `WIKI_LIST` から自動生成されます。
 
-新 wiki が「実在しないゲームのサンプル」なら `WikiMeta` に `kind: 'sample'` を付けると、
-ハブのカードに「サンプル」バッジが出ます（省略時は `'live'`）。
+`WikiMeta.kind` は3種類:
+
+| kind | 用途 | sections | ページ |
+| --- | --- | --- | --- |
+| `'live'`（既定） | 通常運用 | あり | 一覧・記事 |
+| `'planned'` | **準備中** | **空** | **トップ1枚だけ** |
+| `'sample'` | 実在しないゲームのダミー | あり | 一覧・記事 |
+
+`'planned'` と `'sample'` はハブのカードにバッジが出ます。
+
+### 準備中（`kind: 'planned'`）の wiki を足す
+
+記事コレクションを持たないぶん手順が短くなります。**それぞれ独自UIで作る**のが方針
+（→ [WIKIS.md](./WIKIS.md) / [UI-RESEARCH.md](./UI-RESEARCH.md)）。
+
+| # | ファイル | 何をする |
+| --- | --- | --- |
+| 1 | `src/lib/wikis.ts` | `WikiMeta` を1件（`kind: 'planned'` / `sections: []` / **`officialUrl` は実在を確認してから** / `rightsHolder` 必須） |
+| 2 | `src/layouts/<Game>Layout.astro` | **そのゲームのUIで**新規に作る。読み込む CSS は自分の1本だけ |
+| 3 | `src/styles/<game>.css` | トークンは `--<略>-*` に閉じる。他 wiki のトークンを参照しない |
+| 4 | `src/pages/<base>/index.astro` | 準備中ページ1枚。`noindex` にする |
+| 5 | `scripts/check-ui.mjs` | `INDEPENDENT_BASES` と `STYLE_MARKS` に追加 |
+| 6 | `scripts/check-content.mjs` | `STATIC_PAGES` に `/<base>/` |
+| 7 | `astro.config.mjs` | sitemap の `filter` に追加（中身が無いページを検索に載せない） |
+| 8 | `scripts/audit-browser.mjs` | `PAGES` に追加 |
+
+**準備中ページに必ず載せるもの**: 準備中の明示／公式サイトへのリンク（`rel="noopener noreferrer"`）／
+**非公式ファンサイトである旨と権利者名**。「近日公開」など約束できないことは書かない。
 
 ### 落とし穴
 
