@@ -142,9 +142,10 @@ export const PREFS: PrefDef[] = [
     choices: [
       { value: 'cards', label: 'カード' },
       { value: 'compact', label: 'コンパクト' },
+      { value: 'table', label: '表' },
     ],
     label: '一覧の表示',
-    hint: 'コンパクトにすると、説明を省いた1行のリストになり、一度に多くの項目を見渡せます。',
+    hint: 'コンパクトは説明を省いた1行のリスト。表は名前と属性・ロールなどが列で揃うので、見比べるのに向きます。',
     group: 'list',
     icon: 'layout',
   },

@@ -524,6 +524,61 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
         targets.forEach((t) => revealObserver!.observe(t));
       }
 
+      /*
+        目次のスクロール追従。いま読んでいる見出しを目次でハイライトする。
+        - 見出し（.prose h2/h3）を IntersectionObserver で見張り、
+          画面の上寄りに入っているものを「現在地」にする
+        - 対応していない環境では何も起きない（目次はそのまま使える）
+        - スクロールのたびに計算しないので軽い
+      */
+      let tocObserver: IntersectionObserver | null = null;
+      function runTocSpy() {
+        const toc = document.querySelector('.toc');
+        if (!toc || !('IntersectionObserver' in window)) return;
+        const links = new Map<string, HTMLAnchorElement>();
+        for (const a of toc.querySelectorAll<HTMLAnchorElement>('a[href^="#"]')) {
+          links.set(decodeURIComponent(a.getAttribute('href')!.slice(1)), a);
+        }
+        if (links.size === 0) return;
+        const heads = [...document.querySelectorAll<HTMLElement>('.prose h2[id], .prose h3[id]')]
+          .filter((h) => links.has(h.id));
+        if (heads.length === 0) return;
+
+        // 画面に入っている見出しのうち、いちばん上のものを現在地とする
+        const visible = new Set<string>();
+        const mark = () => {
+          let current = '';
+          for (const h of heads) {
+            if (visible.has(h.id)) {
+              current = h.id;
+              break;
+            }
+          }
+          // 1つも入っていないとき（見出しの間を読んでいる）は、直前に通った見出しを保つ
+          if (!current) {
+            for (const h of heads) {
+              if (h.getBoundingClientRect().top < 120) current = h.id;
+            }
+          }
+          for (const [id, a] of links) a.classList.toggle('is-current', id === current);
+        };
+
+        tocObserver?.disconnect();
+        tocObserver = new IntersectionObserver(
+          (entries) => {
+            for (const e of entries) {
+              if (e.isIntersecting) visible.add((e.target as HTMLElement).id);
+              else visible.delete((e.target as HTMLElement).id);
+            }
+            mark();
+          },
+          // 上端から少し下、下端は大きく削る＝「画面の上のほう」に入ったら現在地
+          { rootMargin: '-96px 0px -70% 0px' },
+        );
+        heads.forEach((h) => tocObserver!.observe(h));
+        mark();
+      }
+
       // 遷移直前に検索モーダル/ドロワーを確実に閉じる。
       // 検索を開いたまま結果リンクで遷移すると、showModal 状態の <dialog> が close されずに
       // swap で除去され、ネイティブの inert/top-layer 状態が残ってサイドバー等を操作できなくなる。
@@ -547,6 +602,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
         syncActiveNav();
         animateCounters();
         runReveal();
+        runTocSpy();
       });
     </script>
 

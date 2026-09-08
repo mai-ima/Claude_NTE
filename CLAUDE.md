@@ -29,6 +29,7 @@
 | [docs/CHECKS.md](./docs/CHECKS.md) | `pnpm verify` の各検査が何を禁じているか。落ちたときの直し方 |
 | [docs/FINDINGS.md](./docs/FINDINGS.md) | 実際に読んで確かめたこと。**過去にやった勘違いの「誤 → 正」** |
 | [docs/WIKIS.md](./docs/WIKIS.md) | **wiki 一覧の正**。6つの wiki の URL・状態・UI・コレクション |
+| [docs/CHANGELOG-INTERNAL.md](./docs/CHANGELOG-INTERNAL.md) | **開発の詳細な変更履歴**。実測値・調べ方・失敗と原因 |
 | [docs/UI-RESEARCH.md](./docs/UI-RESEARCH.md) | 各ゲームのUIを観察した記録。**調べ方の手順つき** |
 
 新しく分かったことは、その場で該当ファイルに追記すること。
@@ -56,6 +57,9 @@
 2. `CONTEXT.md` の「4. 現在の状態」と「5. 作業ログ」を更新する。
 3. **リリースノート（`src/data/releaseNotes.ts`）を更新する**。忘れやすい。
    利用者に見える変更なら、専門用語を避けた日本語で1項目足す。
+   **ここは「ざっくり」**（1〜2文・目安150字）。実装・実測値・失敗と原因といった
+   詳しい話は **[docs/CHANGELOG-INTERNAL.md](./docs/CHANGELOG-INTERNAL.md)** に書く。
+   書き分けの決まりは `src/data/releaseNotes.ts` の冒頭コメントにある。
 
 利用者が新しい方針を決めたら、その場で
 **[.claude/state/DECISIONS.md](./.claude/state/DECISIONS.md) に原文つきで追記**する。

@@ -1059,6 +1059,9 @@ body.ef-sheet-open {
   margin: 0 0 20px;
   padding: 14px 0 0;
   border-bottom: 10px solid #c6c6c6; /* 実測 1rem solid #c6c6c6 */
+  /* 上が白・下が蛍光イエローの2段ベタ。
+     ※ ここに点線ドットも重ねてみたが、見出しの罫線と干渉して
+        「点線の下線」に見えてしまったのでやめた。ドットは導入ブロック側で使う。 */
   background-image: linear-gradient(
     180deg,
     var(--ef-bg) 0,
@@ -1353,14 +1356,6 @@ body.ef-sheet-open {
   }
 }
 
-/* ---- 点線のドットパターン ----------------------------------------------
-   実画面ではアイコンの背景に**点の格子**が敷かれていた。
-   画像を使わず、放射グラデーションの繰り返しで作る。 */
-.ef-dots {
-  background-image: radial-gradient(var(--ef-line) 1px, transparent 1px);
-  background-size: 6px 6px;
-}
-
 /* ---- 下方向のフェード ---------------------------------------------------
    実測: `linear-gradient(180deg, rgba(0,0,0,0) …)` が**14回**。
    区画の下端を地の色へ溶かす。長い一覧の「まだ続く」を示すのに使う。 */
@@ -1552,6 +1547,12 @@ body.ef-sheet-open {
   align-items: center;
   gap: 8px;
   margin: 0 0 12px;
+  /* 狭い画面では横に流れる。実測の「左右端だけ透かすマスク」を当てて、
+     まだ続くことを示す（.ef-mask-x はスクロールバーも隠す）。 */
+  padding-bottom: 2px;
+}
+.ef-viewbar > * {
+  flex: none;
 }
 .ef-viewbar-label {
   font-size: 0.68rem;

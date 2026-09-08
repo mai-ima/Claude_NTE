@@ -73,7 +73,7 @@ const fmt = (d: unknown) =>
     sorted.length > 0 && (
       /* 表示形式の切り替え。行 / タイル / 詳しく の3つ。
          選んだ形式は localStorage に残り、次に開いたときも同じ形で出る。 */
-      <div class="ef-viewbar" data-ef-viewbar>
+      <div class="ef-viewbar ef-mask-x" data-ef-viewbar>
         <span class="ef-viewbar-label">View</span>
         <button class="ef-viewbtn" type="button" data-ef-view-set="rows" aria-pressed="true">
           <Icon name="lucide:rows-3" />行

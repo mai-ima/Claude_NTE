@@ -116,6 +116,12 @@ const editHref = editPath ? editUrl(editPath) : editUrlFor(collection, currentId
 
       <div class="entity-grid">
         <div style="min-width:0;">
+          {/*
+            読書の進み具合。ヘッダーのすぐ下に細い線で出る。
+            CSS のスクロール連動アニメーションだけで動く（JS を使わない）。
+            対応していないブラウザと「モーションを減らす」のときは出ない。
+          */}
+          <div class="read-progress" aria-hidden="true"></div>
           <article data-pagefind-body>
             <header class="page-head" style="margin-bottom:16px;">
               <p class="eyebrow" data-pagefind-meta="category">{sectionLabel}</p>

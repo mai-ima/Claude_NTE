@@ -88,6 +88,73 @@ html[data-listview='compact'] .grid-cards > .card-link > .cluster {
   margin-top: 6px;
 }
 
+/* ----- 一覧の表示: 表（table） -----
+   カードを**行**に組み替えて、名前と属性・ロールなどの列を縦にそろえる。
+   見比べたいときに効く（コンパクトは「たくさん見渡す」、表は「そろえて比べる」）。
+
+   マークアップは変えない。`.card-link` の中は
+     1行目 = 見出しの行（アバター＋名前）
+     .cluster = 属性・ロールのバッジ
+     p = 説明（.card-fresh は日付）
+   なので、grid で列を割り当てるだけで表の見え方になる。 */
+html[data-listview='table'] .grid-cards {
+  grid-template-columns: 1fr;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+html[data-listview='table'] .grid-cards > .card-link {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 2fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  /* 行の区切りは下辺だけ。最後の行には引かない。 */
+  border-bottom: 1px solid var(--border);
+}
+html[data-listview='table'] .grid-cards > .card-link:last-child {
+  border-bottom: 0;
+}
+html[data-listview='table'] .grid-cards > .card-link:nth-child(even) {
+  /* 縞にして行を追いやすくする（表の基本） */
+  background: color-mix(in srgb, var(--surface-2) 55%, transparent);
+}
+html[data-listview='table'] .grid-cards > .card-link:hover {
+  background: var(--accent-weak);
+}
+/* 1列目 = 名前の行 */
+html[data-listview='table'] .grid-cards > .card-link > .row:first-child {
+  min-width: 0;
+}
+/* 2列目 = 属性・ロールなどのバッジ */
+html[data-listview='table'] .grid-cards > .card-link > .cluster {
+  margin-top: 0;
+  justify-content: flex-start;
+}
+/* 3列目 = 日付。説明文は表では畳む（列がそろわなくなるため） */
+html[data-listview='table'] .grid-cards > .card-link > p:not(.card-fresh) {
+  display: none;
+}
+html[data-listview='table'] .grid-cards > .card-link > .card-fresh {
+  margin: 0;
+  white-space: nowrap;
+  text-align: right;
+}
+/* 画面が狭いときは列を崩して1行ずつにする（横スクロールを作らない） */
+@media (max-width: 640px) {
+  html[data-listview='table'] .grid-cards > .card-link {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+  html[data-listview='table'] .grid-cards > .card-link > .card-fresh {
+    text-align: left;
+  }
+}
+
 /* ----- 一覧の並び替え -----
    .grid-cards は CSS Grid だが、グリッドアイテムにも order は効く。
    各カードには EntityList 側が --ord-updated / --ord-name（順位）を埋めてある。
