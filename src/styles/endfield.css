@@ -1723,3 +1723,20 @@ html[data-ef-view='detail'] .ef-row-desc {
 .ef-rail::-webkit-scrollbar {
   display: none;
 }
+
+/* ---- compact: 説明を落として1行に詰める --------------------------------
+   件数が増えたときに**名前だけを速く追える**形。行の高さを詰め、
+   番号と名前と印だけを残す（説明は記事を開けば読める）。 */
+html[data-ef-view='compact'] .ef-list.is-hairline .ef-row {
+  padding-block: 7px;
+  align-items: center;
+}
+html[data-ef-view='compact'] .ef-row-desc {
+  display: none;
+}
+html[data-ef-view='compact'] .ef-row-name {
+  font-size: 0.94rem;
+}
+html[data-ef-view='compact'] .ef-row-no {
+  opacity: 0.55;
+}

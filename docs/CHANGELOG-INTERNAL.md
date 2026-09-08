@@ -317,3 +317,28 @@ Playwright で「解除 → 別ページ → 戻る」を実際に踏んで見�
 | 準備中3 wiki の `<head>` | `src/components/PlannedHead.astro` | 同じ11行が3つあった。変わるのは wiki と theme-color だけ |
 
 `GenshinLayout` に残っていた未使用の `Icon` の import も外した。
+
+### 12. 表示形式とアニメーション（4巡目）
+
+| 追加 | 実装 | 備考 |
+| --- | --- | --- |
+| 一覧の**時系列**（NTE 側） | `html[data-listview='timeline']`（`prefs.css`） | 縦線＋丸。日付（`.card-fresh`）を `order:-1` で上へ |
+| エンドフィールドの**詰めて** | `html[data-ef-view='compact']`（`endfield.css`） | 説明を落として行を詰める。4形式目 |
+| お知らせの入場 | 既存の `data-reveal` に `.notice-list > *` を追加 | 件数が少ないので **nth-child で少しずつ遅らせる**（一覧のカードではやらない） |
+| 案内（ゲート）の登場 | `SiteStateGate.astro` の `@keyframes` | 端末側とサイト側の**両方**の「動きを減らす」で止まる |
+
+**踏んだ点**
+
+- 時系列の丸を `.card-link::before` で描いたら、**`.char-card::before`（属性色の帯）を潰した**。
+  さらに `.char-card { overflow: hidden }` で丸が切れていた。
+  → `::after` に変え、この形式のときだけ `overflow: visible` にした。
+- ついでに見つけた既存の崩れ: `.badge` は `height: 22px` 固定なのに折り返し可能で、
+  一覧の「あと21日」が2行になって枠からはみ出していた。
+  → `white-space: nowrap` を入れた（通常のカード表示でも起きていた）。
+  **ただし `flex: none` は入れてはいけない**。最初そう書いたところ、長いバッジ
+  （武器名など）が縮まなくなって**一覧そのものが横にあふれた**（実測 431>393、
+  デスクトップでも 1306>1280）。`max-width: 100%` ＋ `overflow: hidden` ＋
+  `text-overflow: ellipsis` に変えた。
+- 選択肢を1つ増やすと**設定ページが横にあふれる**（`一覧の表示` が4つになり
+  iPhone SE で 335>320）。狭い画面では丸い枠の中で**折り返す**ようにした。
+  → 表示形式を足すときは、設定パネルの幅も一緒に確認すること。

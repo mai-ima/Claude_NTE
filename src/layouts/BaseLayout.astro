@@ -511,7 +511,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
       let revealObserver: IntersectionObserver | null = null;
       function runReveal() {
         if (document.documentElement.getAttribute('data-reveal') !== '1') return;
-        const targets = document.querySelectorAll('.grid-cards > *, .stat-band > .stat');
+        const targets = document.querySelectorAll('.grid-cards > *, .stat-band > .stat, .notice-list > *');
         if (!('IntersectionObserver' in window)) {
           targets.forEach((t) => t.classList.add('is-in'));
           return;

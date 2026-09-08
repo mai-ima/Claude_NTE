@@ -110,9 +110,10 @@ const crumbItems = [{ name: 'エンドフィールド', href: withBase('/endfiel
           m.name = 'theme-color';
           m.content = light ? '#f4f4f2' : '#191919';
           document.head.appendChild(m);
-          // 一覧の表示形式（rows / grid / detail）。描画前に当ててちらつきを防ぐ。
+          // 一覧の表示形式（rows / grid / detail / compact）。
+          // 描画前に当ててちらつきを防ぐ。
           var v = localStorage.getItem('endfield.view');
-          if (v === 'grid' || v === 'detail') {
+          if (v === 'grid' || v === 'detail' || v === 'compact') {
             document.documentElement.setAttribute('data-ef-view', v);
           }
         } catch (e) {}

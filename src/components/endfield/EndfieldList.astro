@@ -71,7 +71,7 @@ const fmt = (d: unknown) =>
 
   {
     sorted.length > 0 && (
-      /* 表示形式の切り替え。行 / タイル / 詳しく の3つ。
+      /* 表示形式の切り替え。行 / タイル / 詳しく / 詰めて の4つ。
          選んだ形式は localStorage に残り、次に開いたときも同じ形で出る。 */
       <div class="ef-viewbar ef-mask-x" data-ef-viewbar>
         <span class="ef-viewbar-label">View</span>
@@ -83,6 +83,9 @@ const fmt = (d: unknown) =>
         </button>
         <button class="ef-viewbtn" type="button" data-ef-view-set="detail" aria-pressed="false">
           <Icon name="lucide:align-left" />詳しく
+        </button>
+        <button class="ef-viewbtn" type="button" data-ef-view-set="compact" aria-pressed="false">
+          <Icon name="lucide:list" />詰めて
         </button>
       </div>
     )

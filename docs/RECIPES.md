@@ -284,3 +284,26 @@ sources:
 - 案内を重ねる要素は `src/components/SiteStateGate.astro`。
   **6つのレイアウトすべてに置く**（wiki を足したら、そのレイアウトにも入れる）。
   `/admin/` `/legal/` `/notices/` では出さない（停止中に閉じ込めを作らないため）。
+
+
+---
+
+## 8. 一覧の表示形式を1つ足す
+
+| # | ファイル | 何をする |
+| --- | --- | --- |
+| 1 | `src/lib/prefs.ts` | `nte.listview` の `choices` に1件足す（`hint` も直す） |
+| 2 | `src/styles/prefs.css` | `html[data-listview='<値>']` のルールを書く |
+| 3 | — | **設定パネルの幅を確認する**。選択肢が4つを超えると狭い画面で横にあふれる |
+
+エンドフィールドは別系統（`html[data-ef-view]`）:
+
+| # | ファイル | 何をする |
+| --- | --- | --- |
+| 1 | `src/layouts/EndfieldLayout.astro` | 起動スクリプトの**許容値**に足す（描画前に当てる） |
+| 2 | `src/components/endfield/EndfieldList.astro` | 切り替えボタンを1つ足す |
+| 3 | `src/styles/endfield.css` | `html[data-ef-view='<値>']` のルールを書く |
+
+**落とし穴**: カードに擬似要素で飾りを足すときは、
+`.char-card::before`（属性色の帯）と `overflow: hidden` に注意する。
+`::before` を上書きすると一覧から属性が読み取れなくなる。

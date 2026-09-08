@@ -407,6 +407,14 @@
   align-items: center;
   gap: 5px;
   height: 22px;
+  /* 高さが22px固定なので、折り返すと文字が枠からはみ出す。
+     実際に一覧の「あと21日」が2行になって崩れていた。
+     ただし **`flex: none` は付けない** — 長いバッジ（武器名など）が縮まなくなり、
+     一覧そのものが横にあふれる（実測 431>393）。長い場合は省略記号にする。 */
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
   padding: 0 9px;
   border-radius: 999px;
   font-size: 0.74rem;
@@ -1616,16 +1624,27 @@
    重くなるため廃止し、初回表示のみ一度だけ動く IntersectionObserver 方式へ変更。
    非対応・reduced-motion・classic・遷移後はフラグ(html[data-reveal])が付かず通常表示。
    ========================================================================= */
-html[data-reveal='1'] :is(.grid-cards > *, .stat-band > .stat) {
+html[data-reveal='1'] :is(.grid-cards > *, .stat-band > .stat, .notice-list > *) {
   opacity: 0;
   transform: translateY(12px);
   transition:
     opacity 0.45s ease,
     transform 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
-html[data-reveal='1'] :is(.grid-cards > *, .stat-band > .stat).is-in {
+html[data-reveal='1'] :is(.grid-cards > *, .stat-band > .stat, .notice-list > *).is-in {
   opacity: 1;
   transform: none;
+}
+/* お知らせは件数が少なく縦一列なので、**少しずつ遅らせて**順に現れるようにする
+   （一覧のカードは件数が多く、遅らせると最後の行が待たされるのでやらない）。 */
+html[data-reveal='1'] .notice-list > *:nth-child(2) {
+  transition-delay: 0.06s;
+}
+html[data-reveal='1'] .notice-list > *:nth-child(3) {
+  transition-delay: 0.12s;
+}
+html[data-reveal='1'] .notice-list > *:nth-child(n + 4) {
+  transition-delay: 0.18s;
 }
 
 /* グローバル検索モーダル（⌘K） */
@@ -2072,6 +2091,19 @@ body {
   }
   .pref-row-choice .pref-seg-opt {
     flex: 1;
+    min-width: 0;
+  }
+}
+/* 320px 幅では、選択肢が4つ（例: 一覧の表示）だと1行に収まらず、
+   ページごと横にあふれる。**丸い枠の中で折り返す**ようにする。 */
+@media (max-width: 400px) {
+  .pref-row-choice .pref-seg {
+    flex-wrap: wrap;
+    border-radius: 18px;
+  }
+  .pref-row-choice .pref-seg-opt {
+    flex: 1 0 auto;
+    padding-inline: 9px;
   }
 }
 

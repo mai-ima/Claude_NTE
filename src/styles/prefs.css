@@ -197,3 +197,65 @@ html[data-draftmark='on'] .badge-draft {
 html[data-edit='on'] .edit-link {
   display: flex;
 }
+
+/* ---- 一覧の表示: 時系列（timeline）---------------------------------------
+   縦の線に沿って並べ、「いつ時点の情報か」を左に出す形。
+   カードのマークアップは変えずに CSS だけで組み替える（他の形式と同じ作法）。
+   日付そのものは各カードの `.card-fresh`（更新/確認）に入っている。 */
+html[data-listview='timeline'] .grid-cards {
+  grid-template-columns: 1fr;
+  gap: 0;
+  /* 縦の線。左端から 7px の位置に引く */
+  padding-left: 22px;
+  border-left: 2px solid var(--border);
+  margin-left: 6px;
+}
+html[data-listview='timeline'] .grid-cards > .card-link {
+  position: relative;
+  border: 0;
+  border-radius: var(--radius-sm);
+  box-shadow: none;
+  padding: 10px 12px;
+  margin-bottom: 4px;
+}
+/* 線の上に置く丸。カードに触れると色が付く。
+   **`::after` を使う**のは、`.char-card::before` が属性色の帯に使われていて、
+   そちらを潰すと一覧から属性が読み取れなくなるため。
+   `.char-card` は `overflow: hidden` なので、この形式のときだけ外に出す。 */
+html[data-listview='timeline'] .grid-cards > .card-link {
+  overflow: visible;
+}
+html[data-listview='timeline'] .grid-cards > .card-link::after {
+  content: '';
+  position: absolute;
+  left: -29px;
+  top: 16px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+html[data-listview='timeline'] .grid-cards > .card-link:hover {
+  background: var(--surface-2);
+}
+html[data-listview='timeline'] .grid-cards > .card-link:hover::after {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+/* 日付は本文の上へ移す（時系列なので日付が主役） */
+html[data-listview='timeline'] .grid-cards > .card-link > .card-fresh {
+  order: -1;
+  margin: 0 0 2px;
+  font-weight: 700;
+  color: var(--accent);
+}
+html[data-listview='timeline'] .grid-cards > .card-link {
+  display: flex;
+  flex-direction: column;
+}
+/* 日付の無い記事でも丸の位置がずれないよう、行の高さを揃える */
+html[data-listview='timeline'] .grid-cards > .card-link > .cluster {
+  margin-top: 8px;
+}
