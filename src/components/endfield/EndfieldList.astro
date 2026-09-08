@@ -70,6 +70,25 @@ const fmt = (d: unknown) =>
   <p class="ef-lead">{section.blurb}</p>
 
   {
+    sorted.length > 0 && (
+      /* 表示形式の切り替え。行 / タイル / 詳しく の3つ。
+         選んだ形式は localStorage に残り、次に開いたときも同じ形で出る。 */
+      <div class="ef-viewbar" data-ef-viewbar>
+        <span class="ef-viewbar-label">View</span>
+        <button class="ef-viewbtn" type="button" data-ef-view-set="rows" aria-pressed="true">
+          <Icon name="lucide:rows-3" />行
+        </button>
+        <button class="ef-viewbtn" type="button" data-ef-view-set="grid" aria-pressed="false">
+          <Icon name="lucide:layout-grid" />タイル
+        </button>
+        <button class="ef-viewbtn" type="button" data-ef-view-set="detail" aria-pressed="false">
+          <Icon name="lucide:align-left" />詳しく
+        </button>
+      </div>
+    )
+  }
+
+  {
     sorted.length === 0 ? (
       <div class="ef-empty">
         <strong>この項目はまだ準備中です</strong>
@@ -80,7 +99,7 @@ const fmt = (d: unknown) =>
       </div>
     ) : (
       // 区切りは公式に倣って**中央寄せ90%幅の細線**にする（is-hairline）
-      <div class="ef-list is-hairline">
+      <div class="ef-list is-hairline ef-fade-b">
         {sorted.map((e, i) => {
           const d = e.data;
           // 「いつ時点の情報か」は一覧でも分かるようにする（誠実性ルール）。
@@ -144,3 +163,35 @@ const fmt = (d: unknown) =>
     }
   </nav>
 </EndfieldLayout>
+
+{/*
+  表示形式の切り替え。描画前の適用は EndfieldLayout の起動スクリプトが済ませている
+  （ちらつき防止）。ここでは押したときの反映と、現在の形式のボタンを押下状態にする。
+*/}
+<script is:inline data-astro-rerun>
+  (function () {
+    var bar = document.querySelector('[data-ef-viewbar]');
+    if (!bar) return;
+    var root = document.documentElement;
+    function mark() {
+      var now = root.getAttribute('data-ef-view') || 'rows';
+      for (var b of bar.querySelectorAll('[data-ef-view-set]')) {
+        b.setAttribute('aria-pressed', String(b.dataset.efViewSet === now));
+      }
+    }
+    bar.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-ef-view-set]');
+      if (!btn) return;
+      var v = btn.dataset.efViewSet;
+      if (v === 'rows') root.removeAttribute('data-ef-view');
+      else root.setAttribute('data-ef-view', v);
+      try {
+        localStorage.setItem('endfield.view', v);
+      } catch (err) {
+        /* 保存できなくても切り替えは効く */
+      }
+      mark();
+    });
+    mark();
+  })();
+</script>

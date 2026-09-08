@@ -582,6 +582,42 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
           if (h && !h.hasAttribute('data-glitch')) {
             h.setAttribute('data-glitch', (h.textContent || '').trim());
           }
+
+          /*
+            ポインタ追従。公式サイトは `mouseTracking260603.js` を読み込んでいて、
+            画面の要素がポインタに反応して動く。こちらはヒーローの光を寄せるだけ。
+            - 「モーションを減らす」設定と端末の設定の**両方**で止まる
+            - タッチ端末（ポインタが無い）では何もしない
+            - 更新は requestAnimationFrame で1フレーム1回に抑える
+          */
+          var hero = document.querySelector('.hero');
+          if (!hero) return;
+          if (document.documentElement.getAttribute('data-motion') === 'reduce') return;
+          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+          if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+          var queued = false;
+          var px = 0;
+          var py = 0;
+          function paint() {
+            queued = false;
+            hero.style.setProperty('--nte-mx', px.toFixed(1) + '%');
+            hero.style.setProperty('--nte-my', py.toFixed(1) + '%');
+          }
+          hero.addEventListener('pointermove', function (e) {
+            var r = hero.getBoundingClientRect();
+            if (!r.width || !r.height) return;
+            px = ((e.clientX - r.left) / r.width) * 100;
+            py = ((e.clientY - r.top) / r.height) * 100;
+            if (!queued) {
+              queued = true;
+              requestAnimationFrame(paint);
+            }
+          });
+          hero.addEventListener('pointerleave', function () {
+            hero.style.removeProperty('--nte-mx');
+            hero.style.removeProperty('--nte-my');
+          });
         } catch (e) {}
       })();
     </script>

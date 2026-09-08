@@ -609,3 +609,72 @@ const d = ctx.getImageData(x, y, 1, 1).data;   // → #rrggbb
 公式の `.listNews a:hover` は**帯の画像を敷いて**行を反転させている。
 画像は使えないので、`background-size: 0% → 100%` で**左から面を伸ばす**（0.3秒）。
 擬似要素を重ねないので中の文字が隠れる心配がない。本文リンクの下線も同じ作法にした。
+
+
+---
+
+## ★ 6回目（2026-09-08 深夜）— 表示形式と、残っていた動き
+
+### アークナイツ：エンドフィールド — 一覧の表示形式（3つ）
+
+`html[data-ef-view]` で切り替える**新しい表示形式**。既定は `rows`。
+
+| 形式 | 見え方 |
+| --- | --- |
+| `rows`（既定） | 実測の「行で並べる」一覧。区切りは中央寄せ90%幅の細線 |
+| `grid` | 2〜3列のタイル。罫線で区切る作法は保ったまま横に並べる |
+| `detail` | 説明を省略せず全文出す |
+
+- 切り替えは一覧の上の `.ef-viewbar`。**現在の形式は黒い面に白文字**（このゲームのタグの作法）
+- 選んだ形式は `localStorage['endfield.view']` に残り、
+  **描画前に `EndfieldLayout` の起動スクリプトが当てる**（ちらつきを防ぐ）
+- NTE 側の設定（`data-listview`）とは**別の仕組み**。
+  エンドフィールドは専用レイアウトで NTE の設定パネルを読み込まないため
+- **記事が0件のときは切り替えを出さない**（押しても何も起きない UI を置かない）
+
+### アークナイツ：エンドフィールド — 折りたたみ（実測のドロップダウン）
+
+実測（`.footer_languageItem`）:
+
+```css
+.dropDown         { opacity:0; pointer-events:none; transition: opacity .2s }
+.active .dropDown { opacity:1; pointer-events:all }
+.arrow            { transition: transform .2s; transform: rotate(90deg) }
+.active .arrow    { transform: rotate(270deg) }
+```
+
+→ **矢印が 90度 → 270度 に回る**（180度ぶん）0.2秒の開閉。
+   `.ef-fold`（`<details>`）として実装し、トップの「このサイトのほかの wiki」に使った。
+
+### アークナイツ：エンドフィールド — 残りの実測意匠を実際に使った
+
+- **点線のドット**: 導入ブロックの黒地に、等高線の上へうっすら重ねた（7px 格子）
+- **下方向のフェード**: 一覧の下端（`.ef-fade-b`）に。「まだ続く」を示す
+- **スクロールバーを隠す**（実測 `::-webkit-scrollbar{display:none}`）:
+  公式はサイト全体で隠しているが、**本文まで隠すと読み進める手がかりが消える**。
+  **横に流れる帯（`.ef-mask-x`）とレールだけ**に絞った
+
+### 鳴潮 — 丸い矢印ボタンと「左上だけ角丸」の戻る
+
+実測（`.md-back`）:
+
+```css
+.md-back            { border:.01rem solid #d3cbb8; border-top-left-radius:.2rem }
+.back-text          { border-bottom:.01rem solid #d3cbb8; text-align:right }
+.back-arrow span    { width:.48rem; height:.48rem; border-radius:50%; border:.01rem solid #d3cbb8 }
+```
+
+→ **極細の枠だけの丸**（塗りは無い）＋ **左上だけ丸めた枠**、文字の下に細い線。
+   「wiki 一覧へ」をこの形にした。ホバーで金に変わり、丸が少し右へ動く。
+
+### NTE モード — ポインタ追従
+
+公式サイトは **`mouseTracking260603.js`** を読み込んでいて、要素がポインタに反応する。
+こちらはヒーローの光を**ポインタの位置に寄せる**だけにした。
+
+- 座標は JS が `--nte-mx` / `--nte-my`（0〜100%）に入れ、CSS の
+  `radial-gradient(... at var(--nte-mx, 12%) var(--nte-my, 8%) ...)` が読む
+- **JS が動かない環境では既定値のまま**なので壊れない
+- 「モーションを減らす」設定と端末の設定の**両方**で止まる。
+  タッチ端末（`hover: none`）では何もしない
+- 更新は `requestAnimationFrame` で 1フレーム1回に抑える

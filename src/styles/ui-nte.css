@@ -578,12 +578,29 @@ html[data-ui='nte'] .textarea:focus-visible {
 /* =========================================================================
    ヒーローとフッター
    ========================================================================= */
+/* 公式サイトは `mouseTracking260603.js` を読み込んでいて、
+   画面の要素が**ポインタに反応して動く**。こちらは同じ考え方で、
+   ヒーローの光を**ポインタの位置に寄せる**。
+   座標は JS が --nte-mx / --nte-my（0〜100%）に入れる。
+   JS が動かない環境では既定値（左上と右上）のままになるので、壊れない。 */
 html[data-ui='nte'] .hero {
   border: 1px solid var(--border);
   background:
-    radial-gradient(90% 120% at 12% 8%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 62%),
+    radial-gradient(
+      90% 120% at var(--nte-mx, 12%) var(--nte-my, 8%),
+      color-mix(in srgb, var(--accent) 20%, transparent),
+      transparent 62%
+    ),
     radial-gradient(70% 110% at 92% 15%, color-mix(in srgb, var(--nte-glitch-c) 14%, transparent), transparent 58%),
     var(--surface);
+  transition: background-position 0.2s ease;
+}
+/* 「モーションを減らす」ときは追従させない（JS 側も見ているが、CSS でも止める） */
+@media (prefers-reduced-motion: reduce) {
+  html[data-ui='nte'] .hero {
+    --nte-mx: 12%;
+    --nte-my: 8%;
+  }
 }
 html[data-ui='nte'] .app-footer {
   border-top: 1px solid var(--border);

@@ -104,8 +104,12 @@ const fill = w.sections.length > 0 ? filled / w.sections.length : 0;
     </div>
   </div>
 
-  <div class="ef-block">
-    <h2>このサイトのほかの wiki</h2>
+  {/*
+    折りたたみ。実測のドロップダウン（矢印が 90度 → 270度 に回る 0.2秒の開閉）を
+    そのまま使う。副次的な導線なので、既定は閉じておく。
+  */}
+  <details class="ef-fold">
+    <summary>このサイトのほかの wiki</summary>
     <div class="ef-list">
       <a class="ef-row" href={withBase('/')} data-astro-reload>
         <Icon name="lucide:arrow-left-right" />
@@ -124,5 +128,5 @@ const fill = w.sections.length > 0 ? filled / w.sections.length : 0;
         <span class="ef-row-meta">ハブ</span>
       </a>
     </div>
-  </div>
+  </details>
 </EndfieldLayout>

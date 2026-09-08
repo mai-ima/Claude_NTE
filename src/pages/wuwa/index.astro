@@ -33,7 +33,16 @@ const w = wiki('wuwa');
         公式サイトを開く
         <Icon name="lucide:external-link" />
       </a>
-      <a class="ww-btn" href={withBase('/wikis/')} data-astro-reload>wiki 一覧へ</a>
+      {/*
+        実測の「極細の枠だけの丸い矢印ボタン」＋「左上だけ角丸の戻る」を使う。
+        文字は右寄せで下に細い線、というところまで公式の作法に合わせてある。
+      */}
+      <a class="ww-back" href={withBase('/wikis/')} data-astro-reload>
+        <span class="ww-back-text">wiki 一覧へ</span>
+        <span class="ww-circle" aria-hidden="true">
+          <Icon name="lucide:arrow-right" />
+        </span>
+      </a>
     </div>
   </article>
 </WuwaLayout>

@@ -353,3 +353,73 @@ a {
     }
   }
 }
+
+/* =========================================================================
+   まだ使っていなかった実測の意匠
+   ========================================================================= */
+
+/* ---- 丸い矢印ボタン -----------------------------------------------------
+   実測（.md-back .back-arrow span）:
+     width:.48rem; height:.48rem; border-radius:50%; border:.01rem solid #d3cbb8;
+   → **極細の枠だけの丸**。塗りは無い。 */
+.ww-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex: none;
+  border: var(--ww-hair) solid var(--ww-warm);
+  border-radius: 50%;
+  color: var(--ww-warm);
+  background: transparent;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+.ww-circle svg {
+  width: 15px;
+  height: 15px;
+}
+a:hover > .ww-circle,
+a:focus-visible > .ww-circle {
+  border-color: var(--ww-gold);
+  color: var(--ww-gold);
+  transform: translateX(3px);
+}
+
+/* ---- 「左上だけ角丸」の戻るボタン ---------------------------------------
+   実測（.md-back）:
+     border:.01rem solid #d3cbb8; border-top-left-radius:.2rem;
+     .back-text { border-bottom:.01rem solid #d3cbb8; text-align:right }
+   → 極細の枠で、**左上だけ**丸め、文字は右寄せで下に細い線。 */
+.ww-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border: var(--ww-hair) solid var(--ww-warm);
+  border-top-left-radius: 20px; /* 実測 .2rem */
+  color: var(--ww-warm);
+  font-size: 0.82rem;
+  text-decoration: none;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+.ww-back:hover {
+  border-color: var(--ww-gold);
+  color: var(--ww-gold);
+  text-decoration: none;
+}
+.ww-back-text {
+  border-bottom: var(--ww-hair) solid currentColor;
+  padding-bottom: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ww-circle,
+  .ww-back {
+    transition: none;
+  }
+}

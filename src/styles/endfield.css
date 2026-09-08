@@ -1200,6 +1200,8 @@ body.ef-sheet-open {
   /* 等高線。同心円の極薄なリングを2系統ずらして重ね、地形図に見せる。
      画像は使わず、繰り返しのグラデーションだけで作る。 */
   background-image:
+    /* 実測の点線ドット（アイコン背景の格子）を、等高線の上にうっすら重ねる */
+    radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
     repeating-radial-gradient(
       circle at 82% 18%,
       rgba(255, 255, 255, 0.07) 0 1px,
@@ -1210,6 +1212,10 @@ body.ef-sheet-open {
       rgba(255, 255, 255, 0.05) 0 1px,
       transparent 1px 30px
     );
+  background-size:
+    7px 7px,
+    auto,
+    auto;
 }
 /* 左端のバーの「通り道」。全体量を先に見せる。
    （::after が ::before の上に描かれるので、通り道を ::before に置く） */
@@ -1530,4 +1536,189 @@ body.ef-sheet-open {
   position: relative;
   width: 16px;
   height: 16px;
+}
+
+/* =========================================================================
+   12. 一覧の表示形式（rows / grid / detail）
+   ------------------------------------------------------------------------
+   `html[data-ef-view]` で切り替える。既定は rows（実測の「行で並べる」一覧）。
+   NTE 側の設定（data-listview）とは**別の仕組み**にしてある。
+   エンドフィールドは専用レイアウトで、NTE の設定パネルを読み込まないため。
+   ========================================================================= */
+
+/* 切り替えの帯 */
+.ef-viewbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+.ef-viewbar-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ef-muted);
+}
+.ef-viewbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 32px;
+  padding: 0 11px;
+  border: 1px solid var(--ef-line);
+  border-radius: var(--ef-radius);
+  background: var(--ef-bg);
+  color: var(--ef-text-2);
+  font: inherit;
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color var(--ef-fast) ease,
+    color var(--ef-fast) ease,
+    border-color var(--ef-fast) ease;
+}
+.ef-viewbtn svg {
+  width: 15px;
+  height: 15px;
+}
+.ef-viewbtn:hover {
+  border-color: var(--ef-ink);
+}
+/* 現在の形式は**黒い面に白文字**（このゲームのタグの作法） */
+.ef-viewbtn[aria-pressed='true'] {
+  background: var(--ef-ink);
+  border-color: var(--ef-ink);
+  color: #ffffff;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ef-viewbtn {
+    transition: none;
+  }
+}
+
+/* ---- grid: 2〜3列のタイル ------------------------------------------------
+   罫線で区切る作法は保ったまま、横に並べて一度に見渡せるようにする。 */
+html[data-ef-view='grid'] .ef-list.is-hairline {
+  display: grid;
+  gap: 1px;
+  background: var(--ef-line-soft);
+  border: 1px solid var(--ef-line);
+}
+@media (min-width: 640px) {
+  html[data-ef-view='grid'] .ef-list.is-hairline {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  }
+}
+html[data-ef-view='grid'] .ef-list.is-hairline .ef-row {
+  grid-template-columns: 34px 1fr;
+  grid-template-areas:
+    'no name'
+    'no desc'
+    'meta meta';
+  align-items: start;
+  row-gap: 4px;
+  background: var(--ef-bg);
+}
+/* grid では 90% 幅の区切り線は使わない（1pxの隙間が罫線になるため） */
+html[data-ef-view='grid'] .ef-list.is-hairline .ef-row + .ef-row::before {
+  display: none;
+}
+html[data-ef-view='grid'] .ef-row-no {
+  grid-area: no;
+}
+html[data-ef-view='grid'] .ef-row-body {
+  grid-area: name;
+}
+html[data-ef-view='grid'] .ef-row-name {
+  white-space: normal;
+}
+html[data-ef-view='grid'] .ef-row-meta {
+  grid-area: meta;
+  justify-self: start;
+  padding-top: 6px;
+  border-top: 1px solid var(--ef-line-soft);
+  width: 100%;
+}
+
+/* ---- detail: 説明を全文出す（既定は1行に省略している）------------------ */
+html[data-ef-view='detail'] .ef-row {
+  align-items: start;
+  padding-block: 18px;
+}
+html[data-ef-view='detail'] .ef-row-name {
+  white-space: normal;
+}
+html[data-ef-view='detail'] .ef-row-desc {
+  display: block;
+  overflow: visible;
+  white-space: normal;
+  -webkit-line-clamp: unset;
+}
+
+/* =========================================================================
+   13. 折りたたみ（実測のドロップダウン）
+   ------------------------------------------------------------------------
+   実測（.footer_languageItem）:
+     .dropDown        { opacity:0; pointer-events:none; transition: opacity .2s }
+     .active .dropDown{ opacity:1; pointer-events:all }
+     .arrow           { transition: transform .2s; transform: rotate(90deg) }
+     .active .arrow   { transform: rotate(270deg) }
+   → **矢印が 90度 → 270度 に回る**（＝180度ぶん回る）0.2秒の開閉。
+   ========================================================================= */
+.ef-fold {
+  border-top: var(--ef-bar) solid var(--ef-ink);
+  margin-top: 32px;
+}
+.ef-fold > summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 2px;
+  cursor: pointer;
+  font-size: 1.02rem;
+  font-weight: 800;
+  letter-spacing: -0.02em; /* 実測の負のレタースペーシング */
+  list-style: none;
+}
+.ef-fold > summary::-webkit-details-marker {
+  display: none;
+}
+.ef-fold > summary::after {
+  content: '';
+  width: 8px;
+  height: 12px;
+  margin-left: auto;
+  background: var(--ef-ink);
+  /* 実測の右向き三角 */
+  clip-path: polygon(0 20%, 100% 50%, 0 80%, 0 80%);
+  transform: rotate(90deg); /* 実測: 閉じているとき 90度 */
+  transition: transform var(--ef-fast) ease; /* 実測 .2s */
+}
+.ef-fold[open] > summary::after {
+  transform: rotate(270deg); /* 実測: 開いているとき 270度 */
+}
+.ef-fold[open] > summary {
+  color: var(--ef-ink);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ef-fold > summary::after {
+    transition: none;
+  }
+}
+
+/* =========================================================================
+   14. スクロールバーを隠す（実測 `::-webkit-scrollbar { display: none }`）
+   ------------------------------------------------------------------------
+   公式はサイト全体で隠しているが、**本文まで隠すと読み進める手がかりが消える**。
+   ここは**横に流れる帯（.ef-mask-x）とレール**だけに絞る。
+   ========================================================================= */
+.ef-mask-x,
+.ef-rail {
+  scrollbar-width: none;
+}
+.ef-mask-x::-webkit-scrollbar,
+.ef-rail::-webkit-scrollbar {
+  display: none;
 }
