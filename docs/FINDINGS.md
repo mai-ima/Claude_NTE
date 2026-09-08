@@ -514,3 +514,33 @@ h1[data-glitch]::before { content: attr(data-glitch); position: absolute; inset:
 
 見た目が環境依存で壊れるものは、意匠として正しくても**採用しない**。
 今回はレール下端の縦書きCTAを、横組みの短いラベルに替えた。
+
+---
+
+## 狭い画面の横スクロールの犯人は `grid-template-columns: 1fr` だった（2026-09-08）
+
+**症状**: iPhone SE 幅（320px）で、NTE 側の**全ページ**が横に少し動く
+（`document.scrollWidth` = 348 > `clientWidth` = 320）。393px 幅では出ない。
+
+**誤 → 正**
+
+| 誤（最初に疑ったもの） | 正 |
+| --- | --- |
+| ヘッダーのブランド名が縮まないせい | ブランドは `min-width:0` を入れれば縮む。**でも直らなかった** |
+| 閉じている wiki 切替メニューがはみ出しているせい | あれは `position:absolute`。親の幅には影響しない |
+| — | **`.app { grid-template-columns: 1fr }`**。`1fr` の最小は `auto`＝中身の min-content。<br>`minmax(0, 1fr)` にしたら 320 に収まった |
+
+**覚えておくこと**
+
+- グリッドの列を `1fr` と書くと、**最小幅が中身に引っ張られる**。
+  中身を縮めたい列は必ず **`minmax(0, 1fr)`**。flex の子なら `min-width: 0`。
+- `white-space: nowrap` を足すと min-content が「全文の幅」になる。
+  `overflow:hidden` + `text-overflow:ellipsis` だけでは縮まず、**その要素自身にも
+  `min-width: 0`** が要る。
+- 調べ方: `document.querySelectorAll('*')` を回して `getBoundingClientRect().right`
+  が `clientWidth` を超えるものを拾う。ただし **`position:absolute/fixed` は除外**
+  （犯人でないのに大量に引っかかる）。最後は**親をたどって `scrollWidth` を見る**。
+- 再発防止として `scripts/audit-browser.mjs` に **iPhone SE（320px）の巡回**を足した。
+
+**ついでの落とし穴**: 検査用の簡易サーバーで CSS の `content-type` を `text/html` で
+返していて、「CSS が当たっていない画面」を測って悩んだ。**拡張子で出し分ける**こと。

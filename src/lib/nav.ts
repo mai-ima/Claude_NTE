@@ -374,3 +374,21 @@ export const ROLE_META: Record<string, RoleMeta> = {
 export function roleMeta(id: string): RoleMeta {
   return ROLE_META[id] ?? { id, label: id, icon: 'user' };
 }
+
+/**
+ * どの wiki のフッターにも並べる共通リンク。
+ *
+ * 6つのレイアウト（BaseLayout / Endfield / Genshin / Hsr / Wuwa / Alpha）が
+ * それぞれ自前のフッターを持っているため、**ここを直せば6つに反映される**ようにする。
+ * ページを1つ増やすたびに6ファイルを手で直していて、実際に入れ忘れが起きた。
+ */
+export interface FooterLink {
+  href: string;
+  label: string;
+}
+
+export const COMMON_FOOTER_LINKS: FooterLink[] = [
+  { href: '/wikis/', label: 'wiki 一覧' },
+  { href: '/notices/', label: 'お知らせ' },
+  { href: '/legal/', label: '規約・ポリシー' },
+];

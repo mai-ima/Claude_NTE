@@ -16,7 +16,7 @@
  * の2つは必ず残す。閉じ込めを作らないため。
  */
 import { withBase } from '../lib/path';
-import { DEFAULT_SITE_STATE, SITE_MODES } from '../lib/site-state';
+import { DEFAULT_SITE_STATE, SITE_MODES, STATE_KEY, ADMIN_KEY, GATE_CLOSED_KEY } from '../lib/site-state';
 
 /** 既定の文言は data 属性でスクリプトへ渡す（同じ文字列を2か所に書かないため） */
 const modes = SITE_MODES.filter((m) => m.value !== 'normal').map((m) => ({
@@ -109,7 +109,8 @@ const modes = SITE_MODES.filter((m) => m.value !== 'normal').map((m) => ({
   .site-gate-btn {
     display: inline-flex;
     align-items: center;
-    min-height: 40px;
+    /* 指で押す前提の大きさ（44px）。狭い画面では横いっぱいに伸ばす */
+    min-height: 44px;
     padding: 0 14px;
     border: 1px solid #d6d9e0;
     border-radius: 10px;
@@ -130,6 +131,30 @@ const modes = SITE_MODES.filter((m) => m.value !== 'normal').map((m) => ({
     margin-left: auto;
     border-color: transparent;
     color: #667;
+  }
+  /* 狭い画面: 折り返して端が揃わなくなるので、縦に積んで押しやすくする */
+  @media (max-width: 480px) {
+    .site-gate {
+      padding: 14px;
+    }
+    .site-gate-box {
+      padding: 20px 18px;
+    }
+    .site-gate-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .site-gate-btn {
+      justify-content: center;
+    }
+    .site-gate-btn.is-primary {
+      grid-column: 1 / -1;
+    }
+    .site-gate-btn.is-quiet {
+      margin-left: 0;
+      grid-column: 1 / -1;
+      justify-content: center;
+    }
   }
   /* 停止中（閉じられない状態）は背後を読ませない */
   :global(html[data-site-locked]) {
@@ -159,7 +184,12 @@ const modes = SITE_MODES.filter((m) => m.value !== 'normal').map((m) => ({
 <script
   is:inline
   data-astro-rerun
-  define:vars={{ defaultState: DEFAULT_SITE_STATE, modeText: modes, gateBase: withBase('/') }}
+  define:vars={{
+    defaultState: DEFAULT_SITE_STATE,
+    modeText: modes,
+    gateBase: withBase('/'),
+    keys: { state: STATE_KEY, admin: ADMIN_KEY, closed: GATE_CLOSED_KEY },
+  }}
 >
   (function () {
     var gate = document.getElementById('site-gate');
@@ -169,7 +199,7 @@ const modes = SITE_MODES.filter((m) => m.value !== 'normal').map((m) => ({
     var state = { mode: defaultState.mode, message: defaultState.message, until: defaultState.until };
     var scope = 'build';
     try {
-      var raw = localStorage.getItem('nte.site.state');
+      var raw = localStorage.getItem(keys.state);
       if (raw) {
         var saved = JSON.parse(raw);
         if (saved && typeof saved.mode === 'string') {
@@ -209,8 +239,8 @@ const modes = SITE_MODES.filter((m) => m.value !== 'normal').map((m) => ({
     var closable = state.mode === 'maintenance';
     var unlocked = false;
     try {
-      unlocked = localStorage.getItem('nte.admin.unlocked') === '1';
-      if (closable && sessionStorage.getItem('nte.site.gate.closed') === state.mode) {
+      unlocked = localStorage.getItem(keys.admin) === '1';
+      if (closable && sessionStorage.getItem(keys.closed) === state.mode) {
         gate.hidden = true;
         return;
       }
@@ -243,7 +273,7 @@ const modes = SITE_MODES.filter((m) => m.value !== 'normal').map((m) => ({
         : '閉じて表示する';
       close.addEventListener('click', function () {
         try {
-          sessionStorage.setItem('nte.site.gate.closed', state.mode);
+          sessionStorage.setItem(keys.closed, state.mode);
         } catch (e) {}
         gate.hidden = true;
         document.documentElement.removeAttribute('data-site-locked');

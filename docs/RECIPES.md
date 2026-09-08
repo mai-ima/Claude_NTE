@@ -96,7 +96,7 @@ pnpm verify
 | # | ファイル | 何をする |
 | --- | --- | --- |
 | 1 | `src/lib/wikis.ts` | `WikiMeta` を1件（`kind: 'planned'` / `sections: []` / **`officialUrl` は実在を確認してから** / `rightsHolder` 必須） |
-| 2 | `src/layouts/<Game>Layout.astro` | **そのゲームのUIで**新規に作る。読み込む CSS は自分の1本だけ |
+| 2 | `src/layouts/<Game>Layout.astro` | **そのゲームのUIで**新規に作る。読み込む CSS は自分の1本だけ。<br>`<head>` は `PlannedHead.astro`、フッターの導線は `COMMON_FOOTER_LINKS`、<br>本文の末尾に `SiteStateGate` を置く |
 | 3 | `src/styles/<game>.css` | トークンは `--<略>-*` に閉じる。他 wiki のトークンを参照しない |
 | 4 | `src/pages/<base>/index.astro` | 準備中ページ1枚。`noindex` にする |
 | 5 | `scripts/check-ui.mjs` | `INDEPENDENT_BASES` と `STYLE_MARKS` に追加 |
@@ -214,7 +214,8 @@ sources:
 1. `src/lib/legal.ts` の `LEGAL_UPDATED`（各ページ末尾に出る最終更新日）
 2. `scripts/check-content.mjs` の `STATIC_PAGES`（ページを増やしたとき）
 3. `scripts/audit-browser.mjs` の `PAGES`（同上）
-4. 各レイアウトのフッター（6つ。`/legal/` への導線）
+4. フッターの導線は `src/lib/nav.ts` の `COMMON_FOOTER_LINKS`
+   （**ここだけ直せば6つのレイアウトすべてに反映される**）
 
 ### ⚠ プライバシーポリシーが嘘にならないように
 

@@ -20,7 +20,14 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { Icon } from 'astro-icon/components';
 import { createHash } from 'node:crypto';
 import { withBase } from '../../lib/path';
-import { SITE_MODES, DEFAULT_SITE_STATE } from '../../lib/site-state';
+import {
+  SITE_MODES,
+  DEFAULT_SITE_STATE,
+  STATE_KEY,
+  NOTICES_KEY,
+  ADMIN_KEY,
+  GATE_CLOSED_KEY,
+} from '../../lib/site-state';
 import { NOTICE_LEVELS, NOTICES } from '../../lib/notices';
 
 const passcode = import.meta.env.ADMIN_PASSCODE ?? 'nte-admin';
@@ -67,7 +74,10 @@ const today = new Date().toISOString().slice(0, 10);
         </form>
         <p id="admin-error" class="admin-error" hidden>合言葉が違います。</p>
 
+        {/* .callout は「アイコン＋本文」の横並び。段落を直に並べると**段落ごとに列**に
+            なってスマホで1文字ずつ折り返すので、本文は必ず1つの要素にまとめる。 */}
         <div class="callout callout-info" style="margin-top:20px;">
+          <div>
           <p style="margin:0 0 8px;"><strong>この鍵でできること・できないこと</strong></p>
           <p style="margin:0 0 8px;">
             本サイトはサーバーを持たない静的サイトです。合言葉の照合は
@@ -80,6 +90,7 @@ const today = new Date().toISOString().slice(0, 10);
             ソースの <code>src/lib/notices.ts</code> と <code>src/lib/site-state.ts</code>
             を書き換えて公開し直す形になります。手順はロックを解除すると表示されます。
           </p>
+          </div>
         </div>
         {
           usingDefaultPass && (
@@ -198,15 +209,23 @@ const today = new Date().toISOString().slice(0, 10);
   </div>
 </BaseLayout>
 
-<script is:inline data-astro-rerun define:vars={{ passHash }}>
+<script
+  is:inline
+  data-astro-rerun
+  define:vars={{
+    passHash,
+    keys: { state: STATE_KEY, notices: NOTICES_KEY, admin: ADMIN_KEY, closed: GATE_CLOSED_KEY },
+  }}
+>
   (function () {
     var lock = document.getElementById('admin-lock');
     var panel = document.getElementById('admin-panel');
     if (!lock || !panel) return;
 
-    var STATE_KEY = 'nte.site.state';
-    var NOTICES_KEY = 'nte.site.notices';
-    var ADMIN_KEY = 'nte.admin.unlocked';
+    // キー名は src/lib/site-state.ts が正。ここには書かず define:vars で受け取る
+    var STATE_KEY = keys.state;
+    var NOTICES_KEY = keys.notices;
+    var ADMIN_KEY = keys.admin;
 
     var read = function (key, fallback) {
       try {
@@ -303,7 +322,7 @@ const today = new Date().toISOString().slice(0, 10);
       current.until = document.getElementById('admin-until').value.trim();
       if (!write(STATE_KEY, current)) return;
       try {
-        sessionStorage.removeItem('nte.site.gate.closed');
+        sessionStorage.removeItem(keys.closed);
       } catch (e) {}
       alert(
         current.mode === 'normal'
@@ -387,20 +406,25 @@ const today = new Date().toISOString().slice(0, 10);
         return;
       }
       var id = 'notice-' + date.replace(/-/g, '');
+      // 文字列は JSON.stringify で囲む（引用符・改行・バックスラッシュを自分で
+      // 逃がすと、貼り付けたコードが壊れる。ここは人が書く場所ではない）
+      var q = function (v) {
+        return JSON.stringify(String(v));
+      };
       var text =
         '  {\n' +
-        "    id: '" + id + "',\n" +
-        "    date: '" + date + "',\n" +
-        "    title: '" + title.replace(/'/g, "\\'") + "',\n" +
+        '    id: ' + q(id) + ',\n' +
+        '    date: ' + q(date) + ',\n' +
+        '    title: ' + q(title) + ',\n' +
         '    body: [\n' +
         body
           .split(/\n{2,}/)
           .map(function (p) {
-            return "      '" + p.replace(/'/g, "\\'").replace(/\n/g, ' ') + "',";
+            return '      ' + q(p.replace(/\n/g, ' ')) + ',';
           })
           .join('\n') +
         "\n    ].join('\\n\\n'),\n" +
-        "    level: '" + level + "',\n" +
+        '    level: ' + q(level) + ',\n' +
         '  },';
       var done = document.getElementById('notice-copied');
       navigator.clipboard

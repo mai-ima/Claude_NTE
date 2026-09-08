@@ -5,7 +5,9 @@
 /* ---- App shell ---------------------------------------------------------- */
 .app {
   display: grid;
-  grid-template-columns: 1fr;
+  /* minmax(0, 1fr) にしないと、列の最小が中身の min-content になり、
+     狭い画面（320px）で**ページ全体に横スクロールが出る**（実測 348px）。 */
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto 1fr auto;
   grid-template-areas: 'header' 'main' 'footer';
   min-height: 100dvh;
@@ -458,6 +460,13 @@
   border: 1px solid var(--border);
   background: var(--surface-2);
   margin: 18px 0;
+}
+/* アイコンを持たない callout は縦積みにする。
+   .callout は「アイコン＋本文」の横並びなので、本文を直に複数並べると
+   **要素ごとに列**になり、狭い画面で1文字ずつ折り返す（実際に起きた）。 */
+.callout:not(:has(> svg)) {
+  flex-direction: column;
+  gap: 0;
 }
 .callout svg {
   width: 20px;
@@ -2560,4 +2569,53 @@ html[data-wiki]:not([data-wiki='nte']) {
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   background: var(--surface);
+}
+
+/* ---- お知らせ・管理ページの狭い画面 -------------------------------------- */
+@media (max-width: 480px) {
+  /* 見出しは一覧では2行までに収める（本文の抜粋と合わせて高さを揃える） */
+  .notice-title {
+    font-size: 1rem;
+  }
+  /* 状態の選択は1列に。横2列だと説明文が細切れになる */
+  .admin-modes {
+    grid-template-columns: 1fr;
+  }
+  /* 削除ボタンが本文に押し込まれないよう、行を縦積みにする */
+  .admin-row {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .admin-row .btn {
+    align-self: flex-end;
+  }
+}
+
+/* ---- とても狭い画面（iPhone SE 幅 = 320px）--------------------------------
+   ヘッダーの中身（ハンバーガー・ブランド・wiki切替・検索・テーマ）が
+   縮まず、**ページ全体に横スクロールが出ていた**（実測 381px > 320px）。
+   ブランド名を縮められるようにし、余白と間隔を詰めて収める。 */
+@media (max-width: 400px) {
+  .app-header {
+    gap: 6px;
+    padding-inline: max(10px, env(safe-area-inset-left, 0px))
+      max(10px, env(safe-area-inset-right, 0px));
+  }
+  /* min-width:0 が無いと flex の子は文字数ぶんの幅を主張して縮まない */
+  .brand {
+    min-width: 0;
+    gap: 7px;
+  }
+  /* nowrap にすると min-content = 全文の幅になるため、
+     **span 自身にも min-width:0** を入れないと縮まない（実測で確認） */
+  .brand > span:last-child {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .brand-mark {
+    flex: none;
+  }
 }

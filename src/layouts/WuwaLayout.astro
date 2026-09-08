@@ -8,26 +8,18 @@
  */
 import '../styles/wuwa.css';
 import SiteStateGate from '../components/SiteStateGate.astro';
+import PlannedHead from '../components/PlannedHead.astro';
 import { withBase } from '../lib/path';
 import { wiki } from '../lib/wikis';
+import { COMMON_FOOTER_LINKS } from '../lib/nav';
 
 const w = wiki('wuwa');
-const canonical = new URL(Astro.url.pathname, Astro.site).href;
 ---
 
 <!doctype html>
 <html lang="ja">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>{w.siteName}</title>
-    <meta name="description" content={w.description} />
-    <link rel="canonical" href={canonical} />
-    <link rel="icon" href={withBase('favicon.svg')} type="image/svg+xml" />
-    <meta name="theme-color" content="#000000" />
-    {/* 中身がまだ無いページを検索結果に載せない。sitemap からも除いてある。 */}
-    <meta name="robots" content="noindex, follow" />
-    <meta name="generator" content={Astro.generator} />
+    <PlannedHead wikiId="wuwa" themeColor="#000000" />
   </head>
   <body>
     <div class="ww-shell">
@@ -49,11 +41,19 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
       <footer class="ww-foot">
         <p>{w.footer}</p>
         <p>
+          {/* 並びの定義は src/lib/nav.ts の COMMON_FOOTER_LINKS
+              （6つのレイアウトで同じものを出す。増やすときはそこだけ直す） */}
           <a href={withBase('/')} data-astro-reload>NTE 完全攻略wiki</a>
-          <span aria-hidden="true"> ／ </span>
-          <a href={withBase('/wikis/')} data-astro-reload>wiki 一覧</a>
-          <span aria-hidden="true"> ／ </span>
-          <a href={withBase('/legal/')} data-astro-reload>規約・ポリシー</a>
+          {
+            COMMON_FOOTER_LINKS.map((l) => (
+              <>
+                <span aria-hidden="true"> ／ </span>
+                <a href={withBase(l.href)} data-astro-reload>
+                  {l.label}
+                </a>
+              </>
+            ))
+          }
         </p>
       </footer>
     </div>

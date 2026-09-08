@@ -72,3 +72,5 @@ export const STATE_KEY = 'nte.site.state';
 export const NOTICES_KEY = 'nte.site.notices';
 /** 管理ページのロックを解除した印のキー */
 export const ADMIN_KEY = 'nte.admin.unlocked';
+/** メンテナンスの案内を閉じた印（**sessionStorage**。タブを閉じれば消える） */
+export const GATE_CLOSED_KEY = 'nte.site.gate.closed';

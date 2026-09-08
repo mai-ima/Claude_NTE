@@ -10,6 +10,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { Icon } from 'astro-icon/components';
 import { withBase } from '../../lib/path';
 import { NOTICES, noticeHref, noticeDate, sortNotices, levelOf } from '../../lib/notices';
+import { NOTICES_KEY } from '../../lib/site-state';
 
 const list = sortNotices(NOTICES);
 ---
@@ -80,14 +81,14 @@ const list = sortNotices(NOTICES);
   </div>
 </BaseLayout>
 
-<script is:inline data-astro-rerun>
+<script is:inline data-astro-rerun define:vars={{ noticesKey: NOTICES_KEY }}>
   (function () {
     var host = document.getElementById('local-notice-list');
     var sec = document.getElementById('local-notices');
     if (!host || !sec) return;
     var list = [];
     try {
-      list = JSON.parse(localStorage.getItem('nte.site.notices') || '[]');
+      list = JSON.parse(localStorage.getItem(noticesKey) || '[]');
     } catch (e) {
       list = [];
     }

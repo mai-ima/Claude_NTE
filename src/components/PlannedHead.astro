@@ -1,0 +1,31 @@
+---
+/**
+ * 準備中の wiki（原神・鳴潮・崩壊：スターレイル）の <head>。
+ *
+ * 3つのレイアウトで同じものを書いていたのでここにまとめた。
+ * **見た目（CSS）は共有しない**方針だが、メタ情報は共有してよい。
+ * 変わるのは wiki と theme-color だけ。
+ */
+import { withBase } from '../lib/path';
+import { wiki, type WikiId } from '../lib/wikis';
+
+interface Props {
+  wikiId: WikiId;
+  /** ブラウザのアドレスバーの色。そのゲームの地の色を渡す */
+  themeColor: string;
+}
+const { wikiId, themeColor } = Astro.props;
+const w = wiki(wikiId);
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>{w.siteName}</title>
+<meta name="description" content={w.description} />
+<link rel="canonical" href={canonical} />
+<link rel="icon" href={withBase('favicon.svg')} type="image/svg+xml" />
+<meta name="theme-color" content={themeColor} />
+{/* 中身がまだ無いページを検索結果に載せない。sitemap からも除いてある。 */}
+<meta name="robots" content="noindex, follow" />
+<meta name="generator" content={Astro.generator} />

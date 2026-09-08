@@ -21,6 +21,7 @@ import { Icon } from 'astro-icon/components';
 import { withBase, activeHref } from '../lib/path';
 import { wiki } from '../lib/wikis';
 import { loadNavSections } from '../lib/content';
+import { COMMON_FOOTER_LINKS } from '../lib/nav';
 
 interface Crumb {
   name: string;
@@ -219,9 +220,14 @@ const crumbItems = [{ name: 'エンドフィールド', href: withBase('/endfiel
           <p class="ef-foot-links">
             <a href={w.officialUrl} target="_blank" rel="noopener noreferrer">公式サイト</a>
             <a href={withBase('/')} data-astro-reload>NTE 完全攻略wiki</a>
-            <a href={withBase('/wikis/')} data-astro-reload>wiki 一覧</a>
-            <span aria-hidden="true"> ／ </span>
-            <a href={withBase('/legal/')} data-astro-reload>規約・ポリシー</a>
+            {/* 並びの定義は src/lib/nav.ts の COMMON_FOOTER_LINKS */}
+            {
+              COMMON_FOOTER_LINKS.map((l) => (
+                <a href={withBase(l.href)} data-astro-reload>
+                  {l.label}
+                </a>
+              ))
+            }
           </p>
         </div>
       </footer>

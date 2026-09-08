@@ -19,6 +19,7 @@ import { Icon } from 'astro-icon/components';
 import { withBase, activeHref } from '../lib/path';
 import { wiki as wikiMeta, WIKI_LIST, LIVE_WIKIS, type WikiId } from '../lib/wikis';
 import { prefBootData } from '../lib/prefs';
+import { COMMON_FOOTER_LINKS } from '../lib/nav';
 import { UI_MODES } from '../lib/ui';
 import MobileDrawer from '../components/MobileDrawer.astro';
 import SiteStateGate from '../components/SiteStateGate.astro';
@@ -351,9 +352,9 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
               </a>
             ))
           }
-          <a href={withBase('/wikis/')}>wiki 一覧</a>
-          <a href={withBase('/notices/')}>お知らせ</a>
-          <a href={withBase('/legal/')}>規約・ポリシー</a>
+          {/* 並びの定義は src/lib/nav.ts の COMMON_FOOTER_LINKS
+              （NTE 配下のページなのでフルロード指定は要らない） */}
+          {COMMON_FOOTER_LINKS.map((l) => <a href={withBase(l.href)}>{l.label}</a>)}
         </p>
       </footer>
 

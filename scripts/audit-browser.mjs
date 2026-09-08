@@ -165,6 +165,18 @@ for (const [label, opts] of [
   await ctx.close();
 }
 
+/* 320px 幅（iPhone SE / 旧 iPhone）でも横スクロールが出ないこと。
+   ここは**代表ページだけ**にしている（全ページ×3端末は時間がかかりすぎる）。
+   .app の grid 列を 1fr にしていたため、狭い画面でページ全体が横に動いていた
+   （実測 348px > 320px）。→ minmax(0, 1fr)。同じ事故を繰り返さないための検査。 */
+const NARROW_PAGES = ['/', '/notices/', '/admin/', '/settings/', '/characters/', '/legal/copyright/', '/endfield/', '/wikis/'];
+{
+  const ctx = await browser.newContext(devices['iPhone SE']);
+  const page = await ctx.newPage();
+  for (const u of NARROW_PAGES) await visit(page, u, 'iPhoneSE');
+  await ctx.close();
+}
+
 // localStorage の復元（ガチャ天井トラッカー）
 // ※ 折りたたみの中など**画面に出ていない**入力欄があるので、可視のものだけを対象にする。
 try {
@@ -193,7 +205,10 @@ try {
 await browser.close();
 own?.server.close();
 
-console.log(`ブラウザ検査: ${PAGES.length + TOOLS.length}ページ × 2端末（iPhone 14 Pro / デスクトップ）`);
+console.log(
+  `ブラウザ検査: ${PAGES.length + TOOLS.length}ページ × 2端末（iPhone 14 Pro / デスクトップ）` +
+    ` ＋ 狭い画面 ${NARROW_PAGES.length}ページ（iPhone SE 320px）`,
+);
 console.log('検査: JSエラー・横あふれ・HTTP応答・極端な入力・保存と復元');
 console.log('');
 if (problems.length === 0) {
