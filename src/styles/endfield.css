@@ -1025,3 +1025,141 @@ body.ef-sheet-open {
     transition: none;
   }
 }
+
+/* =========================================================================
+   9. 下層ページの意匠（2回目の調査・公式CSS 9本の実測）
+   ------------------------------------------------------------------------
+   セクションの一覧ページ・記事ページで使う。根拠は docs/UI-RESEARCH.md。
+   ========================================================================= */
+
+/* ---- 下層ページのヘッダー帯 ---------------------------------------------
+   実測（.SubpageHeader_subpageHeader）:
+     border-bottom: 1rem solid #c6c6c6;
+     background-image: linear-gradient(180deg, white 15.5625rem, #fffa00 0, #fffa00);
+   → **上が白・下が蛍光イエローの2段ベタ**で、**下端に太い灰色の罫線**。
+     公式は高さ 31.625rem（＝画面の1/3ほど）だが、wiki は本文が主なので
+     比率（白 : 黄 ＝ おおよそ 1 : 1）だけ借りて薄く敷く。 */
+.ef-subhead {
+  position: relative;
+  margin: 0 0 20px;
+  padding: 14px 0 0;
+  border-bottom: 10px solid #c6c6c6; /* 実測 1rem solid #c6c6c6 */
+  background-image: linear-gradient(
+    180deg,
+    var(--ef-bg) 0,
+    var(--ef-bg) 50%,
+    var(--ef-accent) 50%,
+    var(--ef-accent) 100%
+  );
+}
+/* 黄色のベタの上に文字を載せるので、文字色は黒で固定する
+   （白地向けの --ef-text-2 を継ぐと黄色の上で読めなくなる）。 */
+.ef-subhead > * {
+  color: var(--ef-ink);
+}
+/* 帯の中は少しだけ内側に寄せる（公式も見出しは端から離してある） */
+.ef-subhead .ef-eyebrow {
+  padding-inline: 2px;
+  margin-bottom: 10px;
+}
+.ef-subhead .ef-title {
+  margin: 0;
+  padding: 4px 14px 12px;
+}
+
+/* ---- 黒い正方形に黄色のアイコン -----------------------------------------
+   実測（.SubpageHeader_decoHeader .icon）:
+     width/height: 4.375rem; background-color:#191919; color:#fffa00;
+   セクションの印として使う。 */
+.ef-sq-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex: none;
+  background: var(--ef-ink);
+  color: var(--ef-accent);
+}
+.ef-sq-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ---- 一覧の行の区切りは「90%幅の細線」 ----------------------------------
+   実測（.footer_dropDownItem:not(:first-of-type):before）:
+     width: 90%; height: 1px; background-color: #888;
+   → 公式は**全幅ではなく中央寄せの90%**で項目を区切る。
+     1pxグリッドの隙間だけだと全幅の線になるので、こちらに寄せる。 */
+.ef-list.is-hairline {
+  gap: 0;
+  background: var(--ef-bg);
+}
+.ef-list.is-hairline .ef-row {
+  position: relative;
+}
+.ef-list.is-hairline .ef-row + .ef-row::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  height: 1px;
+  background: var(--ef-line);
+  pointer-events: none;
+}
+
+/* ---- 丸ボタンは二重リング。ホバーで蛍光イエロー -------------------------
+   実測（.Pagination_button）:
+     border-radius: 2.3125rem; background:#fafafa; box-shadow: 0 0 .625rem rgba(2,2,2,.3);
+     .border:before { border: .375rem solid #e6e6e6; border-radius:50% }
+     .border:after  { border: .25rem  solid #fff;    border-radius:50% }
+     :hover { background-color:#fffa00 }  /* 押している間は #eeea00 */
+   → 「灰の太い輪の内側に白い輪」を重ねた丸ボタン。 */
+.ef-round {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: #fafafa; /* 実測 */
+  color: #3c3c3c; /* 実測 .arrow の色 */
+  box-shadow: 0 0 10px rgba(2, 2, 2, 0.3); /* 実測 0 0 .625rem */
+  cursor: pointer;
+  transition: background-color var(--ef-fast) ease;
+}
+/* 二重の輪。外が灰、内が白。 */
+.ef-round::before,
+.ef-round::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.ef-round::before {
+  border: 5px solid #e6e6e6; /* 実測 .375rem */
+}
+.ef-round::after {
+  border: 3px solid #ffffff; /* 実測 .25rem */
+}
+.ef-round:hover {
+  background: var(--ef-accent); /* 実測 #fffa00 */
+}
+.ef-round:active {
+  background: #eeea00; /* 実測 */
+}
+.ef-round:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  color: #aaa; /* 実測 .disabled .arrow */
+}
+@media (prefers-reduced-motion: reduce) {
+  .ef-round {
+    transition: none;
+  }
+}

@@ -42,9 +42,12 @@
   --gs-text: #3b3226;
   --gs-text-2: #5c5142;
   --gs-muted: #857a68;
-  --gs-radius: 14px; /* 柔らかい曲線 */
+  --gs-radius: 4px; /* 実測: ニュース一覧のカードは 4px（描画された値で最多） */
   --gs-frame: 6px; /* 実測: 白い太枠 border 6px */
   --gs-warm: rgba(38, 18, 12, 0.62); /* 実測: 暖色の半透明 */
+  --gs-cta: #ffcf0d; /* 実測: 「ダウンロード」ボタンの黄色（画素から採取） */
+  --gs-bar: rgba(18, 18, 18, 0.8); /* 実測: ヘッダーの半透明の暗い帯 */
+  --gs-shadow: 0 3px 7px rgba(0, 0, 0, 0.35); /* 実測: ニュースカードの影 */
   --gs-font:
     ui-serif, 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
   /* 実測で和文は游ゴシック体だった。無い環境も考えて素直な代替を並べる。 */
@@ -86,14 +89,25 @@ a {
 }
 
 /* ---- ヘッダー: 中央にブランド、細い金の罫線 ---------------------------- */
+/* ヘッダー。実画面（ニュース一覧）は**半透明の暗い帯**に白い大文字英字メニューで、
+   右端に黄色の「ダウンロード」ボタンが帯いっぱいの高さで乗っていた。
+   準備中ページは項目が無いので、帯とブランドだけを写す。 */
 .gs-head {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 12px;
   padding: 18px 16px;
-  border-bottom: 1px solid var(--gs-line);
-  background: rgba(255, 253, 248, 0.7);
+  background: var(--gs-bar);
+  color: #ffffff;
+  backdrop-filter: blur(4px);
+}
+.gs-head .gs-brand {
+  color: #ffffff;
+}
+.gs-head .gs-mark {
+  border-color: rgba(255, 255, 255, 0.65);
+  color: #ffffff;
 }
 .gs-mark {
   display: inline-flex;
@@ -136,7 +150,7 @@ a {
   padding: 36px 26px 30px;
   text-align: center;
   position: relative;
-  box-shadow: 0 10px 40px -18px var(--gs-warm);
+  box-shadow: var(--gs-shadow); /* 実測 0 3px 7px rgba(0,0,0,.35) */
 }
 /* 四隅の飾り。アール・デコ調の角当てを CSS だけで作る（画像は使わない） */
 .gs-card::before,
@@ -249,13 +263,18 @@ a {
 .gs-btn:hover {
   background: rgba(200, 163, 90, 0.12);
 }
+/* 主ボタンは実測どおり**鮮やかな黄色 #ffcf0d に濃い文字**。
+   金（--gs-gold）は装飾の罫線用で、CTA の色ではなかった。 */
 .gs-btn.is-primary {
-  background: var(--gs-gold);
-  color: #fffdf8;
-  border-color: var(--gs-gold);
+  background: var(--gs-cta);
+  color: #2a2214;
+  border-color: var(--gs-cta);
+  border-radius: var(--gs-radius);
+  font-weight: 700;
 }
 .gs-btn.is-primary:hover {
-  background: var(--gs-gold-deep);
+  background: #f0c000;
+  border-color: #f0c000;
 }
 .gs-btn svg {
   width: 15px;

@@ -40,8 +40,20 @@ const fmt = (d: unknown) =>
   breadcrumbs={[{ name: section.label, href: withBase(section.href) }]}
   wide
 >
-  <p class="ef-eyebrow">{eyebrow}</p>
-  <h1 class="ef-title">{section.label}</h1>
+  {/*
+    下層ページのヘッダー帯。公式は「上が白・下が蛍光イエローの2段ベタ＋下端に
+    太い灰色の罫線」で、その上に**黒い正方形に黄色のアイコン**を置いていた
+    （実測 .SubpageHeader / .decoHeader .icon → docs/UI-RESEARCH.md）。
+  */}
+  <div class="ef-subhead">
+    <p class="ef-eyebrow">
+      <span class="ef-sq-icon" aria-hidden="true">
+        <Icon name={`lucide:${section.icon}`} />
+      </span>
+      {eyebrow}
+    </p>
+    <h1 class="ef-title">{section.label}</h1>
+  </div>
   <p class="ef-lead">{section.blurb}</p>
 
   {
@@ -54,7 +66,8 @@ const fmt = (d: unknown) =>
         </p>
       </div>
     ) : (
-      <div class="ef-list">
+      // 区切りは公式に倣って**中央寄せ90%幅の細線**にする（is-hairline）
+      <div class="ef-list is-hairline">
         {sorted.map((e, i) => {
           const d = e.data;
           // 「いつ時点の情報か」は一覧でも分かるようにする（誠実性ルール）。

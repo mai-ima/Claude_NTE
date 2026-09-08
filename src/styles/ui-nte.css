@@ -3,78 +3,175 @@
    ------------------------------------------------------------------------
    NTE の**公式サイトの配色と質感を再現**したモード。classic には影響しない。
 
-   根拠（docs/UI-RESEARCH.md）— <https://nte.perfectworld.com/jp/> が読み込む
-   `public/style/public_cover260819.css`（PC・37KB）と
-   `public/m/style/public_cover260819.css`（スマホ・31KB）を取得して実測した:
+   根拠（docs/UI-RESEARCH.md）— <https://nte.perfectworld.com/jp/> の配信CSSを実測:
+     public/style/public_cover260819.css      （カバー・PC 37KB）
+     public/m/style/public_cover260819.css    （カバー・スマホ 31KB）
+     public/style/public260819.css            （共通・PC 15KB）
+     public/style/public_list260427.css       （ニュース一覧と記事・PC 13KB）
+     public/m/style/public_list260427.css     （同・スマホ 27KB）
+     public/style/font260603.css              （フォント）
 
-   - `body { background: #1d1d1d }` — 地は**黒よりわずかに明るい濃灰**
-   - ヘッダーも `#1d1d1d` で固定。面は `rgba(29,29,29,.8 / .85 / .9)` の半透明
-   - **アクセントはシアン `#4fe5fb`**。ボタンは
-     `.logOut,.userCenter { background:#4fe5fb; color:#1d1d1d; border-radius:.16rem }`
+   ★ このサイトは**2つの顔**を持っている（2回目の調査で分かった）:
+
+   | 面 | 実測 |
+   | --- | --- |
+   | カバー（トップ） | `body{background:#1d1d1d}` の**暗い画面**。白い文字 |
+   | ニュース一覧 | 暗い地に `.title{color:#e8e8e8}` / `.des,.date{color:#aaa}`。行は
+   |              | `border-bottom:.03rem solid #313131`（**3px相当の濃い線**）で区切る。
+   |              | **ホバーで行が反転**し、文字が `#313131`（暗い）になる |
+   | 記事本文 | `.article{color:#313131}` / `.articleTitle{color:#1d1d1d}`
+   |          | → **明るい紙に暗い文字**（背景は紙のビジュアル） |
+
+   → だから**テーマの明暗を無視する必要がない**。
+     暗いテーマ＝一覧の見え方、明るいテーマ＝記事ページの見え方に割り当てる。
+     どちらも公式に実在する配色なので、再現として筋が通る。
+
+   共通の実測値:
+
+   - **アクセントはシアン**。`#4fe5fb`（ボタン地）と `#7cecfc`（現在地・ホバー）
+   - ボタンは `background:#4fe5fb; color:#1d1d1d; border-radius:.16rem`
      → **シアン地に濃灰の文字**
-   - 言語切替の現在地・ホバーは **`#7cecfc`**（明るいシアン）
    - ダウンロードボタンだけ**淡い金 `#ecce98`** ＋ `.02rem solid #858585`
-   - スライドのページャの現在地は**クリーム `#f9dbbd`**
-   - 罫線は `.01rem solid #a0a0a0`（1px相当）と `.02rem solid #000`（2px相当）
-   - 角丸は `0` / `.1rem`（10px相当）/ `.16rem`（16px相当）、丸ボタンは `50%`
+   - ページャは `.02rem solid #727272` の**正方形**（`.43rem` 角）。
+     現在地は `border-color:#7cecfc; color:#7cecfc`
+   - ページ内ナビの印は **`#56e4f8` の `.2rem` の正方形**。
+     現在地とホバーで **`#fb5692`（ピンク）になり 45度回転して菱形**になる
+     （`.pageNav a.active:before{background:#fb5692;transform:rotate(45deg)}`）
+   - 罫線は `.01rem solid #a0a0a0`／`.02rem solid #000`／一覧は `.03rem solid #313131`
+   - 角丸は `0` / `.1rem`（10px）/ `.12rem`（12px）/ `.16rem`（16px）、丸ボタンは `50%`
+   - **box-shadow は実測0件**（カバー・共通・一覧・記事のすべて）。面は罫線で立てる
+   - フォントは面で違う:
+       カバー … `LINE Seed JP`（`.html-jp`）／欧文 `bahnschrift`
+       共通・記事 … **`Inter, Noto Sans SC, Noto Sans JP, Noto Sans KR, …`**
+     → wiki は記事が主体なので**記事側（Inter + Noto Sans JP）**を採る
    - **グリッチ演出 `.glitching`**（このサイトの一番の特徴）:
-     `::before` が赤 `rgba(255,0,60,.7)` を **+2px**、
-     `::after` がシアン `rgba(0,255,204,.7)` を **−2px** に `drop-shadow` でずらし、
-     `mix-blend-mode: screen`／`clip-path: inset(…)` を **0.3s** で切り替える
-   - 日本語フォントは **LINE Seed JP**、欧文は **bahnschrift**
+       `::before` が赤 `rgba(255,0,60,.7)` を **+2px**、
+       `::after` がシアン `rgba(0,255,204,.7)` を **−2px** に `drop-shadow` でずらし、
+       `mix-blend-mode:screen`／`clip-path:inset(…)` を **0.3s** で切り替える
+       （スマホ版は ±5px・`opacity:.8` と**より強い**）
 
-   ※ 公式のフォント（LINE Seed JP / bahnschrift）は**同梱しない**。
-     手元にある人だけに効くよう font-family の先頭に置き、無ければ既定へ落とす。
+   ※ 公式のフォント（LINE Seed JP / Inter / Noto Sans JP / bahnschrift）は**同梱しない**。
+     font-family の先頭に置き、手元にある人だけに効かせる。無ければ既定へ落ちる。
    ※ 公式の画像・ロゴは使わない。形と色は CSS だけで作る。
    ========================================================================= */
 
+/* ---- 変数 ---------------------------------------------------------------
+   ⚠ ここは **html:root[...]（詳細度 0,2,1）** で書くこと。
+   `html[data-ui='nte']`（0,1,1）では themes.css の
+   `:root[data-theme='minimal']`（0,2,0）に負けて --accent を上書きできない。
+   （docs/FINDINGS.md に経緯を残してある） */
 html:root[data-ui='nte'] {
-  /* 実測の角丸（.1rem / .16rem ＝ 10px / 16px 相当） */
+  /* 実測の角丸（.1rem / .12rem / .16rem） */
   --radius: 10px;
   --radius-sm: 6px;
   --radius-lg: 16px;
 
-  /* 実測のアクセント。テーマの明暗にかかわらずシアンで固定する
-     （公式サイトの色を再現するのがこのモードの目的なので） */
+  /* 実測のアクセント */
   --accent: #4fe5fb;
   --accent-hover: #7cecfc;
   --accent-contrast: #1d1d1d;
 
   /* 実測の補助色 */
-  --nte-cream: #f9dbbd;
-  --nte-gold: #ecce98;
-  --nte-hair: #a0a0a0;
+  --nte-cream: #f9dbbd; /* スライドのページャの現在地 */
+  --nte-gold: #ecce98; /* ダウンロードボタンだけの色 */
+  --nte-pink: #fb5692; /* ページ内ナビの現在地（菱形） */
+  --nte-square: #56e4f8; /* 同・通常時（正方形） */
+  --nte-rule: 3px; /* 一覧の区切り .03rem */
+  --nte-neon: #4fe5fb; /* 実測のシアンそのもの。**塗り／発光にだけ**使う */
   /* グリッチの2色。実測値をそのまま使う */
   --nte-glitch-r: rgba(255, 0, 60, 0.7);
   --nte-glitch-c: rgba(0, 255, 204, 0.7);
 
-  /* 欧文は bahnschrift（幅の狭いテクニカルなサンセリフ）。
-     和文は LINE Seed JP。どちらも同梱しないので、無い環境は既定へ落ちる。 */
+  /* 記事ページの font-family（実測をそのまま。どれも同梱しない） */
   --font:
-    'Bahnschrift', 'LINE Seed JP_TTF', 'LINESeedJP', 'DIN Alternate',
-    'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', system-ui, sans-serif;
+    Inter, 'Noto Sans JP', 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', system-ui,
+    -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* 影は実測0件 */
+  --shadow-sm: none;
+  --shadow: none;
+  --shadow-lg: none;
 }
 
-/* ---- 地と面 -------------------------------------------------------------
-   公式サイトには明るい配色が無い（`body{background:#1d1d1d}` の一択）ので、
-   このモードは**テーマの明暗によらず公式と同じ濃灰**にする。
-   再現がこのモードの目的なので、ここだけはテーマ設定より実測を優先している
-   （設定パネルの説明文にもその旨を書いてある）。明るい画面が要るときは
-   別のUIモードを選べる。 */
-html:root[data-ui='nte'] {
-  --bg: #1d1d1d;
+/* ---- 暗いテーマ ＝ 公式の「カバー／ニュース一覧」の配色 ------------------ */
+html:root[data-ui='nte'][data-theme='dark'] {
+  --bg: #1d1d1d; /* 実測 body{background:#1d1d1d} */
   --surface: #232323;
   --surface-2: #2b2b2b;
-  --text: #e8e8e8;
-  --muted: #a0a0a0;
-  --border: #494949;
+  --text: #e8e8e8; /* 実測 .listItem .title */
+  --muted: #aaaaaa; /* 実測 .listItem .des / .date */
+  --border: #313131; /* 実測 一覧の区切り線 */
   --accent-weak: #16333a;
   --danger: #ff6b7f;
   --danger-weak: #331c21;
-  --warning: #ecce98; /* 実測の淡い金をそのまま注意色に使う */
+  --warning: #ecce98;
   --warning-weak: #332d20;
   --success: #7cecfc;
   color-scheme: dark;
+}
+
+/* ---- 明るいテーマ ＝ 公式の「記事本文」の配色 ---------------------------- */
+html:root[data-ui='nte'][data-theme='minimal'],
+html:root[data-ui='nte'][data-theme='soft'] {
+  --bg: #eceae6; /* 記事は紙のビジュアルの上。近い明るさの無彩色で置く */
+  --surface: #ffffff;
+  --surface-2: #f5f5f5; /* 実測 */
+  --text: #313131; /* 実測 .article{color:#313131} */
+  --muted: #727272; /* 実測 ページャの枠色と同系 */
+  --border: #313131; /* 一覧の区切りは明暗どちらでも濃い線 */
+  --accent-weak: #e2f8fc;
+  /* 公式のシアン #4fe5fb は明るい紙の上では文字として読めない
+     （#eceae6 に対して 1.3:1）。**塗りは実測のまま**にしつつ、
+     文字に使う側だけ同系の濃いシアンに落とす（4.8:1）。
+     公式も、シアンを使うのは暗い面だけだった。 */
+  --accent: #0b6f80;
+  --accent-hover: #0e8ea3;
+  --accent-contrast: #ffffff;
+  --danger: #c8324f;
+  --danger-weak: #fbe9ed;
+  --warning: #8a6a1f;
+  --warning-weak: #faf1dd;
+  --success: #1f7d8c;
+  color-scheme: light;
+}
+
+/* auto は OS の設定に従う。上の2つと同じ値を割り当てる。 */
+@media (prefers-color-scheme: light) {
+  html:root[data-ui='nte'][data-theme='auto'] {
+    --bg: #eceae6;
+    --surface: #ffffff;
+    --surface-2: #f5f5f5;
+    --text: #313131;
+    --muted: #727272;
+    --border: #313131;
+    --accent-weak: #e2f8fc;
+    --accent: #0b6f80;
+    --accent-hover: #0e8ea3;
+    --accent-contrast: #ffffff;
+    --danger: #c8324f;
+    --danger-weak: #fbe9ed;
+    --warning: #8a6a1f;
+    --warning-weak: #faf1dd;
+    --success: #1f7d8c;
+    color-scheme: light;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  html:root[data-ui='nte'][data-theme='auto'] {
+    --bg: #1d1d1d;
+    --surface: #232323;
+    --surface-2: #2b2b2b;
+    --text: #e8e8e8;
+    --muted: #aaaaaa;
+    --border: #313131;
+    --accent-weak: #16333a;
+    --danger: #ff6b7f;
+    --danger-weak: #331c21;
+    --warning: #ecce98;
+    --warning-weak: #332d20;
+    --success: #7cecfc;
+    color-scheme: dark;
+  }
 }
 
 html[data-ui='nte'] body {
@@ -86,21 +183,25 @@ html[data-ui='nte'] ::selection {
   color: var(--accent-contrast);
 }
 
-/* ---- 見出し: RGB のずれ（グリッチの静止版）-----------------------------
-   公式は要素を3枚重ねて動かしているが、こちらは見出しを複製できないので
-   実測の2色をそのまま text-shadow のズレとして置く。動きは下の走査帯で足す。 */
+/* =========================================================================
+   見出し
+   ========================================================================= */
+/* 実測の `.articleTitle{color:#1d1d1d; font-weight:700}` に倣い、太字にする。 */
 html[data-ui='nte'] .page-head h1 {
+  font-weight: 700;
   letter-spacing: 0.01em;
+  /* グリッチ。公式は要素を3枚重ねて動かしているが、見出しは複製できないので
+     実測の2色をそのままズレとして置く。動きは下の走査帯で足す。 */
   text-shadow:
     2px 0 0 var(--nte-glitch-r),
     -2px 0 0 var(--nte-glitch-c);
 }
-/* 走査帯: 見出しの上を細い帯が横切る。実測の 0.3s と inset() の作法に倣う。
-   動きは prefers-reduced-motion と設定の「モーションを減らす」の**両方**で止まる。 */
 html[data-ui='nte'] .page-head {
   position: relative;
   overflow: hidden;
 }
+/* 走査帯。実測の 0.3s と clip-path:inset() の作法に倣う。
+   動きは prefers-reduced-motion と設定の「モーションを減らす」の**両方**で止まる。 */
 @media (prefers-reduced-motion: no-preference) {
   html[data-ui='nte']:not([data-motion='reduce']) .page-head::after {
     content: '';
@@ -109,8 +210,8 @@ html[data-ui='nte'] .page-head {
     pointer-events: none;
     background: linear-gradient(
       transparent 0%,
-      color-mix(in srgb, var(--accent) 22%, transparent) 48%,
-      color-mix(in srgb, var(--accent) 22%, transparent) 52%,
+      color-mix(in srgb, var(--nte-neon) 22%, transparent) 48%,
+      color-mix(in srgb, var(--nte-neon) 22%, transparent) 52%,
       transparent 100%
     );
     mix-blend-mode: screen;
@@ -126,13 +227,15 @@ html[data-ui='nte'] .page-head {
   }
 }
 
-/* 記事本文の見出しはシアンの縦棒で示す（罫線 1px の作法に合わせて細く） */
+/* 記事本文の見出しはシアンの縦棒で示す */
 html[data-ui='nte'] .prose h2 {
   border-left: 3px solid var(--accent);
   padding-left: 10px;
 }
 
-/* ---- ヘッダー: 濃灰で固定、下にシアンの細い線 -------------------------- */
+/* =========================================================================
+   ヘッダーと下部タブ
+   ========================================================================= */
 html[data-ui='nte'] .app-header {
   background: color-mix(in srgb, var(--bg) 88%, transparent);
   backdrop-filter: blur(8px);
@@ -148,18 +251,15 @@ html[data-ui='nte'] .nav-link.is-active,
 html[data-ui='nte'] .nav-link[aria-current='page'] {
   color: var(--accent-hover);
 }
-
-/* ---- スマホの下部タブ --------------------------------------------------- */
 html[data-ui='nte'] .bottom-nav {
   background: color-mix(in srgb, var(--bg) 92%, transparent);
   border-top: 1px solid var(--accent);
 }
-html[data-ui='nte'] .bottom-nav .nav-link.is-active,
-html[data-ui='nte'] .bottom-nav .nav-link[aria-current='page'] {
-  color: var(--accent-hover);
-}
 
-/* ---- 面（カード・パネル）: 半透明＋細い罫線 ---------------------------- */
+/* =========================================================================
+   面（カード・パネル）
+   実測どおり**影を使わず罫線で立てる**。
+   ========================================================================= */
 html[data-ui='nte'] .card,
 html[data-ui='nte'] .card-link,
 html[data-ui='nte'] .info-panel,
@@ -167,37 +267,44 @@ html[data-ui='nte'] .tool,
 html[data-ui='nte'] .tool-result,
 html[data-ui='nte'] .toc,
 html[data-ui='nte'] .drawer-panel {
-  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
 }
-/* 触れるとシアンの枠が立つ。角に短い当たりを出して「照準」の感じにする。 */
+
+/* 一覧の行。実測は
+     .listItem{border-bottom:.03rem solid #313131}
+     .listNews a:hover{（帯が敷かれ）文字色が #313131 に反転}
+   → **下辺だけ3pxの濃い線**、**ホバーで反転**、という2点を写す。 */
 html[data-ui='nte'] .card-link {
   position: relative;
+  border-width: 1px 1px var(--nte-rule);
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s;
 }
 html[data-ui='nte'] .card-link:hover,
 html[data-ui='nte'] .card-link:focus-visible {
+  background: var(--accent);
   border-color: var(--accent);
+  color: var(--accent-contrast);
 }
-html[data-ui='nte'] .card-link::after {
-  content: '';
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  width: 10px;
-  height: 10px;
-  border-top: 1px solid var(--accent);
-  border-right: 1px solid var(--accent);
-  opacity: 0;
-  transition: opacity 0.2s;
-  pointer-events: none;
+/* 反転したら中の副次テキストも読める色にそろえる */
+html[data-ui='nte'] .card-link:hover :is(.muted, .card-desc, .card-meta, time, small),
+html[data-ui='nte'] .card-link:focus-visible :is(.muted, .card-desc, .card-meta, time, small) {
+  color: color-mix(in srgb, var(--accent-contrast) 78%, transparent);
 }
-html[data-ui='nte'] .card-link:hover::after,
-html[data-ui='nte'] .card-link:focus-visible::after {
-  opacity: 1;
+@media (prefers-reduced-motion: reduce) {
+  html[data-ui='nte'] .card-link {
+    transition: none;
+  }
 }
 
-/* ---- ボタン: 実測どおり「シアン地に濃灰の文字」------------------------- */
+/* =========================================================================
+   ボタン
+   実測: .logOut,.userCenter{background:#4fe5fb; color:#1d1d1d; border-radius:.16rem}
+   ========================================================================= */
 html[data-ui='nte'] .btn {
   border-radius: var(--radius);
   border: 1px solid var(--border);
@@ -220,14 +327,52 @@ html[data-ui='nte'] .btn.is-primary:hover {
   border-color: var(--accent-hover);
   color: var(--accent-contrast);
 }
-/* 外部リンク・ダウンロード系だけ実測の淡い金にする（公式もここだけ色が違う） */
+/* 外部リンク系だけ実測の淡い金にする（公式もダウンロードボタンだけ色が違う） */
 html[data-ui='nte'] .btn.is-download,
 html[data-ui='nte'] .edit-link {
   color: var(--nte-gold);
   border-color: color-mix(in srgb, var(--nte-gold) 55%, transparent);
 }
 
-/* ---- 小さな部品 ---------------------------------------------------------- */
+/* =========================================================================
+   目次 ＝ 公式の「ページ内ナビ（.pageNav）」
+   実測:
+     .pageNav a:before        { background:#56e4f8; width:.2rem; height:.2rem }
+     .pageNav a.active:before { background:#fb5692; transform:rotate(45deg) }
+   → **シアンの正方形が、現在地とホバーでピンクの菱形に45度回転する**。
+     このサイトで一番わかりやすい「らしさ」なので、そのまま写す。
+   ========================================================================= */
+html[data-ui='nte'] .toc a {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+html[data-ui='nte'] .toc a::before {
+  content: '';
+  flex: none;
+  width: 8px;
+  height: 8px;
+  background: var(--nte-square);
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+html[data-ui='nte'] .toc a:hover::before,
+html[data-ui='nte'] .toc a:focus-visible::before,
+html[data-ui='nte'] .toc a.is-active::before,
+html[data-ui='nte'] .toc a[aria-current]::before {
+  background: var(--nte-pink);
+  transform: rotate(45deg);
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-ui='nte'] .toc a::before {
+    transition: none;
+  }
+}
+
+/* =========================================================================
+   小さな部品
+   ========================================================================= */
 html[data-ui='nte'] .chip,
 html[data-ui='nte'] .badge {
   border-radius: var(--radius-sm);
@@ -240,17 +385,32 @@ html[data-ui='nte'] .badge-accent {
   border-color: var(--accent);
   color: var(--accent-contrast);
 }
-/* 数値はシアンで光らせる（公式のカウントダウン .time-msg .col が #4fe5fb） */
+/* 数値はシアン。暗い面のときだけ、公式と同じように光らせる。 */
 html[data-ui='nte'] .stat-num {
   color: var(--accent);
+}
+html:root[data-ui='nte'][data-theme='dark'] .stat-num {
   text-shadow: 0 0 8px color-mix(in srgb, var(--accent) 45%, transparent);
 }
 html[data-ui='nte'] .eyebrow {
-  color: var(--nte-cream);
   letter-spacing: 0.16em;
 }
+/* 明るい面ではクリームが飛ぶので、暗いテーマのときだけ実測の色を使う */
+html:root[data-ui='nte'][data-theme='dark'] .eyebrow {
+  color: var(--nte-cream);
+}
 
-/* ---- 入力 ---------------------------------------------------------------- */
+/* 絞り込みのチップは、公式のページャ（正方形の枠）に倣って角を落とす */
+html[data-ui='nte'] .filterbar .chip {
+  border-radius: 0;
+}
+html[data-ui='nte'] .filterbar .chip.is-on {
+  border-color: var(--accent-hover);
+}
+
+/* =========================================================================
+   入力
+   ========================================================================= */
 html[data-ui='nte'] .input,
 html[data-ui='nte'] .select,
 html[data-ui='nte'] .textarea {
@@ -267,21 +427,9 @@ html[data-ui='nte'] .textarea:focus-visible {
   outline-offset: 1px;
 }
 
-/* ---- 影は使わない --------------------------------------------------------
-   公式サイトの CSS に box-shadow は1つも無かった（実測0件）。
-   面は影ではなく**細い罫線**で立てる。 */
-html:root[data-ui='nte'] {
-  --shadow-sm: none;
-  --shadow: none;
-  --shadow-lg: none;
-}
-
-/* ---- フッター ------------------------------------------------------------ */
-html[data-ui='nte'] .app-footer {
-  border-top: 1px solid var(--border);
-}
-
-/* ---- ヒーロー: シアンの光を左上から、右上は緑シアン（グリッチの色） ----- */
+/* =========================================================================
+   ヒーローとフッター
+   ========================================================================= */
 html[data-ui='nte'] .hero {
   border: 1px solid var(--border);
   background:
@@ -289,6 +437,6 @@ html[data-ui='nte'] .hero {
     radial-gradient(70% 110% at 92% 15%, color-mix(in srgb, var(--nte-glitch-c) 14%, transparent), transparent 58%),
     var(--surface);
 }
-html[data-ui='nte'] .hero .eyebrow {
-  color: var(--nte-cream);
+html[data-ui='nte'] .app-footer {
+  border-top: 1px solid var(--border);
 }

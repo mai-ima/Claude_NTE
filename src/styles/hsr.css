@@ -30,13 +30,13 @@
   --hsr-bg: #f7f7f5;
   --hsr-bg-2: #ececea;
   --hsr-panel: #ffffff;
-  --hsr-ink: #14141a; /* 太い黒 */
+  --hsr-ink: #121212; /* 実測: ヘッダー帯の黒（画素から採取） */
   --hsr-ink-2: #3c3c46;
   --hsr-muted: #74747f;
-  --hsr-line: #14141a;
+  --hsr-line: #121212;
   --hsr-yellow: #ffd221; /* 3色構成の黄 */
-  --hsr-blue: #2a7fff; /* 実画面の現在地の青 */
-  --hsr-gold: #cbb27a; /* 実画面のCTAの金 */
+  --hsr-blue: #307af7; /* 実測: 現在地の下線の青（画素から採取） */
+  --hsr-gold: #c9af85; /* 実測: 右上のCTAの金（画素から採取） */
   --hsr-purple: #8b7fd4; /* 差し色（wiki のアクセント色と合わせる） */
   --hsr-font:
     ui-sans-serif, system-ui, -apple-system, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP',
@@ -178,9 +178,16 @@ a {
   letter-spacing: 0.2em;
   text-transform: uppercase;
 }
+/* 帯の先頭の印。実画面（キャラクター／ワールド）では**短い縦の棒**が
+   帯の左端に立っていた。点ではなく棒なので、擬似要素で作る。 */
 .hsr-eyebrow::before {
-  content: '・';
-  color: var(--hsr-yellow);
+  content: '';
+  display: inline-block;
+  vertical-align: -1px;
+  width: 2px;
+  height: 11px;
+  margin-right: 8px;
+  background: var(--hsr-yellow);
 }
 .hsr-title {
   margin: 0 0 14px;
