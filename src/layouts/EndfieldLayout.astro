@@ -16,6 +16,7 @@
  * - テーマ: OS 連動 ＋ 手動切替（localStorage 'endfield.theme'／NTE・α とは別キー）
  */
 import '../styles/endfield.css';
+import SiteStateGate from '../components/SiteStateGate.astro';
 import { Icon } from 'astro-icon/components';
 import { withBase, activeHref } from '../lib/path';
 import { wiki } from '../lib/wikis';
@@ -330,5 +331,7 @@ const crumbItems = [{ name: 'エンドフィールド', href: withBase('/endfiel
         box.appendChild(table);
       }
     </script>
+    {/* サイトの状態（メンテナンス／停止）の案内。通常営業なら何も出ない。 */}
+    <SiteStateGate />
   </body>
 </html>

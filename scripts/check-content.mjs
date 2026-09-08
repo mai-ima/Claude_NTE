@@ -68,6 +68,8 @@ const STATIC_PAGES = new Set([
   '/legal/privacy/',
   '/legal/disclaimer/',
   '/legal/copyright/',
+  '/notices/',
+  '/admin/',
   '/endfield/',
   '/genshin/',
   '/wuwa/',

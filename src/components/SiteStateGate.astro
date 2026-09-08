@@ -1,0 +1,256 @@
+---
+/**
+ * サイトの状態（メンテナンス／停止）の案内を、全ページに重ねて出す枠。
+ *
+ * 6つのレイアウトすべてに置く（wiki ごとに CSS を分けているので、この要素の
+ * 見た目だけは**どの wiki でも同じ**になるよう、ここで完結させてある）。
+ *
+ * 状態の出どころは2つ:
+ *   - `DEFAULT_SITE_STATE`（ビルド同梱）… **全員に見える**
+ *   - `localStorage`（管理ページで切り替え）… **その端末だけ**
+ * 後者は管理ページに明記してある。全員に効くように見せない。
+ *
+ * 停止（suspended）のときは閉じられない。ただし
+ *   - 規約・ポリシーは開ける（読めなくなると困る文書のため）
+ *   - 管理ページへ入れる（＝ロックを解除すれば解除操作ができる）
+ * の2つは必ず残す。閉じ込めを作らないため。
+ */
+import { withBase } from '../lib/path';
+import { DEFAULT_SITE_STATE, SITE_MODES } from '../lib/site-state';
+
+/** 既定の文言は data 属性でスクリプトへ渡す（同じ文字列を2か所に書かないため） */
+const modes = SITE_MODES.filter((m) => m.value !== 'normal').map((m) => ({
+  value: m.value,
+  heading: m.heading,
+  message: m.message,
+}));
+---
+
+<div id="site-gate" class="site-gate" hidden role="dialog" aria-modal="false" aria-labelledby="site-gate-title">
+  <div class="site-gate-box">
+    <p class="site-gate-badge" data-gate-label></p>
+    <h2 id="site-gate-title" data-gate-heading></h2>
+    <p class="site-gate-msg" data-gate-message></p>
+    <p class="site-gate-until" data-gate-until hidden></p>
+    <div class="site-gate-actions">
+      <button type="button" class="site-gate-btn is-primary" data-gate-close hidden>
+        閉じて表示する
+      </button>
+      <a class="site-gate-btn" href={withBase('/notices/')}>お知らせ</a>
+      <a class="site-gate-btn" href={withBase('/legal/')}>規約・ポリシー</a>
+      <a class="site-gate-btn is-quiet" href={withBase('/admin/')}>管理</a>
+    </div>
+    <p class="site-gate-note" data-gate-scope></p>
+  </div>
+</div>
+
+<style>
+  /* wiki ごとに CSS を分けているので、ここは**どの wiki でも同じ見た目**にする。
+     各 wiki のトークン（--ef-* など）に依存しない自己完結した色にしてある。 */
+  .site-gate {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    display: grid;
+    place-items: center;
+    padding: 20px;
+    background: rgba(10, 12, 16, 0.82);
+    backdrop-filter: blur(3px);
+    color: #101216;
+  }
+  .site-gate[hidden] {
+    display: none;
+  }
+  .site-gate-box {
+    width: min(520px, 100%);
+    max-height: 88dvh;
+    overflow: auto;
+    padding: 24px;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  }
+  .site-gate-badge {
+    display: inline-block;
+    margin: 0 0 12px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: #fdf0d5;
+    color: #8a5a00;
+    font-size: 0.74rem;
+    font-weight: 700;
+  }
+  .site-gate h2 {
+    margin: 0 0 10px;
+    font-size: 1.2rem;
+    line-height: 1.4;
+  }
+  .site-gate-msg,
+  .site-gate-until,
+  .site-gate-note {
+    margin: 0 0 10px;
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+  .site-gate-note:empty {
+    display: none;
+  }
+  .site-gate-note {
+    margin: 12px 0 0;
+    color: #667;
+    font-size: 0.8rem;
+  }
+  .site-gate-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .site-gate-btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0 14px;
+    border: 1px solid #d6d9e0;
+    border-radius: 10px;
+    background: #fff;
+    color: #101216;
+    font: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .site-gate-btn.is-primary {
+    border-color: #101216;
+    background: #101216;
+    color: #fff;
+  }
+  .site-gate-btn.is-quiet {
+    margin-left: auto;
+    border-color: transparent;
+    color: #667;
+  }
+  /* 停止中（閉じられない状態）は背後を読ませない */
+  :global(html[data-site-locked]) {
+    overflow: hidden;
+  }
+  @media (prefers-color-scheme: dark) {
+    .site-gate-box {
+      background: #171a21;
+      color: #eceef3;
+    }
+    .site-gate-btn {
+      border-color: #333846;
+      background: #171a21;
+      color: #eceef3;
+    }
+    .site-gate-btn.is-primary {
+      border-color: #eceef3;
+      background: #eceef3;
+      color: #101216;
+    }
+    .site-gate-note {
+      color: #99a;
+    }
+  }
+</style>
+
+<script
+  is:inline
+  data-astro-rerun
+  define:vars={{ defaultState: DEFAULT_SITE_STATE, modeText: modes, gateBase: withBase('/') }}
+>
+  (function () {
+    var gate = document.getElementById('site-gate');
+    if (!gate) return;
+
+    // 1) 状態を決める。端末の設定（localStorage）が、ビルド同梱の既定より優先。
+    var state = { mode: defaultState.mode, message: defaultState.message, until: defaultState.until };
+    var scope = 'build';
+    try {
+      var raw = localStorage.getItem('nte.site.state');
+      if (raw) {
+        var saved = JSON.parse(raw);
+        if (saved && typeof saved.mode === 'string') {
+          state = {
+            mode: saved.mode,
+            message: saved.message || '',
+            until: saved.until || '',
+          };
+          scope = 'local';
+        }
+      }
+    } catch (e) {}
+
+    var def = null;
+    for (var i = 0; i < modeText.length; i++) {
+      if (modeText[i].value === state.mode) def = modeText[i];
+    }
+    document.documentElement.setAttribute('data-site-mode', state.mode);
+    if (!def) {
+      gate.hidden = true; // 通常営業
+      return;
+    }
+
+    // 2) 案内を出さないページ。
+    //    - 管理: ここで出すと状態を戻せなくなる
+    //    - 規約・ポリシー / お知らせ: 停止中でも**読めなければならない**文書
+    //      （ゲートの中からこの2つへリンクしているので、行った先で塞がないこと）
+    var open = ['admin', 'legal', 'notices'];
+    for (var k = 0; k < open.length; k++) {
+      if (location.pathname.indexOf(gateBase + open[k]) === 0) {
+        gate.hidden = true;
+        return;
+      }
+    }
+
+    // 3) メンテナンスは一度閉じたらそのタブでは出さない。停止は閉じられない。
+    var closable = state.mode === 'maintenance';
+    var unlocked = false;
+    try {
+      unlocked = localStorage.getItem('nte.admin.unlocked') === '1';
+      if (closable && sessionStorage.getItem('nte.site.gate.closed') === state.mode) {
+        gate.hidden = true;
+        return;
+      }
+    } catch (e) {}
+    // 管理ページのロックを解除している人は、停止中でも中を見られる（作業のため）
+    if (unlocked) closable = true;
+
+    var label = gate.querySelector('[data-gate-label]');
+    var heading = gate.querySelector('[data-gate-heading]');
+    var msg = gate.querySelector('[data-gate-message]');
+    var until = gate.querySelector('[data-gate-until]');
+    var note = gate.querySelector('[data-gate-scope]');
+    var close = gate.querySelector('[data-gate-close]');
+
+    label.textContent = state.mode === 'maintenance' ? 'メンテナンス' : '公開停止';
+    heading.textContent = def.heading;
+    msg.textContent = state.message || def.message;
+    if (state.until) {
+      until.textContent = '再開の目安: ' + state.until;
+      until.hidden = false;
+    }
+    note.textContent =
+      scope === 'local'
+        ? 'この表示は、この端末のブラウザに保存された設定によるものです。'
+        : '';
+    if (closable) {
+      close.hidden = false;
+      close.textContent = unlocked && state.mode !== 'maintenance'
+        ? '管理者として表示する'
+        : '閉じて表示する';
+      close.addEventListener('click', function () {
+        try {
+          sessionStorage.setItem('nte.site.gate.closed', state.mode);
+        } catch (e) {}
+        gate.hidden = true;
+        document.documentElement.removeAttribute('data-site-locked');
+      });
+    }
+    // 停止中で解除もされていないときは、背後を触れないようにする
+    if (!closable) document.documentElement.setAttribute('data-site-locked', '1');
+    gate.hidden = false;
+  })();
+</script>

@@ -91,6 +91,8 @@ const PAGES = [
   '/endfield/terms/',
   // 準備中の wiki（それぞれ独自UI）
   '/genshin/', '/wuwa/', '/hsr/',
+  // お知らせと管理
+  '/notices/', '/notices/notices-open/', '/admin/',
 ];
 
 const problems = [];

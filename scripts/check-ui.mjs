@@ -182,7 +182,71 @@ for (const name of fs.readdirSync(styleDir).filter((f) => f.endsWith('.css'))) {
   }
 }
 
-console.log(`HTML ${files.length} ファイル / アイコン参照 ${checkedUses} 件 / wiki跨ぎリンク ${crossLinks} 件を検査`);
+
+/* -------------------------------------------------------------------------
+   9) 公開ページの禁止表現
+   -------------------------------------------------------------------------
+   画面に出る文字列に「運営の過程」を書かない（決定の原文は
+   .claude/state/DECISIONS.md 2026-09-08「公開向けの文章の書き方」、
+   判定のしかたは docs/RECIPES.md の「6. 公開ページの文章」）。
+
+   実際に公開ページへ出てしまった言い回しを機械で止める。
+   **コメントは検査しない**（このリポジトリでは悪い例をコメントに引用するため）。
+   ------------------------------------------------------------------------- */
+const PROSE_DIRS = ['src/pages', 'src/components', 'src/layouts', 'src/data', 'src/lib'];
+const PROSE_EXT = ['.astro', '.ts', '.tsx'];
+/** 語 → なぜ駄目か（指摘にそのまま出す） */
+const BANNED_PHRASES = [
+  ['近日公開', '約束できない予定は書かない'],
+  ['決まっていません', '運営の事情。読者には「決まりましたらお知らせします」と書く'],
+  ['せずに済み', '書いた側の感想。公開ページには出さない'],
+  ['と思っていましたが', '制作の過程。docs/CHANGELOG-INTERNAL.md へ'],
+  ['あえて', '判断の説明。結果と次の案内だけを書く'],
+  ['作業用ブランチ', '開発の事情。読者に関係がない'],
+  ['main への取り込み', '開発の事情。読者に関係がない'],
+];
+
+/** コメントを空白に置き換える（行数と位置は保つ）。文字列中の // は数えないので
+ *  完全な構文解析ではないが、検査の取りこぼしより誤検出を避ける側に倒している。 */
+function stripComments(src) {
+  let out = src;
+  out = out.replace(/\{\/\*[\s\S]*?\*\/\}/g, (m) => m.replace(/[^\n]/g, ' '));
+  out = out.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' '));
+  out = out.replace(/(^|[^:])\/\/[^\n]*/g, (m, p1) => p1 + ' '.repeat(m.length - p1.length));
+  return out;
+}
+
+function proseFiles(dir) {
+  const abs = path.resolve(process.cwd(), dir);
+  if (!fs.existsSync(abs)) return [];
+  const found = [];
+  for (const e of fs.readdirSync(abs, { withFileTypes: true })) {
+    const rel = `${dir}/${e.name}`;
+    if (e.isDirectory()) found.push(...proseFiles(rel));
+    else if (PROSE_EXT.some((x) => e.name.endsWith(x))) found.push(rel);
+  }
+  return found;
+}
+
+let prosePhrases = 0;
+for (const dir of PROSE_DIRS) {
+  for (const rel of proseFiles(dir)) {
+    const text = stripComments(fs.readFileSync(path.resolve(process.cwd(), rel), 'utf8'));
+    const lines = text.split('\n');
+    for (const [phrase, why] of BANNED_PHRASES) {
+      lines.forEach((line, i) => {
+        if (!line.includes(phrase)) return;
+        prosePhrases++;
+        problems.push(`${rel}:${i + 1}: 公開ページに出せない言い回し「${phrase}」 — ${why}`);
+      });
+    }
+  }
+}
+
+console.log(
+  `HTML ${files.length} ファイル / アイコン参照 ${checkedUses} 件 / wiki跨ぎリンク ${crossLinks} 件 / ` +
+    `公開文の禁止表現 ${prosePhrases} 件を検査`,
+);
 if (problems.length === 0) {
   console.log('✓ 問題は見つかりませんでした');
   process.exit(0);

@@ -1,0 +1,75 @@
+---
+/**
+ * お知らせの個別ページ。
+ *
+ * ビルドに同梱したお知らせ（= 全員に見えるもの）だけを静的に書き出す。
+ * この端末で作ったお知らせは一覧ページに直接展開して出している
+ * （個別ページは URL が要るが、静的サイトでは後から増やせないため）。
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Icon } from 'astro-icon/components';
+import { withBase } from '../../lib/path';
+import { NOTICES, noticeHref, noticeDate, sortNotices, levelOf } from '../../lib/notices';
+
+export function getStaticPaths() {
+  return NOTICES.map((n) => ({ params: { id: n.id }, props: { notice: n } }));
+}
+
+const { notice } = Astro.props;
+const lv = levelOf(notice.level);
+const paras = notice.body.split(/\n{2,}/).filter((p) => p.trim());
+
+/** 前後のお知らせ（新しい順の並びで隣り合うもの） */
+const order = sortNotices(NOTICES);
+const i = order.findIndex((n) => n.id === notice.id);
+const newer = i > 0 ? order[i - 1] : null;
+const older = i >= 0 && i < order.length - 1 ? order[i + 1] : null;
+---
+
+<BaseLayout title={notice.title} description={paras[0] ?? notice.title}>
+  <div class="layout">
+    <div class="content" style="max-width:760px;margin-inline:auto;">
+      <nav class="text-sm muted cluster" style="margin-bottom:16px;" aria-label="パンくず">
+        <a href={withBase('/')}>ホーム</a>
+        <span aria-hidden="true"> › </span>
+        <a href={withBase('/notices/')}>お知らせ</a>
+      </nav>
+
+      <article class="card card-pad">
+        <div class="cluster" style="gap:8px;align-items:center;">
+          <span class={`badge notice-badge is-${notice.level}`}>
+            <Icon name={`lucide:${lv.icon}`} style="width:13px;height:13px;" />
+            {lv.label}
+          </span>
+          <time class="muted text-sm" datetime={notice.date}>{noticeDate(notice.date)}</time>
+        </div>
+        <h1 style="margin:12px 0 16px;">{notice.title}</h1>
+        <div class="prose">
+          {paras.map((p) => <p>{p}</p>)}
+        </div>
+      </article>
+
+      <nav class="cluster" style="margin-top:24px;justify-content:space-between;gap:12px;">
+        {
+          older ? (
+            <a class="btn btn-ghost" href={withBase(noticeHref(older.id))}>
+              <Icon name="lucide:chevron-left" />前のお知らせ
+            </a>
+          ) : (
+            <span />
+          )
+        }
+        <a class="btn btn-ghost" href={withBase('/notices/')}>一覧へ</a>
+        {
+          newer ? (
+            <a class="btn btn-ghost" href={withBase(noticeHref(newer.id))}>
+              次のお知らせ<Icon name="lucide:chevron-right" />
+            </a>
+          ) : (
+            <span />
+          )
+        }
+      </nav>
+    </div>
+  </div>
+</BaseLayout>

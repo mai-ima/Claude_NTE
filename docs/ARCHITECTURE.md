@@ -386,10 +386,32 @@ wiki は6つある。一覧・状態・UI の対応は **[WIKIS.md](./WIKIS.md)*
 | `nte.tapfx`（多値） / `nte.tabbar` / `nte.callout` | 設定（タッチ操作） | **残る** |
 | `nte.edit` | 設定（機能） | **残る** |
 | `nte.<ツールの状態>` / 個人メモ など | データ | 消える |
+| `nte.site.state` | サイトの状態（管理ページで切り替え） | 消える |
+| `nte.site.notices` | この端末で作ったお知らせ | 消える |
+| `nte.admin.unlocked` | 管理ページのロックを外した印 | 消える |
 | `alpha.theme` | α のテーマ | **対象外**（`nte.` 接頭辞でないため export/clear の対象外） |
+| `endfield.view` | エンドフィールドの一覧の表示形式 | **対象外**（同上） |
+| `nte.site.gate.closed` | メンテナンス案内を閉じた印（**sessionStorage**） | タブを閉じると消える |
 
 「残る」の判定は `src/lib/store.ts` の `KEEP_ON_CLEAR`。
 `exportAll()` / `importAll()` は `nte.` 接頭辞のキーだけを扱う。
+
+> **管理ページの3つは「設定の初期化」で消える**（`KEEP_ON_CLEAR` に入れていない）。
+> メンテナンス表示は初期化で解除される、ということ。全員に見せる状態は
+> `src/lib/site-state.ts` の `DEFAULT_SITE_STATE` 側にあるので、そちらは影響を受けない。
+
+### サイトの状態とお知らせ（`/admin/`）
+
+| 置き場所 | 見える範囲 | 変え方 |
+| --- | --- | --- |
+| `src/lib/site-state.ts` の `DEFAULT_SITE_STATE` | **全員** | ソースを書き換えて公開し直す |
+| `src/lib/notices.ts` の `NOTICES` | **全員** | 同上（管理ページから貼り付ける形を書き出せる） |
+| `localStorage`（管理ページの操作） | **その端末だけ** | `/admin/` で切り替える |
+
+静的サイトのため、サーバー側に書き込む先が無い。**この2段構えは画面にも明記してある**
+（管理ページ・お知らせ一覧）。「全員に効く」ように見せないこと。
+案内を重ねる要素は `src/components/SiteStateGate.astro`（6つのレイアウトすべてに置く）。
+`/admin/` `/legal/` `/notices/` では案内を出さない（停止中に閉じ込めを作らないため）。
 
 ---
 

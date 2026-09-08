@@ -1,0 +1,145 @@
+---
+/**
+ * お知らせの一覧。
+ *
+ * ビルドに同梱したお知らせ（全員に見える）を静的に並べ、そのあとに
+ * **この端末で作ったお知らせ**（管理ページで追加したもの）を JS で足す。
+ * 2つは見出しで分けてある（出どころが違うことを隠さない）。
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Icon } from 'astro-icon/components';
+import { withBase } from '../../lib/path';
+import { NOTICES, noticeHref, noticeDate, sortNotices, levelOf } from '../../lib/notices';
+
+const list = sortNotices(NOTICES);
+---
+
+<BaseLayout
+  title="お知らせ"
+  description="この wiki の更新や仕様の変更についてのお知らせを掲載しています。"
+>
+  <div class="layout">
+    <div class="content" style="max-width:820px;margin-inline:auto;">
+      <nav class="text-sm muted cluster" style="margin-bottom:16px;" aria-label="パンくず">
+        <a href={withBase('/')}>ホーム</a>
+        <span aria-hidden="true"> › </span>
+        <span>お知らせ</span>
+      </nav>
+
+      <section class="page-head">
+        <p class="eyebrow">Notices</p>
+        <h1>お知らせ</h1>
+        <p class="lead">
+          この wiki の更新や仕様の変更についてお知らせします。
+          記事ごとの更新日は各ページの末尾に、サイト全体の変更点は
+          <a href={withBase('/release-notes/')}>更新履歴</a>に載せています。
+        </p>
+      </section>
+
+      <div class="notice-list" style="margin-top:24px;">
+        {
+          list.map((n) => {
+            const lv = levelOf(n.level);
+            return (
+              <a class="card card-pad card-link notice-item" href={withBase(noticeHref(n.id))}>
+                <div class="cluster" style="gap:8px;align-items:center;">
+                  <span class={`badge notice-badge is-${n.level}`}>
+                    <Icon name={`lucide:${lv.icon}`} style="width:13px;height:13px;" />
+                    {lv.label}
+                  </span>
+                  <time class="muted text-sm" datetime={n.date}>
+                    {noticeDate(n.date)}
+                  </time>
+                  {n.pinned && <span class="badge text-sm">固定</span>}
+                </div>
+                <h2 class="notice-title">{n.title}</h2>
+                <p class="muted text-sm notice-excerpt">{n.body.split('\n\n')[0]}</p>
+              </a>
+            );
+          })
+        }
+      </div>
+
+      {/*
+        この端末で作ったお知らせ。空のときは節ごと隠す（見出しだけが残らないように）。
+        中身は下の inline スクリプトが localStorage から組み立てる。
+      */}
+      <section id="local-notices" hidden style="margin-top:36px;">
+        <h2>この端末で作成したお知らせ</h2>
+        <p class="muted text-sm">
+          管理ページで作成したものです。<strong>保存先がこの端末のブラウザなので、
+          ほかの方には表示されません。</strong>
+        </p>
+        <div class="notice-list" id="local-notice-list" style="margin-top:16px;"></div>
+      </section>
+
+      <p class="muted text-sm" style="margin-top:32px;">
+        掲載内容についてのご連絡は、各ページ下部の窓口からお願いします。
+      </p>
+    </div>
+  </div>
+</BaseLayout>
+
+<script is:inline data-astro-rerun>
+  (function () {
+    var host = document.getElementById('local-notice-list');
+    var sec = document.getElementById('local-notices');
+    if (!host || !sec) return;
+    var list = [];
+    try {
+      list = JSON.parse(localStorage.getItem('nte.site.notices') || '[]');
+    } catch (e) {
+      list = [];
+    }
+    if (!Array.isArray(list) || list.length === 0) return;
+
+    var LV = {
+      info: { label: 'お知らせ' },
+      important: { label: '重要' },
+      maintenance: { label: 'メンテナンス' },
+    };
+    list.sort(function (a, b) {
+      return String(b.date).localeCompare(String(a.date));
+    });
+    host.textContent = '';
+    for (var i = 0; i < list.length; i++) {
+      var n = list[i];
+      var lv = LV[n.level] || LV.info;
+      var card = document.createElement('article');
+      card.className = 'card card-pad notice-item';
+
+      var head = document.createElement('div');
+      head.className = 'cluster';
+      head.style.cssText = 'gap:8px;align-items:center;';
+      var badge = document.createElement('span');
+      badge.className = 'badge notice-badge is-' + (n.level || 'info');
+      badge.textContent = lv.label;
+      var time = document.createElement('time');
+      time.className = 'muted text-sm';
+      time.dateTime = n.date || '';
+      time.textContent = n.date || '';
+      head.appendChild(badge);
+      head.appendChild(time);
+
+      var h = document.createElement('h3');
+      h.className = 'notice-title';
+      h.textContent = n.title || '(無題)';
+
+      var body = document.createElement('div');
+      body.className = 'notice-body';
+      var paras = String(n.body || '').split(/\n{2,}/);
+      for (var j = 0; j < paras.length; j++) {
+        if (!paras[j].trim()) continue;
+        var p = document.createElement('p');
+        p.textContent = paras[j];
+        body.appendChild(p);
+      }
+
+      card.appendChild(head);
+      card.appendChild(h);
+      card.appendChild(body);
+      host.appendChild(card);
+    }
+    sec.hidden = false;
+  })();
+</script>

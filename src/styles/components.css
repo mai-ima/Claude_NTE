@@ -2426,3 +2426,138 @@ html[data-wiki]:not([data-wiki='nte']) {
   flex: 1;
   min-width: 0;
 }
+
+/* ---- お知らせ（/notices/） ---------------------------------------------- */
+.notice-list {
+  display: grid;
+  gap: 12px;
+}
+.notice-item {
+  display: block;
+}
+.notice-title {
+  margin: 10px 0 6px;
+  font-size: 1.06rem;
+  line-height: 1.45;
+}
+.notice-excerpt {
+  margin: 0;
+  /* 一覧では冒頭だけを見せる（2行で切る） */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+.notice-body p {
+  margin: 0 0 8px;
+  font-size: 0.92rem;
+  line-height: 1.75;
+}
+.notice-body p:last-child {
+  margin-bottom: 0;
+}
+/* 重みごとの色。印は左端の細い帯で示す（色だけに頼らない） */
+.notice-badge.is-important {
+  background: var(--warning-weak);
+  color: var(--warning);
+  border-color: color-mix(in srgb, var(--warning) 35%, transparent);
+}
+.notice-badge.is-maintenance {
+  background: var(--accent-weak);
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.notice-item {
+  border-left: 3px solid var(--border);
+}
+.notice-item:has(.is-important) {
+  border-left-color: var(--warning);
+}
+.notice-item:has(.is-maintenance) {
+  border-left-color: var(--accent);
+}
+
+/* ---- 管理ページ（/admin/） ---------------------------------------------- */
+.admin-form {
+  display: grid;
+  gap: 12px;
+  max-width: 520px;
+}
+.admin-field {
+  display: grid;
+  gap: 5px;
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+.admin-field input,
+.admin-field select,
+.admin-field textarea {
+  width: 100%;
+  padding: 9px 11px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-weight: 400;
+}
+.admin-field textarea {
+  resize: vertical;
+  line-height: 1.6;
+}
+.admin-error {
+  margin: 10px 0 0;
+  color: var(--warning);
+  font-size: 0.86rem;
+  font-weight: 600;
+}
+/* 状態の選択。押している1つだけ枠が濃くなる */
+.admin-modes {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  margin-top: 12px;
+}
+.admin-mode {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.admin-mode[aria-pressed='true'] {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+.admin-mode-head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-weight: 700;
+}
+.admin-mode-head svg {
+  width: 16px;
+  height: 16px;
+  color: var(--accent);
+}
+.admin-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+.admin-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}

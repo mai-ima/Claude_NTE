@@ -1,0 +1,423 @@
+---
+/**
+ * 管理ページ（/admin/）。
+ *
+ * ★ このページの限界を先に書く（隠すと嘘になる）
+ *
+ *   本サイトは**静的サイト**で、サーバー側のプログラムもデータベースもない。
+ *   したがって
+ *     - 合言葉の照合は**ブラウザの中**で行っている（サーバー認証ではない）
+ *     - ここで作ったお知らせ・切り替えた状態は **その端末にだけ**保存される
+ *   の2つが避けられない。**画面にもそのまま書いてある**。
+ *   全員に見せる変更は `src/lib/notices.ts` / `src/lib/site-state.ts` を書き換えて
+ *   ビルドし直す（＝配る）。その手順もこのページに載せてある。
+ *
+ * 合言葉は環境変数 `ADMIN_PASSCODE` から取り、**ビルド時に SHA-256 にしてから**
+ * 埋め込む。生の合言葉は出力に含めない（総当たりは防げないので、これは
+ * 「肩越しに見えない」程度の意味しかない。過大な約束をしない）。
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Icon } from 'astro-icon/components';
+import { createHash } from 'node:crypto';
+import { withBase } from '../../lib/path';
+import { SITE_MODES, DEFAULT_SITE_STATE } from '../../lib/site-state';
+import { NOTICE_LEVELS, NOTICES } from '../../lib/notices';
+
+const passcode = import.meta.env.ADMIN_PASSCODE ?? 'nte-admin';
+const passHash = createHash('sha256').update(String(passcode)).digest('hex');
+/** 環境変数が未設定なら、その旨を画面に出す（既定の合言葉は公開リポジトリにある） */
+const usingDefaultPass = !import.meta.env.ADMIN_PASSCODE;
+
+const today = new Date().toISOString().slice(0, 10);
+---
+
+{/* 読者向けのページではないので検索には載せない（noindex） */}
+<BaseLayout title="管理" description="サイトの状態とお知らせを切り替えるページです。" noindex>
+  <div class="layout">
+    <div class="content" style="max-width:820px;margin-inline:auto;">
+      <nav class="text-sm muted cluster" style="margin-bottom:16px;" aria-label="パンくず">
+        <a href={withBase('/')}>ホーム</a>
+        <span aria-hidden="true"> › </span>
+        <span>管理</span>
+      </nav>
+
+      <section class="page-head">
+        <p class="eyebrow">Admin</p>
+        <h1>管理</h1>
+        <p class="lead">サイトの状態の切り替えと、お知らせの作成・削除ができます。</p>
+      </section>
+
+      {/* ---- ロック画面 ------------------------------------------------ */}
+      <section id="admin-lock" class="card card-pad" style="margin-top:24px;">
+        <h2 style="margin-top:0;">合言葉を入力してください</h2>
+        <form id="admin-form" class="admin-form">
+          <label class="admin-field">
+            <span>合言葉</span>
+            <input
+              type="password"
+              id="admin-pass"
+              autocomplete="current-password"
+              required
+              placeholder="••••••••"
+            />
+          </label>
+          <button class="btn btn-primary" type="submit">
+            <Icon name="lucide:log-in" />開く
+          </button>
+        </form>
+        <p id="admin-error" class="admin-error" hidden>合言葉が違います。</p>
+
+        <div class="callout callout-info" style="margin-top:20px;">
+          <p style="margin:0 0 8px;"><strong>この鍵でできること・できないこと</strong></p>
+          <p style="margin:0 0 8px;">
+            本サイトはサーバーを持たない静的サイトです。合言葉の照合は
+            <strong>お使いのブラウザの中だけ</strong>で行っており、
+            サーバーによる認証ではありません。ここで行った変更も
+            <strong>この端末にだけ</strong>保存され、ほかの方の画面は変わりません。
+          </p>
+          <p style="margin:0;">
+            全員に見える変更（お知らせの公開、サイト全体のメンテナンス表示）は、
+            ソースの <code>src/lib/notices.ts</code> と <code>src/lib/site-state.ts</code>
+            を書き換えて公開し直す形になります。手順はロックを解除すると表示されます。
+          </p>
+        </div>
+        {
+          usingDefaultPass && (
+            <p class="muted text-sm" style="margin-top:12px;">
+              合言葉は環境変数 <code>ADMIN_PASSCODE</code> で設定できます。未設定のあいだは
+              初期値のままです。
+            </p>
+          )
+        }
+      </section>
+
+      {/* ---- 管理画面 -------------------------------------------------- */}
+      <div id="admin-panel" hidden>
+        <div class="cluster" style="justify-content:space-between;margin-top:24px;">
+          <p class="badge badge-accent">ロック解除中</p>
+          <button class="btn btn-ghost" type="button" id="admin-logout">
+            <Icon name="lucide:log-out" />ロックする
+          </button>
+        </div>
+
+        {/* -- サイトの状態 -- */}
+        <section class="card card-pad" style="margin-top:16px;">
+          <h2 style="margin-top:0;">サイトの状態</h2>
+          <p class="muted text-sm">
+            通常以外にすると、全ページに案内が重なって表示されます。
+            <strong>この端末のブラウザにだけ</strong>効きます。
+          </p>
+          <div class="admin-modes" id="admin-modes">
+            {
+              SITE_MODES.map((m) => (
+                <button class="admin-mode" type="button" data-mode={m.value} aria-pressed="false">
+                  <span class="admin-mode-head">
+                    <Icon name={`lucide:${m.icon}`} />
+                    {m.label}
+                  </span>
+                  <span class="muted text-sm">{m.hint}</span>
+                </button>
+              ))
+            }
+          </div>
+
+          <div class="admin-form" style="margin-top:16px;">
+            <label class="admin-field">
+              <span>画面に出す文（空なら既定の文）</span>
+              <textarea id="admin-msg" rows="3" placeholder="内容の更新作業を行っています。"
+              ></textarea>
+            </label>
+            <label class="admin-field">
+              <span>再開の目安（空なら出しません）</span>
+              <input type="text" id="admin-until" placeholder="9月10日 12時ごろ" />
+            </label>
+            <button class="btn btn-primary" type="button" id="admin-save-state">
+              <Icon name="lucide:save" />この状態にする
+            </button>
+          </div>
+          <p class="muted text-sm" style="margin-top:12px;">
+            公開されている既定の状態: <strong>{DEFAULT_SITE_STATE.mode}</strong>
+            （<code>src/lib/site-state.ts</code> の <code>DEFAULT_SITE_STATE</code>）
+          </p>
+        </section>
+
+        {/* -- お知らせ -- */}
+        <section class="card card-pad" style="margin-top:16px;">
+          <h2 style="margin-top:0;">お知らせ</h2>
+          <p class="muted text-sm">
+            作成したお知らせは<a href={withBase('/notices/')}>お知らせ一覧</a>の下部に出ます。
+            <strong>この端末のブラウザにだけ</strong>保存されます。
+          </p>
+
+          <div class="admin-form" style="margin-top:12px;">
+            <label class="admin-field">
+              <span>日付</span>
+              <input type="date" id="notice-date" value={today} />
+            </label>
+            <label class="admin-field">
+              <span>種類</span>
+              <select id="notice-level">
+                {NOTICE_LEVELS.map((l) => <option value={l.value}>{l.label}</option>)}
+              </select>
+            </label>
+            <label class="admin-field">
+              <span>見出し</span>
+              <input type="text" id="notice-title" placeholder="メンテナンスのお知らせ" />
+            </label>
+            <label class="admin-field">
+              <span>本文（空行で段落が分かれます）</span>
+              <textarea id="notice-body" rows="5"></textarea>
+            </label>
+            <div class="cluster">
+              <button class="btn btn-primary" type="button" id="notice-add">
+                <Icon name="lucide:plus" />追加する
+              </button>
+              <button class="btn btn-ghost" type="button" id="notice-copy">
+                <Icon name="lucide:clipboard-copy" />全員に配る形で書き出す
+              </button>
+            </div>
+            <p class="muted text-sm" id="notice-copied" hidden>
+              クリップボードにコピーしました。<code>src/lib/notices.ts</code> の
+              <code>NOTICES</code> に貼り付けて公開し直すと、全員に見えるようになります。
+            </p>
+          </div>
+
+          <h3 style="margin-top:24px;">この端末のお知らせ</h3>
+          <div id="notice-admin-list" class="admin-list"></div>
+
+          <h3 style="margin-top:24px;">公開中のお知らせ（全員に見えるもの）</h3>
+          <ul class="muted text-sm" style="margin:8px 0 0;padding-left:1.2em;">
+            {NOTICES.map((n) => <li>{n.date} — {n.title}</li>)}
+          </ul>
+          <p class="muted text-sm" style="margin-top:8px;">
+            こちらは <code>src/lib/notices.ts</code> にあります。削除・修正はソースを直します。
+          </p>
+        </section>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script is:inline data-astro-rerun define:vars={{ passHash }}>
+  (function () {
+    var lock = document.getElementById('admin-lock');
+    var panel = document.getElementById('admin-panel');
+    if (!lock || !panel) return;
+
+    var STATE_KEY = 'nte.site.state';
+    var NOTICES_KEY = 'nte.site.notices';
+    var ADMIN_KEY = 'nte.admin.unlocked';
+
+    var read = function (key, fallback) {
+      try {
+        var raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch (e) {
+        return fallback;
+      }
+    };
+    var write = function (key, value) {
+      try {
+        localStorage.setItem(key, JSON.stringify(value));
+        return true;
+      } catch (e) {
+        alert('この端末に保存できませんでした（ブラウザの設定で保存が禁止されている可能性があります）。');
+        return false;
+      }
+    };
+
+    /* ---- ロックの開け閉め ------------------------------------------- */
+    function show(unlocked) {
+      lock.hidden = unlocked;
+      panel.hidden = !unlocked;
+      if (unlocked) {
+        renderState();
+        renderNotices();
+      }
+    }
+    // ※ 最初の表示は**このスクリプトの末尾**で行う。ここで呼ぶと、
+    //    まだ代入されていない状態（var current）を renderState() が読んで落ちる。
+
+    var form = document.getElementById('admin-form');
+    var err = document.getElementById('admin-error');
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var input = document.getElementById('admin-pass');
+      var value = input.value || '';
+      // SHA-256 は Web Crypto（https と localhost で使える）。
+      // 使えない環境では鍵を掛けない旨を出す（黙って素通しにしない）。
+      if (!window.crypto || !window.crypto.subtle) {
+        err.textContent =
+          'この環境では合言葉を照合できません（安全な接続でのみ動作します）。';
+        err.hidden = false;
+        return;
+      }
+      window.crypto.subtle
+        .digest('SHA-256', new TextEncoder().encode(value))
+        .then(function (buf) {
+          var hex = Array.prototype.map
+            .call(new Uint8Array(buf), function (b) {
+              return ('0' + b.toString(16)).slice(-2);
+            })
+            .join('');
+          if (hex !== passHash) {
+            err.textContent = '合言葉が違います。';
+            err.hidden = false;
+            input.select();
+            return;
+          }
+          err.hidden = true;
+          input.value = '';
+          try {
+            localStorage.setItem(ADMIN_KEY, '1');
+          } catch (e2) {}
+          show(true);
+        });
+    });
+
+    document.getElementById('admin-logout').addEventListener('click', function () {
+      try {
+        localStorage.removeItem(ADMIN_KEY);
+      } catch (e) {}
+      show(false);
+    });
+
+    /* ---- サイトの状態 ------------------------------------------------ */
+    var current = read(STATE_KEY, { mode: 'normal', message: '', until: '' });
+    function renderState() {
+      var btns = document.querySelectorAll('#admin-modes .admin-mode');
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].setAttribute('aria-pressed', String(btns[i].dataset.mode === current.mode));
+      }
+      document.getElementById('admin-msg').value = current.message || '';
+      document.getElementById('admin-until').value = current.until || '';
+    }
+    document.getElementById('admin-modes').addEventListener('click', function (e) {
+      var btn = e.target.closest('.admin-mode');
+      if (!btn) return;
+      current.mode = btn.dataset.mode;
+      renderState();
+    });
+    document.getElementById('admin-save-state').addEventListener('click', function () {
+      current.message = document.getElementById('admin-msg').value.trim();
+      current.until = document.getElementById('admin-until').value.trim();
+      if (!write(STATE_KEY, current)) return;
+      try {
+        sessionStorage.removeItem('nte.site.gate.closed');
+      } catch (e) {}
+      alert(
+        current.mode === 'normal'
+          ? '通常の状態にしました。'
+          : 'この端末で「' + current.mode + '」にしました。ほかの方の画面は変わりません。',
+      );
+    });
+
+    /* ---- お知らせ ---------------------------------------------------- */
+    function notices() {
+      var list = read(NOTICES_KEY, []);
+      return Array.isArray(list) ? list : [];
+    }
+    function renderNotices() {
+      var host = document.getElementById('notice-admin-list');
+      var list = notices();
+      host.textContent = '';
+      if (list.length === 0) {
+        var p = document.createElement('p');
+        p.className = 'muted text-sm';
+        p.textContent = 'まだありません。';
+        host.appendChild(p);
+        return;
+      }
+      list.forEach(function (n, i) {
+        var row = document.createElement('div');
+        row.className = 'admin-row';
+        var txt = document.createElement('div');
+        var strong = document.createElement('strong');
+        strong.textContent = n.title || '(無題)';
+        var small = document.createElement('span');
+        small.className = 'muted text-sm';
+        small.textContent = ' ' + (n.date || '') + ' / ' + (n.level || 'info');
+        txt.appendChild(strong);
+        txt.appendChild(small);
+        var del = document.createElement('button');
+        del.className = 'btn btn-ghost';
+        del.type = 'button';
+        del.textContent = '削除';
+        del.addEventListener('click', function () {
+          if (!confirm('「' + (n.title || '(無題)') + '」を削除します。よろしいですか。')) return;
+          var next = notices();
+          next.splice(i, 1);
+          if (write(NOTICES_KEY, next)) renderNotices();
+        });
+        row.appendChild(txt);
+        row.appendChild(del);
+        host.appendChild(row);
+      });
+    }
+
+    document.getElementById('notice-add').addEventListener('click', function () {
+      var title = document.getElementById('notice-title').value.trim();
+      var body = document.getElementById('notice-body').value.trim();
+      if (!title || !body) {
+        alert('見出しと本文を入力してください。');
+        return;
+      }
+      var list = notices();
+      list.unshift({
+        id: 'local-' + Date.now(),
+        date: document.getElementById('notice-date').value || '',
+        level: document.getElementById('notice-level').value || 'info',
+        title: title,
+        body: body,
+      });
+      if (!write(NOTICES_KEY, list)) return;
+      document.getElementById('notice-title').value = '';
+      document.getElementById('notice-body').value = '';
+      renderNotices();
+    });
+
+    // 全員に配る形（src/lib/notices.ts に貼れる形）で書き出す
+    document.getElementById('notice-copy').addEventListener('click', function () {
+      var title = document.getElementById('notice-title').value.trim();
+      var body = document.getElementById('notice-body').value.trim();
+      var date = document.getElementById('notice-date').value || '';
+      var level = document.getElementById('notice-level').value || 'info';
+      if (!title || !body) {
+        alert('見出しと本文を入力してください。');
+        return;
+      }
+      var id = 'notice-' + date.replace(/-/g, '');
+      var text =
+        '  {\n' +
+        "    id: '" + id + "',\n" +
+        "    date: '" + date + "',\n" +
+        "    title: '" + title.replace(/'/g, "\\'") + "',\n" +
+        '    body: [\n' +
+        body
+          .split(/\n{2,}/)
+          .map(function (p) {
+            return "      '" + p.replace(/'/g, "\\'").replace(/\n/g, ' ') + "',";
+          })
+          .join('\n') +
+        "\n    ].join('\\n\\n'),\n" +
+        "    level: '" + level + "',\n" +
+        '  },';
+      var done = document.getElementById('notice-copied');
+      navigator.clipboard
+        .writeText(text)
+        .then(function () {
+          done.hidden = false;
+        })
+        .catch(function () {
+          alert(text);
+        });
+    });
+
+    /* ---- 最初の表示（すべての変数を用意したあとで） ------------------- */
+    try {
+      show(localStorage.getItem(ADMIN_KEY) === '1');
+    } catch (e) {
+      show(false);
+    }
+  })();
+</script>

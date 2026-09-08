@@ -7,6 +7,7 @@
  * ※ 公式の画像・ロゴ・フォントは同梱しない。
  */
 import '../styles/wuwa.css';
+import SiteStateGate from '../components/SiteStateGate.astro';
 import { withBase } from '../lib/path';
 import { wiki } from '../lib/wikis';
 
@@ -56,5 +57,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
         </p>
       </footer>
     </div>
+    {/* サイトの状態（メンテナンス／停止）の案内。通常営業なら何も出ない。 */}
+    <SiteStateGate />
   </body>
 </html>

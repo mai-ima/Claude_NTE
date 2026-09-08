@@ -51,6 +51,7 @@ export default defineConfig({
     // 準備中の wiki（原神 / 鳴潮 / 崩壊：スターレイル）と検証用サンプル（α）は
     // まだ中身が無い・実在しないゲームなので、sitemap に載せない。
     // ページ側でも noindex にしてあり、ここは二重の歯止め。
-    sitemap({ filter: (page) => !/\/(genshin|wuwa|hsr|alpha)\//.test(page) }),
+    // 中身が無いページ（準備中・検証用）と、読者向けでないページ（管理）は検索に載せない
+    sitemap({ filter: (page) => !/\/(genshin|wuwa|hsr|alpha|admin)\//.test(page) }),
   ],
 });
