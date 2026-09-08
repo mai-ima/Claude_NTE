@@ -1163,3 +1163,120 @@ body.ef-sheet-open {
     transition: none;
   }
 }
+
+/* =========================================================================
+   10. 導入ブロック（公式のローディング画面の再現）
+   ------------------------------------------------------------------------
+   実画面の観察（docs/UI-RESEARCH.md）:
+     黒地＋**等高線（地形図）の極薄パターン**／左端に**細い黄色の縦バー**（進捗）／
+     大きな黄色の数字と、小さく白い単位／右下に**細字・大文字・字間広め**の英字コピー
+
+   ※ 公式のキャッチコピーそのものは載せない（公式の文言なので）。
+     英字ラベルはこの wiki 自身の言葉にしてある。
+   ※ 数字は**実データ**（収録済みの記事数）を出す。飾りの偽の数字は置かない。
+   ========================================================================= */
+.ef-intro {
+  position: relative;
+  overflow: hidden;
+  margin: 0 0 24px;
+  padding: 26px 22px 22px 30px;
+  background-color: var(--ef-ink);
+  color: #ffffff;
+  /* 等高線。同心円の極薄なリングを2系統ずらして重ね、地形図に見せる。
+     画像は使わず、繰り返しのグラデーションだけで作る。 */
+  background-image:
+    repeating-radial-gradient(
+      circle at 82% 18%,
+      rgba(255, 255, 255, 0.07) 0 1px,
+      transparent 1px 22px
+    ),
+    repeating-radial-gradient(
+      circle at 18% 92%,
+      rgba(255, 255, 255, 0.05) 0 1px,
+      transparent 1px 30px
+    );
+}
+/* 左端のバーの「通り道」。全体量を先に見せる。
+   （::after が ::before の上に描かれるので、通り道を ::before に置く） */
+.ef-intro::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: rgba(255, 255, 255, 0.16);
+}
+/* 実際に伸びる黄色のバー。--ef-fill（0〜1）ぶんだけ下から立ち上がる。 */
+.ef-intro::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 5px;
+  height: calc(var(--ef-fill, 0) * 100%);
+  min-height: 4px;
+  background: var(--ef-accent);
+  box-shadow: var(--ef-glow);
+}
+
+.ef-intro-num {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin: 0;
+  line-height: 1;
+}
+/* 大きな黄色の数字。等幅にして計器らしく。 */
+.ef-intro-num b {
+  font-size: clamp(2.4rem, 9vw, 3.6rem);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em; /* 実測の負のレタースペーシング */
+  color: var(--ef-accent);
+  text-shadow: var(--ef-glow);
+}
+/* 単位は小さく白く（実画面の `%` の扱い） */
+.ef-intro-num span {
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+.ef-intro-note {
+  margin: 10px 0 0;
+  max-width: 46ch;
+  font-size: 0.84rem;
+  line-height: 1.8;
+  color: #c9c9c9;
+}
+/* 右下の英字ラベル。細字・大文字・字間広め（実画面の作法）。 */
+.ef-intro-en {
+  margin: 16px 0 0;
+  font-size: 0.62rem;
+  font-weight: 400;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: #8a8a8a;
+  text-align: right;
+}
+@media (min-width: 700px) {
+  .ef-intro-en {
+    position: absolute;
+    right: 22px;
+    bottom: 18px;
+    margin: 0;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* 表示のときにバーが下から伸びる（公式の進捗表示の動き）。1回だけ。 */
+  .ef-intro::after {
+    animation: ef-fill 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+  @keyframes ef-fill {
+    from {
+      height: 0;
+    }
+  }
+}

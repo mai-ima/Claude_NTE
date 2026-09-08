@@ -200,6 +200,129 @@ html[data-ui='nte'] .page-head {
   position: relative;
   overflow: hidden;
 }
+/* ---- 本物のグリッチ（公式の keyframes をそのまま移植）--------------------
+   公式（`.glitching`）は見出しを3枚重ね、上の2枚を赤とシアンにずらして
+   `clip-path: inset()` を **0.3s** で切り替えている:
+
+     .glitching:before { animation: glitch-anim-red  .3s cubic-bezier(.25,.46,.45,.94) infinite both;
+                         filter: drop-shadow( 2px 0 0 rgba(255,0,60,.7));
+                         mix-blend-mode: screen; opacity:.4 }
+     .glitching:after  { animation: glitch-anim-cyan .3s … infinite reverse both;
+                         filter: drop-shadow(-2px 0 0 rgba(0,255,204,.7)); … }
+
+   こちらは `content: attr(data-glitch)` で文字を複製して同じことをする
+   （見出しに `data-glitch` を付けてあるのはこのため）。
+
+   ただし**公式は infinite だがこちらは3回で止める**。
+   wiki は長時間読むページなので、常時点滅させると本文が読めなくなる。
+   ホバーしている間だけ infinite に戻す（＝公式と同じ挙動を任意に呼び出せる）。
+   動きは prefers-reduced-motion と設定の「モーションを減らす」の両方で止まる。 */
+html[data-ui='nte'] .page-head h1[data-glitch] {
+  position: relative;
+}
+html[data-ui='nte'] .page-head h1[data-glitch]::before,
+html[data-ui='nte'] .page-head h1[data-glitch]::after {
+  content: attr(data-glitch);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  text-shadow: none; /* 親の静止ズレは継がない（二重になる） */
+  /* 実測 mix-blend-mode: screen。暗い面ではこれで色が乗る。 */
+  mix-blend-mode: screen;
+}
+/* 明るい面で screen は白く飛んで消えるので、暗くする側の合成に替える。
+   公式がグリッチを使うのは暗い画面だけなので、ここは移植のための補い。 */
+html:root[data-ui='nte'][data-theme='minimal'] .page-head h1[data-glitch]::before,
+html:root[data-ui='nte'][data-theme='minimal'] .page-head h1[data-glitch]::after,
+html:root[data-ui='nte'][data-theme='soft'] .page-head h1[data-glitch]::before,
+html:root[data-ui='nte'][data-theme='soft'] .page-head h1[data-glitch]::after {
+  mix-blend-mode: multiply;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html[data-ui='nte']:not([data-motion='reduce']) .page-head h1[data-glitch]::before {
+    filter: drop-shadow(2px 0 0 var(--nte-glitch-r)); /* 実測 +2px の赤 */
+    animation: nte-glitch-red 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 3 both;
+  }
+  html[data-ui='nte']:not([data-motion='reduce']) .page-head h1[data-glitch]::after {
+    filter: drop-shadow(-2px 0 0 var(--nte-glitch-c)); /* 実測 −2px のシアン */
+    animation: nte-glitch-cyan 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) 3 reverse both;
+  }
+  /* ホバー中は公式と同じ infinite に戻す */
+  html[data-ui='nte']:not([data-motion='reduce']) .page-head h1[data-glitch]:hover::before,
+  html[data-ui='nte']:not([data-motion='reduce']) .page-head h1[data-glitch]:hover::after {
+    animation-iteration-count: infinite;
+  }
+
+  /* 以下の clip-path と transform は**公式の値をそのまま**。
+     opacity だけ、止まったときに消えるよう 100% で 0 にしてある
+     （公式は infinite なので opacity は .4 固定）。 */
+  @keyframes nte-glitch-red {
+    0% {
+      opacity: 0.4;
+      clip-path: inset(20% 0 80% 0);
+      transform: translate(-2px, 1px);
+    }
+    20% {
+      opacity: 0.4;
+      clip-path: inset(60% 0 10% 0);
+      transform: translate(2px, -1px);
+    }
+    40% {
+      opacity: 0.4;
+      clip-path: inset(40% 0 50% 0);
+      transform: translate(-2px, 1px);
+    }
+    60% {
+      opacity: 0.4;
+      clip-path: inset(80% 0 5% 0);
+      transform: translate(2px, -1px);
+    }
+    80% {
+      opacity: 0.4;
+      clip-path: inset(10% 0 70% 0);
+      transform: translate(-2px, 1px);
+    }
+    to {
+      opacity: 0;
+      clip-path: inset(30% 0 20% 0);
+      transform: translate(2px, -1px);
+    }
+  }
+  @keyframes nte-glitch-cyan {
+    0% {
+      opacity: 0.4;
+      clip-path: inset(10% 0 60% 0);
+      transform: translate(2px, -1px);
+    }
+    20% {
+      opacity: 0.4;
+      clip-path: inset(30% 0 20% 0);
+      transform: translate(-2px, 1px);
+    }
+    40% {
+      opacity: 0.4;
+      clip-path: inset(70% 0 10% 0);
+      transform: translate(2px, -1px);
+    }
+    60% {
+      opacity: 0.4;
+      clip-path: inset(20% 0 50% 0);
+      transform: translate(-2px, 1px);
+    }
+    80% {
+      opacity: 0.4;
+      clip-path: inset(50% 0 30% 0);
+      transform: translate(2px, -1px);
+    }
+    to {
+      opacity: 0;
+      clip-path: inset(5% 0 80% 0);
+      transform: translate(-2px, 1px);
+    }
+  }
+}
+
 /* 走査帯。実測の 0.3s と clip-path:inset() の作法に倣う。
    動きは prefers-reduced-motion と設定の「モーションを減らす」の**両方**で止まる。 */
 @media (prefers-reduced-motion: no-preference) {

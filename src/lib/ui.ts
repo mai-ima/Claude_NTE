@@ -68,6 +68,19 @@ export function getStoredUI(): UIMode {
 
 export function applyUI(mode: UIMode): void {
   document.documentElement.setAttribute('data-ui', mode);
+  // 'nte' のグリッチは見出しの文字の複製が要る（公式が3枚重ねているのと同じ理屈）。
+  // 初回表示は BaseLayout の inline スクリプトが付けるが、設定パネルで
+  // 切り替えたときはここで付ける。付けっぱなしでも他モードには影響しない。
+  if (mode === 'nte') {
+    try {
+      const h = document.querySelector('.page-head h1');
+      if (h && !h.hasAttribute('data-glitch')) {
+        h.setAttribute('data-glitch', (h.textContent ?? '').trim());
+      }
+    } catch {
+      /* 付けられなくてもグリッチが出ないだけ。表示は壊れない */
+    }
+  }
 }
 
 export function setUI(mode: UIMode): void {

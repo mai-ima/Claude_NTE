@@ -447,3 +447,30 @@ const d = ctx.getImageData(x, y, 1, 1).data;   // → #rrggbb
 | スターレイルのヘッダー帯 | `#14141a` | **`#121212`** |
 
 「だいたい合っている」で済ませず、**1色ずつ画素で確かめる**。
+
+
+---
+
+## `clip-path` のグリッチは「文字の複製」が要る（2026-09-08）
+
+RGB がずれてスライスする、あのグリッチは `text-shadow` では作れない。
+`clip-path: inset()` で**横帯を切って左右にずらす**のが本体で、
+そのためには**同じ文字がもう2枚**要る（切ったら元の文字が欠ける）。
+
+CSS だけでやるなら `content: attr(...)` で複製する:
+
+```css
+h1[data-glitch]::before { content: attr(data-glitch); position: absolute; inset: 0; }
+```
+
+**属性を手で書くと足し忘れる。** このリポジトリは `.page-head h1` を持つページが
+14種類あった。3つだけ手で書いて残りを忘れる、が実際に起きかけたので、
+**`BaseLayout` の末尾の inline スクリプトで機械的に写す**方式に一本化した
+（`data-astro-rerun` で View Transitions の切替後も走る）。
+
+ついでに2点:
+
+- `mix-blend-mode: screen` は**明るい地では白く飛んで消える**。
+  明暗を切り替えるサイトでは `multiply` と出し分ける。
+- `animation-fill-mode: both` で回数を有限にすると、**最後のフレームの状態が残る**。
+  終わったら消したいなら `to { opacity: 0 }` を自分で書く。

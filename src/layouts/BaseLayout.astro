@@ -563,5 +563,27 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
         }
       }
     </style>
+
+    {/*
+      UIモード「NTE」のグリッチ用。公式（`.glitching`）は見出しを3枚重ねて
+      `clip-path: inset()` をずらすので、**文字の複製が要る**。
+      公式はマークアップに `data-text` を持たせているが、こちらはページが14種類あり
+      1つずつ属性を書くと足し忘れが起きる。そこで**見出しの文字を機械的に写す**。
+
+      - `data-ui="nte"` のときだけ動く（他のモードには何も足さない）
+      - `data-astro-rerun` で View Transitions のページ切替後にも走る
+      - 失敗しても表示は壊れない（グリッチが出ないだけ）
+    */}
+    <script is:inline data-astro-rerun>
+      (function () {
+        try {
+          if (document.documentElement.getAttribute('data-ui') !== 'nte') return;
+          var h = document.querySelector('.page-head h1');
+          if (h && !h.hasAttribute('data-glitch')) {
+            h.setAttribute('data-glitch', (h.textContent || '').trim());
+          }
+        } catch (e) {}
+      })();
+    </script>
   </body>
 </html>

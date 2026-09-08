@@ -16,26 +16,46 @@ const loaded = await loadNavSections(w.sections);
 const countOf = (c: string) => loaded.find((s) => s.collection === c)?.items.length ?? 0;
 const total = w.sections.reduce((n, s) => n + countOf(s.collection), 0);
 const no = (i: number) => String(i + 1).padStart(2, '0');
+/** 導入ブロックの進捗バー。**記事が1本以上あるセクションの割合**（実データ）。 */
+const filled = w.sections.filter((s) => countOf(s.collection) > 0).length;
+const fill = w.sections.length > 0 ? filled / w.sections.length : 0;
 ---
 
 <EndfieldLayout title="ホーム" wide>
-  {/* 45度のハザード帯。公式が使う意匠を高さ6pxに絞って敷く（docs/UI-RESEARCH.md） */}
+  {/* 斜めのハザード帯。実測は −45度・線3px・周期6px（docs/UI-RESEARCH.md） */}
   <div class="ef-hazard-bar" aria-hidden="true"></div>
+
   <p class="ef-eyebrow">Arknights: Endfield</p>
   <h1 class="ef-title">アークナイツ：エンドフィールド 攻略wiki</h1>
-  {/* 見出し下の細いカラーバー（実画面ではマゼンタと青緑が並んでいた） */}
-  <p class="ef-title-bar" aria-hidden="true"><span></span><span></span></p>
+  {/* 見出し下のカラーライン。実測は**マゼンタ → 蛍光イエロー → 緑**の3色（docs/UI-RESEARCH.md） */}
+  <p class="ef-title-bar" aria-hidden="true"></p>
   <p class="ef-lead">
     惑星タロII の開拓を進めるための攻略・データベースです。
     オペレーター・武器・装備・集成工業システム・エリアなどを、
     出典を明記したうえでまとめていきます。
   </p>
 
+  {/*
+    導入ブロック。公式のローディング画面（黒地＋等高線＋左端の黄色い進捗バー＋
+    大きな黄色の数字）を再現したもの。数字は**実データ**（収録済みの記事数）で、
+    左のバーもその割合で伸びる。飾りの偽の数字は置かない。
+  */}
+  <section class="ef-intro" style={`--ef-fill:${fill}`}>
+    <p class="ef-intro-num">
+      <b>{total}</b><span>記事 / {w.sections.length} セクション</span>
+    </p>
+    <p class="ef-intro-note">
+      枠組みだけを先に用意しました。左のバーは、用意した12セクションのうち
+      <strong>記事が入っているセクションの割合</strong>です。
+      出典で裏が取れたものから順に埋めていきます。
+    </p>
+    <p class="ef-intro-en" aria-hidden="true">Planet Talos II · Field Guide</p>
+  </section>
+
   <p class="ef-note">
-    <strong>この wiki は準備中です（記事 {total} 件）。</strong>
-    枠組みだけを先に用意しました。記事は、公式のお知らせや信頼できる情報源で
-    <strong>裏が取れたものから順に</strong>追加していきます。
-    確かめられていない内容を先に置くことはしません。
+    <strong>この wiki は準備中です。</strong>
+    記事は、公式のお知らせや信頼できる情報源で<strong>裏が取れたものから順に</strong>
+    追加していきます。確かめられていない内容を先に置くことはしません。
   </p>
 
   <div class="ef-block">
