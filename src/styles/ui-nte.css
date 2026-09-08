@@ -402,14 +402,21 @@ html[data-ui='nte'] .drawer-panel {
 html[data-ui='nte'] .card-link {
   position: relative;
   border-width: 1px 1px var(--nte-rule);
+  /* 公式は `.listNews a:hover` で**帯の画像を敷いて**反転させている。
+     画像は使えないので、同じ幅の面を `background-size` で**左から伸ばす**。
+     擬似要素を重ねないので、中の文字が隠れる心配がない。 */
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 0% 100%;
   transition:
-    background-color 0.2s,
-    color 0.2s,
-    border-color 0.2s;
+    background-size 0.3s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
 }
 html[data-ui='nte'] .card-link:hover,
 html[data-ui='nte'] .card-link:focus-visible {
-  background: var(--accent);
+  background-size: 100% 100%;
   border-color: var(--accent);
   color: var(--accent-contrast);
 }
@@ -420,6 +427,24 @@ html[data-ui='nte'] .card-link:focus-visible :is(.muted, .card-desc, .card-meta,
 }
 @media (prefers-reduced-motion: reduce) {
   html[data-ui='nte'] .card-link {
+    transition: none;
+  }
+}
+
+/* リンクの下線も公式の作法（0.3s で伸びる）に合わせる */
+html[data-ui='nte'] .prose a {
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 0% 2px;
+  transition: background-size 0.3s ease;
+  text-decoration: none;
+}
+html[data-ui='nte'] .prose a:hover {
+  background-size: 100% 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-ui='nte'] .prose a {
     transition: none;
   }
 }

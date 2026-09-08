@@ -153,6 +153,35 @@ for (const file of files) {
   }
 }
 
+/* -------------------------------------------------------------------------
+   CSS のコメントの入れ子を検査する。
+
+   実際にやらかした事故:
+     /* … :hover { background-color:#fffa00 }  (ここに閉じ記号) …
+        → 続く説明文が CSS として解釈され、**次のルールが丸ごと無効化された**。
+   CSS のコメントは入れ子にできないので、内側に開き記号があれば警告する。
+   ビルドもリンタも通ってしまい、見た目が壊れるまで気づけないため、ここで止める。
+   ------------------------------------------------------------------------- */
+const styleDir = path.join(process.cwd(), 'src', 'styles');
+for (const name of fs.readdirSync(styleDir).filter((f) => f.endsWith('.css'))) {
+  const text = fs.readFileSync(path.join(styleDir, name), 'utf8');
+  let at = 0;
+  while (true) {
+    const open = text.indexOf('/*', at);
+    if (open < 0) break;
+    const close = text.indexOf('*/', open + 2);
+    if (close < 0) break;
+    if (text.slice(open + 2, close).includes('/*')) {
+      const line = text.slice(0, open).split('\n').length;
+      problems.push(
+        `src/styles/${name}:${line}: コメントの中に開き記号があります。` +
+          'CSS のコメントは入れ子にできないため、途中で閉じて後続のルールが無効になります',
+      );
+    }
+    at = close + 2;
+  }
+}
+
 console.log(`HTML ${files.length} ファイル / アイコン参照 ${checkedUses} 件 / wiki跨ぎリンク ${crossLinks} 件を検査`);
 if (problems.length === 0) {
   console.log('✓ 問題は見つかりませんでした');

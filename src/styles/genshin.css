@@ -365,3 +365,62 @@ a {
     display: none;
   }
 }
+
+/* =========================================================================
+   動き
+   ------------------------------------------------------------------------
+   実画面（ニュース一覧）のカードは、明るい背景ビジュアルの上に
+   `0 3px 7px rgba(0,0,0,.35)` の影で浮いていた。触れたら少し持ち上げる。
+   ※ 公式のパーティクル・フレアは画像とシェーダの世界なので持ってこない。
+     こちらは「浮く」ところだけを CSS で受け持つ。
+   ========================================================================= */
+.gs-card {
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease;
+}
+@media (any-hover: hover) {
+  .gs-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.28);
+  }
+}
+.gs-btn {
+  transition:
+    background-color 0.28s ease,
+    border-color 0.28s ease,
+    transform 0.28s ease;
+}
+.gs-btn:active {
+  transform: translateY(1px);
+}
+/* 金の額装は、開いたときに四隅からすっと現れる（アール・デコの額装らしく）。 */
+@media (prefers-reduced-motion: no-preference) {
+  .gs-shell::before,
+  .gs-shell::after {
+    animation: gs-frame-in 0.9s ease-out both;
+  }
+  .gs-shell::after {
+    animation-delay: 0.15s;
+  }
+  @keyframes gs-frame-in {
+    from {
+      opacity: 0;
+    }
+  }
+  /* 見出し下の四芒星はゆっくり回る（原神の装飾は回転を好む） */
+  .gs-rule span {
+    animation: gs-star 9s linear infinite;
+  }
+  @keyframes gs-star {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gs-card,
+  .gs-btn {
+    transition: none;
+  }
+}

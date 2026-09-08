@@ -6,7 +6,7 @@
 
    根拠（docs/UI-RESEARCH.md）— **公式サイトの配信CSSを実際に取得して数えた**:
    （https://wutheringwaves.kurogames.com/ja/main と、そこから読まれる
-     static4.0/assets/*.css を10本取得して集計した実測値）
+     static4.0/assets/ 以下の CSS を10本取得して集計した実測値）
    - 地は **`background: #000`**（HTML の inline に実測）
    - アクセントは**シアンではなく金／シャンパン**だった:
        `#dab67d`（見出し・現在地の明るい金）／`#c9ac67`（本文中の金）／
@@ -293,5 +293,63 @@ a {
   *::after {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
+  }
+}
+
+/* =========================================================================
+   実測の「0から伸びる」動き
+   ------------------------------------------------------------------------
+   公式CSSに同じ作法が3か所あった。どれも**幅0から伸びる金の線**:
+
+     .article:after      { background-color:#c4ac7d; height:.06rem; width:0;
+                           transition: all .3s ease-in-out }
+     .banner-navi-active { background-color:#c4ac7d; width:0; transition: all .3s }
+     .tab-navi           { background-color:#c4ac7d; width:.45rem; height:.05rem;
+                           transition: all .3s }
+
+   → 触れると金の細い線が**左から伸びる**。0.3秒。これを主要なリンクに入れる。
+   ========================================================================= */
+.ww-btn,
+.ww-foot a,
+.ww-note a {
+  position: relative;
+}
+.ww-btn::after,
+.ww-foot a::after,
+.ww-note a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 2px; /* 実測 .06rem 相当 */
+  background: var(--ww-gold-3);
+  transition: width 0.3s ease-in-out; /* 実測 .3s ease-in-out */
+  pointer-events: none;
+}
+.ww-btn:hover::after,
+.ww-btn:focus-visible::after,
+.ww-foot a:hover::after,
+.ww-note a:hover::after {
+  width: 100%;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ww-btn::after,
+  .ww-foot a::after,
+  .ww-note a::after {
+    transition: none;
+  }
+}
+
+/* 下向きの三角は、公式ではスクロール誘導として**上下に揺れて**いた。
+   0.3s の作法に合わせ、控えめに動かす。 */
+@media (prefers-reduced-motion: no-preference) {
+  .ww-caret {
+    animation: ww-bob 1.8s ease-in-out infinite;
+  }
+  @keyframes ww-bob {
+    50% {
+      transform: translateY(4px);
+    }
   }
 }

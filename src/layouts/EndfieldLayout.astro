@@ -163,6 +163,24 @@ const crumbItems = [{ name: 'エンドフィールド', href: withBase('/endfiel
               <span class="ef-rail-ico"><Icon name="lucide:arrow-left-right" /></span>
               <span class="ef-rail-label"><span class="ef-rail-name">NTE wiki へ</span></span>
             </a>
+            {/*
+              レール下端の縦書きCTA。実画面では黄色い面の縦書きボタン
+              （「ゲームを起動」）がここにあった。行き先のある導線に割り当てる。
+            */}
+            {/*
+              レール下端の黄色いCTA。実画面では縦書きだったが、縦組みメトリクスを
+              持たないフォントだと字が重なるため、横組みの短いラベルにしてある
+              （理由は endfield.css に書いた）。
+            */}
+            <a
+              class="ef-rail-cta"
+              href={w.officialUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icon name="lucide:external-link" />
+              公式<span class="sr-only">サイト（別タブで開きます）</span>
+            </a>
           </div>
         </nav>
 

@@ -44,6 +44,21 @@
   display: none !important;
 }
 
+/* スクリーンリーダー専用。
+   このレイアウトは base.css を読まない（wiki ごとに CSS を分ける方針）ので、
+   ここにも同じものを置く。 */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 :root {
   /* 実測値をそのままトークンにする（実画面で確認した白地ベース） */
   --ef-bg: #ffffff; /* 地は白 */
@@ -1115,7 +1130,7 @@ body.ef-sheet-open {
      border-radius: 2.3125rem; background:#fafafa; box-shadow: 0 0 .625rem rgba(2,2,2,.3);
      .border:before { border: .375rem solid #e6e6e6; border-radius:50% }
      .border:after  { border: .25rem  solid #fff;    border-radius:50% }
-     :hover { background-color:#fffa00 }  /* 押している間は #eeea00 */
+     :hover { background-color:#fffa00 }（押している間は #eeea00）
    → 「灰の太い輪の内側に白い輪」を重ねた丸ボタン。 */
 .ef-round {
   position: relative;
@@ -1279,4 +1294,240 @@ body.ef-sheet-open {
       height: 0;
     }
   }
+}
+
+/* =========================================================================
+   11. まだ使っていなかった意匠（実測記録から拾い直したもの）
+   ------------------------------------------------------------------------
+   docs/UI-RESEARCH.md に記録しながら、実装まで届いていなかった意匠を足す。
+   ========================================================================= */
+
+/* ---- シェブロン（山形）の並び ------------------------------------------
+   実画面のオペレーター紹介で、進行方向を示すために**同じ山形が3つ並んで**いた。
+   実測の右向き三角 `clip-path: polygon(0 20%,100% 50%,0 80%,0 80%)` を
+   3つ並べ、手前ほど濃くする。 */
+.ef-chevrons {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  vertical-align: middle;
+}
+.ef-chevrons i {
+  width: 6px;
+  height: 10px;
+  background: var(--ef-ink);
+  clip-path: polygon(0 20%, 100% 50%, 0 80%, 0 80%);
+}
+.ef-chevrons i:nth-child(2) {
+  opacity: 0.55;
+}
+.ef-chevrons i:nth-child(3) {
+  opacity: 0.25;
+}
+/* 動くときは3つが順に明るくなる（進行方向の示唆）。0.3s は実測のトランジション。 */
+@media (prefers-reduced-motion: no-preference) {
+  .ef-chevrons.is-live i {
+    animation: ef-chev 1.2s steps(1, end) infinite;
+  }
+  .ef-chevrons.is-live i:nth-child(2) {
+    animation-delay: 0.3s;
+  }
+  .ef-chevrons.is-live i:nth-child(3) {
+    animation-delay: 0.6s;
+  }
+  @keyframes ef-chev {
+    0%,
+    33% {
+      opacity: 1;
+    }
+    34%,
+    100% {
+      opacity: 0.22;
+    }
+  }
+}
+
+/* ---- 点線のドットパターン ----------------------------------------------
+   実画面ではアイコンの背景に**点の格子**が敷かれていた。
+   画像を使わず、放射グラデーションの繰り返しで作る。 */
+.ef-dots {
+  background-image: radial-gradient(var(--ef-line) 1px, transparent 1px);
+  background-size: 6px 6px;
+}
+
+/* ---- 下方向のフェード ---------------------------------------------------
+   実測: `linear-gradient(180deg, rgba(0,0,0,0) …)` が**14回**。
+   区画の下端を地の色へ溶かす。長い一覧の「まだ続く」を示すのに使う。 */
+.ef-fade-b {
+  position: relative;
+}
+.ef-fade-b::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 56px;
+  pointer-events: none;
+  background-image: linear-gradient(180deg, transparent, var(--ef-bg));
+}
+
+/* ---- 左右端だけ透かすマスク --------------------------------------------
+   実測: `linear-gradient(90deg, transparent 0, transparent .25rem,
+          black .5rem, black calc(100% - .5rem), …)`
+   横スクロールする帯の両端をぼかす。 */
+.ef-mask-x {
+  overflow-x: auto;
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    #000 8px,
+    #000 calc(100% - 8px),
+    transparent 100%
+  );
+}
+
+/* ---- 計器風の数値表示 ---------------------------------------------------
+   実測（.Pagination_paginationNumber）:
+     font-family: Novecentosanswide-Medium; font-size: 1.5rem;
+     現在値と総数を `/` を挟んで並べる。
+   実画面の `REC 1 / 33` と同じ見せ方。 */
+.ef-meter {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ef-ink);
+}
+.ef-meter b {
+  font-size: 1.05rem;
+  font-weight: 800;
+}
+.ef-meter span {
+  font-size: 0.78rem;
+  color: var(--ef-muted);
+}
+/* 「録画中」の赤い点のような現在地の印。黄色にして本作の色に寄せる。 */
+.ef-meter em {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ef-accent);
+  box-shadow: var(--ef-glow);
+  align-self: center;
+  margin-right: 2px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ef-meter em {
+    animation: ef-blink 1.6s ease-in-out infinite;
+  }
+  @keyframes ef-blink {
+    50% {
+      opacity: 0.25;
+    }
+  }
+}
+
+/* ---- レール下部の縦書きCTA ---------------------------------------------
+   実画面ではレールの下端に**黄色い面の縦書きボタン**（「ゲームを起動」）があった。
+   こちらは行き先のある導線（公式サイト）に割り当てる。 */
+.ef-rail-cta {
+  display: none;
+}
+@media (min-width: 900px) {
+  /* 実画面は**縦書き**だったが、`writing-mode: vertical-rl` は
+     和文の縦組みメトリクスを持たないフォントに当たると**字が重なる**。
+     環境によって読めなくなるのは通せないので、**横組みの短いラベル**にした。
+     黄色い面・レール幅いっぱい・押下で色が変わる、という要点は保っている。 */
+  .ef-rail-cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+    padding: 12px 4px;
+    background: var(--ef-accent);
+    color: var(--ef-ink);
+    font-size: 0.66rem;
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: 0.04em;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color var(--ef-fast) ease;
+  }
+  .ef-rail-cta:hover {
+    background: #eeea00; /* 実測の押下色 */
+    text-decoration: none;
+  }
+  .ef-rail-cta svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+/* ---- 前後のセクションへ ------------------------------------------------
+   実測のページャ（ピル型の外枠＋二重リングの丸ボタン）を実際に使う場所。
+   一覧ページの下端に「前のセクション / 次のセクション」を置く。 */
+.ef-pager {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 36px;
+  padding: 10px 14px;
+  /* 実測 border:.375rem solid #e6e6e6; border-radius:2.625rem; background:#e6e6e6 */
+  background: #e6e6e6;
+  border: 6px solid #e6e6e6;
+  border-radius: 42px;
+}
+.ef-pager-side {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  text-decoration: none;
+  color: var(--ef-text);
+}
+.ef-pager-side:hover {
+  text-decoration: none;
+}
+.ef-pager-side.is-end {
+  flex-direction: row-reverse;
+  text-align: right;
+}
+.ef-pager-txt {
+  min-width: 0;
+}
+.ef-pager-dir {
+  display: block;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ef-muted);
+}
+.ef-pager-name {
+  display: block;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@media (max-width: 560px) {
+  .ef-pager-txt {
+    display: none;
+  }
+  .ef-pager {
+    justify-content: center;
+    gap: 24px;
+  }
+}
+/* 丸ボタンの中の矢印（実測 .arrow は color:#3c3c3c、右向きは scaleX(-1)） */
+.ef-round svg {
+  position: relative;
+  width: 16px;
+  height: 16px;
 }

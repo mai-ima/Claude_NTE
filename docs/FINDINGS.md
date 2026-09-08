@@ -474,3 +474,43 @@ h1[data-glitch]::before { content: attr(data-glitch); position: absolute; inset:
   明暗を切り替えるサイトでは `multiply` と出し分ける。
 - `animation-fill-mode: both` で回数を有限にすると、**最後のフレームの状態が残る**。
   終わったら消したいなら `to { opacity: 0 }` を自分で書く。
+
+
+---
+
+## CSS のコメントの中に閉じ記号を書くと、次のルールが丸ごと消える（2026-09-08）
+
+実際にやらかした。説明コメントの中に、公式CSSの引用としてこう書いた:
+
+```css
+/* 実測（.Pagination_button）:
+     :hover { background-color:#fffa00 }  /* 押している間は #eeea00 */
+   → 「灰の太い輪の内側に白い輪」を重ねた丸ボタン。 */
+.ef-round { position: relative; … }
+```
+
+**CSS のコメントは入れ子にできない。** 内側の閉じ記号でコメントが終わり、
+続く説明文が CSS として解釈され、パーサが回復するまでの間に
+**`.ef-round` のルールが丸ごと捨てられた**。
+
+症状は「`position: relative` が効かず、`inset: 0` の擬似要素が
+**ビューポート大の巨大な円**になる」。ビルドもリンタも通るので気づきにくい。
+
+→ `scripts/check-ui.mjs` に**コメントの入れ子を見つける検査**を足した。
+   `src/styles/*.css` を走査し、コメントの内側に開き記号があれば `pnpm test:ui` で落ちる。
+
+**引用を書くときは、閉じ記号を含む断片をコメントに入れないこと。**
+
+---
+
+## 縦書き（writing-mode）は font 次第で字が重なる（2026-09-08）
+
+`writing-mode: vertical-rl` は、和文の**縦組みメトリクスを持たないフォント**に当たると
+**グリフが重なって読めなくなる**。`text-orientation: upright` でも `mixed` でも起きた。
+
+- `getClientRects()` は「1列 14×46px」と**正常な値を返す**ので、数値では気づけない
+- **高解像度で要素を撮って目で見る**のが唯一の確認手段だった
+  （`deviceScaleFactor: 4` にして `element.screenshot()`）
+
+見た目が環境依存で壊れるものは、意匠として正しくても**採用しない**。
+今回はレール下端の縦書きCTAを、横組みの短いラベルに替えた。
