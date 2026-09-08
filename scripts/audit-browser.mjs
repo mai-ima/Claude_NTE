@@ -78,6 +78,8 @@ const TOOLS = [
 ];
 const PAGES = [
   '/', '/wikis/', '/settings/', '/release-notes/', '/characters/', '/terms/',
+  // 規約・ポリシー（本格リリース向けの法的文書）
+  '/legal/', '/legal/terms/', '/legal/privacy/', '/legal/disclaimer/', '/legal/copyright/',
   '/events/', '/vehicles/', '/arcs/', '/items/', '/enemies/', '/locations/',
   '/systems/', '/guides/', '/shops/', '/people/', '/story/',
   '/alpha/', '/alpha/characters/', '/alpha/systems/', '/alpha/guides/', '/alpha/terms/',

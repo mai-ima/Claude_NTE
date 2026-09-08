@@ -1,0 +1,66 @@
+---
+/**
+ * 規約・ポリシーの目次。
+ *
+ * 4本の文書の入口。フッターからはこのページだけを指し、
+ * 個別の文書はここから辿る（フッターに4本並べると横に溢れる）。
+ */
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../lib/path';
+import { LEGAL_DOCS, LEGAL_UPDATED, CONTACT_URL, legalHref } from '../../lib/legal';
+---
+
+<BaseLayout
+  title="規約・ポリシー"
+  description="利用規約・プライバシーポリシー・免責事項・著作権表記をまとめています。"
+>
+  <div class="layout">
+    <div class="content" style="max-width:760px;margin-inline:auto;">
+      <section class="page-head">
+        <p class="eyebrow">規約・ポリシー</p>
+        <h1>規約・ポリシー</h1>
+        <p class="lead">
+          本サイトをご利用いただくうえでの決まりごとと、情報の取り扱いについてまとめています。
+        </p>
+      </section>
+
+      <div class="card card-pad" style="margin-top:20px;">
+        <p style="margin:0;">
+          本サイトは、個人が趣味で運営している<strong>非公式のファンサイト</strong>です。
+          各ゲームの開発元・運営元とは関係がありません。
+          <strong>広告・アクセス解析・Cookie は使っていません。</strong>
+        </p>
+      </div>
+
+      <div class="grid grid-cards" style="margin-top:20px;">
+        {
+          LEGAL_DOCS.map((d) => (
+            <a class="card card-pad card-link" href={withBase(legalHref(d.slug))}>
+              <div class="row" style="gap:10px;align-items:center;">
+                <span
+                  class="badge badge-accent"
+                  style="height:34px;width:34px;padding:0;border-radius:9px;justify-content:center;"
+                >
+                  <Icon name={`lucide:${d.icon}`} style="width:18px;height:18px;" />
+                </span>
+                <span style="font-weight:700;">{d.title}</span>
+              </div>
+              <p class="muted text-sm" style="margin-top:8px;">{d.blurb}</p>
+            </a>
+          ))
+        }
+      </div>
+
+      <p class="muted text-sm" style="margin-top:24px;">
+        最終更新: {LEGAL_UPDATED}<br />
+        ご意見・訂正のご依頼は
+        <a href={CONTACT_URL} target="_blank" rel="noopener noreferrer">
+          GitHub の Issues
+          <Icon name="lucide:external-link" style="width:13px;height:13px;margin-left:3px;" />
+        </a>
+        からお願いします。
+      </p>
+    </div>
+  </div>
+</BaseLayout>

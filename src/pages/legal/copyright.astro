@@ -1,0 +1,107 @@
+---
+/**
+ * 著作権・権利表記。
+ *
+ * 権利者名は `src/lib/wikis.ts` の rightsHolder / footer から取る。
+ * **wiki を1つ足したらこのページは自動で追従する**（手で書き足さない）。
+ */
+import LegalPage from '../../components/LegalPage.astro';
+import { Icon } from 'astro-icon/components';
+import { withBase } from '../../lib/path';
+import { WIKI_LIST } from '../../lib/wikis';
+import { legalHref } from '../../lib/legal';
+
+/** サイト名から**ゲームの名前だけ**を取り出す。
+ *  例: 「原神 攻略wiki（準備中）」→「原神」／「NTE 完全攻略wiki」→「NTE」 */
+const gameName = (siteName: string) =>
+  siteName
+    .replace(/（[^）]*）\s*$/, '') // 末尾の（準備中）など
+    .replace(/\s*完全攻略wiki$/, '')
+    .replace(/\s*攻略wiki$/, '')
+    .replace(/\s*wiki$/, '')
+    .trim();
+
+/** 実在するゲームだけを並べる（α はマルチwiki機能の検証用のダミー） */
+const games = WIKI_LIST.filter((w) => w.kind !== 'sample').map((w) => ({
+  name: gameName(w.siteName),
+  href: w.base ? `${w.base}/` : '/',
+  // NTE だけ rightsHolder を持たない（フッターに書いてある）ので補う
+  holder: w.rightsHolder ?? 'Hotta Studio / Perfect World Games',
+  official: w.officialUrl,
+}));
+---
+
+<LegalPage
+  slug="copyright"
+  description="各ゲームの権利者と、本サイトが書いた文章の扱いについてまとめています。"
+>
+  <h2>1. ゲームに関する権利</h2>
+  <p>
+    本サイトで扱っている各ゲームの<strong>名称・画像・音声・データ・世界観などの権利は、
+    すべて各権利者に帰属します</strong>。本サイトはそれらの権利を主張しません。
+  </p>
+
+  <div style="overflow-x:auto;">
+    <table>
+      <thead>
+        <tr>
+          <th>ゲーム</th>
+          <th>権利者</th>
+          <th>公式サイト</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          games.map((g) => (
+            <tr>
+              <td>
+                <a href={withBase(g.href)} data-astro-reload>
+                  {g.name}
+                </a>
+              </td>
+              <td>{g.holder}</td>
+              <td>
+                {g.official ? (
+                  <a href={g.official} target="_blank" rel="noopener noreferrer">
+                    公式
+                    <Icon
+                      name="lucide:external-link"
+                      style="width:12px;height:12px;margin-left:3px;"
+                    />
+                  </a>
+                ) : (
+                  <span class="muted">—</span>
+                )}
+              </td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <h2>2. 公式の素材は同梱していません</h2>
+  <p>
+    本サイトは、<strong>公式のスクリーンショット・ロゴ・アイコン画像・地図・フォントを
+    一切置いていません</strong>。
+  </p>
+  <p>
+    各 wiki の見た目は「そのゲームらしさ」を目指して作っていますが、
+    <strong>色や形といった様式を自前の CSS で組み直したもの</strong>であり、
+    公式の画像を持ち込んだものではありません。
+    キャラクターの丸いアイコンなども、名前と属性から自動で描いている自前の図形です。
+  </p>
+
+  <h2>3. 本サイトが書いた文章について</h2>
+  <p>
+    解説文・構成・図表など、本サイトが独自に作成した部分については、
+    <a href={withBase(legalHref('terms'))}>利用規約</a>の「引用・転載」に従ってご利用ください。
+    出典を示したうえでの引用は自由です。
+  </p>
+
+  <h2>4. 権利者の方へ</h2>
+  <p>
+    掲載内容に問題がある場合は、このページ末尾の窓口からご連絡ください。
+    <strong>ご連絡をいただき次第、速やかに確認し、該当箇所の修正または削除を行います。</strong>
+  </p>
+</LegalPage>

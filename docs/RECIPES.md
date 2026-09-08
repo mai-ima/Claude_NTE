@@ -193,3 +193,38 @@ sources:
 `src/data/releaseNotes.ts` の配列**先頭**に追加（新しい順）。
 サイト内の `/release-notes/` と、トップページ・設定ページの「最新バージョン」表示に反映されます。
 バージョンは `beta v0.9.3` のような表記。
+
+
+---
+
+## 5. 法的文書（規約・ポリシー）を直す・足す
+
+本格リリースに向けて `/legal/` 配下に4本置いた。**書いてある内容は実装の事実と
+一致していなければならない**ので、機能を足すときはここも見直すこと。
+
+| ファイル | 何が書いてある |
+| --- | --- |
+| `src/lib/legal.ts` | 4本の一覧・最終更新日・問い合わせ先。**目次とフッターはここから生成される** |
+| `src/components/LegalPage.astro` | 4本で共通の枠（見出し・幅・末尾の更新日と窓口） |
+| `src/pages/legal/index.astro` | 目次 |
+| `src/pages/legal/{terms,privacy,disclaimer,copyright}.astro` | 本文 |
+
+**触ったら合わせて直すもの**:
+
+1. `src/lib/legal.ts` の `LEGAL_UPDATED`（各ページ末尾に出る最終更新日）
+2. `scripts/check-content.mjs` の `STATIC_PAGES`（ページを増やしたとき）
+3. `scripts/audit-browser.mjs` の `PAGES`（同上）
+4. 各レイアウトのフッター（6つ。`/legal/` への導線）
+
+### ⚠ プライバシーポリシーが嘘にならないように
+
+現在は次を**事実として**書いている。**どれかを導入するなら、導入より前に文書を直すこと。**
+
+- アクセス解析・広告タグ・外部CDN … **0件**（`grep -riE "analytics|gtag|adsense|cdn\." src/` で確認できる）
+- Cookie を書き出すコード … **無い**
+- `localStorage` の内容を送信するコード … **無い**
+
+### 権利表記は自動で追従する
+
+`src/pages/legal/copyright.astro` の表は `WIKI_LIST` から作っている。
+**wiki を1つ足したら、このページは何も直さなくても増える**（`rightsHolder` は必須）。

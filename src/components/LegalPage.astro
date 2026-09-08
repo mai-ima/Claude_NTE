@@ -1,0 +1,76 @@
+---
+/**
+ * 法的文書ページの共通の枠。
+ *
+ * 4本の文書で見出し・幅・末尾（更新日と問い合わせ先）を揃える。
+ * 本文は各ページから <slot /> で流し込む。
+ */
+import { Icon } from 'astro-icon/components';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../lib/path';
+import { LEGAL_DOCS, LEGAL_UPDATED, CONTACT_URL, legalHref } from '../lib/legal';
+
+interface Props {
+  slug: string;
+  /** 検索結果や共有時に出る説明 */
+  description: string;
+}
+const { slug, description } = Astro.props;
+const doc = LEGAL_DOCS.find((d) => d.slug === slug)!;
+const others = LEGAL_DOCS.filter((d) => d.slug !== slug);
+---
+
+<BaseLayout title={doc.title} description={description}>
+  <div class="layout">
+    <div class="content" style="max-width:760px;margin-inline:auto;">
+      <nav class="text-sm muted cluster" style="margin-bottom:16px;" aria-label="パンくず">
+        <a href={withBase('/')}>ホーム</a>
+        <span aria-hidden="true"> › </span>
+        <a href={withBase('/legal/')}>規約・ポリシー</a>
+      </nav>
+
+      <section class="page-head">
+        <p class="eyebrow">規約・ポリシー</p>
+        <h1>{doc.title}</h1>
+        <p class="lead">{doc.blurb}</p>
+      </section>
+
+      <article class="prose card card-pad" style="margin-top:20px;">
+        <slot />
+
+        <hr />
+        <p class="muted text-sm">
+          最終更新: {LEGAL_UPDATED}<br />
+          この文書について気づいた点や、記載の訂正のご依頼は
+          <a href={CONTACT_URL} target="_blank" rel="noopener noreferrer">
+            GitHub の Issues
+            <Icon name="lucide:external-link" style="width:13px;height:13px;margin-left:3px;" />
+          </a>
+          からお知らせください。
+        </p>
+      </article>
+
+      <section style="margin-top:32px;">
+        <h2>ほかの文書</h2>
+        <div class="grid grid-cards" style="margin-top:16px;">
+          {
+            others.map((d) => (
+              <a class="card card-pad card-link" href={withBase(legalHref(d.slug))}>
+                <div class="row" style="gap:10px;align-items:center;">
+                  <span
+                    class="badge badge-accent"
+                    style="height:32px;width:32px;padding:0;border-radius:9px;justify-content:center;"
+                  >
+                    <Icon name={`lucide:${d.icon}`} style="width:17px;height:17px;" />
+                  </span>
+                  <span style="font-weight:700;">{d.title}</span>
+                </div>
+                <p class="muted text-sm" style="margin-top:8px;">{d.blurb}</p>
+              </a>
+            ))
+          }
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
