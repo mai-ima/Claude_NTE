@@ -209,6 +209,12 @@ sources:
 | `src/pages/legal/index.astro` | 目次 |
 | `src/pages/legal/{terms,privacy,disclaimer,copyright}.astro` | 本文 |
 
+**書き方**: 4本とも**条文形式**（第◯条＋項番号の `<ol>`）。
+一般的なウェブサービスの規約に揃えてある。**事実に反する条項は置かない**
+（運営者の氏名・所在地は公表していないため窓口は問い合わせ先に一本化、
+開示等の請求は「保有個人データを保有していない」という事実に沿って書く）。
+条を足しても目次は自動で追従する（`LegalPage.astro` が本文の h2 から作る）。
+
 **触ったら合わせて直すもの**:
 
 1. `src/lib/legal.ts` の `LEGAL_UPDATED`（各ページ末尾に出る最終更新日）

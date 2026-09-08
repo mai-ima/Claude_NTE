@@ -26,25 +26,25 @@ export const LEGAL_DOCS: LegalDoc[] = [
   {
     slug: 'terms',
     title: '利用規約',
-    blurb: 'このサイトを見るとき・引用するときの決まりごと。',
+    blurb: '本サイトの利用条件・禁止事項・引用の扱いを定めた規約です。',
     icon: 'scroll-text',
   },
   {
     slug: 'privacy',
     title: 'プライバシーポリシー',
-    blurb: '取得している情報と、していないこと。',
+    blurb: '情報の取扱い。解析・広告・Cookie は使用していません。',
     icon: 'shield-check',
   },
   {
     slug: 'disclaimer',
     title: '免責事項',
-    blurb: '情報の正確さについて、どこまで保証できるか。',
+    blurb: '掲載情報の正確性と、損害に対する責任の範囲。',
     icon: 'triangle-alert',
   },
   {
     slug: 'copyright',
     title: '著作権・権利表記',
-    blurb: '各ゲームの権利者と、このサイトの文章の扱い。',
+    blurb: '各ゲームの権利の帰属と、本サイトの制作物の扱い。',
     icon: 'copyright',
   },
 ];

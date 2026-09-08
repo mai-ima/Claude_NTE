@@ -2651,3 +2651,40 @@ html[data-wiki]:not([data-wiki='nte']) {
     flex: none;
   }
 }
+
+/* ---- 規約・ポリシーの目次 ------------------------------------------------
+   条文が長いので、本文の見出しから作った目次を上に置く（JS が組み立てる）。 */
+.legal-toc {
+  margin-top: 20px;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+.legal-toc-title {
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.legal-toc ol {
+  /* 見出しが「第◯条」で始まるので、目次側の連番は出さない（番号が二重になる） */
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+  display: grid;
+  gap: 5px;
+  font-size: 0.88rem;
+}
+.legal-toc a {
+  color: var(--text);
+}
+.legal-toc a:hover {
+  color: var(--accent);
+}
+/* 条文の入れ子（第8条のような「1. のなかの (1)」）を読みやすくする */
+.prose ol ol {
+  margin-top: 6px;
+  list-style: lower-roman;
+}

@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SettingsPanel from '../components/SettingsPanel';
 import { RELEASE_NOTES } from '../data/releaseNotes';
+import { withBase } from '../lib/path';
 
 const currentVersion = RELEASE_NOTES[0]?.version ?? '';
 ---
@@ -18,7 +19,15 @@ const currentVersion = RELEASE_NOTES[0]?.version ?? '';
       <SettingsPanel client:only="preact" />
 
       <p class="muted text-sm" style="margin-top:24px;text-align:center;">
-        現在のバージョン: <strong>{currentVersion}</strong> ／ <a href="/release-notes/">更新履歴</a>
+        現在のバージョン: <strong>{currentVersion}</strong> ／
+        <a href={withBase('/release-notes/')}>更新履歴</a> ／
+        <a href={withBase('/notices/')}>お知らせ</a> ／
+        <a href={withBase('/legal/')}>規約・ポリシー</a>
+      </p>
+      {/* 管理ページ。URL を知らないと入れないのは不便なので置くが、
+          合言葉が要るので目立たせない（検索にも載せていない）。 */}
+      <p class="muted text-sm" style="margin-top:8px;text-align:center;opacity:0.7;">
+        <a href={withBase('/admin/')}>管理</a>
       </p>
     </div>
   </div>

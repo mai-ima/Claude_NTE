@@ -94,5 +94,22 @@ const drawerActive = activeHref(currentPath, allHrefs);
         <span>wiki 一覧</span>
       </a>
     </div>
+
+    {/* サイトについて。フッターは下まで行かないと見えないので、ここにも置く。 */}
+    <div class="nav-group">
+      <p class="nav-group-title">サイトについて</p>
+      <a class="nav-link" href={withBase('/notices/')} data-drawer-close>
+        <Icon name="lucide:megaphone" />
+        <span>お知らせ</span>
+      </a>
+      <a class="nav-link" href={withBase('/release-notes/')} data-drawer-close>
+        <Icon name="lucide:history" />
+        <span>更新履歴</span>
+      </a>
+      <a class="nav-link" href={withBase('/legal/')} data-drawer-close>
+        <Icon name="lucide:scale" />
+        <span>規約・ポリシー</span>
+      </a>
+    </div>
   </nav>
 </div>
