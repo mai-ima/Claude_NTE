@@ -34,6 +34,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
         {/* マークは画像ではなく文字で作る（公式ロゴは使わない） */}
         <span class="ww-mark" aria-hidden="true">鳴</span>
         <span class="ww-brand">鳴潮 攻略wiki</span>
+        {/*
+          公式は欧文に Novecentowide（幅広の大文字向けサンセリフ）を使っていた。
+          フォントは同梱しないので、大文字＋広い字間で雰囲気だけ寄せる。
+        */}
+        <span class="ww-head-en" aria-hidden="true">Wuthering Waves</span>
       </header>
 
       <main class="ww-main">

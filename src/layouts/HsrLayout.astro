@@ -34,6 +34,17 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
         {/* マークは画像ではなく文字で作る（公式ロゴは使わない） */}
         <span class="hsr-mark" aria-hidden="true">星</span>
         <span class="hsr-brand">崩壊：スターレイル 攻略wiki</span>
+        {/*
+          実画面の黒ヘッダーにあった大文字英字メニュー（HOME / NEWS / CHARACTER / WORLD、
+          現在地は青）を写した意匠。まだ行き先が無いのでリンクにはせず、
+          読み上げからも外す（aria-hidden）。docs/UI-RESEARCH.md 参照。
+        */}
+        <nav class="hsr-nav" aria-hidden="true">
+          <span class="is-here">HOME</span>
+          <span>NEWS</span>
+          <span>CHARACTER</span>
+          <span>WORLD</span>
+        </nav>
       </header>
 
       <main class="hsr-main">

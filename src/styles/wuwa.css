@@ -1,16 +1,31 @@
 /* =========================================================================
    鳴潮（Wuthering Waves）攻略wiki（準備中）専用スタイル
    ------------------------------------------------------------------------
-   NTE / α / エンドフィールド / 原神 とは**一切共有しない**独立したスタイル。
+   NTE / α / エンドフィールド / 原神 / スターレイル とは**一切共有しない**独立したスタイル。
    トークンは --ww-* に閉じる。
 
-   根拠（docs/UI-RESEARCH.md）:
-   - 公式サイト（wutheringwaves.kurogames.com）の HTML に `background: #000` を実測。
-     取得できた CSS の色は暗色階調のみ（#181818 / #222222 / #282828 / #2c3e50）で、
-     アクセント色は**取れなかった**（見た目は JS が動的に作るため）。
-   - メディア記事より、世界観は **SF・ポストアポカリプス**。
-   → ここから「黒地・高コントラスト・鋭角の切り欠き・シアンの差し色」として**解釈**した。
-     実物を確認できたら docs/UI-RESEARCH.md を更新してから直すこと。
+   根拠（docs/UI-RESEARCH.md）— **公式サイトの配信CSSを実際に取得して数えた**:
+   （https://wutheringwaves.kurogames.com/ja/main と、そこから読まれる
+     static4.0/assets/*.css を10本取得して集計した実測値）
+   - 地は **`background: #000`**（HTML の inline に実測）
+   - アクセントは**シアンではなく金／シャンパン**だった:
+       `#dab67d`（見出し・現在地の明るい金）／`#c9ac67`（本文中の金）／
+       `#c4ac7d`（タブやページャの進行表示）／`#caad7b`・`#c2a869`・`#b3976d`
+   - 罫線と補助文字は **`#d3cbb8`（暖かい灰）**。`#d2cab8` / `#bbb4a3` / `#c1b9a9` も同系
+   - 罫線はほぼ全部 **`.01rem solid`（＝1px相当の極細）**。太いのは
+     現在地を示す **`.04rem`（4px相当）の下線**だけ
+       例: `.banner.oversea { border-left:1px; border-bottom:.04rem; border-color:#c9ac67 }`
+           → **左と下だけの L 字の枠**
+   - 角丸は使わないのが基本。使うのは
+       ・`border-radius: .1rem 0`（**左上と右下だけ**丸める対角の処理）
+       ・`border-top-left-radius: .2rem`（**左上だけ**）
+       ・`50%`（丸い矢印ボタン）
+     ※ スターレイルの「**右上**だけ角丸」とはちょうど逆。並べても混ざらない。
+   - `clip-path: polygon(0 0,100% 0%,50% 100%)` = **下向きの三角**（スクロール誘導）
+   - 欧文フォントは **Novecentowide-Medium / -Bold**
+     （幾何学的でワイドな大文字向けサンセリフ）。同梱はしないので、
+     **大文字＋広いレタースペーシング**で雰囲気だけ再現する。
+   - `text-shadow: 0 0 .05rem #000` — 黒の発光影で文字を背景から浮かせる
 
    ※ 公式の画像・ロゴ・フォントは同梱しない。装飾は CSS で作る。
    ========================================================================= */
@@ -26,15 +41,18 @@
 
 :root {
   --ww-bg: #000000; /* 実測（公式サイトの inline） */
-  --ww-bg-2: #0e0e0f;
-  --ww-panel: #181818; /* 実測（公式CSSの暗色階調） */
-  --ww-line: #2c2c2e;
-  --ww-line-soft: #1c1c1e;
+  --ww-bg-2: #0b0b09;
+  --ww-panel: #101010;
+  --ww-gold: #dab67d; /* 実測: 見出し・現在地の明るい金 */
+  --ww-gold-2: #c9ac67; /* 実測: 本文中の金 */
+  --ww-gold-3: #c4ac7d; /* 実測: タブ・ページャの進行表示 */
+  --ww-warm: #d3cbb8; /* 実測: 罫線と補助文字の暖かい灰 */
+  --ww-warm-2: #bbb4a3;
   --ww-text: #f2f2f2;
-  --ww-text-2: #b9bcc0;
-  --ww-muted: #7d8288;
-  --ww-accent: #2dd4bf; /* 解釈（実測できず） */
-  --ww-accent-deep: #14b8a6;
+  --ww-text-2: #d5d5d5;
+  --ww-muted: #929292; /* 実測 */
+  --ww-hair: 1px; /* 実測 .01rem ＝ 極細の罫線 */
+  --ww-bar: 4px; /* 実測 .04rem ＝ 現在地を示す太い線 */
   --ww-font:
     ui-sans-serif, system-ui, -apple-system, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP',
     sans-serif;
@@ -45,12 +63,12 @@ body {
   margin: 0;
   min-height: 100dvh;
   background: var(--ww-bg);
-  /* 走査線のような細い横縞。SF調の解釈（極薄にして本文の可読性を落とさない） */
-  background-image: repeating-linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.014) 0 1px,
-    transparent 1px 4px
-  );
+  /* 黒地の中央だけをうっすら暖色で起こす（公式の暗い画面の作法から解釈）。
+     画像は使わず、自前のグラデーションだけで作る。 */
+  background-image:
+    radial-gradient(ellipse 80% 55% at 50% 0%, rgba(218, 182, 125, 0.09), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(201, 172, 103, 0.05), transparent 70%);
+  background-attachment: fixed;
   color: var(--ww-text);
   font-family: var(--ww-font);
   font-size: 16px;
@@ -60,10 +78,10 @@ body {
 }
 
 a {
-  color: var(--ww-accent);
+  color: var(--ww-gold);
 }
 :focus-visible {
-  outline: 2px solid var(--ww-accent);
+  outline: 2px solid var(--ww-gold);
   outline-offset: 3px;
 }
 
@@ -74,24 +92,25 @@ a {
   min-height: 100dvh;
 }
 
-/* ---- ヘッダー: 左寄せ、下に細いシアンの線 ------------------------------ */
+/* ---- ヘッダー: 極細の罫線。現在地だけ太い金の下線 ---------------------- */
 .ww-head {
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 16px 20px;
-  border-bottom: 1px solid var(--ww-line);
+  /* 実測どおり罫線は極細。色は暖かい灰を落として使う */
+  border-bottom: var(--ww-hair) solid rgba(211, 203, 184, 0.24);
   position: relative;
 }
-/* 下辺の一部だけシアンを走らせる（全幅にしないのがSF調の要点） */
+/* 現在地を示す太い金の線。実測の `.04rem` に倣い、全幅にはしない。 */
 .ww-head::after {
   content: '';
   position: absolute;
-  left: 0;
-  bottom: -1px;
-  width: 120px;
-  height: 1px;
-  background: var(--ww-accent);
+  left: 20px;
+  bottom: calc(var(--ww-hair) * -1);
+  width: 96px;
+  height: var(--ww-bar);
+  background: var(--ww-gold-3);
 }
 .ww-mark {
   display: inline-flex;
@@ -100,15 +119,29 @@ a {
   width: 34px;
   height: 34px;
   flex: none;
-  background: var(--ww-accent);
-  color: #04211d;
-  font-weight: 900;
-  /* 左上と右下を鋭角に落とす */
-  clip-path: polygon(22% 0, 100% 0, 100% 78%, 78% 100%, 0 100%, 0 22%);
+  background: transparent;
+  border: var(--ww-hair) solid var(--ww-gold-2);
+  color: var(--ww-gold);
+  font-weight: 700;
+  /* 実測の「左上と右下だけ丸める」対角の処理 */
+  border-radius: 10px 0;
 }
 .ww-brand {
   font-weight: 700;
   letter-spacing: 0.06em;
+}
+/* 欧文の小見出し。Novecentowide の代わりに大文字＋広い字間で雰囲気を作る。 */
+.ww-head-en {
+  margin-left: auto;
+  font-size: 0.66rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--ww-warm-2);
+}
+@media (max-width: 640px) {
+  .ww-head-en {
+    display: none;
+  }
 }
 
 /* ---- 本体 ---------------------------------------------------------------- */
@@ -118,41 +151,58 @@ a {
   place-items: center;
   padding: 48px 20px 64px;
 }
+
+/* カードは極細の暖かい灰の枠。角丸は左上と右下だけ（実測の対角処理）。 */
 .ww-card {
   width: 100%;
   max-width: 620px;
-  background: var(--ww-panel);
-  border: 1px solid var(--ww-line);
+  background: rgba(16, 16, 16, 0.82);
+  border: var(--ww-hair) solid rgba(211, 203, 184, 0.4);
+  border-radius: 14px 0;
   padding: 36px 26px 30px;
   position: relative;
-  /* 右上を大きく斜めに落とす。角丸は使わない */
-  clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%);
 }
-/* 左肩にシアンの短い帯 */
+/* 実測の「左と下だけの L 字の枠」を、カードの外に一回り小さく重ねる。 */
 .ww-card::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 64px;
-  height: 3px;
-  background: var(--ww-accent);
+  left: -7px;
+  bottom: -7px;
+  width: 46%;
+  height: 38%;
+  border-left: var(--ww-hair) solid rgba(201, 172, 103, 0.55);
+  border-bottom: var(--ww-bar) solid rgba(201, 172, 103, 0.55);
+  pointer-events: none;
+}
+/* 右上に小さな正方形の当たり（公式が角に置く極細の四角の解釈） */
+.ww-card::after {
+  content: '';
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 18px;
+  height: 18px;
+  border: var(--ww-hair) solid rgba(211, 203, 184, 0.5);
+  pointer-events: none;
 }
 
 .ww-eyebrow {
   margin: 0 0 10px;
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.3em;
+  font-size: 0.68rem;
+  font-weight: 600;
+  /* Novecentowide 風。大文字と広い字間で寄せる */
+  letter-spacing: 0.4em;
   text-transform: uppercase;
-  color: var(--ww-accent);
+  color: var(--ww-gold-3);
 }
 .ww-title {
   margin: 0 0 14px;
   font-size: clamp(1.5rem, 5vw, 1.95rem);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.35;
-  letter-spacing: -0.01em;
+  color: var(--ww-gold);
+  /* 実測の text-shadow（黒の発光影）。背景から文字を浮かせる */
+  text-shadow: 0 0 5px #000;
 }
 .ww-lead {
   margin: 0 0 22px;
@@ -162,12 +212,13 @@ a {
   margin: 0 0 24px;
   padding: 14px 16px;
   background: var(--ww-bg-2);
-  border-left: 2px solid var(--ww-accent);
+  /* 太い線は現在地・強調のときだけ、という実測の使い分けに合わせる */
+  border-left: var(--ww-bar) solid var(--ww-gold-3);
   font-size: 0.88rem;
   color: var(--ww-text-2);
 }
 .ww-note strong {
-  color: var(--ww-text);
+  color: var(--ww-gold);
 }
 
 .ww-actions {
@@ -181,35 +232,46 @@ a {
   gap: 7px;
   min-height: 44px;
   padding: 0 20px;
-  border: 1px solid var(--ww-line);
+  border: var(--ww-hair) solid var(--ww-warm);
+  border-radius: 10px 0;
   background: transparent;
-  color: var(--ww-text);
+  color: var(--ww-warm);
   font-size: 0.88rem;
   text-decoration: none;
-  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  transition: 0.3s;
 }
 .ww-btn:hover {
-  border-color: var(--ww-accent);
-  color: var(--ww-accent);
+  border-color: var(--ww-gold);
+  color: var(--ww-gold);
 }
 .ww-btn.is-primary {
-  background: var(--ww-accent);
-  border-color: var(--ww-accent);
-  color: #04211d;
+  border-color: var(--ww-gold-2);
+  /* 実測の「下だけ太い金」を主ボタンの目印に使う */
+  border-bottom-width: var(--ww-bar);
+  color: var(--ww-gold);
   font-weight: 700;
 }
 .ww-btn.is-primary:hover {
-  background: var(--ww-accent-deep);
-  color: #04211d;
+  background: rgba(201, 172, 103, 0.12);
+  border-color: var(--ww-gold);
 }
 .ww-btn svg {
   width: 15px;
   height: 15px;
 }
 
+/* 下向きの三角。実測の clip-path をそのまま使う（スクロール誘導の意匠） */
+.ww-caret {
+  margin: 0 0 18px;
+  width: 12px;
+  height: 8px;
+  background: var(--ww-gold-3);
+  clip-path: polygon(0 0, 100% 0%, 50% 100%);
+}
+
 /* ---- フッター ------------------------------------------------------------ */
 .ww-foot {
-  border-top: 1px solid var(--ww-line);
+  border-top: var(--ww-hair) solid rgba(211, 203, 184, 0.24);
   padding: 20px 20px 32px;
   font-size: 0.76rem;
   line-height: 1.8;
@@ -219,10 +281,10 @@ a {
   margin: 0 0 6px;
 }
 .ww-foot a {
-  color: var(--ww-text-2);
+  color: var(--ww-warm-2);
 }
 .ww-foot a:hover {
-  color: var(--ww-accent);
+  color: var(--ww-gold);
 }
 
 @media (prefers-reduced-motion: reduce) {

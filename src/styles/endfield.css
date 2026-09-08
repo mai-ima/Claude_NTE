@@ -4,21 +4,29 @@
    NTE 側（base/components/themes/ui-*.css）とも α（alpha.css）とも**一切共有しない**
    独立したデザインシステム。読み込むのは EndfieldLayout だけ。
 
-   配色と形は**公式サイトの CSS を実測して決めた**（docs/UI-RESEARCH.md）:
-     #191919（85回・最多）= 主背景 / #fff = 文字 / #fffa00（57回）= アクセント
-     #35373c = 面の灰 / #d9d9d9・#999 = 文字の階調
-     border-radius は 2〜4px が中心（角丸はごく小さい）
-     clip-path の多角形マスクを多用（斜めの切り欠き）
-     英字は幅広・大文字主体（Novecento sans wide 系）、字間は詰め気味
+   配色と形は**公式サイトを Playwright で実際に開いて決めた**（docs/UI-RESEARCH.md）。
+   手順は「route インターセプトで全リクエストを curl に肩代わりさせる」。
+   この環境は Chromium の直アクセスを切るが、その方式なら本編まで描画できる。
 
-   ※ 公式フォントは**同梱しない**（ライセンス不明）。system-ui 系に
-     letter-spacing と大文字化を効かせて雰囲気だけ寄せる。
+   実画面で分かったこと（CSS の静的解析だけでは取り違えていた）:
+
+     - **地は白**。黒はローディング画面だけで、本編は白地が主
+     - **左レールは白地に黒アイコン**。現在地は**黒い面に白アイコン**
+     - **黄色 #fffa00 は「面」で大胆に**使う（帯・CTA・現在地）。文字色には使わない
+     - 人物名は `[ 名前 ]` の**角括弧**、その下に**細いカラーバー**
+     - 分類は**黒背景に白文字の小さなタグ**
+     - `REC` `1 / 33` のような**計器風の数値**、シェブロンの並び、点線のドット
+     - 実測: uppercase 26回 / border 3px #f2f2f2 / radius 2px /
+             box-shadow rgba(2,2,2,.4) 0 0 6.75px / 6px の太い罫線 /
+             45度のハザードストライプ / transition 0.2〜0.3秒
+
+   ※ 公式フォント（Novecento sans wide / Gilroy）は**同梱しない**（ライセンス不明）。
+     system-ui 系に letter-spacing と大文字化を効かせて雰囲気だけ寄せる。
 
    設計方針:
-   - 暗色が既定（NTE と α は明色が既定なので、開いた瞬間に別物と分かる）
-   - 箱（カード）を使わず**罫線で区切る**
-   - 影を使わない。階層は面の明度差と罫線で出す
-   - 蛍光イエローは**面積を絞る**（黒地に大面積で置くと目に痛い）
+   - **白地が既定**。長文を読む wiki とも相性がよい
+   - 箱（カード）を使わず**罫線で区切る**。要所は 6px の太い罫線
+   - 黄色は面積を絞る（帯・現在地・CTA だけ）
    - トークンは --ef-* に閉じる（NTE の --accent 等には依存しない）
    ========================================================================= */
 
@@ -37,24 +45,25 @@
 }
 
 :root {
-  /* 実測値をそのままトークンにする */
-  --ef-bg: #191919;
-  --ef-bg-2: #101010;
-  --ef-panel: #35373c;
-  --ef-line: #3a3d43;
-  --ef-line-soft: #2a2c30;
-  --ef-text: #ffffff;
-  --ef-text-2: #d9d9d9;
-  --ef-muted: #999999;
-  --ef-accent: #fffa00;
+  /* 実測値をそのままトークンにする（実画面で確認した白地ベース） */
+  --ef-bg: #ffffff; /* 地は白 */
+  --ef-bg-2: #fafafa; /* 実測 rgb(250,250,250) */
+  --ef-panel: #f2f2f2; /* 実測 border 3px rgb(242,242,242) の面 */
+  --ef-line: #d9d9d9; /* 実測 rgb(217,217,217) */
+  --ef-line-soft: #ebebeb;
+  --ef-ink: #191919; /* UIパーツ・タグの黒。実測 rgb(25,25,25) */
+  --ef-text: #141414; /* 実測 rgb(20,20,20) */
+  --ef-text-2: #383838; /* 実測 rgb(56,56,56) */
+  --ef-muted: #8f8f8f; /* 実測 rgb(143,143,143) */
+  --ef-accent: #fffa00; /* 実測 rgb(255,250,0) */
   --ef-accent-ink: #191919; /* 黄の上に置く文字 */
   --ef-ok: #00ffa2;
   --ef-hot: #ff1aac;
 
-  --ef-radius: 3px;
+  --ef-radius: 2px; /* 実測 */
   --ef-gap: 16px;
   --ef-measure: 720px; /* 本文の最大幅。装飾より可読性を優先する */
-  --ef-rail: 56px; /* 左の細いレールの幅 */
+  --ef-rail: 68px; /* 左の白いレールの幅（実画面の実測に合わせた） */
   --ef-font:
     ui-sans-serif, system-ui, -apple-system, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP',
     Meiryo, sans-serif;
@@ -69,11 +78,14 @@
       面で塗るだけでなく**光らせる**のが特徴。 */
   --ef-glow: 0 0 10px color-mix(in srgb, var(--ef-accent) 70%, transparent);
 
+  /** 面の影。実測は rgba(2,2,2,.4) 0 0 6.75px（ぼかしだけで方向を持たない） */
+  --ef-shadow: 0 0 6.75px rgba(2, 2, 2, 0.14);
+
   /** 動きの速さ。公式は 0.2〜0.3 秒（background-color .2s / transform .3s）。 */
   --ef-fast: 0.2s;
   --ef-slow: 0.3s;
 
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 /**
@@ -90,31 +102,34 @@
   );
 }
 
-/* 明色は「利用者が手動で選んだとき」だけ。**OS 設定には追従しない。**
+/* 暗色は「利用者が手動で選んだとき」だけ。**OS 設定には追従しない。**
  *
- * NTE も α も明色が既定なので、ここまで暗色にしないと「別の wiki に来た」ことが
- * 伝わらない。黒地に蛍光イエローがこのゲームの見た目そのもの（docs/UI-RESEARCH.md）。
- * 明るい画面で読みたい人のために切替は残してある（ステータスバーのボタン）。
+ * 公式サイトのローディング画面が黒地なので、その雰囲気を暗色側に割り当てた。
+ * 本編は白地なので**既定は白**（実画面の観察どおり）。
  */
-:root[data-ef-theme='light'] {
-  --ef-bg: #f4f4f2;
-  --ef-bg-2: #ececea;
-  --ef-panel: #ffffff;
-  --ef-line: #cfcfc9;
-  --ef-line-soft: #e4e4e0;
-  --ef-text: #191919;
-  --ef-text-2: #35373c;
-  --ef-muted: #6b6b6b;
-  /* 蛍光イエローは白地だと文字として読めない。明色では**文字用に暗く落とし**、
-     「地」として使うとき（.is-accent）だけ元の黄色に戻す。 */
-  --ef-accent: #8a7400;
-  --ef-accent-flat: #fffa00;
-  --ef-accent-ink: #191919;
-  color-scheme: light;
+:root[data-ef-theme='dark'] {
+  --ef-bg: #191919; /* ローディング画面の黒（実測 #191919） */
+  --ef-bg-2: #101010;
+  --ef-panel: #35373c;
+  --ef-line: #3a3d43;
+  --ef-line-soft: #2a2c30;
+  --ef-ink: #ffffff; /* 暗色では UI パーツの色が反転する */
+  --ef-text: #ffffff;
+  --ef-text-2: #d9d9d9;
+  --ef-muted: #999999;
+  --ef-shadow: 0 0 6.75px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
 }
-/* 暗色では文字用と地用が同じ色でよい */
+
+/** 黄色の上に置く「文字色としての黄」。
+ *  白地では黄色の文字は読めないので、文字に使うときは**黒**にする。
+ *  面として敷くときだけ --ef-accent（黄）を使う。 */
 :root {
+  --ef-accent-text: var(--ef-ink);
   --ef-accent-flat: var(--ef-accent);
+}
+:root[data-ef-theme='dark'] {
+  --ef-accent-text: var(--ef-accent);
 }
 
 html {
@@ -128,11 +143,12 @@ body {
   font-family: var(--ef-font);
   font-size: 16px;
   line-height: 1.85;
-  /* 罫線のグリッドを薄く敷いて「計器盤」の感じを出す。可読性を落とさない濃さに留める。 */
+  /* 方眼を極薄で敷いて「計器盤」の感じを出す。白地なので**うんと淡く**。
+     公式のローディング画面は等高線だが、本文の可読性を優先して直線の方眼にする。 */
   background-image:
     linear-gradient(var(--ef-line-soft) 1px, transparent 1px),
     linear-gradient(90deg, var(--ef-line-soft) 1px, transparent 1px);
-  background-size: 72px 72px;
+  background-size: 96px 96px;
   background-position: -1px -1px;
 }
 
@@ -173,21 +189,31 @@ a:hover {
   gap: 12px;
   min-height: 48px;
   padding: 0 14px;
-  background: var(--ef-bg-2);
+  /* 実画面のヘッダーは黒帯。白地の本文との境目がはっきりする。 */
+  background: var(--ef-ink);
+  color: var(--ef-bg);
   /* 公式が使う 6px の太い罫線。細線だとこのゲームの重さが出ない。 */
-  border-bottom: var(--ef-bar) solid var(--ef-panel);
+  border-bottom: var(--ef-bar) solid var(--ef-accent);
   font-size: 0.78rem;
-  position: sticky; /* 上で指定済みだが、::after の基準として明示しておく */
 }
-/* バーの下端に黄色の短い帯を重ねる（全幅にせず、左肩だけ光らせる） */
-.ef-status::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: calc(var(--ef-bar) * -1);
-  width: 96px;
-  height: var(--ef-bar);
-  background: var(--ef-accent);
+/* 黒帯の中の文字。地が黒なので**明るい側の色に固定**する
+   （--ef-text-2 などの白地向けトークンをそのまま使うと暗くて読めない）。 */
+.ef-status-brand,
+.ef-status-here,
+.ef-status-name {
+  color: #ffffff;
+}
+.ef-status-sep,
+.ef-status-count {
+  color: #a8a8a8;
+}
+.ef-status-btn {
+  color: #d9d9d9;
+  border-color: #4a4a4a;
+}
+.ef-status-btn:hover {
+  color: var(--ef-accent);
+  border-color: var(--ef-accent);
 }
 .ef-status-mark {
   display: inline-flex;
@@ -238,18 +264,14 @@ a:hover {
   }
 }
 .ef-status-no {
-  color: var(--ef-accent);
+  color: var(--ef-accent); /* 黒帯の上なので黄色が読める */
   font-weight: 800;
   font-variant-numeric: tabular-nums;
   /* 公式の `box-shadow: 0 0 10px #fff000` に倣い、黄色は**光らせる**。
      文字なので text-shadow で。 */
   text-shadow: var(--ef-glow);
 }
-.ef-status-sep {
-  color: var(--ef-muted);
-}
 .ef-status-count {
-  color: var(--ef-muted);
   font-variant-numeric: tabular-nums;
 }
 .ef-status-spacer {
@@ -305,7 +327,8 @@ a:hover {
     width: var(--ef-rail);
     flex: none;
     padding: 8px 0;
-    background: var(--ef-bg-2);
+    /* 実画面どおり**白いレール**。本文との境は太い罫線で分ける。 */
+    background: var(--ef-bg);
     border-right: var(--ef-bar) solid var(--ef-panel);
     overflow: hidden auto;
     transition: width var(--ef-slow) ease;
@@ -324,8 +347,9 @@ a:hover {
     display: grid;
     grid-template-columns: var(--ef-rail) 1fr;
     align-items: center;
-    min-height: 44px;
-    color: var(--ef-muted);
+    min-height: 48px;
+    /* 白地に**黒のピクトグラム**（実画面どおり）。薄いグレーではない。 */
+    color: var(--ef-ink);
     /* 現在地の帯。公式の太い罫線に合わせて 6px にする */
     border-left: var(--ef-bar) solid transparent;
     white-space: nowrap;
@@ -334,18 +358,19 @@ a:hover {
       color var(--ef-fast) ease;
   }
   .ef-rail-item:hover {
-    color: var(--ef-text);
-    background: color-mix(in srgb, var(--ef-accent) 8%, transparent);
+    background: var(--ef-panel);
     text-decoration: none;
   }
   /* 現在地は「色」「左の帯」「番号」の3つで示す（色覚に依らず分かるように） */
+  /* 現在地は**黒い面に白アイコン**（実画面どおり）。左の帯は黄色。
+     色・面の反転・帯の3つで示すので、色覚に依らず分かる。 */
   .ef-rail-item[aria-current='page'] {
-    color: var(--ef-accent);
+    color: var(--ef-bg);
+    background: var(--ef-ink);
     border-left-color: var(--ef-accent);
-    background: color-mix(in srgb, var(--ef-accent) 12%, transparent);
   }
   .ef-rail-item[aria-current='page'] .ef-rail-no {
-    text-shadow: var(--ef-glow);
+    color: var(--ef-accent);
   }
   .ef-rail-ico {
     display: inline-flex;
@@ -435,16 +460,18 @@ a:hover {
    カードの箱を使わず、**罫線で区切る**。
    見出しには「01 / OPERATORS」のような番号＋英字ラベルを添える。
    ========================================================================= */
+/* 見出しの上の英字ラベル。実画面では**細字・大文字・字間広め**を小さく置いていた。
+   白地なので黄色の文字は読めない。色ではなく**字間と大きさ**で差をつける。 */
 .ef-eyebrow {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin: 0 0 6px;
+  margin: 0 0 8px;
   font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  font-weight: 600;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--ef-accent);
+  color: var(--ef-muted);
 }
 .ef-eyebrow::after {
   content: '';
@@ -453,12 +480,41 @@ a:hover {
   /* 見出しラベルの右へ伸びる線。右端に向けて消える（公式の 90deg マスクの発想） */
   background: linear-gradient(90deg, var(--ef-line) 0%, transparent 100%);
 }
+/* 見出し。実画面では `[ ティフォロス ]` のように**角括弧**で囲んでいた。
+   括弧は装飾なので読み上げからは外す（::before / ::after で出す）。 */
 .ef-title {
   margin: 0 0 10px;
   font-size: clamp(1.5rem, 4.5vw, 2rem);
   font-weight: 800;
   line-height: 1.3;
   letter-spacing: -0.01em;
+}
+.ef-title::before,
+.ef-title::after {
+  color: var(--ef-muted);
+  font-weight: 400;
+}
+.ef-title::before {
+  content: '［';
+}
+.ef-title::after {
+  content: '］';
+}
+/* 見出しの下の細いカラーバー。実画面ではマゼンタと青緑が並んでいた。 */
+.ef-title-bar {
+  display: flex;
+  gap: 4px;
+  margin: 0 0 18px;
+}
+.ef-title-bar span {
+  height: 3px;
+  width: 56px;
+}
+.ef-title-bar span:nth-child(1) {
+  background: var(--ef-hot);
+}
+.ef-title-bar span:nth-child(2) {
+  background: var(--ef-ok);
 }
 .ef-lead {
   margin: 0 0 24px;
@@ -469,7 +525,7 @@ a:hover {
    細線だと区画の境目が弱く、このゲームの重さが出ない。 */
 .ef-block {
   position: relative;
-  border-top: var(--ef-bar) solid var(--ef-panel);
+  border-top: var(--ef-bar) solid var(--ef-ink);
   padding-top: 18px;
   margin-top: 32px;
 }
@@ -536,19 +592,18 @@ a:hover {
 /* 押せる行だと分かるよう、触れたら**左に黄色の帯**が立つ。
    色の変化だけでなく形が変わるので、色覚に依らず気づける。 */
 .ef-row:hover {
-  background: var(--ef-panel);
+  background: var(--ef-bg-2);
   border-left-color: var(--ef-accent);
   text-decoration: none;
 }
+/* 行番号。実画面の「計器風の数値」に倣って等幅で置く。
+   白地では黄色の文字が読めないので**黒**にし、目印は左の帯に任せる。 */
 .ef-row-no {
   font-size: 0.72rem;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
-  color: var(--ef-accent);
+  color: var(--ef-ink);
   letter-spacing: 0.04em;
-}
-.ef-row:hover .ef-row-no {
-  text-shadow: var(--ef-glow);
 }
 .ef-row-body {
   min-width: 0;
@@ -592,7 +647,7 @@ a:hover {
 
 /* 注記（準備中のお知らせなど）。左に黄色の帯を立てる。 */
 .ef-note {
-  border-left: 3px solid var(--ef-accent);
+  border-left: var(--ef-bar) solid var(--ef-accent);
   background: var(--ef-bg-2);
   padding: 12px 14px;
   margin: 18px 0;
@@ -604,17 +659,24 @@ a:hover {
 }
 
 /* バッジ（レア度・状態など） */
+/* 分類のタグ。実画面では**黒背景に白文字**の小さなタグだった。 */
 .ef-badge {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 2px 8px;
+  padding: 2px 9px;
   border: 1px solid var(--ef-line);
   border-radius: var(--ef-radius);
   font-size: 0.7rem;
   font-weight: 700;
   color: var(--ef-text-2);
   white-space: nowrap;
+}
+/* 見出しに添える分類（陣営・種族など）は黒地・白文字にする */
+.ef-badge.is-ink {
+  background: var(--ef-ink);
+  border-color: var(--ef-ink);
+  color: var(--ef-bg);
 }
 .ef-badge.is-accent {
   background: var(--ef-accent-flat);
@@ -766,8 +828,14 @@ a:hover {
   align-items: center;
   gap: 10px;
   padding: 12px 14px;
+  background: var(--ef-ink);
+  color: var(--ef-bg);
   border-bottom: var(--ef-bar) solid var(--ef-panel);
   position: relative;
+}
+.ef-sheet-close {
+  color: var(--ef-bg);
+  border-color: #4a4a4a;
 }
 /* 見出しの下端に45度のハザード帯（工事現場の警告帯と同じ意匠）。
    面積を取ると読みにくいので高さ 6px に絞る。 */

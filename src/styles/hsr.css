@@ -4,14 +4,13 @@
    NTE / α / エンドフィールド / 原神 / 鳴潮 とは**一切共有しない**独立したスタイル。
    トークンは --hsr-* に閉じる。
 
-   根拠（docs/UI-RESEARCH.md — UI解説記事の観察）:
-   - 配色は **黄色・黒・白の3色**構成
-   - 小型ポップアップは「**右上が角丸、左下側に重なったような線**」という統一処理
-   - **閉じるボタンは右上に統一**
-   - 選択要素・ターゲットに**回転するエフェクト**
-   - トランジションは**方向を保つ**（下から出たら下へ消える）
-   → 公式サイトからは色コードを取れなかったため、**明るい地＋太い黒の文字＋黄の面**
-     として解釈した。実物を確認できたら docs/UI-RESEARCH.md を更新してから直すこと。
+   根拠（docs/UI-RESEARCH.md）— **公式サイトを Playwright で実際に開いて確認した**:
+   - **上部に黒い横ヘッダー**。中央に HOME / NEWS / CHARACTER / WORLD の**大文字英字メニュー**
+   - **現在地は青**（文字色＋下に青い下線）。黄色ではなかった
+   - 右上に**金色のCTAボタン**。**右上だけ角丸**
+   - **`border-radius: 0px 31.5px 0px 0px` を11回**実測 → **右上だけ角丸**が UI 全体の統一処理
+     （UI解説記事の「右上が角丸、左下に重なった線」という記述と一致した）
+   - 右端に**縦のソーシャル丸ボタン列**、左端に縦書きの `Scroll Down`
 
    ※ エンドフィールドも黄色を使うが、あちらは「黒地に蛍光イエロー」。
      こちらは「白地に黒＋黄の面」にして、並べたときに別物と分かるようにしている。
@@ -36,6 +35,8 @@
   --hsr-muted: #74747f;
   --hsr-line: #14141a;
   --hsr-yellow: #ffd221; /* 3色構成の黄 */
+  --hsr-blue: #2a7fff; /* 実画面の現在地の青 */
+  --hsr-gold: #cbb27a; /* 実画面のCTAの金 */
   --hsr-purple: #8b7fd4; /* 差し色（wiki のアクセント色と合わせる） */
   --hsr-font:
     ui-sans-serif, system-ui, -apple-system, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP',
@@ -95,8 +96,32 @@ a {
   background: var(--hsr-yellow);
   color: var(--hsr-ink);
   font-weight: 900;
-  /* 右上だけ角丸（記事で観察された特徴） */
-  border-radius: 0 12px 0 0;
+  /* 実測どおり**右上だけ**角丸 */
+  border-radius: 0 14px 0 0;
+}
+/* ヘッダーに置く大文字英字のメニュー風ラベル（実画面の HOME / NEWS / … に倣う）。
+   準備中なので押せないが、そのゲームらしい画面であることを伝える。 */
+.hsr-nav {
+  display: flex;
+  gap: 22px;
+  margin-left: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #9a9aa4;
+}
+.hsr-nav span {
+  padding-bottom: 3px;
+}
+/* 現在地は**青**（実画面どおり）。文字色と下線の2つで示す。 */
+.hsr-nav .is-here {
+  color: var(--hsr-blue);
+  border-bottom: 2px solid var(--hsr-blue);
+}
+@media (max-width: 720px) {
+  .hsr-nav {
+    display: none;
+  }
 }
 .hsr-brand {
   font-weight: 800;
@@ -137,7 +162,7 @@ a {
 .hsr-eyebrow {
   display: inline-block;
   margin: 0 0 12px;
-  padding: 2px 10px;
+  padding: 3px 12px;
   background: var(--hsr-yellow);
   font-size: 0.7rem;
   font-weight: 800;
@@ -180,7 +205,8 @@ a {
   min-height: 44px;
   padding: 0 20px;
   border: 2px solid var(--hsr-line);
-  border-radius: 0 12px 0 0;
+  /* 実測 `border-radius: 0 31.5px 0 0` に倣い、**右上だけ**大きく丸める */
+  border-radius: 0 20px 0 0;
   background: var(--hsr-panel);
   color: var(--hsr-ink);
   font-size: 0.88rem;
@@ -190,11 +216,14 @@ a {
 .hsr-btn:hover {
   background: var(--hsr-bg-2);
 }
+/* 実画面のCTAは**金色**（黄ではない） */
 .hsr-btn.is-primary {
-  background: var(--hsr-yellow);
+  background: var(--hsr-gold);
+  border-color: var(--hsr-gold);
+  color: #241f16;
 }
 .hsr-btn.is-primary:hover {
-  background: #f5c400;
+  background: #b99f63;
 }
 .hsr-btn svg {
   width: 15px;

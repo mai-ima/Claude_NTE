@@ -4,8 +4,14 @@
    NTE / α / エンドフィールド とは**一切共有しない**独立したスタイル。
    トークンは --gs-* に閉じる。
 
-   根拠（docs/UI-RESEARCH.md）:
-   - 公式サイトからは**色コードを取れなかった**（中身を JS が動的に作るため）。
+   根拠（docs/UI-RESEARCH.md）— **公式サイトを Playwright で実際に開いて確認した**:
+   - **`border: 6px solid rgb(255,255,255)` を7回**実測 → **白い6pxの太枠**が意匠の核
+   - `rgb(17,17,17)`（暗いパネル）／`rgba(38,18,12,0.62)`（**暖色の半透明**）／
+     `rgb(252,249,254)`（ほぼ白）／`border: 2px solid rgb(0,0,0)`
+   - 文字色は白と黒が拮抗 → **明暗を場面で使い分ける**
+   - 背景は**暖色の明るいビジュアル**（机の上・羊皮紙・ランプの光）
+   - 和文は**游ゴシック体**
+   ※ ローディングが長く UI パーツまでは描画されなかったので、下記は補助:
    - UI解説記事から確認できた特徴:
        ・アイコンは「白ベタ一色」ではなく**白＋白の透明度のツートーン**
        ・**透過表現を加えたフラットデザイン**（背景の美しさを邪魔しない）
@@ -37,11 +43,14 @@
   --gs-text-2: #5c5142;
   --gs-muted: #857a68;
   --gs-radius: 14px; /* 柔らかい曲線 */
+  --gs-frame: 6px; /* 実測: 白い太枠 border 6px */
+  --gs-warm: rgba(38, 18, 12, 0.62); /* 実測: 暖色の半透明 */
   --gs-font:
     ui-serif, 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+  /* 実測で和文は游ゴシック体だった。無い環境も考えて素直な代替を並べる。 */
   --gs-font-ui:
-    ui-sans-serif, system-ui, -apple-system, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP',
-    sans-serif;
+    'Yu Gothic', YuGothic, ui-sans-serif, system-ui, -apple-system,
+    'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
   color-scheme: light;
 }
 
@@ -114,15 +123,20 @@ a {
   place-items: center;
   padding: 48px 20px 64px;
 }
+/* 実測の「白い6pxの太枠」を再現する。枠の外に金の細線を回して、
+   公式の装飾的な二重枠に寄せる。 */
 .gs-card {
   width: 100%;
   max-width: 640px;
   background: var(--gs-panel);
-  border: 1px solid var(--gs-line);
+  border: var(--gs-frame) solid #ffffff;
+  outline: 1px solid var(--gs-line);
+  outline-offset: 0;
   border-radius: var(--gs-radius);
-  padding: 40px 28px 32px;
+  padding: 36px 26px 30px;
   text-align: center;
   position: relative;
+  box-shadow: 0 10px 40px -18px var(--gs-warm);
 }
 /* 四隅の飾り。アール・デコ調の角当てを CSS だけで作る（画像は使わない） */
 .gs-card::before,
