@@ -159,16 +159,28 @@ a {
   pointer-events: none;
 }
 
+/* セクション見出しの帯。実画面（キャラクターページ）では
+   `・キャラクター` のように**先頭に点**が付き、背景の黒い帯が
+   **右へ向かってフェードして消える**。それをそのまま写す。 */
 .hsr-eyebrow {
-  display: inline-block;
-  margin: 0 0 12px;
-  padding: 3px 12px;
-  background: var(--hsr-yellow);
-  font-size: 0.7rem;
-  font-weight: 800;
+  display: block;
+  margin: 0 0 14px;
+  padding: 5px 14px 5px 10px;
+  background-image: linear-gradient(
+    90deg,
+    var(--hsr-ink) 0%,
+    var(--hsr-ink) 45%,
+    transparent 100%
+  );
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  border-radius: 0 8px 0 0;
+}
+.hsr-eyebrow::before {
+  content: '・';
+  color: var(--hsr-yellow);
 }
 .hsr-title {
   margin: 0 0 14px;
@@ -252,4 +264,21 @@ a {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
   }
+}
+
+/* =========================================================================
+   パネル四隅の小さな当たり
+   実画面のキャラクターページでは、大きな半透明パネルの**四隅に短い鉤（かぎ）**が
+   付いていた。カードの角に同じ印を置く。
+   ========================================================================= */
+.hsr-card::after {
+  content: '';
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  width: 12px;
+  height: 12px;
+  border-top: 2px solid var(--hsr-line);
+  border-right: 2px solid var(--hsr-line);
+  pointer-events: none;
 }

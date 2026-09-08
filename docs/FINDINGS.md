@@ -364,3 +364,59 @@ await p.locator('textarea').first().inputValue();
 ```
 
 実装は正しいのにテストだけが落ちて、しばらく実装を疑ってしまった。
+
+
+---
+
+## UIモードで配色を変えたいのに `--accent` が効かない（2026-09-08）
+
+**誤**: 既存のUIモードにならって `html[data-ui='nte'] { --accent: #4fe5fb }` と書けば色が変わる。
+
+**正**: **変わらない。** 詳細度が足りていない。
+
+| セレクタ | 詳細度 |
+| --- | --- |
+| `html[data-ui='nte']` | 要素1 + 属性1 = **(0,1,1)** |
+| `themes.css` の `:root[data-theme='minimal']` | 疑似クラス1 + 属性1 = **(0,2,0)** |
+
+`(0,2,0)` が勝つので、`themes.css` の `--accent: #3b6ef0` がそのまま残る。
+
+既存のモード（aurora / terminal など）が破綻していなかったのは、
+**どれも `--accent` を上書きせず `color-mix()` で派生させていたから**。
+`--radius` は `:root`（0,1,0）にしか無いので `(0,1,1)` で勝てていた。
+
+**直し方**: 変数を定義するブロックだけ **`html:root[data-ui='nte']`（0,2,1）** にする。
+明暗テーマとの組み合わせを分けたいなら `html:root[data-ui='nte'][data-theme='minimal']`（0,3,1）。
+
+**気づき方**: 見た目が変わらないときは、Playwright で
+`getComputedStyle(document.body).backgroundColor` を見ると一発で分かる。
+`data-ui` 属性は付いているのに色だけ元のまま、なら詳細度負けを疑う。
+
+---
+
+## 圧縮された1行 CSS に `grep -o` は効かない（2026-09-08 に再確認）
+
+公式サイトの配信 CSS は1行が数万文字ある。この形に対して
+
+```bash
+grep -oE '#[0-9a-fA-F]{6}' x.css   # → 0件（エラーも出ない）
+grep -c color x.css                # → 0（"color" は確実に入っているのに）
+```
+
+**無言で失敗する**。CSS の解析は必ず `node` で読むこと
+（手順は `docs/UI-RESEARCH.md` の「★ CSS の静的解析でつまずいた点」）。
+
+---
+
+## 公式サイトの「本体 CSS」は HTML から辿れないことがある（2026-09-08）
+
+鳴潮の `index-*.css`（75KB）は**中身が animate.css だけ**で、色が1つも無かった。
+本物は **JS バンドルの中に書かれたチャンク名**から辿る:
+
+```bash
+node -e "const s=require('fs').readFileSync('app.js','utf8');
+  console.log([...new Set([...s.matchAll(/assets\/[A-Za-z0-9_.-]+\.css/g)].map(m=>m[0]))].join('\n'))"
+```
+
+これで16本出てきて、そこに配色が全部あった。
+「CSS にリセットしか無い」で諦めない。

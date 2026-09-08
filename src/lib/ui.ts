@@ -8,6 +8,7 @@
  * - 'liquid'   : 本格リキッドグラス（厚い曇りガラス・カプセル形状）
  * - 'aurora'   : 不透明×ネオングラデーション＋発光（ガラスでない）
  * - 'apple'    : Apple HIG 風のクリーンなフラット（仮称）
+ * - 'nte'      : NTE 公式サイトの配色と質感を再現（濃灰 #1d1d1d × シアン #4fe5fb）
  * html[data-ui='<mode>'] でスタイルを切り替える。テーマ（配色）とは独立。
  */
 
@@ -21,7 +22,8 @@ export type UIMode =
   | 'apple'
   | 'terminal'
   | 'clay'
-  | 'blueprint';
+  | 'blueprint'
+  | 'nte';
 
 export const UI_KEY = 'nte.ui';
 const DEFAULT_UI: UIMode = 'classic';
@@ -42,6 +44,12 @@ export const UI_MODES: { value: UIMode; label: string; hint: string; beta: boole
   { value: 'terminal', label: 'Terminal', hint: 'レトロCRT/端末風。等幅・走査線・記号UI', beta: true },
   { value: 'clay', label: 'Clay', hint: 'やわらかニューモーフィズム。ぷっくり3D', beta: true },
   { value: 'blueprint', label: 'Blueprint', hint: '製図/設計図風。方眼と四隅のティック', beta: true },
+  {
+    value: 'nte',
+    label: 'NTE（公式サイト風）',
+    hint: 'NTE 公式サイトの配色と質感を再現。濃い灰色の地にシアン、見出しは色ズレ。公式に明るい配色が無いため、テーマの明暗によらず暗い画面になります',
+    beta: true,
+  },
 ];
 
 const VALID: UIMode[] = UI_MODES.map((m) => m.value);

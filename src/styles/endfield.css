@@ -60,7 +60,7 @@
   --ef-ok: #00ffa2;
   --ef-hot: #ff1aac;
 
-  --ef-radius: 2px; /* 実測 */
+  --ef-radius: 4px; /* 実測 .25rem（19回で最多）。50% の丸ボタンも別にある */
   --ef-gap: 16px;
   --ef-measure: 720px; /* 本文の最大幅。装飾より可読性を優先する */
   --ef-rail: 68px; /* 左の白いレールの幅（実画面の実測に合わせた） */
@@ -501,20 +501,24 @@ a:hover {
   content: '］';
 }
 /* 見出しの下の細いカラーバー。実画面ではマゼンタと青緑が並んでいた。 */
+/* 見出し下のカラーライン。実測（.decoLine）はこう書かれていた:
+     linear-gradient(90deg, #ff00f0 11.25rem, #fffa00 0, #fffa00 22.5625rem, #00ffa2 0)
+   → **マゼンタ → 蛍光イエロー → 緑** の3色を、およそ 1 : 1 : 4 の幅で継ぐ帯。
+   高さは .25rem（4px）。1本のグラデーションなので span は要らないが、
+   既存の HTML を壊さないよう span は空のまま無効化しておく。 */
 .ef-title-bar {
-  display: flex;
-  gap: 4px;
+  height: 4px;
+  width: min(100%, 420px);
   margin: 0 0 18px;
+  background-image: linear-gradient(
+    90deg,
+    var(--ef-hot) 0 17%,
+    var(--ef-accent) 0 33%,
+    var(--ef-ok) 0
+  );
 }
 .ef-title-bar span {
-  height: 3px;
-  width: 56px;
-}
-.ef-title-bar span:nth-child(1) {
-  background: var(--ef-hot);
-}
-.ef-title-bar span:nth-child(2) {
-  background: var(--ef-ok);
+  display: none;
 }
 .ef-lead {
   margin: 0 0 24px;
@@ -549,13 +553,16 @@ a:hover {
 /* ---- 見出しの上に置くハザード帯 ------------------------------------------
    45度の斜めストライプ（工事現場の警告帯）。公式が使う意匠だが、
    面積を取ると読みにくくなるので**高さ6pxの帯**に絞る。 */
+/* 斜めのストライプ。実測（ナビの現在地 .activeName の背景）は
+     repeating-linear-gradient(-45deg,#1f1f22,#1f1f22 3px,transparent 0,transparent 6px)
+   → **-45度・線3px・周期6px**。線の色は黒に近い #1f1f22 で、黄色ではなかった。 */
 .ef-hazard-bar {
   height: var(--ef-bar);
   margin-bottom: 14px;
   background-image: repeating-linear-gradient(
     -45deg,
-    var(--ef-accent) 0 6px,
-    transparent 6px 14px
+    #1f1f22 0 3px,
+    transparent 3px 6px
   );
 }
 
@@ -982,4 +989,39 @@ body.ef-sheet-open {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* =========================================================================
+   ボタンのホバー: 右向きの三角が現れて右へ滑る
+   実測: .Button_button:hover:after {
+           clip-path: polygon(0 20%,100% 50%,0 80%,0 80%);
+           transform: translateX(.875rem) }
+   ========================================================================= */
+.ef-status-btn,
+.ef-fab {
+  position: relative;
+}
+.ef-status-btn::after {
+  content: '';
+  position: absolute;
+  right: 6px;
+  top: 50%;
+  width: 7px;
+  height: 10px;
+  margin-top: -5px;
+  background: currentColor;
+  /* 実測どおりの右向き三角 */
+  clip-path: polygon(0 20%, 100% 50%, 0 80%, 0 80%);
+  opacity: 0;
+  transition: opacity var(--ef-fast), transform var(--ef-fast);
+}
+.ef-status-btn:hover::after,
+.ef-status-btn:focus-visible::after {
+  opacity: 1;
+  transform: translateX(4px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ef-status-btn::after {
+    transition: none;
+  }
 }

@@ -192,11 +192,22 @@ a {
   height: 1px;
   background: currentColor;
 }
+/* 実画面で確認できた**四芒星（✦）**。菱形ではなく、
+   縦横に細く伸びた4方向の星が原神の区切り記号だった。 */
 .gs-rule span {
-  width: 8px;
-  height: 8px;
+  width: 13px;
+  height: 13px;
   background: currentColor;
-  transform: rotate(45deg);
+  clip-path: polygon(
+    50% 0%,
+    59% 41%,
+    100% 50%,
+    59% 59%,
+    50% 100%,
+    41% 59%,
+    0% 50%,
+    41% 41%
+  );
 }
 
 .gs-lead {
@@ -270,5 +281,68 @@ a {
   *::after {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
+  }
+}
+
+/* =========================================================================
+   画面を囲う金の細枠と四隅の角当て
+   ------------------------------------------------------------------------
+   実画面で確認した意匠。公式は本文の外側に**極細の金の枠**を一周させ、
+   **四隅に小さな角飾り**を置いている（アール・デコ調の額装）。
+   画像は使わず、細線とグラデーションだけで作る。
+   ========================================================================= */
+.gs-shell {
+  position: relative;
+}
+.gs-shell::before,
+.gs-shell::after {
+  content: '';
+  position: fixed;
+  inset: 10px;
+  pointer-events: none;
+  z-index: 1;
+}
+/* 一周する極細の枠 */
+.gs-shell::before {
+  border: 1px solid color-mix(in srgb, var(--gs-gold) 42%, transparent);
+}
+/* 四隅の角当て。角から内側へ伸びる短い2本の線を、
+   4つの角それぞれに背景グラデーションで置く。 */
+.gs-shell::after {
+  --gs-tick: 22px;
+  /* 角ごとに横棒と縦棒の2本。4隅ぶんで8本を重ねる。 */
+  background-image:
+    linear-gradient(var(--gs-gold), var(--gs-gold)),
+    linear-gradient(var(--gs-gold), var(--gs-gold)),
+    linear-gradient(var(--gs-gold), var(--gs-gold)),
+    linear-gradient(var(--gs-gold), var(--gs-gold)),
+    linear-gradient(var(--gs-gold), var(--gs-gold)),
+    linear-gradient(var(--gs-gold), var(--gs-gold)),
+    linear-gradient(var(--gs-gold), var(--gs-gold)),
+    linear-gradient(var(--gs-gold), var(--gs-gold));
+  background-repeat: no-repeat;
+  background-size:
+    var(--gs-tick) 3px,
+    3px var(--gs-tick),
+    var(--gs-tick) 3px,
+    3px var(--gs-tick),
+    var(--gs-tick) 3px,
+    3px var(--gs-tick),
+    var(--gs-tick) 3px,
+    3px var(--gs-tick);
+  background-position:
+    left top,
+    left top,
+    right top,
+    right top,
+    left bottom,
+    left bottom,
+    right bottom,
+    right bottom;
+}
+@media (max-width: 560px) {
+  /* 画面が狭いときは枠が窮屈なので角当てだけ残す */
+  .gs-shell::before {
+    display: none;
   }
 }

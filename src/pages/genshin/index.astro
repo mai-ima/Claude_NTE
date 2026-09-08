@@ -35,8 +35,9 @@ const w = wiki('genshin');
         公式サイトを開く
         <Icon name="lucide:external-link" />
       </a>
+      {/* 実画面のリンクは末尾に « » を付けていた（「ホームページに戻る »」） */}
       <a class="gs-btn" href={withBase('/wikis/')} data-astro-reload>
-        wiki 一覧へ
+        wiki 一覧へ<span aria-hidden="true"> »</span>
       </a>
     </div>
   </article>
