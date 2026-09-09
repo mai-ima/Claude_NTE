@@ -7,11 +7,14 @@ start: 2026-08-19
 order: 1
 description: "2026年8月19日配信の大型アップデート。新エリア星暮保護区、本編第6章「霧の巣遊戯」、夏イベント群、新キャラ残虹／リンコ、階層チャレンジなどを追加。"
 status: "verified"
-updated: 2026-09-05
+updated: 2026-09-09
+checked: 2026-09-09
 tags: ["アップデート", "v1.3", "星暮保護区", "夏イベント"]
 sources:
   - label: "NTE公式 — Ver.1.3「霧月夜に星還りて」アップデートのお知らせ"
     url: "https://nte.perfectworld.com/jp/article/news/gamenews/20260817/263606.html"
+  - label: "NTE公式 — 2026年9月9日 メンテナンスのお知らせ"
+    url: "https://nte.perfectworld.com/jp/article/news/gamenews/20260908/263946.html"
   - label: "神ゲー攻略 — Ver1.3予告番組の内容まとめ"
     url: "https://kamigame.jp/nte/page/434738849776728900.html"
   - label: "PR TIMES — Ver.1.3「霧月夜に星帰りて」8月19日より配信開始"
@@ -37,7 +40,7 @@ sources:
 | キャラ | 属性 | 実装 |
 | --- | --- | --- |
 | **[残虹](/characters/zanko/)** | [呪](/terms/el-incantation/) | 前半（8/19〜9/9）限定ボード「[惑心の影](/events/zanko-pickup/)」 |
-| **[リンコ](/characters/rinko/)** | [霊](/terms/el-anima/) | 後半（9/9〜9/30 予定）限定ボード「[全帯域ローミング中！](/events/rinko-pickup/)」 |
+| **[リンコ](/characters/rinko/)** | [霊](/terms/el-anima/) | 後半（9/9〜9/30 06:59）限定ボード「[全帯域ローミング中！](/events/rinko-pickup/)」 |
 
 復刻は前半が[ナナリ](/characters/nanally/)、後半が[潯（ホトリ）](/characters/hotori/)。
 
@@ -51,15 +54,23 @@ sources:
 - [スターズ・バレー](/events/stars-valley/)（ビーチバレー）
 - [サーフブレイカー](/events/surf-breaker/)（水上バイクレース）
 - [難破船トレジャー](/events/shipwreck-treasure/)（8/28〜9/30）
-- バトル・バンケット（難易度チャレンジ）／潮風ツーリング／ビルド・ラッシュ／軌道外ブレイク
+- バトル・バンケット（難易度チャレンジ）／ビルド・ラッシュ
 - **[階層チャレンジ（真竜試練）](/systems/floor-challenge/)** — [九百九十九夜](/systems/nine-nights/)に追加された最大99階層のダンジョン
+
+### 後半（2026/9/9〜）で追加されたもの
+
+- **[軌道外ブレイク](/events/orbital-break/)**（9/9〜9/30 06:59）— 押し寄せる敵をさばいて生き残る新モード
+- [ピクセルオーバーフロー](/events/pixel-overflow/)（9/14〜9/21）／[潮風ツーリング](/events/sea-breeze-touring/)（9/17〜9/30）／[ファンスラッシュ](/events/fans-slash/)（9/21〜9/28）
+- [ノスタルジー号](/vehicles/nostalgie/)（自転車・800,000ファンス）
+- リンコ向けコスチューム3種（「アストロ・ダイバー」「スプリング・メモリア」ほか）
+- 戦闘中の**バフ表示の上限が 3個から5個** に増加、キャラモデルの表示不具合の修正など
 
 ### 生活・QoL
 
 - **自動運転**への対応、**助手席同乗**
 - **コスチュームローテーション**（ランダムコーデ）、水着コスチューム
 - UI非表示機能、マルチの敵影追跡、キャラクター描画の強化
-- 新しい乗り物（[水上バイク Tide](/vehicles/tide/)／[ビーチバギー サウザン](/vehicles/thousand/)／[自転車 ノスタルジー号](/vehicles/nostalgie/)）と不動産「閑野雅邸」（6,900,000ファンス・シティ名声Lv.13）
+- 新しい乗り物（[水上バイク Tide](/vehicles/tide/)／[ビーチバギー サウザン](/vehicles/thousand/)／[自転車 ノスタルジー号](/vehicles/nostalgie/)・後半）と不動産「閑野雅邸」（6,900,000ファンス・シティ名声Lv.13）
 - シーズンパス「[ハンター褒章](/systems/hunter-commendation/)」の新シーズン
 
 関連: [ガチャ/イベント一覧](/events/) ／ [更新履歴](/release-notes/)

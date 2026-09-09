@@ -4,7 +4,8 @@ category: "スタート"
 order: 20
 description: "すり抜け無しの天井設計を活かし、Ver.1.3 現在は開催中バナーの限定S（残虹→リンコ）を1点狙いするのが定石。"
 status: "verified"
-updated: 2026-09-05
+updated: 2026-09-09
+checked: 2026-09-09
 tags: ["リセマラ", "ガチャ", "v1.3"]
 sources:
   - label: "神ゲー攻略 — リセマラ当たりランキング"
@@ -21,7 +22,7 @@ NTEは**すり抜け（50/50）が無く**、リミテッドで出たS級は必�
 
 ## おすすめの初動（Ver.1.3「霧月夜に星還りて」時点）
 
-- **開催中の限定Sを1点狙い**するのが基本。Ver.1.3 は前半が **[残虹](/characters/zanko/)**（呪・[惑心の影](/events/zanko-pickup/) 8/19〜9/9）、後半が **[リンコ](/characters/rinko/)**（霊・[全帯域ローミング中！](/events/rinko-pickup/) 9/9〜9/30 予定）。
+- **開催中の限定Sを1点狙い**するのが基本。Ver.1.3 は前半が **[残虹](/characters/zanko/)**（呪・[惑心の影](/events/zanko-pickup/) 8/19〜9/9）、後半が **[リンコ](/characters/rinko/)**（霊・[全帯域ローミング中！](/events/rinko-pickup/) 9/9〜9/30 06:59）。**2026年9月9日時点では後半が開催中**。
 - **残虹**は[濁燃](/terms/reaction-scorch/)などの継続ダメージを主軸にするメインアタッカーで、現行 Tier 最上位（SS）。DoT編成の核になる。
 - 恒常の当たり: **[九原](/characters/jiuyuan/) / [ハソール](/characters/hathor/) / [ダフォディール](/characters/daffodill/) / [早霧](/characters/sakiri/) / [白蔵](/characters/baicang/)**（属性の穴を埋めやすい）。
 - 無料の **[ハニア](/characters/haniel/) / [ちぃちゃん](/characters/chiz/) / [零](/characters/zero/)** が土台を支える。攻撃バッファーの**ハニア**は火力キャラ全般と好相性。

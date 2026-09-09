@@ -11,7 +11,8 @@ tier: "S"
 cv: "伊藤静"
 description: "エイボン骨董品店の店主。時間操作を軸にした光属性のサブアタッカー/支援で、味方スキルを記録して再現する。"
 status: "verified"
-updated: 2026-09-05
+updated: 2026-09-09
+checked: 2026-09-09
 tags: ["光", "バッファー", "サポート", "時間停止"]
 sources:
   - label: "Game8 — 潯（ほとり）"
@@ -41,4 +42,4 @@ sources:
 
 ## 入手
 
-v1.0 後半の限定ピックアップ（**2026/5/13〜6/3**）→ [潯（ほとり）ピックアップ](/events/hotori-pickup/)。英語版のバナー名は「Misty Tipsy Style」。Ver.1.3 後半（9/9〜）に**復刻**が予定されている（→[全帯域ローミング中！](/events/rinko-pickup/)）。
+v1.0 後半の限定ピックアップ（**2026/5/13〜6/3**）→ [潯（ほとり）ピックアップ](/events/hotori-pickup/)。英語版のバナー名は「Misty Tipsy Style」。Ver.1.3 後半では限定ボード「**独り酔い朧月流**」で**復刻**した（**2026/9/9〜9/30 06:59 JST**。→[全帯域ローミング中！](/events/rinko-pickup/)）。

@@ -2,15 +2,18 @@
 title: "アストロ・コーラー"
 rarity: "S"
 form: "プラズマ"
-acquisition: "弧盤研究計画「万波特別号」（2026/9/9〜 予定）"
+acquisition: "弧盤研究計画「万波特別号」（2026/9/9〜9/30 06:59）"
 free: false
 recommendedFor: "リンコ（追撃サブアタッカー）"
 order: 13
 description: "リンコのモチーフ（限定）Sランク弧盤。サポートスキルを連発するリンコと噛み合い、スキル・EX終結の火力を底上げする。"
 status: "draft"
-updated: 2026-09-05
+updated: 2026-09-09
+checked: 2026-09-09
 tags: ["弧盤", "S", "限定", "モチーフ", "リンコ", "v1.3", "プラズマ"]
 sources:
+  - label: "NTE公式 — 2026年9月9日 メンテナンスのお知らせ"
+    url: "https://nte.perfectworld.com/jp/article/news/gamenews/20260908/263946.html"
   - label: "神ゲー攻略 — Ver1.3予告番組の内容まとめ"
     url: "https://kamigame.jp/nte/page/434738849776728900.html"
   - label: "神ゲー攻略 — リンコの評価と使い方・おすすめ編成・育成素材"
@@ -28,6 +31,6 @@ sources:
 
 ## 入手
 
-弧盤研究計画（武器ガチャ）「**万波特別号**」（2026/9/9〜 予定）。仕様は[弧盤研究](/terms/arc-project/)を参照。
+弧盤研究計画（武器ガチャ）「**万波特別号**」（**2026/9/9〜9/30 06:59 JST**）。仕様は[弧盤研究](/terms/arc-project/)を参照。
 
 関連: [リンコ](/characters/rinko/) ／ [弧盤システム](/systems/arc-weapons/) ／ [弧盤（武器）一覧](/arcs/)

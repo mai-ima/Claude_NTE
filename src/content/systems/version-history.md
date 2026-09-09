@@ -4,11 +4,14 @@ category: "資料"
 order: 5
 description: "正式リリース（v1.0）から Ver.1.3「霧月夜に星還りて」まで、各バージョンで何が追加されたかの年表。過去バージョンの実装内容もそのまま残している。"
 status: "verified"
-updated: 2026-09-05
+updated: 2026-09-09
+checked: 2026-09-09
 tags: ["資料", "年表", "アップデート", "v1.0", "v1.1", "v1.2", "v1.3"]
 sources:
   - label: "NTE公式 — 正式リリース記念イベント"
     url: "https://nte.perfectworld.com/jp/article/news/gameevent/20260422/261901.html"
+  - label: "NTE公式 — 2026年9月9日 メンテナンスのお知らせ"
+    url: "https://nte.perfectworld.com/jp/article/news/gamenews/20260908/263946.html"
   - label: "NTE公式 — Ver.1.3「霧月夜に星還りて」アップデートのお知らせ"
     url: "https://nte.perfectworld.com/jp/article/news/gamenews/20260817/263606.html"
   - label: "ゲームウィズ — アップデート最新情報まとめ"
@@ -58,10 +61,13 @@ sources:
 
 - **本編**: 第6章「霧の巣遊戯」（「赤竜討伐譚」クリア後に解放）
 - **エリア**: [星暮保護区](/locations/hoshigure-sanctuary/)（星沈湾リゾート・ビーチ・港）
-- **キャラ**: 前半 [残虹](/characters/zanko/)（呪・[惑心の影](/events/zanko-pickup/) 8/19〜9/9）／後半 [リンコ](/characters/rinko/)（霊・[全帯域ローミング中！](/events/rinko-pickup/) 9/9〜9/30 予定）
+- **キャラ**: 前半 [残虹](/characters/zanko/)（呪・[惑心の影](/events/zanko-pickup/) 8/19〜9/9）／後半 [リンコ](/characters/rinko/)（霊・[全帯域ローミング中！](/events/rinko-pickup/) 9/9〜9/30 06:59）
 - **弧盤**: [喰心刃](/arcs/kuishinjin/)（蠱惑特別号）／[アストロ・コーラー](/arcs/astro-caller/)（万波特別号）／[プリペア](/arcs/prepare/)復刻（猛虎特別号）／名月特別号
-- **イベント**: [スターズ・バレー](/events/stars-valley/)、[サーフブレイカー](/events/surf-breaker/)、[難破船トレジャー](/events/shipwreck-treasure/)、バトル・バンケット、潮風ツーリング、ビルド・ラッシュ、軌道外ブレイク
+- **イベント（前半）**: [スターズ・バレー](/events/stars-valley/)、[サーフブレイカー](/events/surf-breaker/)、[難破船トレジャー](/events/shipwreck-treasure/)、バトル・バンケット
+- **イベント（後半・9/9〜）**: [軌道外ブレイク](/events/orbital-break/)（9/9〜9/30）、[ピクセルオーバーフロー](/events/pixel-overflow/)（9/14〜9/21）、[潮風ツーリング](/events/sea-breeze-touring/)（9/17〜9/30）、[ファンスラッシュ](/events/fans-slash/)（9/21〜9/28）
 - **モード**: [階層チャレンジ（真竜試練）](/systems/floor-challenge/)（九百九十九夜に追加・最大99階層）
+- **乗り物**: サウザン（4,000,000ファンス）／[ノスタルジー号](/vehicles/nostalgie/)（800,000ファンス・9/9〜）
 - **QoL**: 自動運転、助手席同乗、コスチュームローテーション、UI非表示、マルチの敵影追跡
+- **QoL（9/9〜）**: 戦闘中のバフ表示の上限が **3個から5個** に増加
 
 > 各バージョンの詳細は個別ページに保全しています。サイト側の更新記録は[更新履歴](/release-notes/)を参照。

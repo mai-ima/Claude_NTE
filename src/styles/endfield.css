@@ -641,6 +641,14 @@ a:hover {
   font-size: 0.8rem;
   line-height: 1.6;
   color: var(--ef-muted);
+  /* 「行」は名前を速く追うための形なので、説明は**2行で切る**。
+     全文を読みたいときは表示形式の「詳しく」に切り替える（下で解除している）。
+     ※ 記事が0件のあいだは見た目に出ず、記事が入って初めて分かる崩れだった。 */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
 }
 .ef-row-meta {
   font-size: 0.72rem;
@@ -1656,6 +1664,7 @@ html[data-ef-view='detail'] .ef-row-desc {
   overflow: visible;
   white-space: normal;
   -webkit-line-clamp: unset;
+  line-clamp: unset;
 }
 
 /* =========================================================================
