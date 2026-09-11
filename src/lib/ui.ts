@@ -1,13 +1,17 @@
 /**
  * UIモード（ベータ機能）の定義と適用ロジック。
  * - 'classic'  : 従来のUI（既定）
- * - 'new'      : ★次期ベース候補。画面の構成そのものを変えるフルチェンジ
+ * - 'new'      : 画面の構成そのものを変えるフルチェンジ
  *                （デスクトップは左の縦レール、モバイルは浮かぶドック）
+ *                ※ 以前は「次期ベース候補」としていたが、利用者の指示で外した。
+ *                   次期ベースの役割は 'base' が担う（2026-09-10）
  * - 'new-classic': 従来UIを近代化した非ベータの新デザイン
  * - 'editorial': 紙の特集記事風（太罫線・ハードシャドウ・活字タイポ）
  * - 'liquid'   : 本格リキッドグラス（厚い曇りガラス・カプセル形状）
  * - 'aurora'   : 不透明×ネオングラデーション＋発光（ガラスでない）
  * - 'apple'    : Apple HIG 風のクリーンなフラット（仮称）
+ * - 'base'     : ★次期ベース。スマホアプリの作法（青紫のアクセント／大きめの角丸／
+ *                カード中心／チップ／下線タブ／浮かぶタブバー）で組んだ土台
  * - 'nte'      : NTE 公式サイトの配色と質感を再現（シアン #4fe5fb。
  *                暗いテーマ＝公式のニュース一覧、明るいテーマ＝公式の記事ページ）
  * html[data-ui='<mode>'] でスタイルを切り替える。テーマ（配色）とは独立。
@@ -24,6 +28,7 @@ export type UIMode =
   | 'terminal'
   | 'clay'
   | 'blueprint'
+  | 'base'
   | 'nte';
 
 export const UI_KEY = 'nte.ui';
@@ -32,9 +37,15 @@ const DEFAULT_UI: UIMode = 'classic';
 export const UI_MODES: { value: UIMode; label: string; hint: string; beta: boolean }[] = [
   { value: 'classic', label: '従来UI', hint: 'これまでのシンプルな表示', beta: false },
   {
+    value: 'base',
+    label: 'Base（次期ベース）',
+    hint: 'アプリのような見た目。青紫のアクセント、丸みのあるカード、絞り込みのチップ、下線のタブ、下に浮かぶタブバー',
+    beta: false,
+  },
+  {
     value: 'new',
-    label: 'New（次期ベース）',
-    hint: '画面の構成から作り直した新しい土台。パソコンは左の縦メニュー、スマホは浮かぶタブ',
+    label: 'New',
+    hint: '画面の構成から作り直した見た目。パソコンは左の縦メニュー、スマホは浮かぶタブ',
     beta: true,
   },
   { value: 'new-classic', label: 'New Classic', hint: '従来UIを近代化した非ベータの新デザイン（洗練タイポ・やわらか影）', beta: false },

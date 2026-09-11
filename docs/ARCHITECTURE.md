@@ -287,7 +287,7 @@ themes.css → base.css → components.css
 | `themes.css` | `html[data-theme]` | 4 テーマの CSS 変数 |
 | `base.css` | — | リセットと土台 |
 | `components.css` | — | **本体（43KB）**。ヘッダー・カード・一覧・下部ナビ・wiki切替など |
-| `ui-*.css`（10種） | `html[data-ui]` | 新UIの見た目。**`ui-new.css` だけは骨組みも変える**（下記） |
+| `ui-*.css`（11種） | `html[data-ui]` | UIモードの見た目。**`ui-new.css` だけは骨組みも変える**（下記） |
 | `prefs.css` | `html[data-<pref>]` | 表示の追加設定の効果 |
 | `ios.css` | `html[data-ios]` | iPhone / iPad 向けの調整（**BaseLayout でのみ読む**） |
 | `alpha.css` | — | **α 専用**のデザインシステム（`--a-*` トークン）。末尾に α 用の `html[data-ios]` あり |
@@ -295,10 +295,15 @@ themes.css → base.css → components.css
 ### UIモード（`html[data-ui]`）の作り分け
 
 `ui-editorial` / `ui-liquid` / `ui-aurora` / `ui-apple` / `ui-terminal` / `ui-clay` /
-`ui-blueprint` / `ui-new-classic` / `ui-nte` は「質感・タイポ・色」を塗り替えるレイヤーで、
-**画面の骨組み（`.app` のグリッド）は classic のまま**です。
+`ui-blueprint` / `ui-new-classic` / `ui-nte` / `ui-base` は「質感・タイポ・色」を塗り替える
+レイヤーで、**画面の骨組み（`.app` のグリッド）は classic のまま**です。
 
-**`ui-nte.css` は配色そのものを差し替える**唯一のモードです（NTE 公式サイトの再現）。
+**`ui-base.css` が次期ベース**です（2026-09-10 に利用者が決定）。参考画像
+（スマホ向けアプリの画面集）から読み取った作法を再現したもので、
+根拠は CSS の冒頭コメントに箇条書きで残してあります。
+以前「次期ベース候補」としていた `ui-new` は、通常のUIモードに戻しました。
+
+**`ui-nte.css` と `ui-base.css` は配色そのものを差し替える**モードです。
 そのため変数を定義するブロックだけ **`html:root[data-ui='nte']`（詳細度 0,2,1）** と書いています。
 `html[data-ui='nte']`（0,1,1）では `themes.css` の `:root[data-theme='minimal']`（0,2,0）に負けて
 **`--accent` などが上書きできません**。ここは実際に踏んだ落とし穴なので、

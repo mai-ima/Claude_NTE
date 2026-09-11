@@ -1,0 +1,505 @@
+/* =========================================================================
+   UIモード「Base」 — <html data-ui="base"> のときだけ適用。**次期ベース**。
+
+   利用者から参考画像（スマホ向けゲームwikiアプリの画面集・3枚）を受け取り、
+   その意匠を隅々まで観察して再現したもの。**画像そのものは同梱していない**。
+   読み取れた作法だけを、こちらのマークアップに合う形で組み直している。
+
+   ---- 参考画像から読み取った作法（実装の根拠）--------------------------------
+
+   1. 地は**薄い青灰**、面（カード）は**白**。境界線は極薄で、影もごく薄い。
+   2. アクセントは**青紫**。単色だけでなく、**青紫→青のグラデーション**を
+      バナー・主ボタン・ブランド名に使う。
+   3. **角が大きく丸い**。カード 16〜20px、ボタンとチップは**ピル**（999px）。
+   4. 検索欄は**ピル型**で、地よりわずかに沈んだ面。
+   5. 見出しは「**見出し ＋ 右端に「もっと見る ›」**」の組。
+   6. 一覧は「**左に角丸のサムネ／中央にタイトルと補足／右にシェブロン**」の行。
+   7. 絞り込みは**チップ**。選ばれたものだけ**青で塗りつぶし＋白文字**。
+   8. タブは**下線**で現在地を示す（アクティブは青＋太字）。
+   9. 種別の印は**淡い色地＋濃い文字**の小さなバッジ。
+  10. スマホの下部ナビは**白い面＋上の細い境界**、現在地だけ青。
+      画像では下端から少し浮いており、**角が丸い**。
+  11. 数値（★や件数）は**小さく右側**に置き、色を落として主張させない。
+
+   ---- こちらの事情に合わせて変えたところ ------------------------------------
+
+   ・画像はネイティブアプリのため**ヘッダーが常に上に固定**だが、こちらは
+     Web で長文記事を読むので、**ヘッダーは従来どおり sticky** のままにした。
+   ・画像の**キャラ絵・ゲームのロゴ・背景写真は使っていない**（権利の都合）。
+     バナーは**自前のグラデーションと図形**で作る。
+   ・アクセントは wiki ごとの色（--wiki-accent）を尊重する。青紫は**既定値**で、
+     wiki の色が設定されていればそちらが優先される。
+
+   色はテーマ（明/暗）の両方で成立させる。classic には一切影響しない。
+   ========================================================================= */
+
+/* 変数の上書きは **html:root** で書く（詳細度 0,2,1）。
+   `html[data-ui='base']` は 0,1,1 で、themes.css の `:root[data-theme='…']`
+   （0,2,0）に負けて効かない。→ docs/FINDINGS.md */
+html:root[data-ui='base'] {
+  /* 角丸。画像はカードが 16〜20px、小物が 12px、押しものはピル */
+  --radius: 18px;
+  --radius-sm: 12px;
+  --radius-lg: 22px;
+
+  /* アクセント（青紫）。wiki 固有色があればそちらが優先される */
+  --b-accent: var(--wiki-accent, #5b6cff);
+  --b-accent-2: #8b5cf6;
+  --b-grad: linear-gradient(135deg, var(--b-accent) 0%, var(--b-accent-2) 100%);
+  --accent: var(--b-accent);
+  --accent-hover: color-mix(in srgb, var(--b-accent) 82%, #fff);
+  --accent-weak: color-mix(in srgb, var(--b-accent) 12%, transparent);
+  --accent-contrast: #fff;
+
+  /* 面と地。画像の地は白に近い青灰 */
+  --bg: #f4f6fd;
+  --surface: #ffffff;
+  --surface-2: #f7f8fe;
+  --border: color-mix(in srgb, var(--b-accent) 14%, #e6e9f5);
+
+  /* 影は「置いてあるだけ」に見える薄さに留める */
+  --shadow-sm: 0 1px 2px rgba(24, 32, 76, 0.05);
+  --shadow: 0 4px 14px rgba(24, 32, 76, 0.07);
+  --shadow-lg: 0 12px 32px rgba(24, 32, 76, 0.12);
+}
+
+/* 暗いテーマ。画像は明るい前提の意匠なので、
+   「白い面」を「濃紺の面」に読み替えて同じ関係を保つ。 */
+html:root[data-ui='base'][data-theme='dark'],
+html:root[data-ui='base'][data-theme='auto'] {
+  --bg: #0e1120;
+  --surface: #171b2e;
+  --surface-2: #1e2338;
+  --border: color-mix(in srgb, var(--b-accent) 26%, #2a3050);
+  --b-accent: var(--wiki-accent, #7b8cff);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
+}
+@media (prefers-color-scheme: dark) {
+  html:root[data-ui='base'][data-theme='auto'] {
+    --bg: #0e1120;
+    --surface: #171b2e;
+  }
+}
+
+html[data-ui='base'] body {
+  background: var(--bg);
+}
+
+/* ---- 1. ヘッダー --------------------------------------------------------
+   画像は白い面＋下に極薄の境界。ブランド名は**グラデーションの文字**。 */
+html[data-ui='base'] .app-header {
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: saturate(140%) blur(12px);
+}
+html[data-ui='base'] .brand {
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+/* ブランド名だけグラデーションで塗る（画像の「wiki hub」の見せ方）。
+   背景クリップなので、非対応環境では通常の文字色に落ちる。 */
+html[data-ui='base'] .brand > span:last-child {
+  background: var(--b-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+html[data-ui='base'][data-theme='dark'] .brand > span:last-child {
+  /* 暗い地では細い字が沈むので、グラデをやめて明るい単色にする */
+  background: none;
+  color: var(--text);
+}
+html[data-ui='base'] .brand-mark {
+  border-radius: 12px;
+  background: var(--b-grad);
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--b-accent) 35%, transparent);
+}
+
+/* ヘッダーの丸ボタン（検索・テーマ・メニュー）。画像は枠なしの素の丸。 */
+html[data-ui='base'] .app-header .btn-icon {
+  border-color: transparent;
+  background: transparent;
+  border-radius: 999px;
+}
+html[data-ui='base'] .app-header .btn-icon:hover {
+  background: var(--surface-2);
+}
+
+/* ---- 2. カード ----------------------------------------------------------
+   画像のカードは「白・大きな角丸・ごく薄い影・境界はほぼ見えない」。 */
+html[data-ui='base'] .card {
+  border-color: var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+html[data-ui='base'] .card-pad {
+  padding: 16px;
+}
+html[data-ui='base'] .card-link {
+  transition:
+    transform 0.18s cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+html[data-ui='base'] .card-link:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+  border-color: color-mix(in srgb, var(--b-accent) 35%, var(--border));
+}
+html[data-ui='base'] .card-link:active {
+  transform: translateY(0) scale(0.995);
+}
+
+/* ---- 3. セクションの見出し ----------------------------------------------
+   画像は「太い見出し ＋ 右端に『もっと見る ›』」。
+   見出しの左に**アクセント色の短い縦棒**を置いて塊を作る。 */
+/* 参考画像の見出しは**装飾を足さず、太さと大きさだけ**で区切っている。
+   （こちらで縦棒などを足すと、画像には無いものが増えてしまう） */
+html[data-ui='base'] .content h2 {
+  font-size: 1.12rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+/* 「もっと見る」は右端の小さなリンク。矢印は疑似要素で足す。 */
+html[data-ui='base'] .row-between > a.text-sm {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: var(--b-accent);
+  font-weight: 700;
+}
+html[data-ui='base'] .row-between > a.text-sm::after {
+  content: '›';
+  font-size: 1.1em;
+  line-height: 1;
+}
+
+/* ---- 3-2. バナー（ヒーロー）--------------------------------------------
+   参考画像の目玉は「**濃い青紫のグラデーションに白文字**の大きなバナー」。
+   右下に丸い矢印ボタンが乗っている。画像は使えないので、
+   グラデーションと**光の円**（radial-gradient）だけで奥行きを作る。 */
+html[data-ui='base'] .hero {
+  border: 0;
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(120% 140% at 85% 15%, rgba(255, 255, 255, 0.22), transparent 55%),
+    radial-gradient(90% 120% at 10% 90%, rgba(255, 255, 255, 0.14), transparent 60%),
+    var(--b-grad);
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--b-accent) 30%, transparent);
+  color: #fff;
+}
+/* ★ `.hero` は `.page-head` でもあるので、下の `.page-head .eyebrow`
+   （アクセント色）と**同じ詳細度でぶつかり、後ろに書いた方が勝つ**。
+   バナーの上で小見出しが青紫のまま埋もれたので、`.hero.page-head` と
+   2つ重ねて詳細度を上げてある（消さないこと）。 */
+html[data-ui='base'] .hero.page-head .eyebrow,
+html[data-ui='base'] .hero h1,
+html[data-ui='base'] .hero p {
+  color: #fff;
+}
+html[data-ui='base'] .hero.page-head .eyebrow {
+  opacity: 0.88;
+}
+html[data-ui='base'] .hero p {
+  opacity: 0.94;
+  /* 参考画像のバナーは3行程度で収まっている。こちらは説明文が長いので、
+     少しだけ字を落として縦に伸びすぎないようにする。 */
+  font-size: 0.95rem;
+}
+html[data-ui='base'] .hero strong {
+  color: #fff;
+}
+/* バナーの中のボタンは、白い面に濃い文字（画像と同じ反転の関係） */
+html[data-ui='base'] .hero .btn-primary {
+  background: #fff;
+  color: var(--b-accent);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+html[data-ui='base'] .hero .btn-primary:hover {
+  filter: none;
+  background: #f4f5ff;
+}
+html[data-ui='base'] .hero .btn:not(.btn-primary) {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #fff;
+}
+html[data-ui='base'] .hero .btn:not(.btn-primary):hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+/* バナーの中に置いた数値の並びも、白基調に読み替える */
+html[data-ui='base'] .hero .stat {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow: none;
+}
+html[data-ui='base'] .hero .stat-num {
+  background: none;
+  color: #fff;
+}
+html[data-ui='base'] .hero .stat-label {
+  color: rgba(255, 255, 255, 0.86);
+}
+
+/* 見出しブロック（ページの先頭）。画像は英字の小見出し＋大きな和文。 */
+html[data-ui='base'] .page-head .eyebrow {
+  color: var(--b-accent);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+html[data-ui='base'] .page-head h1 {
+  letter-spacing: -0.01em;
+}
+
+/* ---- 4. ボタン ----------------------------------------------------------
+   主ボタンは**ピル＋グラデーション**、副ボタンは白地に薄枠。 */
+html[data-ui='base'] .btn {
+  border-radius: 999px;
+  font-weight: 700;
+}
+html[data-ui='base'] .btn-primary {
+  background: var(--b-grad);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--b-accent) 32%, transparent);
+}
+html[data-ui='base'] .btn-primary:hover {
+  filter: brightness(1.06);
+}
+html[data-ui='base'] .btn-ghost {
+  background: var(--surface);
+  border-color: var(--border);
+}
+html[data-ui='base'] .btn-icon {
+  border-radius: 999px;
+}
+
+/* ---- 5. 絞り込みのチップ ------------------------------------------------
+   画像は「選ばれたものだけ青で塗りつぶし・白文字」。
+   非選択は白地＋極薄の枠で、押せることが分かる程度に留める。 */
+html[data-ui='base'] .chip {
+  height: 34px;
+  padding: 0 14px;
+  background: var(--surface);
+  border-color: var(--border);
+  box-shadow: var(--shadow-sm);
+}
+html[data-ui='base'] .chip[aria-pressed='true'],
+html[data-ui='base'] .chip.is-on {
+  background: var(--b-grad);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--b-accent) 30%, transparent);
+}
+/* 設定の選択肢（3〜4択）も同じ作法にそろえる */
+html[data-ui='base'] .pref-seg {
+  border-radius: 999px;
+  background: var(--surface-2);
+}
+html[data-ui='base'] .pref-seg-opt.is-on {
+  background: var(--b-grad);
+  color: #fff;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--b-accent) 30%, transparent);
+}
+
+/* ---- 6. バッジ ----------------------------------------------------------
+   画像は「淡い色地＋濃い文字」。枠線はほぼ出さない。 */
+html[data-ui='base'] .badge {
+  height: 24px;
+  padding: 0 10px;
+  border-color: transparent;
+  background: var(--surface-2);
+  font-weight: 700;
+}
+html[data-ui='base'] .badge-accent,
+html[data-ui='base'] .notice-badge.is-maintenance {
+  background: var(--accent-weak);
+  color: var(--b-accent);
+}
+html[data-ui='base'] .badge-verified {
+  background: color-mix(in srgb, var(--success) 14%, transparent);
+  color: var(--success);
+}
+html[data-ui='base'] .badge-draft,
+html[data-ui='base'] .badge-warning,
+html[data-ui='base'] .notice-badge.is-important {
+  background: color-mix(in srgb, var(--warning) 16%, transparent);
+  color: var(--warning);
+}
+
+/* ---- 7. 一覧の行 --------------------------------------------------------
+   画像の一覧は「左サムネ／中央に文字／右にシェブロン」。
+   こちらの一覧は文字だけの行が多いので、**右のシェブロン**だけを足して
+   「押せる行」であることを示す（サムネは無いページもあるため強制しない）。 */
+html[data-ui='base'] .grid-cards > .card-link {
+  position: relative;
+}
+html[data-ui='base'][data-listview='compact'] .grid-cards > .card-link,
+html[data-ui='base'][data-listview='table'] .grid-cards > .card-link {
+  padding-right: 28px;
+}
+html[data-ui='base'][data-listview='compact'] .grid-cards > .card-link::after,
+html[data-ui='base'][data-listview='table'] .grid-cards > .card-link::after {
+  content: '›';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+/* お知らせの行は画像の「バッジ＋日付＋見出し＋抜粋」がそのまま合う。
+   左端の色帯はこのUIでは出さず、バッジの色で種別を伝える。
+   代わりに画像と同じく**右端にシェブロン**を置いて、押せることを示す。 */
+html[data-ui='base'] .notice-item {
+  position: relative;
+  border-left-width: 1px;
+  border-left-color: var(--border);
+}
+html[data-ui='base'] a.notice-item {
+  padding-right: 34px;
+}
+html[data-ui='base'] a.notice-item::after {
+  content: '›';
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+/* ---- 8. タブ（下線） ----------------------------------------------------
+   画像のゲーム詳細は「概要／攻略／キャラ…」の下線タブ。
+   こちらで対応するのは記事内の目次と、ヘッダーのグローバルナビ。 */
+html[data-ui='base'] .nav-link {
+  border-radius: 999px;
+  font-weight: 700;
+}
+html[data-ui='base'] .nav-link[aria-current='page'] {
+  background: var(--accent-weak);
+  color: var(--b-accent);
+}
+/* 目次は画像の「現在地に色の下線」に寄せる */
+html[data-ui='base'] .toc a {
+  border-radius: 8px;
+}
+html[data-ui='base'] .toc a.is-current {
+  background: var(--accent-weak);
+  color: var(--b-accent);
+  font-weight: 700;
+}
+
+/* ---- 9. 下部のタブバー --------------------------------------------------
+   画像は「白い面・上に細い境界・現在地だけ青」。
+   下端から少し浮かせ、角を丸める（画像の見え方に合わせる）。 */
+html[data-ui='base'] .bottom-nav {
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  height: calc(60px + env(safe-area-inset-bottom, 0px));
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  background: color-mix(in srgb, var(--surface) 94%, transparent);
+  box-shadow: var(--shadow-lg);
+}
+html[data-ui='base'] .bottom-nav a[aria-current='page'] {
+  color: var(--b-accent);
+}
+/* 現在地のアイコンだけ、淡い色の面を敷いて指の行き先を示す */
+html[data-ui='base'] .bottom-nav a[aria-current='page'] svg {
+  border-radius: 999px;
+  outline: 8px solid var(--accent-weak);
+  background: var(--accent-weak);
+}
+
+/* ---- 10. 検索 -----------------------------------------------------------
+   画像の検索欄はピル型で、地よりわずかに沈んだ面。 */
+html[data-ui='base'] .pagefind-ui__search-input,
+html[data-ui='base'] .search-modal input[type='text'],
+html[data-ui='base'] .admin-field input,
+html[data-ui='base'] .admin-field select,
+html[data-ui='base'] .admin-field textarea {
+  border-radius: 999px;
+  background: var(--surface-2);
+  border-color: var(--border);
+}
+html[data-ui='base'] .admin-field textarea {
+  border-radius: 16px;
+}
+html[data-ui='base'] .search-modal {
+  border-radius: var(--radius-lg);
+}
+
+/* ---- 11. 統計の並び -----------------------------------------------------
+   画像のマイページは「数値が大きく、下に小さなラベル」を横に3つ。 */
+html[data-ui='base'] .stat {
+  border-radius: 16px;
+  box-shadow: var(--shadow-sm);
+}
+html[data-ui='base'] .stat-num {
+  background: var(--b-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---- 12. 記事本文 -------------------------------------------------------
+   画像の記事は白いカードの中に本文があり、見出しの前に余白が広い。 */
+html[data-ui='base'] .prose h2 {
+  margin-top: 2em;
+}
+html[data-ui='base'] .prose blockquote {
+  border-radius: 14px;
+  border-left-width: 4px;
+  border-left-color: var(--b-accent);
+  background: var(--accent-weak);
+  padding: 12px 16px;
+}
+html[data-ui='base'] .prose table {
+  border-radius: 14px;
+  overflow: hidden;
+}
+html[data-ui='base'] .prose thead th {
+  background: var(--surface-2);
+}
+html[data-ui='base'] .callout {
+  border-radius: 16px;
+}
+
+/* ---- 13. 入場の動き -----------------------------------------------------
+   画像は静止画なので動きは読み取れない。ここは**控えめに**、
+   カードが下から少し上がって現れるだけにする。
+   「モーションを減らす」設定と端末の設定の**両方**で止まる。 */
+html[data-ui='base'][data-reveal='1'] :is(.grid-cards > *, .notice-list > *) {
+  transform: translateY(10px);
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-ui='base'] .card-link {
+    transition: none;
+  }
+}
+html[data-ui='base'][data-motion='reduce'] .card-link {
+  transition: none;
+}
+
+/* ---- 14. 狭い画面 -------------------------------------------------------
+   画像はスマホ前提の意匠なので、狭い画面でこそ本来の姿になる。 */
+@media (max-width: 640px) {
+  html[data-ui='base'] .card-pad {
+    padding: 14px;
+  }
+  html[data-ui='base'] .content h2 {
+    font-size: 1.06rem;
+  }
+  /* タブバーを下端から 8px 浮かせたぶん、本文の下の余白を足す。
+     既定は 58px ぶんしか確保していないので、そのままだと最後の行が隠れる。 */
+  html[data-ui='base'] .app {
+    padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px));
+  }
+}

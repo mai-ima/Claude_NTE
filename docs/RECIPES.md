@@ -313,3 +313,26 @@ sources:
 **落とし穴**: カードに擬似要素で飾りを足すときは、
 `.char-card::before`（属性色の帯）と `overflow: hidden` に注意する。
 `::before` を上書きすると一覧から属性が読み取れなくなる。
+
+
+---
+
+## 9. UIモードを1つ足す
+
+| # | ファイル | 何をする |
+| --- | --- | --- |
+| 1 | `src/lib/ui.ts` | `UIMode` に値を足し、`UI_MODES` に1件（`label` / `hint` / `beta`） |
+| 2 | `src/styles/ui-<値>.css` | `html[data-ui='<値>']` のルールを書く |
+| 3 | `src/layouts/BaseLayout.astro` | CSS を import（**他の ui-*.css と同じ並びに置く**） |
+| 4 | `docs/ARCHITECTURE.md` | UIモードの表と本数を直す |
+
+**落とし穴**
+
+- **配色（`--accent` など）を変えるなら `html:root[data-ui='x']`** と書く。
+  `html[data-ui='x']`（0,1,1）は `themes.css` の `:root[data-theme='…']`（0,2,0）に負ける。
+- **`.hero` は `.page-head` でもある**。ヒーローの中だけ色を変えるときは
+  `.hero.page-head .eyebrow` のように重ねる（同じ詳細度だと後ろに書いた方が勝つ）。
+- **下部ナビを浮かせたら、`.app` の `padding-bottom` も増やす**
+  （既定は 58px ぶんしか無い。浮かせた分だけ最後の行が隠れる）。
+- 参考画像がある場合は、**画像に無い装飾を足さない**。読み取った作法は
+  CSS の冒頭に箇条書きで残し、あとから根拠をたどれるようにする。
