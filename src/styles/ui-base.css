@@ -503,3 +503,227 @@ html[data-ui='base'][data-motion='reduce'] .card-link {
     padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px));
   }
 }
+
+/* =========================================================================
+   追加の参考画像（2026-09-11・3枚）から拾った作法
+
+   1枚目 … 記事ページ／キャラページ／武器一覧／サイドメニュー
+   2〜3枚目 … スプラッシュ／ホーム／ゲーム詳細／検索結果
+
+   ※ ロゴと wiki 名は**イメージ**（利用者の言葉）なので再現の対象にしない。
+      意匠の作法だけを拾う。画像・キャラ絵も持ち込まない。
+   ========================================================================= */
+
+/* ---- 15. 目次をカードにする --------------------------------------------
+   画像の記事ページは、目次が**独立した白いカード**で、行に**番号**が振られ、
+   右端に開閉の印がある。こちらの目次は見出しの階層なので、番号は
+   `counter` で振り、開閉は付けない（こちらはページ内リンクのため）。 */
+html[data-ui='base'] .toc {
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  counter-reset: toc;
+}
+html[data-ui='base'] .toc ul {
+  counter-reset: toc;
+}
+/* 第2階層（h2）にだけ番号を振る。第3階層は入れ子なので振らない。 */
+html[data-ui='base'] .toc li:not(.depth-3) > a::before {
+  counter-increment: toc;
+  content: counter(toc) '. ';
+  color: var(--b-accent);
+  font-weight: 800;
+}
+html[data-ui='base'] .toc a {
+  padding: 7px 8px;
+  border-radius: 10px;
+}
+html[data-ui='base'] .toc a.is-current {
+  /* 画像は「面で示す」作法なので、既定の左の棒は外して面だけにする */
+  box-shadow: none;
+}
+
+/* ---- 16. 基本情報のテーブル --------------------------------------------
+   画像のキャラページ／ゲーム詳細は「ラベルが左・値が右・行ごとに区切り線」。
+   こちらの `.info-row` がそのままこの形なので、**線と余白だけ**画像に寄せる。 */
+html[data-ui='base'] .info-panel {
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+html[data-ui='base'] .info-row {
+  padding: 12px 16px;
+  font-size: 0.88rem;
+}
+html[data-ui='base'] .info-row .k {
+  color: var(--muted);
+  font-weight: 600;
+}
+html[data-ui='base'] .info-row .v {
+  font-weight: 700;
+}
+
+/* ---- 17. 本文の箇条書きにチェックの印 -----------------------------------
+   画像のゲーム詳細は「ゲームの特徴」を**チェックマーク付きの行**で並べている。
+   記事本文の箇条書きを、その見え方（丸い印＋色）に寄せる。
+   ※ 印は装飾なので、読み上げには影響しない（`::marker` を使う）。 */
+html[data-ui='base'] .prose > ul > li::marker {
+  color: var(--b-accent);
+}
+html[data-ui='base'] .prose > ul > li {
+  padding-left: 2px;
+}
+
+/* ---- 18. タグのチップ ---------------------------------------------------
+   画像の記事ページはタイトルの下に**淡い色のタグ**が並ぶ。
+   こちらの記事にもタグがあるので、同じ見え方にそろえる。 */
+html[data-ui='base'] .meta-row .badge {
+  background: var(--accent-weak);
+  color: var(--b-accent);
+  border-color: transparent;
+}
+
+/* ---- 19. サイドメニュー（ドロワー）-------------------------------------
+   画像のサイドメニューは**濃紺の面**で、現在地だけ**青い面**、
+   「カテゴリ」「設定」の小さな見出しで区切っている。
+   こちらのドロワーも同じ構造（`.nav-group` ＋ `.nav-group-title`）なので、
+   見え方だけ寄せる。 */
+html[data-ui='base'] .drawer-panel {
+  width: min(84vw, 330px);
+  border-right: 0;
+  border-radius: 0 22px 22px 0;
+  padding: 18px 14px;
+  /* ★ 参考画像は、アプリ全体が明るいのに**サイドメニューだけ濃紺**。
+     そこまで含めて画像の作法なので、明るいテーマでもここは濃紺にする。 */
+  background: linear-gradient(180deg, #1b2140 0%, #141936 100%);
+  color: #eef0ff;
+}
+html[data-ui='base'] .drawer-panel .brand,
+html[data-ui='base'] .drawer-panel .nav-link {
+  color: #eef0ff;
+}
+/* 濃紺の上ではグラデ文字が沈むので、ブランド名は白の単色に戻す */
+html[data-ui='base'] .drawer-panel .brand > span:last-child {
+  background: none;
+  color: #fff;
+}
+html[data-ui='base'] .drawer-panel .nav-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+html[data-ui='base'] .drawer-panel .nav-link svg {
+  color: #aab2e8;
+}
+/* 閉じるボタンも濃紺に合わせる（枠だけの丸） */
+html[data-ui='base'] .drawer-panel .btn-icon {
+  border-color: rgba(255, 255, 255, 0.22);
+  background: transparent;
+  color: #eef0ff;
+}
+html[data-ui='base'] .drawer-panel .btn-icon:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+/* 件数・バッジも濃紺の上で読める色に */
+html[data-ui='base'] .drawer-panel .badge {
+  background: rgba(255, 255, 255, 0.12);
+  color: #dfe3ff;
+}
+html[data-ui='base'] .drawer-panel .badge-warning {
+  background: color-mix(in srgb, var(--warning) 24%, transparent);
+  color: #ffd9a8;
+}
+/* ナビ内の絞り込み欄も暗い面に */
+html[data-ui='base'] .drawer-panel input[type='text'],
+html[data-ui='base'] .drawer-panel input[type='search'] {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: #eef0ff;
+}
+html[data-ui='base'] .drawer-panel input::placeholder {
+  color: #97a0d4;
+}
+html[data-ui='base'] .drawer-panel .nav-group-title {
+  margin: 18px 8px 6px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #8e97cf;
+}
+html[data-ui='base'] .drawer-panel .nav-link {
+  padding: 11px 12px;
+  border-radius: 14px;
+  font-weight: 700;
+}
+html[data-ui='base'] .drawer-panel .nav-link[aria-current='page'],
+html[data-ui='base'] .drawer-panel .nav-link.is-active {
+  background: var(--b-grad);
+  color: #fff;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--b-accent) 32%, transparent);
+}
+html[data-ui='base'] .drawer-panel .nav-link[aria-current='page'] svg,
+html[data-ui='base'] .drawer-panel .nav-link.is-active svg {
+  color: #fff;
+}
+
+/* ---- 20. 検索結果 -------------------------------------------------------
+   画像の検索結果は「サムネ＋見出し＋説明＋タグ＋右シェブロン」のカード行。
+   Pagefind の結果も、カード行として読めるようにする。 */
+html[data-ui='base'] .pagefind-ui__result {
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface);
+  margin-bottom: 8px;
+}
+html[data-ui='base'] .pagefind-ui__result-title {
+  font-weight: 800;
+}
+html[data-ui='base'] .pagefind-ui__result-link {
+  color: var(--text);
+}
+
+/* ---- 21. 一覧の絞り込み（アイコン付きの四角ボタン）----------------------
+   画像の武器一覧は、チップではなく**アイコンの下にラベルを置いた四角いボタン**を
+   横に並べている。こちらの一覧のフィルタは横に長くなりがちなので、
+   **アイコンを持つチップだけ**を少し大きくして押しやすくする。 */
+html[data-ui='base'] .chip svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* ---- 22. 件数と並び順の行 ----------------------------------------------
+   画像は一覧の上に「全 72 件」と「人気順 ▾」を左右に置いている。
+   こちらは件数をバッジで出しているので、その見え方をそろえる。 */
+html[data-ui='base'] [data-group-count] {
+  background: var(--accent-weak);
+  color: var(--b-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- 23. 関連リンクのカード --------------------------------------------
+   画像の記事末尾は「この記事を読んだ人はこちらも見ています」という
+   **左にサムネ・右にシェブロン**の1行カード。
+   こちらの記事末尾の関連リンクも、同じ押しやすい行にする。 */
+html[data-ui='base'] .content > .grid-cards > .card-link {
+  border-radius: 16px;
+}
+
+/* ---- 24. 情報の囲み（ゲーム情報カード）----------------------------------
+   画像のゲーム詳細にある「ゲーム情報」は**淡い青の面＋アイコン**の囲み。
+   こちらの `.callout-info` が同じ役目なので、その見え方に寄せる。 */
+html[data-ui='base'] .callout-info {
+  background: var(--accent-weak);
+  border-color: color-mix(in srgb, var(--b-accent) 22%, transparent);
+}
+html[data-ui='base'] .callout-info svg,
+html[data-ui='base'] .callout-info .callout-title {
+  color: var(--b-accent);
+}
+
+/* ---- 25. 一覧の件数バッジと並び ----------------------------------------
+   画像は一覧の見出し行に「全 72 件」を置いている。こちらは見出しの横に
+   件数バッジがあるので、数字が読みやすいよう等幅にそろえる（上の 22 と同じ扱い）。 */
+html[data-ui='base'] .badge {
+  font-variant-numeric: tabular-nums;
+}
