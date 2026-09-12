@@ -1044,3 +1044,149 @@ html[data-ui='base'] .grid-cards[data-tiles] .muted.text-sm {
 html[data-ui='base'] .grid-cards[data-tiles] > .card-link > p {
   display: none;
 }
+
+/* =========================================================================
+   5巡目（2026-09-12）— **画面の骨組みから作り替える**。
+   利用者の指示: 「baseUIは今までのUIの構成や作りを完全に刷新したUIにして／
+   フォント変えて構わないですbaseUIでは」
+
+   ここまでの base は「従来の構成の上に色と形を被せる」ものだった。
+   参考画像は**ネイティブアプリ**で、そもそも画面の組み方が違う。
+   その違いを、ここから下で埋める。
+
+   | 従来の構成 | base の構成（画像に合わせたもの） |
+   | --- | --- |
+   | パソコンは**左に固定サイドバー**＋本文 | **サイドバーを使わない**。1本の柱だけ |
+   | 記事へはサイドバーから辿る | **三本線（ドロワー）と下のタブバー**から辿る |
+   | 本文は地の上に直接置く | **白いカードの中**に置く（画像は全部カード） |
+   | ヘッダーは 56px | **50px**（画像はもっと細い） |
+   ========================================================================= */
+
+/* ---- 37. フォント -------------------------------------------------------
+   参考画像の欧文は**角の丸いサンセリフ**（SF Pro Rounded 系）。
+   `ui-rounded` は CSS の総称名で、対応環境（iOS / macOS）では丸い書体になり、
+   非対応環境では次の候補へ落ちる。**外部から読み込まない**ので、
+   表示のために別のサイトへ接続することはない（プライバシーポリシーのとおり）。
+
+   和文は丸ゴシックにしない。丸ゴシックは太字を持たない環境が多く、
+   見出しが合成の太字になってぼやけるため。**欧文だけ丸くする**。 */
+html:root[data-ui='base'] {
+  /* 本文。和文も**丸ゴシック**にする（iOS / macOS に入っている）。
+     `ui-rounded` は CSS の総称名で、対応環境では丸い欧文になる。 */
+  --font:
+    ui-rounded, -apple-system, 'Hiragino Maru Gothic ProN', 'Hiragino Sans',
+    'Hiragino Kaku Gothic ProN', 'Noto Sans JP', system-ui, sans-serif;
+  /* 見出し・ボタン用。**丸ゴシックは太字を持たない環境が多く**、
+     そのまま太字にすると合成されてぼやける。見出しだけ通常のゴシックに戻す。 */
+  --b-font-strong:
+    ui-rounded, -apple-system, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP',
+    system-ui, sans-serif;
+}
+/* 太く出したいものは、丸ゴシックではなく通常のゴシックで組む */
+html[data-ui='base'] h1,
+html[data-ui='base'] h2,
+html[data-ui='base'] h3,
+html[data-ui='base'] h4,
+html[data-ui='base'] .brand,
+html[data-ui='base'] .btn,
+html[data-ui='base'] .chip,
+html[data-ui='base'] .badge,
+html[data-ui='base'] strong,
+html[data-ui='base'] b {
+  font-family: var(--b-font-strong);
+}
+html[data-ui='base'] body {
+  /* 画像の字は少しゆったりしている */
+  letter-spacing: 0.01em;
+}
+
+/* ---- 38. 画面の柱を1本にする -------------------------------------------
+   画像に固定サイドバーは無い。パソコンでも**アプリを大きくした形**にする。 */
+html[data-ui='base'] .layout.has-sidebar {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  padding: 0;
+}
+html[data-ui='base'] .sidebar {
+  display: none;
+}
+html[data-ui='base'] .content {
+  /* ★ `width: 100%` は外さないこと。グリッドの子に `max-width` だけを付けると
+     **stretch が切れて `fit-content`** になり、中身の min-content が幅になって
+     ページが横に広がる（実測 760 > 393）。同じ罠を `/admin/` でも踏んだ。 */
+  width: 100%;
+  max-width: 760px;
+  margin-inline: auto;
+  padding: 20px 16px 72px;
+}
+/* サイドバーを畳んだので、**パソコンでも三本線を出す**（記事へ辿れなくなるため）。
+   `.app-header .drawer-toggle` と重ねているのは、`components.css` の
+   `@media (min-width: 960px)` の指定に詳細度で勝つため。 */
+@media (min-width: 960px) {
+  html[data-ui='base'] .app-header .drawer-toggle {
+    display: inline-flex;
+  }
+  html[data-ui='base'] .content {
+    padding: 24px 16px 80px;
+  }
+}
+
+/* ---- 39. ヘッダーを細くする --------------------------------------------
+   画像のヘッダーはロゴと丸ボタンだけで、本文の邪魔をしない高さしかない。 */
+html[data-ui='base'] .app-header {
+  height: calc(50px + env(safe-area-inset-top, 0px));
+  gap: 8px;
+}
+
+/* ---- 40. 本文をカードに入れる ------------------------------------------
+   画像は**すべてがカードの中**にある（記事本文・基本情報・一覧）。
+   地の上に文字が直接載っている画面は1枚も無い。 */
+html[data-ui='base'] .prose {
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+@media (min-width: 640px) {
+  html[data-ui='base'] .prose {
+    padding: 24px 26px;
+  }
+}
+/* カードの中に入ったぶん、最初と最後の見出し・段落の余白を詰める */
+html[data-ui='base'] .prose > :first-child {
+  margin-top: 0;
+}
+html[data-ui='base'] .prose > :last-child {
+  margin-bottom: 0;
+}
+/* 見出しの下の罫線は、カードの中では線が多くなるので細く淡くする */
+html[data-ui='base'] .prose h2 {
+  border-bottom-color: var(--border);
+}
+
+/* ---- 41. 記事の本文と脇の列 --------------------------------------------
+   画像のキャラページは**縦に積む**（絵 → 名前 → タブ → 基本情報）。
+   横に2列を置く画面は無いので、脇の列は本文の下に回す。 */
+@media (min-width: 1100px) {
+  html[data-ui='base'] .entity-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  html[data-ui='base'] .entity-aside {
+    position: static;
+    max-height: none;
+  }
+}
+
+/* ---- 42. ヘッダーからグローバルナビを外す ------------------------------
+   参考画像のヘッダーは**ロゴと丸いボタンだけ**で、並んだナビは1枚も無い。
+   行き先は**三本線（ドロワー）と下のタブバー**にまとまっている。
+   こちらのドロワーにも「データベース」の全セクションが入っているので、
+   ここを畳んでも辿れなくならない。 */
+html[data-ui='base'] .app-header nav[aria-label='グローバルナビ'] {
+  display: none;
+}
+/* 空いたぶん、ブランドと丸ボタンの間隔を画像に寄せる */
+html[data-ui='base'] .header-spacer {
+  flex: 1;
+}

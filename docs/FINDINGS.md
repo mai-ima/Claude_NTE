@@ -586,3 +586,58 @@ for await (const line of rl) {
 **教訓**: 参考画像をもとに作るときは、**圧縮をまたいだら必ず画像を取り出して見直す**。
 「画像から読み取った作法」を CSS の冒頭に書き残す運用は続けるが、
 **その文章自体が誤っている可能性**があるので、文章を根拠に文章を足さない。
+
+## グリッドの子に `max-width` だけを付けると、幅が中身なりに広がる（2026-09-12）
+
+**症状**: ページが横に広がる。`scrollWidth` が画面幅より大きい（実測 467 > 393、760 > 393）。
+見た目には出ないことがある（`body` が `overflow-x: hidden` のため）が、
+**横あふれの検査には引っかかる**。
+
+**原因**: グリッドの子は既定で `justify-self: stretch`（＝列いっぱい）。
+ところが **`max-width` を付けると stretch が効かなくなり、`fit-content` に変わる**。
+`fit-content` は「中身の min-content と available の大きい方」なので、
+折り返せない中身（横並びのタブなど）があると、その min-content が幅になる。
+
+```css
+/* 悪い例: 中身の min-content がそのまま幅になる */
+.pane { max-width: 820px; margin-inline: auto; }
+
+/* 良い例: 幅は親いっぱい、その中で上限だけ効かせる */
+.pane { width: 100%; max-width: 820px; margin-inline: auto; }
+```
+
+**同じ日に2回踏んだ**（`/admin/` の `.admin-page` と、base UI の `.content`）。
+**グリッドやフレックスの子に `max-width` を書いたら、必ず `width: 100%` も書く**。
+
+## 閉じた `<details>` の中身は「見えないのに幅を持つ」（2026-09-12）
+
+Chromium の `<details>` は、閉じているとき中身を `display: none` ではなく
+**`content-visibility: hidden`** で隠す。そのため
+
+- `getComputedStyle(el).display` は `block` のまま
+- `getBoundingClientRect()` は**サイズを返す**
+- 画面には出ないが、**`scrollWidth` には効く**
+
+ヘッダーの wiki 切替（幅 300px の絶対配置）がこれで、閉じていてもページが
+横に広がって測られていた。→ **`:not([open])` のとき明示的に `display: none`** にする。
+
+```css
+.wiki-switch:not([open]) .wiki-switch-menu { display: none; }
+```
+
+## 絶対配置のメニューは「開いたとき画面内に収まるか」を確かめる（2026-09-12）
+
+ヘッダー中ほどにある切替メニューが `left: 0; min-width: 300px` で、
+**開くと右側が画面の外に出ていた**（393px の画面で 205 → 505px）。閉じている
+あいだは気づけない。
+
+直し方は**基準を変える**のが早い。`position: relative` を親から外すと、
+絶対配置の基準が**ヘッダー**（sticky なので containing block になる）に移るので、
+`left: 12px; right: 12px` で幅いっぱいに出せる。
+
+```css
+@media (max-width: 700px) {
+  .wiki-switch { position: static; }          /* 基準をヘッダーへ移す */
+  .wiki-switch-menu { left: 12px; right: 12px; min-width: 0; }
+}
+```

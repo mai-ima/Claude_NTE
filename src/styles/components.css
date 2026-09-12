@@ -73,7 +73,11 @@
 /* layout with sidebar on desktop */
 .layout {
   display: grid;
-  grid-template-columns: 1fr;
+  /* ★ `1fr` にすると**最小が中身の min-content** になり、折り返せない中身
+     （長いコード表記など）があると列ごと広がってページが横スクロールする。
+     `.app` では直していたが、ここが `1fr` のまま残っていた（2026-09-12 に発見）。
+     → docs/FINDINGS.md「狭い画面の横スクロールの犯人」 */
+  grid-template-columns: minmax(0, 1fr);
   max-width: 1240px;
   margin: 0 auto;
   width: 100%;
@@ -2252,6 +2256,14 @@ html[data-wiki]:not([data-wiki='nte']) {
   z-index: 50;
 }
 
+/* ★ 閉じているあいだは **display:none** にする。
+   Chromium の `<details>` は閉じたとき中身を `content-visibility: hidden` で隠すので、
+   **見えないのに幅は持っている**。ここは幅 300px の絶対配置なので、
+   ページの `scrollWidth` が画面幅より広く測られていた（実測 467 > 393）。
+   見た目には出ない（body が overflow-x: hidden）が、横あふれの検査に引っかかる。 */
+.wiki-switch:not([open]) .wiki-switch-menu {
+  display: none;
+}
 .wiki-switch-menu {
   position: absolute;
   z-index: 70;
@@ -2263,6 +2275,21 @@ html[data-wiki]:not([data-wiki='nte']) {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
+}
+/* ★ 狭い画面では、開いたときに**右側が画面の外に出ていた**。
+   この切替はヘッダーの中ほど（ブランドの右）にあるので、そこから 300px を
+   右へ広げると画面幅を越える（393px の画面で 205 → 505px）。
+   `.wiki-switch` の `position` を外して**基準をヘッダーに移し**、
+   左右 12px の幅いっぱいに出す。`top: calc(100% + 8px)` はヘッダーの下端になる。 */
+@media (max-width: 700px) {
+  .wiki-switch {
+    position: static;
+  }
+  .wiki-switch-menu {
+    left: 12px;
+    right: 12px;
+    min-width: 0;
+  }
 }
 .wiki-switch-title {
   margin: 4px 6px 8px;
@@ -2519,7 +2546,148 @@ html[data-wiki]:not([data-wiki='nte']) {
   border-left-color: var(--accent);
 }
 
-/* ---- 管理ページ（/admin/） ---------------------------------------------- */
+/* ---- 管理ページ（/admin/） ----------------------------------------------
+   2026-09-12 に作り直した。上から順に長く積むのをやめ、**タブで4つに分けて**
+   1画面に収まるようにしてある（状態 / お知らせ / 表示 / この端末のデータ）。
+   操作の結果は `alert()` ではなく画面下の `.admin-toast` に出す。 */
+.admin-page {
+  /* ★ `width: 100%` は外さないこと。
+     グリッドの子に `max-width` だけを付けると **stretch が切れて `fit-content`**
+     になり、中身の min-content（タブの並び）がそのまま幅になってページが
+     横に広がる（実測 467 > 393）。幅を親いっぱいに固定しておけば、
+     タブは下の `overflow-x: auto` の中で横に流れる。 */
+  width: 100%;
+  max-width: 820px;
+  margin-inline: auto;
+}
+
+/* ロック画面。鍵だけの画面なので中央に寄せて、入力に目が行くようにする */
+.admin-lock {
+  margin-top: 24px;
+  text-align: center;
+}
+.admin-lock h2 {
+  margin: 0 0 4px;
+  font-size: 1.1rem;
+}
+.admin-lock-icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 12px;
+  border-radius: 999px;
+  background: var(--accent-weak, color-mix(in srgb, var(--accent) 12%, transparent));
+  color: var(--accent);
+}
+.admin-lock-icon svg {
+  width: 24px;
+  height: 24px;
+}
+.admin-lock-form {
+  margin-inline: auto;
+  margin-top: 14px;
+  text-align: left;
+}
+.admin-lock-note {
+  margin-top: 20px;
+  text-align: left;
+}
+
+/* 解除後の上のバー。状態がひと目で分かるようにしてある */
+.admin-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+.admin-bar .badge {
+  gap: 5px;
+}
+.admin-bar > .muted {
+  flex: 1;
+  min-width: 0;
+}
+/* 狭い画面では3つを1行に詰めると、真ん中の状態が数文字ずつ折り返す。
+   状態だけを次の行に落として、バッジとボタンは1行に並べる。 */
+@media (max-width: 560px) {
+  .admin-bar > .muted {
+    flex: 1 0 100%;
+    order: 3;
+  }
+}
+
+/* タブ。狭い画面では横に流す（折り返すと2行になって押しにくい） */
+.admin-tabs {
+  display: flex;
+  /* スクロールする箱なので、中身の合計幅を親に要求しない */
+  min-width: 0;
+  gap: 6px;
+  margin: 14px 0 12px;
+  padding-bottom: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.admin-tabs::-webkit-scrollbar {
+  display: none;
+}
+.admin-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.admin-tab svg {
+  width: 15px;
+  height: 15px;
+}
+.admin-tab[aria-selected='true'] {
+  border-color: transparent;
+  background: var(--accent);
+  color: var(--accent-contrast, #fff);
+}
+
+/* 操作の結果。画面の下に浮かせ、5秒で消える */
+.admin-toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  z-index: 60;
+  transform: translateX(-50%);
+  max-width: min(560px, calc(100vw - 32px));
+  margin: 0;
+  padding: 11px 16px;
+  border-radius: 999px;
+  background: var(--text);
+  color: var(--bg);
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1.5;
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+}
+.admin-toast.is-error {
+  background: var(--warning);
+  color: #fff;
+}
+@media (min-width: 960px) {
+  /* パソコンでは下部ナビが無いので、その分だけ下に置ける */
+  .admin-toast {
+    bottom: 24px;
+  }
+}
+
 .admin-form {
   display: grid;
   gap: 12px;
@@ -2586,6 +2754,9 @@ html[data-wiki]:not([data-wiki='nte']) {
   width: 16px;
   height: 16px;
   color: var(--accent);
+}
+.admin-pane {
+  margin-top: 0;
 }
 .admin-list {
   display: grid;

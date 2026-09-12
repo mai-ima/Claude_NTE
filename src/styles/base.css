@@ -89,6 +89,13 @@ pre {
   font-family: var(--font-mono);
   font-size: 0.9em;
 }
+/* 文中のコード表記（`src/lib/notices.ts` のようなパス）は**折り返せる**ようにする。
+   折り返せないと、狭い画面でその1語が行の最小幅を決めてしまい、
+   グリッドの列ごと広がってページが横スクロールする。
+   `pre` は別扱い（コードブロックは自分で横スクロールする）。 */
+:not(pre) > code {
+  overflow-wrap: anywhere;
+}
 
 :focus-visible {
   outline: 2px solid var(--accent);

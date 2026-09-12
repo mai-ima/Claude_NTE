@@ -15,6 +15,17 @@
  * 合言葉は環境変数 `ADMIN_PASSCODE` から取り、**ビルド時に SHA-256 にしてから**
  * 埋め込む。生の合言葉は出力に含めない（総当たりは防げないので、これは
  * 「肩越しに見えない」程度の意味しかない。過大な約束をしない）。
+ *
+ * ---- 2026-09-12 の刷新で直したこと ---------------------------------------
+ *
+ * | 症状 | 原因 | 直し方 |
+ * | --- | --- | --- |
+ * | 削除が別のお知らせを消しうる | 表示時の**並び順の番号**で `splice` していた | **id で消す**（`filter`） |
+ * | 同じ日に2件書き出すと id が衝突 | id が日付だけだった | **時刻を足して一意にする** |
+ * | 「maintenance にしました」と英語が出る | 内部の値をそのまま表示していた | **ラベルを引いて出す** |
+ * | 合言葉の照合が無反応になることがある | `digest()` の失敗を拾っていなかった | `.catch` を付けた |
+ * | 同じページに留まると操作が二重に起きる | 画面の入れ替えでリスナーが重なる | **`data-bound` で1回だけ**にする |
+ * | 通知が `alert()` で作業が止まる | — | **画面内のメッセージ**に置き換えた |
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { Icon } from 'astro-icon/components';
@@ -27,6 +38,7 @@ import {
   NOTICES_KEY,
   ADMIN_KEY,
   GATE_CLOSED_KEY,
+  modeOf,
 } from '../../lib/site-state';
 import { NOTICE_LEVELS, NOTICES } from '../../lib/notices';
 import {
@@ -42,12 +54,31 @@ const passHash = createHash('sha256').update(String(passcode)).digest('hex');
 const usingDefaultPass = !import.meta.env.ADMIN_PASSCODE;
 
 const today = new Date().toISOString().slice(0, 10);
+
+/** 画面に出すためのラベル表（内部の値をそのまま見せないため JS へ渡す） */
+const modeLabels = Object.fromEntries(SITE_MODES.map((m) => [m.value, m.label]));
+const levelLabels = Object.fromEntries(NOTICE_LEVELS.map((l) => [l.value, l.label]));
+
+/** この端末に何が保存されるかの一覧（「この端末のデータ」タブに出す） */
+const STORED = [
+  { key: STATE_KEY, label: 'サイトの状態', hint: '通常 / メンテナンス / 停止と、画面に出す文' },
+  { key: NOTICES_KEY, label: 'この端末のお知らせ', hint: 'ここで作ったお知らせ' },
+  { key: IMAGES_KEY, label: 'キャラクターの画像', hint: '絵をどこから出すか' },
+  { key: ADMIN_KEY, label: 'ロックを外した印', hint: '次に開いたときも開いたままにする' },
+];
+
+const TABS = [
+  { id: 'state', label: 'サイトの状態', icon: 'toggle-left' },
+  { id: 'notices', label: 'お知らせ', icon: 'megaphone' },
+  { id: 'view', label: '表示', icon: 'image' },
+  { id: 'data', label: 'この端末のデータ', icon: 'database' },
+];
 ---
 
 {/* 読者向けのページではないので検索には載せない（noindex） */}
 <BaseLayout title="管理" description="サイトの状態とお知らせを切り替えるページです。" noindex>
   <div class="layout">
-    <div class="content" style="max-width:820px;margin-inline:auto;">
+    <div class="content admin-page">
       <nav class="text-sm muted cluster" style="margin-bottom:16px;" aria-label="パンくず">
         <a href={withBase('/')}>ホーム</a>
         <span aria-hidden="true"> › </span>
@@ -61,9 +92,13 @@ const today = new Date().toISOString().slice(0, 10);
       </section>
 
       {/* ---- ロック画面 ------------------------------------------------ */}
-      <section id="admin-lock" class="card card-pad" style="margin-top:24px;">
-        <h2 style="margin-top:0;">合言葉を入力してください</h2>
-        <form id="admin-form" class="admin-form">
+      <section id="admin-lock" class="card card-pad admin-lock">
+        <div class="admin-lock-icon" aria-hidden="true">
+          <Icon name="lucide:lock" />
+        </div>
+        <h2>合言葉を入力してください</h2>
+
+        <form id="admin-form" class="admin-form admin-lock-form">
           <label class="admin-field">
             <span>合言葉</span>
             <input
@@ -78,24 +113,24 @@ const today = new Date().toISOString().slice(0, 10);
             <Icon name="lucide:log-in" />開く
           </button>
         </form>
-        <p id="admin-error" class="admin-error" hidden>合言葉が違います。</p>
+        <p id="admin-error" class="admin-error" role="alert" hidden></p>
 
         {/* .callout は「アイコン＋本文」の横並び。段落を直に並べると**段落ごとに列**に
             なってスマホで1文字ずつ折り返すので、本文は必ず1つの要素にまとめる。 */}
-        <div class="callout callout-info" style="margin-top:20px;">
+        <div class="callout callout-info admin-lock-note">
           <div>
-          <p style="margin:0 0 8px;"><strong>この鍵でできること・できないこと</strong></p>
-          <p style="margin:0 0 8px;">
-            本サイトはサーバーを持たない静的サイトです。合言葉の照合は
-            <strong>お使いのブラウザの中だけ</strong>で行っており、
-            サーバーによる認証ではありません。ここで行った変更も
-            <strong>この端末にだけ</strong>保存され、ほかの方の画面は変わりません。
-          </p>
-          <p style="margin:0;">
-            全員に見える変更（お知らせの公開、サイト全体のメンテナンス表示）は、
-            ソースの <code>src/lib/notices.ts</code> と <code>src/lib/site-state.ts</code>
-            を書き換えて公開し直す形になります。手順はロックを解除すると表示されます。
-          </p>
+            <p style="margin:0 0 8px;"><strong>この鍵でできること・できないこと</strong></p>
+            <p style="margin:0 0 8px;">
+              本サイトはサーバーを持たない静的サイトです。合言葉の照合は
+              <strong>お使いのブラウザの中だけ</strong>で行っており、
+              サーバーによる認証ではありません。ここで行った変更も
+              <strong>この端末にだけ</strong>保存され、ほかの方の画面は変わりません。
+            </p>
+            <p style="margin:0;">
+              全員に見える変更（お知らせの公開、サイト全体のメンテナンス表示）は、
+              ソースの <code>src/lib/notices.ts</code> と <code>src/lib/site-state.ts</code>
+              を書き換えて公開し直す形になります。手順はロックを解除すると表示されます。
+            </p>
           </div>
         </div>
         {
@@ -110,21 +145,51 @@ const today = new Date().toISOString().slice(0, 10);
 
       {/* ---- 管理画面 -------------------------------------------------- */}
       <div id="admin-panel" hidden>
-        <div class="cluster" style="justify-content:space-between;margin-top:24px;">
-          <p class="badge badge-accent">ロック解除中</p>
+        <div class="admin-bar">
+          <p class="badge badge-accent" style="margin:0;">
+            <Icon name="lucide:unlock" />ロック解除中
+          </p>
+          <span class="muted text-sm" id="admin-now" aria-live="polite"></span>
           <button class="btn btn-ghost" type="button" id="admin-logout">
             <Icon name="lucide:log-out" />ロックする
           </button>
         </div>
 
+        {/* タブ。中身はすべて DOM にあり、表示だけを切り替える */}
+        <div class="admin-tabs" role="tablist" aria-label="管理の項目" id="admin-tabs">
+          {
+            TABS.map((t, i) => (
+              <button
+                class="admin-tab"
+                type="button"
+                role="tab"
+                id={`tab-${t.id}`}
+                aria-controls={`pane-${t.id}`}
+                aria-selected={i === 0 ? 'true' : 'false'}
+                tabindex={i === 0 ? 0 : -1}
+                data-tab={t.id}
+              >
+                <Icon name={`lucide:${t.icon}`} />
+                {t.label}
+              </button>
+            ))
+          }
+        </div>
+
         {/* -- サイトの状態 -- */}
-        <section class="card card-pad" style="margin-top:16px;">
+        <section
+          class="card card-pad admin-pane"
+          role="tabpanel"
+          id="pane-state"
+          aria-labelledby="tab-state"
+          data-pane="state"
+        >
           <h2 style="margin-top:0;">サイトの状態</h2>
           <p class="muted text-sm">
             通常以外にすると、全ページに案内が重なって表示されます。
             <strong>この端末のブラウザにだけ</strong>効きます。
           </p>
-          <div class="admin-modes" id="admin-modes">
+          <div class="admin-modes" id="admin-modes" role="group" aria-label="サイトの状態">
             {
               SITE_MODES.map((m) => (
                 <button class="admin-mode" type="button" data-mode={m.value} aria-pressed="false">
@@ -148,25 +213,103 @@ const today = new Date().toISOString().slice(0, 10);
               <span>再開の目安（空なら出しません）</span>
               <input type="text" id="admin-until" placeholder="9月10日 12時ごろ" />
             </label>
-            <button class="btn btn-primary" type="button" id="admin-save-state">
-              <Icon name="lucide:save" />この状態にする
-            </button>
+            <div class="cluster">
+              <button class="btn btn-primary" type="button" id="admin-save-state">
+                <Icon name="lucide:save" />この状態にする
+              </button>
+              <button class="btn btn-ghost" type="button" id="admin-reset-state">
+                <Icon name="lucide:rotate-ccw" />通常に戻す
+              </button>
+            </div>
           </div>
           <p class="muted text-sm" style="margin-top:12px;">
-            公開されている既定の状態: <strong>{DEFAULT_SITE_STATE.mode}</strong>
+            公開されている既定の状態: <strong>{modeOf(DEFAULT_SITE_STATE.mode).label}</strong>
             （<code>src/lib/site-state.ts</code> の <code>DEFAULT_SITE_STATE</code>）
           </p>
         </section>
 
-        {/* -- キャラクター画像の出どころ -- */}
-        <section class="card card-pad" style="margin-top:16px;">
+        {/* -- お知らせ -- */}
+        <section
+          class="card card-pad admin-pane"
+          role="tabpanel"
+          id="pane-notices"
+          aria-labelledby="tab-notices"
+          data-pane="notices"
+          hidden
+        >
+          <h2 style="margin-top:0;">お知らせ</h2>
+          <p class="muted text-sm">
+            作成したお知らせは<a href={withBase('/notices/')}>お知らせ一覧</a>の下部に出ます。
+            <strong>この端末のブラウザにだけ</strong>保存されます。
+          </p>
+
+          <div class="admin-form" style="margin-top:12px;">
+            <label class="admin-field">
+              <span>日付</span>
+              <input type="date" id="notice-date" value={today} />
+            </label>
+            <label class="admin-field">
+              <span>種類</span>
+              <select id="notice-level">
+                {NOTICE_LEVELS.map((l) => <option value={l.value}>{l.label}</option>)}
+              </select>
+            </label>
+            <label class="admin-field">
+              <span>見出し</span>
+              <input type="text" id="notice-title" placeholder="メンテナンスのお知らせ" />
+            </label>
+            <label class="admin-field">
+              <span>本文（空行で段落が分かれます）</span>
+              <textarea id="notice-body" rows="5"></textarea>
+            </label>
+            <div class="cluster">
+              <button class="btn btn-primary" type="button" id="notice-add">
+                <Icon name="lucide:plus" />この端末に追加
+              </button>
+              <button class="btn btn-ghost" type="button" id="notice-copy">
+                <Icon name="lucide:clipboard-copy" />全員に配る形で書き出す
+              </button>
+            </div>
+          </div>
+
+          <h3 style="margin-top:24px;">この端末のお知らせ</h3>
+          <div id="notice-admin-list" class="admin-list"></div>
+
+          <h3 style="margin-top:24px;">公開中のお知らせ（全員に見えるもの）</h3>
+          <div class="admin-list">
+            {
+              NOTICES.map((n) => (
+                <div class="admin-row">
+                  <div>
+                    <strong>{n.title}</strong>
+                    <span class="muted text-sm"> {n.date} / {levelLabels[n.level] ?? n.level}</span>
+                  </div>
+                  <span class="badge">公開中</span>
+                </div>
+              ))
+            }
+          </div>
+          <p class="muted text-sm" style="margin-top:8px;">
+            こちらは <code>src/lib/notices.ts</code> にあります。削除・修正はソースを直します。
+          </p>
+        </section>
+
+        {/* -- 表示（キャラクター画像の出どころ） -- */}
+        <section
+          class="card card-pad admin-pane"
+          role="tabpanel"
+          id="pane-view"
+          aria-labelledby="tab-view"
+          data-pane="view"
+          hidden
+        >
           <h2 style="margin-top:0;">キャラクターの画像</h2>
           <p class="muted text-sm">
             見た目を <strong>Base</strong> にしているときだけ、キャラクターの図形に絵を重ねます。
             ほかの見た目では、これまでどおり色と頭文字で作った図形のままです。
             <strong>この端末のブラウザにだけ</strong>効きます。
           </p>
-          <div class="admin-modes" id="admin-images">
+          <div class="admin-modes" id="admin-images" role="group" aria-label="画像の出どころ">
             {
               IMAGE_SOURCES.map((s) => (
                 <button class="admin-mode" type="button" data-img={s.value} aria-pressed="false">
@@ -198,59 +341,37 @@ const today = new Date().toISOString().slice(0, 10);
           </p>
         </section>
 
-        {/* -- お知らせ -- */}
-        <section class="card card-pad" style="margin-top:16px;">
-          <h2 style="margin-top:0;">お知らせ</h2>
+        {/* -- この端末のデータ -- */}
+        <section
+          class="card card-pad admin-pane"
+          role="tabpanel"
+          id="pane-data"
+          aria-labelledby="tab-data"
+          data-pane="data"
+          hidden
+        >
+          <h2 style="margin-top:0;">この端末のデータ</h2>
           <p class="muted text-sm">
-            作成したお知らせは<a href={withBase('/notices/')}>お知らせ一覧</a>の下部に出ます。
-            <strong>この端末のブラウザにだけ</strong>保存されます。
+            管理の操作は、すべて<strong>この端末のブラウザの中</strong>に保存されます。
+            いま何が入っているかを確認して、書き出したり消したりできます。
           </p>
-
-          <div class="admin-form" style="margin-top:12px;">
-            <label class="admin-field">
-              <span>日付</span>
-              <input type="date" id="notice-date" value={today} />
-            </label>
-            <label class="admin-field">
-              <span>種類</span>
-              <select id="notice-level">
-                {NOTICE_LEVELS.map((l) => <option value={l.value}>{l.label}</option>)}
-              </select>
-            </label>
-            <label class="admin-field">
-              <span>見出し</span>
-              <input type="text" id="notice-title" placeholder="メンテナンスのお知らせ" />
-            </label>
-            <label class="admin-field">
-              <span>本文（空行で段落が分かれます）</span>
-              <textarea id="notice-body" rows="5"></textarea>
-            </label>
-            <div class="cluster">
-              <button class="btn btn-primary" type="button" id="notice-add">
-                <Icon name="lucide:plus" />追加する
-              </button>
-              <button class="btn btn-ghost" type="button" id="notice-copy">
-                <Icon name="lucide:clipboard-copy" />全員に配る形で書き出す
-              </button>
-            </div>
-            <p class="muted text-sm" id="notice-copied" hidden>
-              クリップボードにコピーしました。<code>src/lib/notices.ts</code> の
-              <code>NOTICES</code> に貼り付けて公開し直すと、全員に見えるようになります。
-            </p>
+          <div class="admin-list" id="admin-stored"></div>
+          <div class="cluster" style="margin-top:16px;">
+            <button class="btn btn-ghost" type="button" id="admin-export">
+              <Icon name="lucide:clipboard-copy" />内容を書き出す
+            </button>
+            <button class="btn btn-ghost" type="button" id="admin-clear">
+              <Icon name="lucide:trash-2" />管理のデータを消す
+            </button>
           </div>
-
-          <h3 style="margin-top:24px;">この端末のお知らせ</h3>
-          <div id="notice-admin-list" class="admin-list"></div>
-
-          <h3 style="margin-top:24px;">公開中のお知らせ（全員に見えるもの）</h3>
-          <ul class="muted text-sm" style="margin:8px 0 0;padding-left:1.2em;">
-            {NOTICES.map((n) => <li>{n.date} — {n.title}</li>)}
-          </ul>
-          <p class="muted text-sm" style="margin-top:8px;">
-            こちらは <code>src/lib/notices.ts</code> にあります。削除・修正はソースを直します。
+          <p class="muted text-sm" style="margin-top:12px;">
+            消えるのは上に挙げた4つだけです。読みやすさなどの表示設定は消えません。
           </p>
         </section>
       </div>
+
+      {/* 操作の結果を出す場所。`alert()` だと作業が止まるので画面内に出す */}
+      <p class="admin-toast" id="admin-toast" role="status" aria-live="polite" hidden></p>
     </div>
   </div>
 </BaseLayout>
@@ -268,18 +389,26 @@ const today = new Date().toISOString().slice(0, 10);
       images: IMAGES_KEY,
     },
     imgDef: DEFAULT_IMAGE_SOURCE,
+    modeLabels,
+    stored: STORED,
   }}
 >
   (function () {
+    var root = document.getElementById('admin-panel');
     var lock = document.getElementById('admin-lock');
-    var panel = document.getElementById('admin-panel');
-    if (!lock || !panel) return;
+    if (!lock || !root) return;
+    // 同じページに留まったまま画面が入れ替わったとき、操作が二重に起きないようにする
+    if (root.dataset.bound === '1') return;
+    root.dataset.bound = '1';
 
     // キー名は src/lib/site-state.ts が正。ここには書かず define:vars で受け取る
     var STATE_KEY = keys.state;
     var NOTICES_KEY = keys.notices;
     var ADMIN_KEY = keys.admin;
 
+    var $ = function (id) {
+      return document.getElementById(id);
+    };
     var read = function (key, fallback) {
       try {
         var raw = localStorage.getItem(key);
@@ -293,35 +422,86 @@ const today = new Date().toISOString().slice(0, 10);
         localStorage.setItem(key, JSON.stringify(value));
         return true;
       } catch (e) {
-        alert('この端末に保存できませんでした（ブラウザの設定で保存が禁止されている可能性があります）。');
+        toast('この端末に保存できませんでした。ブラウザの設定で保存が禁止されているかもしれません。', true);
         return false;
       }
     };
 
+    /* ---- 画面内のお知らせ（alert の代わり）--------------------------- */
+    var toastEl = $('admin-toast');
+    var toastTimer = null;
+    function toast(msg, isError) {
+      if (!toastEl) return;
+      toastEl.textContent = msg;
+      toastEl.classList.toggle('is-error', !!isError);
+      toastEl.hidden = false;
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () {
+        toastEl.hidden = true;
+      }, 5000);
+    }
+
+    /* ---- タブ -------------------------------------------------------- */
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.admin-tab'));
+    var panes = Array.prototype.slice.call(document.querySelectorAll('.admin-pane'));
+    function selectTab(id, focus) {
+      tabs.forEach(function (t) {
+        var on = t.dataset.tab === id;
+        t.setAttribute('aria-selected', String(on));
+        t.tabIndex = on ? 0 : -1;
+        if (on && focus) t.focus();
+      });
+      panes.forEach(function (p) {
+        p.hidden = p.dataset.pane !== id;
+      });
+    }
+    var tablist = $('admin-tabs');
+    if (tablist) {
+      tablist.addEventListener('click', function (e) {
+        var t = e.target.closest('.admin-tab');
+        if (t) selectTab(t.dataset.tab, false);
+      });
+      // 左右の矢印キーでタブを移れるようにする（タブの作法）
+      tablist.addEventListener('keydown', function (e) {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        var i = tabs.findIndex(function (t) {
+          return t.getAttribute('aria-selected') === 'true';
+        });
+        if (i === -1) return;
+        var next = e.key === 'ArrowRight' ? (i + 1) % tabs.length : (i - 1 + tabs.length) % tabs.length;
+        e.preventDefault();
+        selectTab(tabs[next].dataset.tab, true);
+      });
+    }
+
     /* ---- ロックの開け閉め ------------------------------------------- */
     function show(unlocked) {
       lock.hidden = unlocked;
-      panel.hidden = !unlocked;
+      root.hidden = !unlocked;
       if (unlocked) {
         renderState();
         renderNotices();
+        renderImages();
+        renderStored();
       }
     }
     // ※ 最初の表示は**このスクリプトの末尾**で行う。ここで呼ぶと、
-    //    まだ代入されていない状態（var current）を renderState() が読んで落ちる。
+    //    まだ用意していない変数を render 側が読んで落ちる。
 
-    var form = document.getElementById('admin-form');
-    var err = document.getElementById('admin-error');
+    var form = $('admin-form');
+    var err = $('admin-error');
+    function fail(msg) {
+      err.textContent = msg;
+      err.hidden = false;
+    }
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var input = document.getElementById('admin-pass');
+      var input = $('admin-pass');
       var value = input.value || '';
       // SHA-256 は Web Crypto（https と localhost で使える）。
       // 使えない環境では鍵を掛けない旨を出す（黙って素通しにしない）。
       if (!window.crypto || !window.crypto.subtle) {
-        err.textContent =
-          'この環境では合言葉を照合できません（安全な接続でのみ動作します）。';
-        err.hidden = false;
+        fail('この環境では合言葉を照合できません（安全な接続でのみ動作します）。');
         return;
       }
       window.crypto.subtle
@@ -333,8 +513,7 @@ const today = new Date().toISOString().slice(0, 10);
             })
             .join('');
           if (hex !== passHash) {
-            err.textContent = '合言葉が違います。';
-            err.hidden = false;
+            fail('合言葉が違います。');
             input.select();
             return;
           }
@@ -344,10 +523,14 @@ const today = new Date().toISOString().slice(0, 10);
             localStorage.setItem(ADMIN_KEY, '1');
           } catch (e2) {}
           show(true);
+        })
+        .catch(function () {
+          // 照合そのものに失敗したときに無反応で終わらせない
+          fail('合言葉を確認できませんでした。ページを開き直してお試しください。');
         });
     });
 
-    document.getElementById('admin-logout').addEventListener('click', function () {
+    $('admin-logout').addEventListener('click', function () {
       try {
         localStorage.removeItem(ADMIN_KEY);
       } catch (e) {}
@@ -356,32 +539,46 @@ const today = new Date().toISOString().slice(0, 10);
 
     /* ---- サイトの状態 ------------------------------------------------ */
     var current = read(STATE_KEY, { mode: 'normal', message: '', until: '' });
+    function labelOfMode(v) {
+      return modeLabels[v] || v;
+    }
     function renderState() {
       var btns = document.querySelectorAll('#admin-modes .admin-mode');
       for (var i = 0; i < btns.length; i++) {
         btns[i].setAttribute('aria-pressed', String(btns[i].dataset.mode === current.mode));
       }
-      document.getElementById('admin-msg').value = current.message || '';
-      document.getElementById('admin-until').value = current.until || '';
+      $('admin-msg').value = current.message || '';
+      $('admin-until').value = current.until || '';
+      // いまの状態を上のバーにも出す（保存したかどうかが分かるように）
+      var now = $('admin-now');
+      if (now) now.textContent = 'いまこの端末は「' + labelOfMode(current.mode) + '」です';
     }
-    document.getElementById('admin-modes').addEventListener('click', function (e) {
+    $('admin-modes').addEventListener('click', function (e) {
       var btn = e.target.closest('.admin-mode');
       if (!btn) return;
       current.mode = btn.dataset.mode;
       renderState();
     });
-    document.getElementById('admin-save-state').addEventListener('click', function () {
-      current.message = document.getElementById('admin-msg').value.trim();
-      current.until = document.getElementById('admin-until').value.trim();
+    function saveState() {
+      current.message = $('admin-msg').value.trim();
+      current.until = $('admin-until').value.trim();
       if (!write(STATE_KEY, current)) return;
       try {
         sessionStorage.removeItem(keys.closed);
       } catch (e) {}
-      alert(
+      renderState();
+      renderStored();
+      toast(
         current.mode === 'normal'
           ? '通常の状態にしました。'
-          : 'この端末で「' + current.mode + '」にしました。ほかの方の画面は変わりません。',
+          : 'この端末を「' + labelOfMode(current.mode) + '」にしました。ほかの方の画面は変わりません。',
       );
+    }
+    $('admin-save-state').addEventListener('click', saveState);
+    $('admin-reset-state').addEventListener('click', function () {
+      current = { mode: 'normal', message: '', until: '' };
+      renderState();
+      saveState();
     });
 
     /* ---- お知らせ ---------------------------------------------------- */
@@ -390,7 +587,7 @@ const today = new Date().toISOString().slice(0, 10);
       return Array.isArray(list) ? list : [];
     }
     function renderNotices() {
-      var host = document.getElementById('notice-admin-list');
+      var host = $('notice-admin-list');
       var list = notices();
       host.textContent = '';
       if (list.length === 0) {
@@ -400,7 +597,7 @@ const today = new Date().toISOString().slice(0, 10);
         host.appendChild(p);
         return;
       }
-      list.forEach(function (n, i) {
+      list.forEach(function (n) {
         var row = document.createElement('div');
         row.className = 'admin-row';
         var txt = document.createElement('div');
@@ -408,7 +605,7 @@ const today = new Date().toISOString().slice(0, 10);
         strong.textContent = n.title || '(無題)';
         var small = document.createElement('span');
         small.className = 'muted text-sm';
-        small.textContent = ' ' + (n.date || '') + ' / ' + (n.level || 'info');
+        small.textContent = ' ' + (n.date || '日付なし') + ' / ' + (n.level || 'info');
         txt.appendChild(strong);
         txt.appendChild(small);
         var del = document.createElement('button');
@@ -417,9 +614,16 @@ const today = new Date().toISOString().slice(0, 10);
         del.textContent = '削除';
         del.addEventListener('click', function () {
           if (!confirm('「' + (n.title || '(無題)') + '」を削除します。よろしいですか。')) return;
-          var next = notices();
-          next.splice(i, 1);
-          if (write(NOTICES_KEY, next)) renderNotices();
+          // ★ 並び順の番号ではなく **id** で消す。
+          //   表示してから押すまでに中身が変わっていても、別のものを消さない。
+          var next = notices().filter(function (x) {
+            return x.id !== n.id;
+          });
+          if (write(NOTICES_KEY, next)) {
+            renderNotices();
+            renderStored();
+            toast('削除しました。');
+          }
         });
         row.appendChild(txt);
         row.appendChild(del);
@@ -427,68 +631,90 @@ const today = new Date().toISOString().slice(0, 10);
       });
     }
 
-    document.getElementById('notice-add').addEventListener('click', function () {
-      var title = document.getElementById('notice-title').value.trim();
-      var body = document.getElementById('notice-body').value.trim();
+    /** 入力を1か所で取り出す（追加と書き出しで同じものを使う） */
+    function noticeInput() {
+      var title = $('notice-title').value.trim();
+      var body = $('notice-body').value.trim();
       if (!title || !body) {
-        alert('見出しと本文を入力してください。');
-        return;
+        toast('見出しと本文を入力してください。', true);
+        return null;
       }
+      return {
+        title: title,
+        body: body,
+        // 日付が空のままでも使えるよう、今日を入れておく
+        date: $('notice-date').value || new Date().toISOString().slice(0, 10),
+        level: $('notice-level').value || 'info',
+      };
+    }
+
+    $('notice-add').addEventListener('click', function () {
+      var v = noticeInput();
+      if (!v) return;
       var list = notices();
       list.unshift({
         id: 'local-' + Date.now(),
-        date: document.getElementById('notice-date').value || '',
-        level: document.getElementById('notice-level').value || 'info',
-        title: title,
-        body: body,
+        date: v.date,
+        level: v.level,
+        title: v.title,
+        body: v.body,
       });
       if (!write(NOTICES_KEY, list)) return;
-      document.getElementById('notice-title').value = '';
-      document.getElementById('notice-body').value = '';
+      $('notice-title').value = '';
+      $('notice-body').value = '';
       renderNotices();
+      renderStored();
+      toast('この端末に追加しました。お知らせ一覧の下部に出ます。');
     });
 
     // 全員に配る形（src/lib/notices.ts に貼れる形）で書き出す
-    document.getElementById('notice-copy').addEventListener('click', function () {
-      var title = document.getElementById('notice-title').value.trim();
-      var body = document.getElementById('notice-body').value.trim();
-      var date = document.getElementById('notice-date').value || '';
-      var level = document.getElementById('notice-level').value || 'info';
-      if (!title || !body) {
-        alert('見出しと本文を入力してください。');
-        return;
-      }
-      var id = 'notice-' + date.replace(/-/g, '');
+    $('notice-copy').addEventListener('click', function () {
+      var v = noticeInput();
+      if (!v) return;
+      // ★ 日付だけだと**同じ日に2件作ると id が衝突する**（id は URL になる）。
+      //   時刻を足して一意にする。
+      var d = new Date();
+      var hhmm = ('0' + d.getHours()).slice(-2) + ('0' + d.getMinutes()).slice(-2);
+      var id = 'notice-' + v.date.replace(/-/g, '') + '-' + hhmm;
       // 文字列は JSON.stringify で囲む（引用符・改行・バックスラッシュを自分で
       // 逃がすと、貼り付けたコードが壊れる。ここは人が書く場所ではない）
-      var q = function (v) {
-        return JSON.stringify(String(v));
+      var q = function (x) {
+        return JSON.stringify(String(x));
       };
       var text =
         '  {\n' +
         '    id: ' + q(id) + ',\n' +
-        '    date: ' + q(date) + ',\n' +
-        '    title: ' + q(title) + ',\n' +
+        '    date: ' + q(v.date) + ',\n' +
+        '    title: ' + q(v.title) + ',\n' +
         '    body: [\n' +
-        body
+        v.body
           .split(/\n{2,}/)
           .map(function (p) {
             return '      ' + q(p.replace(/\n/g, ' ')) + ',';
           })
           .join('\n') +
         "\n    ].join('\\n\\n'),\n" +
-        '    level: ' + q(level) + ',\n' +
+        '    level: ' + q(v.level) + ',\n' +
         '  },';
-      var done = document.getElementById('notice-copied');
+      copy(text, 'src/lib/notices.ts の NOTICES に貼り付けて公開し直すと、全員に見えるようになります。');
+    });
+
+    /** クリップボードへ。使えない環境では入力欄に出して手で写せるようにする */
+    function copy(text, okMsg) {
+      var fallback = function () {
+        window.prompt('コピーしてお使いください', text);
+      };
+      if (!navigator.clipboard || !navigator.clipboard.writeText) {
+        fallback();
+        return;
+      }
       navigator.clipboard
         .writeText(text)
         .then(function () {
-          done.hidden = false;
+          toast('コピーしました。' + (okMsg || ''));
         })
-        .catch(function () {
-          alert(text);
-        });
-    });
+        .catch(fallback);
+    }
 
     /* ---- キャラクターの画像 ------------------------------------------
        選んだ値は localStorage に入れ、**その場で `data-images` に反映**する。
@@ -505,19 +731,81 @@ const today = new Date().toISOString().slice(0, 10);
         btns[i].setAttribute('aria-pressed', String(btns[i].dataset.img === imgNow));
       }
     }
-    document.getElementById('admin-images').addEventListener('click', function (e) {
+    $('admin-images').addEventListener('click', function (e) {
       var btn = e.target.closest('.admin-mode');
       if (!btn) return;
       imgNow = btn.dataset.img;
       try {
         localStorage.setItem(keys.images, imgNow);
-      } catch (e) {}
+      } catch (e2) {}
       // 既定値のときは属性を書かない（起動スクリプトと同じ約束）
       if (imgNow === imgDef) document.documentElement.removeAttribute('data-images');
       else document.documentElement.setAttribute('data-images', imgNow);
       renderImages();
+      renderStored();
+      toast('画像の出どころを切り替えました。');
     });
-    renderImages();
+
+    /* ---- この端末のデータ -------------------------------------------- */
+    function renderStored() {
+      var host = $('admin-stored');
+      if (!host) return;
+      host.textContent = '';
+      stored.forEach(function (s) {
+        var raw = null;
+        try {
+          raw = localStorage.getItem(s.key);
+        } catch (e) {}
+        var row = document.createElement('div');
+        row.className = 'admin-row';
+        var txt = document.createElement('div');
+        var strong = document.createElement('strong');
+        strong.textContent = s.label;
+        var small = document.createElement('span');
+        small.className = 'muted text-sm';
+        small.textContent = ' ' + s.hint;
+        txt.appendChild(strong);
+        txt.appendChild(document.createElement('br'));
+        txt.appendChild(small);
+        var badge = document.createElement('span');
+        badge.className = raw ? 'badge badge-accent' : 'badge';
+        badge.textContent = raw ? '保存あり' : 'なし';
+        row.appendChild(txt);
+        row.appendChild(badge);
+        host.appendChild(row);
+      });
+    }
+
+    $('admin-export').addEventListener('click', function () {
+      var out = {};
+      stored.forEach(function (s) {
+        try {
+          var raw = localStorage.getItem(s.key);
+          if (raw !== null) out[s.key] = raw;
+        } catch (e) {}
+      });
+      copy(JSON.stringify(out, null, 2), '');
+    });
+
+    $('admin-clear').addEventListener('click', function () {
+      if (!confirm('この端末に保存した管理のデータ（状態・お知らせ・画像の設定・ロックの印）を消します。よろしいですか。')) {
+        return;
+      }
+      stored.forEach(function (s) {
+        try {
+          localStorage.removeItem(s.key);
+        } catch (e) {}
+      });
+      current = { mode: 'normal', message: '', until: '' };
+      imgNow = imgDef;
+      document.documentElement.removeAttribute('data-images');
+      renderState();
+      renderNotices();
+      renderImages();
+      renderStored();
+      toast('消しました。ロックも掛かります。');
+      show(false);
+    });
 
     /* ---- 最初の表示（すべての変数を用意したあとで） ------------------- */
     try {
