@@ -544,3 +544,45 @@ h1[data-glitch]::before { content: attr(data-glitch); position: absolute; inset:
 
 **ついでの落とし穴**: 検査用の簡易サーバーで CSS の `content-type` を `text/html` で
 返していて、「CSS が当たっていない画面」を測って悩んだ。**拡張子で出し分ける**こと。
+
+## 圧縮で消えた添付画像は、会話ログから取り出せる（2026-09-12）
+
+**症状**: コンテキスト圧縮のあと、利用者が添付した参考画像を見直したくても、
+**要約には「画像があった」という文章しか残っていない**。画像そのものは context から消える。
+文章の記憶だけで作業を続けると、**読み違いに気づけないまま実装が進む**（実際に2件やった。
+→ `.claude/state/DECISIONS.md` 2026-09-12）。
+
+**わかったこと**: 会話ログ（`~/.claude/projects/<プロジェクト>/<セッションID>.jsonl`）には
+**画像が base64 のまま残っている**。1行1メッセージの JSONL なので、取り出して
+ファイルに書けば、Read ツールで画像として読み直せる。
+
+**取り出し方**
+
+```js
+// 1行ずつ読む（ファイルは数十MBになるので、丸ごと JSON.parse しない）
+const rl = readline.createInterface({ input: fs.createReadStream(src), crlfDelay: Infinity });
+for await (const line of rl) {
+  if (!line.includes('base64')) continue;          // 先に弾くと速い
+  const j = JSON.parse(line);
+  for (const c of j.message?.content ?? []) {
+    if (c?.type !== 'image') continue;
+    fs.writeFileSync(out, Buffer.from(c.source.data, 'base64'));
+  }
+}
+```
+
+**見分け方（重要）**
+
+| 置き場所 | 何の画像か |
+| --- | --- |
+| `message.content[N]` … **直下** | **利用者が添付した画像** |
+| `message.content[N].content[0]` … tool_result の中 | **自分が撮ったスクリーンショット** |
+
+利用者の添付だけが欲しいなら、**直下にある `type: 'image'` だけ**を拾う。
+
+**同じ画像が2回添付されることがある**。`data.length` と先頭64文字で重複を弾くと、
+実際の枚数が分かる（今回は「3枚を2回」で計9枚に見えたが、実体は**6枚**だった）。
+
+**教訓**: 参考画像をもとに作るときは、**圧縮をまたいだら必ず画像を取り出して見直す**。
+「画像から読み取った作法」を CSS の冒頭に書き残す運用は続けるが、
+**その文章自体が誤っている可能性**があるので、文章を根拠に文章を足さない。
