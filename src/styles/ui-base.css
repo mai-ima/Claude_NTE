@@ -1343,3 +1343,31 @@ html[data-ui='base'] .header-spacer {
     margin-bottom: 12px;
   }
 }
+
+/* ---- 46. タイルの左上に属性の丸 ----------------------------------------
+   参考画像のキャラ一覧は、正方形の絵の**左上に属性の丸バッジ**が乗っている。
+   タイル表示では属性のバッジ（`.cluster`）を隠しているので、
+   ここで丸だけを絵の上に戻す。
+
+   ★ `.char-card::before` は `components.css:1414` の**属性色の帯**に使われている。
+     `::after` も別の用途に取られているので、**見出しの行の `::before`** を使う。 */
+html[data-ui='base'][data-listview='tile'] .grid-cards > .char-card > .row:first-child {
+  position: relative;
+}
+html[data-ui='base'][data-listview='tile'] .grid-cards > .char-card > .row:first-child::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 7px;
+  z-index: 3;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: var(--el, var(--accent));
+  /* 絵の上でも見えるよう、白い縁で抜く（画像も同じ作法） */
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.92);
+}
+/* 属性を持たない一覧（用語・イベントなど）には出さない */
+html[data-ui='base'][data-listview='tile'] .grid-cards > .card-link:not(.char-card) > .row:first-child::before {
+  content: none;
+}

@@ -115,7 +115,10 @@ const latest = RELEASE_NOTES[0];
       }
 
       <section style="margin-top:40px;">
-        <h2>データベース</h2>
+        <h2>
+          <Icon name="lucide:database" style="width:20px;height:20px;color:var(--accent);vertical-align:-3px;" />{' '}
+          データベース
+        </h2>
         {/* data-tiles: 参考画像のホームにある「アイコンの上・ラベルの下の四角いボタン」。
             base UI のときだけその形になる（→ src/styles/ui-base.css 36節）。
             ほかの見た目では今までどおり説明つきのカード。 */}
@@ -143,7 +146,10 @@ const latest = RELEASE_NOTES[0];
         featured.length > 0 && (
           <section style="margin-top:40px;">
             <div class="row row-between">
-              <h2 style="margin:0;">注目のエスパー</h2>
+              <h2 style="margin:0;">
+          <Icon name="lucide:sparkles" style="width:20px;height:20px;color:var(--accent);vertical-align:-3px;" />{' '}
+          注目のエスパー
+        </h2>
               <a class="text-sm" href={withBase('/characters/')}>
                 すべて見る
               </a>
@@ -194,7 +200,10 @@ const latest = RELEASE_NOTES[0];
         topNotices.length > 0 && (
           <section style="margin-top:40px;">
             <div class="row row-between">
-              <h2 style="margin:0;">お知らせ</h2>
+              <h2 style="margin:0;">
+          <Icon name="lucide:megaphone" style="width:20px;height:20px;color:var(--accent);vertical-align:-3px;" />{' '}
+          お知らせ
+        </h2>
               <a class="text-sm" href={withBase('/notices/')}>
                 すべて見る
               </a>
@@ -225,7 +234,10 @@ const latest = RELEASE_NOTES[0];
 
       <div class="grid" style="margin-top:40px;grid-template-columns:1fr;gap:32px;">
         <section>
-          <h2>最近更新した記事</h2>
+          <h2>
+          <Icon name="lucide:clock" style="width:20px;height:20px;color:var(--accent);vertical-align:-3px;" />{' '}
+          最近更新した記事
+        </h2>
           {
             recent.length > 0 ? (
               <ul class="list-reset stack" style="margin-top:16px;">
@@ -248,7 +260,10 @@ const latest = RELEASE_NOTES[0];
         </section>
 
         <section>
-          <h2>ツール</h2>
+          <h2>
+          <Icon name="lucide:wrench" style="width:20px;height:20px;color:var(--accent);vertical-align:-3px;" />{' '}
+          ツール
+        </h2>
           <div class="grid grid-cards" style="margin-top:16px;">
             {
               TOOLS.map((t) => (
@@ -270,7 +285,10 @@ const latest = RELEASE_NOTES[0];
           latest && (
             <section>
               <div class="row row-between">
-                <h2 style="margin:0;">更新履歴</h2>
+                <h2 style="margin:0;">
+          <Icon name="lucide:history" style="width:20px;height:20px;color:var(--accent);vertical-align:-3px;" />{' '}
+          更新履歴
+        </h2>
                 <a class="text-sm" href={withBase('/release-notes/')}>
                   すべて見る
                 </a>
@@ -296,7 +314,10 @@ const latest = RELEASE_NOTES[0];
       {
         otherWikis.length > 0 && (
           <section style="margin-top:40px;">
-            <h2>ほかの wiki</h2>
+            <h2>
+          <Icon name="lucide:library" style="width:20px;height:20px;color:var(--accent);vertical-align:-3px;" />{' '}
+          ほかの wiki
+        </h2>
             <p class="muted text-sm" style="margin-top:4px;">
               このサイトは複数ゲームの wiki を並置できます。記事データは wiki ごとに完全に分かれています。
             </p>
