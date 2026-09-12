@@ -814,3 +814,123 @@ html[data-ui='base'] .page-head .lead {
   font-size: 0.95rem;
   line-height: 1.8;
 }
+
+/* =========================================================================
+   4巡目（2026-09-12）— 表示形式を参考画像どおりに作る。
+   利用者の指示: 「表示形式や全てを再現して欲しい／
+   ゲーム画像やキャラ画像はこのUI限定で使用許可します」
+
+   ★ 画像は **この UIモードのときだけ** 出る。他の11モードは今までどおり
+     自前生成の図形のまま（ルールはすべて html[data-ui='base'] の内側にある）。
+   ========================================================================= */
+
+/* ---- 31. キャラの絵を重ねる --------------------------------------------
+   参考画像は、一覧も詳細もキャラの絵が主役になっている。
+   こちらの `.avatar` は「属性色のグラデ＋頭文字」で作った図形なので、
+   **その上に絵をかぶせる**形にした。絵が無ければ下の図形が見えるだけ。
+
+   `::after` は既に斜めの光沢に使われているので `::before` を使う。
+   重なりは 下から: 地のグラデ → **絵（z-index 2）** → 光沢 → レア度（z-index 2 の後ろ勝ち）。
+   頭文字は z-index 1 なので絵に隠れる。
+
+   出どころは管理ページで切り替える（→ `src/lib/images.ts`）。
+   `--img-local` / `--img-official` は**置いてあるものだけ**が書き出される
+   （`src/lib/asset.ts` がビルド時に確かめる）ので、404 は飛ばない。 */
+html[data-ui='base'] .avatar.has-img::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-image: var(--av-img, none);
+  background-size: cover;
+  /* 立ち絵は顔が上にあるので、切るなら下から切る */
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+/* 既定（属性 data-images なし）＝置いた画像だけを使う */
+html[data-ui='base'] .avatar {
+  --av-img: var(--img-local, none);
+}
+/* 「公式の画像も使う」を選んだ端末。登録が無ければ置いた画像へ落ちる */
+html[data-ui='base'][data-images='official'] .avatar {
+  --av-img: var(--img-official, var(--img-local, none));
+}
+/* 絵があるときは、地のグラデを少し落ち着かせる（縁が浮いて見えるのを防ぐ） */
+html[data-ui='base'] .avatar.has-img {
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+}
+
+/* ---- 32. 横に流れるカード列 --------------------------------------------
+   参考画像のホームは「人気のゲーム」「最近見たゲーム」を**横スクロール**で見せる。
+   見出しの右に「もっと見る ›」、カードは**縦組み**（絵・名前・タグ）で、
+   画面の端で切れて「まだ先がある」と分かる。
+
+   目印は `data-hscroll`（マークアップ側で1つだけ足した）。
+   **base 以外の見た目では今までどおり折り返すグリッド**のまま。 */
+html[data-ui='base'] .grid-cards[data-hscroll] {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  /* 指を離した位置でカードの左端に吸い付く */
+  scroll-snap-type: x proximity;
+  /* 端まで流したときに余白が残るよう、内側に余白を持たせる */
+  padding-bottom: 4px;
+  /* スクロールバーは出さない（画像にも無い）。本文の縦スクロールには触らない */
+  scrollbar-width: none;
+}
+html[data-ui='base'] .grid-cards[data-hscroll]::-webkit-scrollbar {
+  display: none;
+}
+html[data-ui='base'] .grid-cards[data-hscroll] > .card-link {
+  /* 3枚半が見える幅。`flex: none` だと狭い画面で縮まないので、基準幅だけ決める */
+  flex: 0 0 118px;
+  scroll-snap-align: start;
+  padding: 0 0 10px;
+  overflow: hidden;
+  text-align: center;
+}
+/* 中身はタイル表示と同じ組み方（絵を正方形に広げ、名前を1行で切る） */
+html[data-ui='base'] .grid-cards[data-hscroll] > .card-link > .row:first-child {
+  display: block;
+}
+html[data-ui='base'] .grid-cards[data-hscroll] .avatar {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 1 / 1;
+  border-radius: 0;
+  margin-bottom: 6px;
+}
+html[data-ui='base'] .grid-cards[data-hscroll] > .card-link > .row:first-child span {
+  display: block;
+  padding: 0 8px;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* タグは画像どおり名前の下に小さく1つだけ。ロールのバッジは省く */
+html[data-ui='base'] .grid-cards[data-hscroll] > .card-link > .cluster {
+  justify-content: center;
+  margin-top: 0;
+  padding: 0 6px;
+}
+html[data-ui='base'] .grid-cards[data-hscroll] > .card-link > .cluster > .badge {
+  display: none;
+}
+html[data-ui='base'] .grid-cards[data-hscroll] > .card-link .el-badge {
+  font-size: 0.68rem;
+  height: 20px;
+  padding: 0 8px;
+}
+
+/* ---- 33. 記事の上の大きな絵 --------------------------------------------
+   参考画像のキャラページは、**縦長の立ち絵**が上に大きく置かれ、
+   その下に名前と基本情報が続く。
+
+   こちらの `.avatar-block` は 16:10 の横長（絵が無いときに間延びしないための比率）。
+   **絵があるときだけ縦長にする**。切るのは下からなので顔が残る
+   （`background-position: center top` → 31節）。 */
+html[data-ui='base'] .avatar-block.has-img {
+  aspect-ratio: 3 / 4;
+}

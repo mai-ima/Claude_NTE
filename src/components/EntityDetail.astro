@@ -51,7 +51,14 @@ interface Props {
   next?: LinkRef | null;
   spoilerNote?: boolean;
   /** キャラ等で属性色アバターを情報パネル上部に出す */
-  heroAvatar?: { name: string; element: string; rarity?: string };
+  heroAvatar?: {
+    name: string;
+    element: string;
+    rarity?: string;
+    /** 記事の ID と公式画像の URL。base UI のときだけ絵が重なる（→ `src/lib/images.ts`） */
+    id?: string;
+    officialImage?: string;
+  };
   /** 関連項目（同カテゴリの兄弟など）。Wikipedia的な回遊用 */
   related?: LinkRef[];
   /** related セクションの見出し（既定: 関連項目） */
@@ -304,6 +311,8 @@ const editHref = editPath ? editUrl(editPath) : editUrlFor(collection, currentId
                       name={heroAvatar.name}
                       element={heroAvatar.element}
                       rarity={heroAvatar.rarity}
+                      id={heroAvatar.id}
+                      officialImage={heroAvatar.officialImage}
                       block
                     />
                   ) : (

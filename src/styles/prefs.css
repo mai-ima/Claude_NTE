@@ -259,3 +259,79 @@ html[data-listview='timeline'] .grid-cards > .card-link {
 html[data-listview='timeline'] .grid-cards > .card-link > .cluster {
   margin-top: 8px;
 }
+
+/* ----- 一覧の表示: タイル（tile） -----
+   参考画像のキャラクター一覧は、**正方形の絵を4列に並べ、下に名前**だけを置く形。
+   たくさんのキャラを一目で見渡すのに向く（説明を読むための形ではない）。
+
+   マークアップは変えない。`.card-link` の中は
+     1行目 = 見出しの行（アバター＋名前）／.cluster = バッジ／p = 説明
+   なので、**縦積みにしてアバターを正方形いっぱいに広げ、残りを隠す**だけで成立する。
+
+   アバターの大きさは `Avatar.astro` が**インライン style** で書いている
+   （一覧ごとに px が違うため）。ここで上書きするには `!important` が要る。 */
+html[data-listview='tile'] .grid-cards {
+  /* 狭い画面は3列。`minmax(0, 1fr)` にしないと中身の min-content が効いて横にあふれる */
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+@media (min-width: 560px) {
+  html[data-listview='tile'] .grid-cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1100px) {
+  html[data-listview='tile'] .grid-cards {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+html[data-listview='tile'] .grid-cards > .card-link {
+  padding: 0 0 8px;
+  overflow: hidden;
+  text-align: center;
+}
+/* 見出しの行（アバター＋名前）を縦積みにする */
+html[data-listview='tile'] .grid-cards > .card-link > .row:first-child {
+  display: block;
+}
+html[data-listview='tile'] .grid-cards > .card-link .avatar {
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 1 / 1;
+  border-radius: 0;
+  margin-bottom: 6px;
+}
+/* 名前は中央に1行だけ。**はみ出したら「…」で切る**。
+   切らないと長い名前が2行になり、タイルの高さが揃わずガタガタになる
+   （参考画像はどのタイルも同じ高さで並んでいる）。 */
+html[data-listview='tile'] .grid-cards > .card-link .row:first-child > div {
+  padding: 0 6px;
+}
+html[data-listview='tile'] .grid-cards > .card-link .row:first-child .row {
+  display: block;
+}
+/* 名前の大きさは `Avatar` を呼ぶ側がインライン style で書いているので、
+   ここで上書きするには `!important` が要る（外部CSSはインラインに負ける）。 */
+html[data-listview='tile'] .grid-cards > .card-link .row:first-child span[style*='font-weight'] {
+  display: block;
+  font-size: 0.78rem !important;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* 絵と名前だけ残す。説明・バッジ・メタ・英語名・ティアは隠す（画像も同じ）。
+   レア度は絵の右上に出るので、識別はそちらでできる。 */
+html[data-listview='tile'] .grid-cards > .card-link > .cluster,
+html[data-listview='tile'] .grid-cards > .card-link > p,
+html[data-listview='tile'] .grid-cards > .card-link .char-meta,
+html[data-listview='tile'] .grid-cards > .card-link .tier-badge,
+html[data-listview='tile'] .grid-cards > .card-link .muted[style*='0.72rem'] {
+  display: none;
+}
+/* アバターを持たない一覧（用語・イベントなど）は、正方形にすると中身が無いので
+   **タイルにしない**。カードのまま3〜6列に並ぶ（見出しだけが詰まった形になる）。 */
+html[data-listview='tile'] .grid-cards > .card-link:not(:has(.avatar)) {
+  padding: 12px;
+  text-align: left;
+}

@@ -132,7 +132,14 @@ const aCount = list.filter((c: any) => c.data.rarity === 'A').length;
                 data-role={d.role}
               >
                 <div class="row" style="gap:10px;align-items:center;">
-                  <Avatar name={enNameOf(entry)} element={d.element} rarity={d.rarity} size={46} />
+                  <Avatar
+                    name={enNameOf(entry)}
+                    element={d.element}
+                    rarity={d.rarity}
+                    size={46}
+                    id={entry.id}
+                    officialImage={d.officialImage}
+                  />
                   <div style="flex:1;min-width:0;">
                     <div class="row" style="gap:6px;align-items:center;">
                       <span style="font-weight:800;font-size:1.02rem;">{titleOf(entry)}</span>

@@ -29,6 +29,12 @@ import {
   GATE_CLOSED_KEY,
 } from '../../lib/site-state';
 import { NOTICE_LEVELS, NOTICES } from '../../lib/notices';
+import {
+  IMAGE_SOURCES,
+  IMAGES_KEY,
+  DEFAULT_IMAGE_SOURCE,
+  imageSourceOf,
+} from '../../lib/images';
 
 const passcode = import.meta.env.ADMIN_PASSCODE ?? 'nte-admin';
 const passHash = createHash('sha256').update(String(passcode)).digest('hex');
@@ -152,6 +158,46 @@ const today = new Date().toISOString().slice(0, 10);
           </p>
         </section>
 
+        {/* -- キャラクター画像の出どころ -- */}
+        <section class="card card-pad" style="margin-top:16px;">
+          <h2 style="margin-top:0;">キャラクターの画像</h2>
+          <p class="muted text-sm">
+            見た目を <strong>Base</strong> にしているときだけ、キャラクターの図形に絵を重ねます。
+            ほかの見た目では、これまでどおり色と頭文字で作った図形のままです。
+            <strong>この端末のブラウザにだけ</strong>効きます。
+          </p>
+          <div class="admin-modes" id="admin-images">
+            {
+              IMAGE_SOURCES.map((s) => (
+                <button class="admin-mode" type="button" data-img={s.value} aria-pressed="false">
+                  <span class="admin-mode-head">
+                    <Icon name={`lucide:${s.icon}`} />
+                    {s.label}
+                  </span>
+                  <span class="muted text-sm">{s.hint}</span>
+                </button>
+              ))
+            }
+          </div>
+          <div class="callout callout-info" style="margin-top:14px;">
+            <Icon name="lucide:info" />
+            <div>
+              <p style="margin:0;">
+                画像は <code>public/images/characters/</code> に、記事のIDと同じ名前で置きます
+                （例: <code>zanko.webp</code>）。置いていないキャラは図形のままです。
+              </p>
+              <p style="margin:8px 0 0;">
+                ゲームの画像・イラストの権利は各運営元にあります。掲載する場合は、
+                権利者の案内（二次利用のガイドライン等）をご確認ください。
+              </p>
+            </div>
+          </div>
+          <p class="muted text-sm" style="margin-top:12px;">
+            公開されている既定: <strong>{imageSourceOf(DEFAULT_IMAGE_SOURCE).label}</strong>
+            （<code>src/lib/images.ts</code> の <code>DEFAULT_IMAGE_SOURCE</code>）
+          </p>
+        </section>
+
         {/* -- お知らせ -- */}
         <section class="card card-pad" style="margin-top:16px;">
           <h2 style="margin-top:0;">お知らせ</h2>
@@ -214,7 +260,14 @@ const today = new Date().toISOString().slice(0, 10);
   data-astro-rerun
   define:vars={{
     passHash,
-    keys: { state: STATE_KEY, notices: NOTICES_KEY, admin: ADMIN_KEY, closed: GATE_CLOSED_KEY },
+    keys: {
+      state: STATE_KEY,
+      notices: NOTICES_KEY,
+      admin: ADMIN_KEY,
+      closed: GATE_CLOSED_KEY,
+      images: IMAGES_KEY,
+    },
+    imgDef: DEFAULT_IMAGE_SOURCE,
   }}
 >
   (function () {
@@ -436,6 +489,35 @@ const today = new Date().toISOString().slice(0, 10);
           alert(text);
         });
     });
+
+    /* ---- キャラクターの画像 ------------------------------------------
+       選んだ値は localStorage に入れ、**その場で `data-images` に反映**する。
+       同じことを BaseLayout の起動スクリプトが描画前にやっているので、
+       次に開いたページでも同じ状態になる。 */
+    var imgNow = imgDef;
+    try {
+      var saved = localStorage.getItem(keys.images);
+      if (saved) imgNow = saved;
+    } catch (e) {}
+    function renderImages() {
+      var btns = document.querySelectorAll('#admin-images .admin-mode');
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].setAttribute('aria-pressed', String(btns[i].dataset.img === imgNow));
+      }
+    }
+    document.getElementById('admin-images').addEventListener('click', function (e) {
+      var btn = e.target.closest('.admin-mode');
+      if (!btn) return;
+      imgNow = btn.dataset.img;
+      try {
+        localStorage.setItem(keys.images, imgNow);
+      } catch (e) {}
+      // 既定値のときは属性を書かない（起動スクリプトと同じ約束）
+      if (imgNow === imgDef) document.documentElement.removeAttribute('data-images');
+      else document.documentElement.setAttribute('data-images', imgNow);
+      renderImages();
+    });
+    renderImages();
 
     /* ---- 最初の表示（すべての変数を用意したあとで） ------------------- */
     try {

@@ -393,6 +393,7 @@ wiki は6つある。一覧・状態・UI の対応は **[WIKIS.md](./WIKIS.md)*
 | `nte.<ツールの状態>` / 個人メモ など | データ | 消える |
 | `nte.site.state` | サイトの状態（管理ページで切り替え） | 消える |
 | `nte.site.notices` | この端末で作ったお知らせ | 消える |
+| `nte.site.images` | キャラ画像の出どころ（管理ページで切り替え。**base UI のときだけ効く**） | 消える |
 | `nte.admin.unlocked` | 管理ページのロックを外した印 | 消える |
 | `alpha.theme` | α のテーマ | **対象外**（`nte.` 接頭辞でないため export/clear の対象外） |
 | `endfield.view` | エンドフィールドの一覧の表示形式 | **対象外**（同上） |

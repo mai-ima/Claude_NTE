@@ -22,6 +22,7 @@ import { wiki as wikiMeta, WIKI_LIST, LIVE_WIKIS, type WikiId } from '../lib/wik
 import { prefBootData } from '../lib/prefs';
 import { COMMON_FOOTER_LINKS } from '../lib/nav';
 import { UI_MODES } from '../lib/ui';
+import { IMAGES_KEY, IMAGE_SOURCES, DEFAULT_IMAGE_SOURCE } from '../lib/images';
 import MobileDrawer from '../components/MobileDrawer.astro';
 import SiteStateGate from '../components/SiteStateGate.astro';
 import ThemeMenu from '../components/ThemeMenu';
@@ -64,6 +65,12 @@ const w = wikiMeta(wikiId);
 const prefBoot = prefBootData();
 // UIモードの一覧も定義元（src/lib/ui.ts）から渡す。ここで配列を書き写さない。
 const uiValues = UI_MODES.map((m) => m.value);
+/** キャラ画像の出どころ（base UI のときだけ効く）。→ `src/lib/images.ts` */
+const imgBoot = {
+  key: IMAGES_KEY,
+  vals: IMAGE_SOURCES.map((s) => s.value),
+  def: DEFAULT_IMAGE_SOURCE,
+};
 const description = Astro.props.description ?? w.description;
 const siteName = w.siteName;
 const PRIMARY_NAV = w.primaryNav;
@@ -160,7 +167,7 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
 
     {/* テーマ＆UIモードを描画前に適用（チラつき防止）。is:inline なのでバンドルされない素のJS。
         data-astro-rerun: View Transitions の swap 後も再実行し、theme/ui/prefs を再適用する。 */}
-    <script is:inline data-astro-rerun define:vars={{ prefBoot, uiValues }}>
+    <script is:inline data-astro-rerun define:vars={{ prefBoot, uiValues, imgBoot }}>
       (function () {
         try {
           var t = localStorage.getItem('nte.theme');
@@ -188,6 +195,12 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
           if (ui === 'beta') ui = 'editorial'; // 旧ベータからの移行
           if (uiValues.indexOf(ui) === -1) ui = 'classic';
           document.documentElement.setAttribute('data-ui', ui);
+          // キャラ画像の出どころ（管理ページで切り替える。base UI のときだけ CSS が拾う）。
+          // 既定値のときは属性を書かない＝CSS の素の状態。
+          var img = localStorage.getItem(imgBoot.key);
+          if (imgBoot.vals.indexOf(img) === -1) img = imgBoot.def;
+          if (img === imgBoot.def) document.documentElement.removeAttribute('data-images');
+          else document.documentElement.setAttribute('data-images', img);
           // 表示・操作の追加設定。prefBoot は src/lib/prefs.ts の PREFS から生成される。
           // 効いていない状態では属性を消す（View Transitions の swap 後に、
           // 前のページの見た目を引きずらないようにするため）。

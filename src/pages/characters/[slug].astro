@@ -42,7 +42,15 @@ if (d.tier) rows.push({ k: 'ティア(参考)', v: d.tier });
   pills={pills}
   rows={rows}
   headings={headings}
-  heroAvatar={hasEl ? { name: enNameOf(entry), element: d.element, rarity: d.rarity ?? '?' } : undefined}
+  heroAvatar={hasEl
+    ? {
+        name: enNameOf(entry),
+        element: d.element,
+        rarity: d.rarity ?? '?',
+        id: entry.id,
+        officialImage: d.officialImage,
+      }
+    : undefined}
   related={related}
   relatedLabel={em ? `${em.label}属性のキャラ` : '関連キャラ'}
 >

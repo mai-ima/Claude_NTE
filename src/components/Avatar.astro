@@ -1,9 +1,22 @@
 ---
 /**
- * オリジナル生成アバター（著作権配慮のため公式アートは使わない）。
- * 属性色のグラデーション＋頭文字＋レア度で、各キャラを視覚的に識別する。
+ * キャラの見出し図形。
+ *
+ * 既定は**オリジナル生成**（属性色のグラデーション＋頭文字＋レア度）で、
+ * 公式アートは使わない。これは全UIモード共通。
+ *
+ * ただし **UIモード `base` のときだけ**、画像を重ねられる（利用者の許可）。
+ * 出どころは管理ページで切り替える。→ `src/lib/images.ts`
+ *
+ *   `--img-local`    … `public/images/characters/<id>.webp` に置かれた画像
+ *   `--img-official` … 記事の frontmatter `officialImage` に書かれた URL
+ *
+ * どちらも**無ければ変数を出さない**ので、生成アバターがそのまま見える。
+ * 重ねるのは CSS の `::before`（→ `ui-base.css`）。画像が読めなくても
+ * 透明なままなので、**失敗しても崩れない**。
  */
 import { elementMeta } from '../lib/nav';
+import { findLocalImage } from '../lib/asset';
 
 interface Props {
   name: string;
@@ -12,16 +25,26 @@ interface Props {
   /** 表示サイズ（px） */
   size?: number;
   block?: boolean; // info-hero 用に全幅表示
+  /** 記事の ID。`public/images/characters/<id>.*` を探すのに使う */
+  id?: string;
+  /** 公式サイトの画像 URL（frontmatter の `officialImage`） */
+  officialImage?: string;
 }
-const { name, element, rarity, size = 48, block = false } = Astro.props;
+const { name, element, rarity, size = 48, block = false, id, officialImage } = Astro.props;
 const hue = elementMeta(element).hue;
 // 頭文字（英字優先、無ければ先頭1文字）
 const initial = (name.match(/[A-Za-z]/)?.[0] ?? name.charAt(0)).toUpperCase();
+
+// 置いてある画像だけを書き出す（無いものの URL を書くとキャラの数だけ 404 が飛ぶ）
+const local = id ? findLocalImage('characters', id) : null;
+const imgVars =
+  (local ? `--img-local:url('${local}');` : '') +
+  (officialImage ? `--img-official:url('${officialImage}');` : '');
 ---
 
 <div
-  class:list={['avatar', { 'avatar-block': block }]}
-  style={`--el:${hue};${block ? '' : `width:${size}px;height:${size}px;`}`}
+  class:list={['avatar', { 'avatar-block': block, 'has-img': !!(local || officialImage) }]}
+  style={`--el:${hue};${imgVars}${block ? '' : `width:${size}px;height:${size}px;`}`}
   aria-hidden="true"
 >
   <span class="avatar-initial" style={block ? 'font-size:3.2rem;' : `font-size:${Math.round(size * 0.42)}px;`}>

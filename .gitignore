@@ -22,3 +22,8 @@ pnpm-debug.log*
 # os
 .DS_Store
 Thumbs.db
+
+# キャラクター画像（各自の端末に置くもの。権利の判断は置いた人が行う）
+# → public/images/characters/README.md
+public/images/characters/*
+!public/images/characters/README.md

@@ -76,6 +76,12 @@ const characters = defineCollection({
       cv: z.string().optional(), // 声優
       birthday: z.string().optional(),
       image: image().optional(),
+      /**
+       * 公式サイトの画像 URL。**UIモード `base` で「公式の画像も使う」を選んだ端末**でだけ
+       * 表示される（→ `src/lib/images.ts`）。画像は同梱せず、参照するだけ。
+       * 権利は運営元にあるので、書くかどうかはサイトの管理者が判断する。
+       */
+      officialImage: z.url().optional(),
       title: z.string().optional(), // 表示名のオーバーライド（既定は name）
     }),
 });
