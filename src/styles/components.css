@@ -2688,3 +2688,16 @@ html[data-wiki]:not([data-wiki='nte']) {
   margin-top: 6px;
   list-style: lower-roman;
 }
+
+/* ---- 一覧の件数（「全 N 件」）-------------------------------------------
+   絞り込みの下に置く。絞り込むと数が変わるので `aria-live` を付けてある。
+   既定は控えめ（灰色の小さい字）。UIモードによって見え方を寄せる。 */
+.list-count {
+  margin: -12px 0 14px;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+.list-count b {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}

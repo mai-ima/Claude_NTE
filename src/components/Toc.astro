@@ -7,12 +7,29 @@ interface Props {
 const { headings } = Astro.props;
 // h2/h3 のみ目次に採用
 const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
+/**
+ * 第3階層（h3）があるか。
+ * あるときだけ「すべて開く」を出す（押しても何も起きないボタンは置かない）。
+ * 参考画像の目次は**大見出しだけを並べ、右上の「すべて開く」で小見出しを出す**形。
+ * ただし折りたたむのは **UIモード `base` のときだけ**にしてある（→ ui-base.css 34節）。
+ * ほかの見た目では今までどおり全部見えていて、このボタンは出ない。
+ */
+const hasSub = items.some((h) => h.depth === 3);
 ---
 
 {
   items.length > 1 && (
-    <nav class="toc card card-pad" aria-label="目次">
-      <p class="nav-group-title" style="margin-bottom:8px;">目次</p>
+    <nav class="toc card card-pad" aria-label="目次" data-toc>
+      <div class="row row-between" style="margin-bottom:8px;">
+        <p class="nav-group-title" style="margin:0;">
+          目次
+        </p>
+        {hasSub && (
+          <button class="toc-toggle" type="button" aria-expanded="false" data-toc-toggle>
+            すべて開く
+          </button>
+        )}
+      </div>
       <ul>
         {items.map((h) => (
           <li>
@@ -25,3 +42,20 @@ const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
     </nav>
   )
 }
+
+{
+  /* 「すべて開く」の開閉。View Transitions の swap 後も効くよう data-astro-rerun を付ける。
+     CSS 側（base のみ）が `.is-open` を見て小見出しの表示を切り替える。 */
+}
+<script is:inline data-astro-rerun>
+  (function () {
+    var btn = document.querySelector('[data-toc-toggle]');
+    if (!btn) return;
+    var toc = btn.closest('[data-toc]');
+    btn.addEventListener('click', function () {
+      var open = toc.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(open));
+      btn.textContent = open ? 'すべて閉じる' : 'すべて開く';
+    });
+  })();
+</script>

@@ -154,6 +154,12 @@ const ordVars = (item: Item) =>
         )
       }
 
+      {/* 参考画像の一覧は、絞り込みの下に「全 N 件」を置いている。
+          絞り込むと数が変わるので、下の apply() が書き換える。 */}
+      <p class="list-count" id="list-count" aria-live="polite">
+        全 <b>{entries.length}</b> 件
+      </p>
+
       <div data-list-root>
         {
           groups.map((group) => (
@@ -240,11 +246,16 @@ const ordVars = (item: Item) =>
           var cards = Array.prototype.slice.call(document.querySelectorAll('.js-card'));
           var groups = Array.prototype.slice.call(document.querySelectorAll('[data-group]'));
           var active = '';
+          var countEl = document.getElementById('list-count');
           function apply() {
+            var total = 0;
             cards.forEach(function (c) {
               var ok = !active || c.getAttribute('data-fval') === active;
               c.style.display = ok ? '' : 'none';
+              if (ok) total++;
             });
+            // 「全 N 件」を絞り込みの結果に合わせる（参考画像の一覧と同じ置き方）
+            if (countEl) countEl.innerHTML = '全 <b>' + total + '</b> 件';
             groups.forEach(function (g) {
               var vis = 0;
               Array.prototype.slice.call(g.querySelectorAll('.js-card')).forEach(function (c) {

@@ -934,3 +934,113 @@ html[data-ui='base'] .grid-cards[data-hscroll] > .card-link .el-badge {
 html[data-ui='base'] .avatar-block.has-img {
   aspect-ratio: 3 / 4;
 }
+
+/* ---- 34. 目次を「すべて開く」でたたむ ----------------------------------
+   参考画像の記事ページは、目次に**大見出しだけを並べ**、右上の「すべて開く」で
+   小見出しを出す。行の右には下向きのシェブロンが付いている。
+
+   ★ **たたむのは base のときだけ**。ほかの見た目では今までどおり全部見えていて、
+     ボタン自体を出さない（押しても何も起きないボタンを置かないため）。 */
+html[data-ui='base'] .toc-toggle {
+  border: 0;
+  background: none;
+  padding: 2px 4px;
+  color: var(--b-accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+html[data-ui='base'] .toc-toggle:hover {
+  text-decoration: underline;
+}
+/* 閉じているあいだは小見出しを隠す */
+html[data-ui='base'] .toc:not(.is-open) li:has(> .depth-3) {
+  display: none;
+}
+/* 小見出しを持つ大見出しの右に、開けることを示すしるしを出す。
+   開いているあいだは下向きに回す（参考画像と同じ 90度 → 180度 の回り方）。 */
+html[data-ui='base'] .toc:has(.toc-toggle) li:not(:has(> .depth-3)) > a {
+  position: relative;
+  padding-right: 24px;
+}
+html[data-ui='base'] .toc:has(.toc-toggle) li:not(:has(> .depth-3)) > a::after {
+  content: '›';
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  color: var(--muted);
+  font-size: 1.1rem;
+  line-height: 1;
+  transform: translateY(-50%) rotate(90deg);
+  transition: transform 0.2s ease;
+}
+html[data-ui='base'] .toc.is-open li:not(:has(> .depth-3)) > a::after {
+  transform: translateY(-50%) rotate(270deg);
+}
+/* ほかの見た目ではボタンを出さない（たたまないので意味がない） */
+html:not([data-ui='base']) .toc-toggle {
+  display: none;
+}
+
+/* ---- 35. 一覧の件数 -----------------------------------------------------
+   参考画像は一覧の上に「全 72 件」「検索結果 12件」を**濃い太字**で置いている。
+   数字だけ少し大きく、単位は小さい。 */
+html[data-ui='base'] .list-count {
+  color: var(--text);
+  font-weight: 700;
+  font-size: 0.86rem;
+}
+html[data-ui='base'] .list-count b {
+  font-size: 1rem;
+  color: var(--b-accent);
+}
+
+/* ---- 36. カテゴリの「四角いボタン」------------------------------------
+   参考画像のホームは、入り口を**アイコンの上・ラベルの下の四角いボタン**で並べる
+   （すべて／人気／新着／カテゴリ）。アイコンは淡い色地の角丸四角に入っている。
+
+   こちらで同じ役目なのはトップの「データベース」。目印は `data-tiles`。
+   **base のときだけ**この形になり、ほかの見た目では説明つきのカードのまま。 */
+html[data-ui='base'] .grid-cards[data-tiles] {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+@media (min-width: 900px) {
+  html[data-ui='base'] .grid-cards[data-tiles] {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+html[data-ui='base'] .grid-cards[data-tiles] > .card-link {
+  padding: 12px 6px 10px;
+  text-align: center;
+}
+/* アイコンと文字の行を縦積みにする */
+html[data-ui='base'] .grid-cards[data-tiles] > .card-link > .row {
+  display: block;
+}
+/* アイコンの入れ物。画像は 40px 前後の角丸四角で、地は淡いアクセント色 */
+html[data-ui='base'] .grid-cards[data-tiles] .badge-accent {
+  width: 40px !important;
+  height: 40px !important;
+  margin: 0 auto 7px;
+  border-radius: 13px !important;
+}
+html[data-ui='base'] .grid-cards[data-tiles] .badge-accent svg {
+  width: 20px !important;
+  height: 20px !important;
+}
+/* ラベルは1行で切る。長いセクション名でも高さが揃う */
+html[data-ui='base'] .grid-cards[data-tiles] > .card-link > .row div > div:first-child {
+  font-size: 0.76rem;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* 記事数は小さく。説明文は画像に無いので出さない */
+html[data-ui='base'] .grid-cards[data-tiles] .muted.text-sm {
+  font-size: 0.64rem;
+}
+html[data-ui='base'] .grid-cards[data-tiles] > .card-link > p {
+  display: none;
+}

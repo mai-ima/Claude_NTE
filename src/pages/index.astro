@@ -116,7 +116,10 @@ const latest = RELEASE_NOTES[0];
 
       <section style="margin-top:40px;">
         <h2>データベース</h2>
-        <div class="grid grid-cards" style="margin-top:16px;">
+        {/* data-tiles: 参考画像のホームにある「アイコンの上・ラベルの下の四角いボタン」。
+            base UI のときだけその形になる（→ src/styles/ui-base.css 36節）。
+            ほかの見た目では今までどおり説明つきのカード。 */}
+        <div class="grid grid-cards" style="margin-top:16px;" data-tiles>
           {
             SECTIONS.map((s) => (
               <a class="card card-pad card-link" href={withBase(s.href)}>
