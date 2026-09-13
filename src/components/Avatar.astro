@@ -8,12 +8,16 @@
  * ただし **UIモード `base` のときだけ**、画像を重ねられる（利用者の許可）。
  * 出どころは管理ページで切り替える。→ `src/lib/images.ts`
  *
- *   `--img-local`    … `public/images/characters/<id>.webp` に置かれた画像
- *   `--img-official` … 記事の frontmatter `officialImage` に書かれた URL
+ *   `--img-local`    … `public/images/<dir>/<id>.webp` に置かれた画像（利用者が置いたもの）
+ *   `--img-official` … 同梱した公式画像（`public/images/official/nte/<dir>/<id>.webp`）。
+ *                      同梱が無ければ記事の frontmatter `officialImage` の URL へ落ちる
  *
  * どちらも**無ければ変数を出さない**ので、生成アバターがそのまま見える。
  * 重ねるのは CSS の `::before`（→ `ui-base.css`）。画像が読めなくても
  * 透明なままなので、**失敗しても崩れない**。
+ *
+ * ★ 2026-09-13: 公式画像を**同梱して既定で出す**ことになった（利用者の決定）。
+ *   外部 URL を都度読みに行かないので速く、外部サイトが消えても残る。
  */
 import { elementMeta } from '../lib/nav';
 import { findLocalImage } from '../lib/asset';
@@ -25,21 +29,38 @@ interface Props {
   /** 表示サイズ（px） */
   size?: number;
   block?: boolean; // info-hero 用に全幅表示
-  /** 記事の ID。`public/images/characters/<id>.*` を探すのに使う */
+  /** 記事の ID。`public/images/<dir>/<id>.*` を探すのに使う */
   id?: string;
   /** 公式サイトの画像 URL（frontmatter の `officialImage`） */
   officialImage?: string;
+  /**
+   * 画像を探すフォルダ名。コレクション名と同じにする（例: 'characters' / 'arcs'）。
+   * キャラ以外の一覧・記事でも同じ仕組みで絵を出せるようにするための口。
+   */
+  dir?: string;
 }
-const { name, element, rarity, size = 48, block = false, id, officialImage } = Astro.props;
+const {
+  name,
+  element,
+  rarity,
+  size = 48,
+  block = false,
+  id,
+  officialImage,
+  dir = 'characters',
+} = Astro.props;
 const hue = elementMeta(element).hue;
 // 頭文字（英字優先、無ければ先頭1文字）
 const initial = (name.match(/[A-Za-z]/)?.[0] ?? name.charAt(0)).toUpperCase();
 
 // 置いてある画像だけを書き出す（無いものの URL を書くとキャラの数だけ 404 が飛ぶ）
-const local = id ? findLocalImage('characters', id) : null;
+const local = id ? findLocalImage(dir, id) : null;
+// 同梱した公式画像。あれば外部 URL より優先する（速い・消えない・幅を揃えてある）
+const bundled = id ? findLocalImage(`official/nte/${dir}`, id) : null;
+const official = bundled ?? officialImage ?? null;
 const imgVars =
   (local ? `--img-local:url('${local}');` : '') +
-  (officialImage ? `--img-official:url('${officialImage}');` : '');
+  (official ? `--img-official:url('${official}');` : '');
 ---
 
 <div
@@ -51,7 +72,7 @@ const imgVars =
       // 「置いた画像だけ」を選んでいる端末でも**公式の登録があるだけで**
       // 縁と縦長の比率が当たってしまう（絵は出ないのに枠だけ変わる）
       'has-img-local': !!local,
-      'has-img-official': !!officialImage,
+      'has-img-official': !!official,
     },
   ]}
   style={`--el:${hue};${imgVars}${block ? '' : `width:${size}px;height:${size}px;`}`}

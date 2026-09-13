@@ -27,8 +27,14 @@ export type ImageSource = 'frame' | 'official';
 /** localStorage のキー。管理ページと起動スクリプトで共有する */
 export const IMAGES_KEY = 'nte.site.images';
 
-/** ビルドに焼き込む既定。**全員に見えるのはこれ** */
-export const DEFAULT_IMAGE_SOURCE: ImageSource = 'frame';
+/**
+ * ビルドに焼き込む既定。**全員に見えるのはこれ**
+ *
+ * 2026-09-13 に `frame` → `official` へ変更した（利用者の決定）。
+ * 公式画像を**サイトに同梱**したため、外部へ読みに行かずに出せるようになった。
+ * 絵を出したくない端末は、管理ページで「置いた画像だけ」を選ぶ。
+ */
+export const DEFAULT_IMAGE_SOURCE: ImageSource = 'official';
 
 export const IMAGE_SOURCES: {
   value: ImageSource;
@@ -39,13 +45,13 @@ export const IMAGE_SOURCES: {
   {
     value: 'frame',
     label: '置いた画像だけ',
-    hint: 'public/images/ に置いた画像を表示します。置いていないものは、色と頭文字で作った図形のままです。',
+    hint: 'public/images/ に自分で置いた画像だけを表示します。同梱の公式画像は出しません。置いていないものは、色と頭文字で作った図形のままです。',
     icon: 'image',
   },
   {
     value: 'official',
-    label: '公式の画像も使う',
-    hint: '記事に公式サイトの画像URLが登録されていれば、それも表示します。権利は各運営元にあります。',
+    label: '公式の画像も使う（既定）',
+    hint: '同梱している公式の立ち絵を表示します。同梱が無い記事は、登録された公式サイトの画像URLを使います。権利は各運営元にあります。',
     icon: 'globe',
   },
 ];

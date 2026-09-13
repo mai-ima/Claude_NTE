@@ -29,6 +29,7 @@
 | [docs/CHECKS.md](./docs/CHECKS.md) | `pnpm verify` の各検査が何を禁じているか。落ちたときの直し方 |
 | [docs/FINDINGS.md](./docs/FINDINGS.md) | 実際に読んで確かめたこと。**過去にやった勘違いの「誤 → 正」** |
 | [docs/WIKIS.md](./docs/WIKIS.md) | **wiki 一覧の正**。6つの wiki の URL・状態・UI・コレクション |
+| [docs/IMAGE-SOURCES.md](./docs/IMAGE-SOURCES.md) | **同梱画像の台帳**。1枚ずつの出どころ・取得日・目視で確かめたこと |
 | [docs/CHANGELOG-INTERNAL.md](./docs/CHANGELOG-INTERNAL.md) | **開発の詳細な変更履歴**。実測値・調べ方・失敗と原因 |
 | [docs/UI-RESEARCH.md](./docs/UI-RESEARCH.md) | 各ゲームのUIを観察した記録。**調べ方の手順つき** |
 | [docs/IOS-APP.md](./docs/IOS-APP.md) | **iOS アプリへ移すための設計**。データの取り方・画面構成・権利の注意 |

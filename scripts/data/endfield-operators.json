@@ -1,0 +1,365 @@
+[
+ {
+  "key": "typhoea",
+  "name": "ティフォロス",
+  "en": "Typhoeus",
+  "rarity": "6",
+  "icons": [
+   "assault",
+   "nature"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/typhoea.87cfb4cd.png"
+ },
+ {
+  "key": "purrche",
+  "name": "プチエナ",
+  "en": "Purrchena",
+  "rarity": "5",
+  "icons": [
+   "shielder",
+   "physic"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/purrche.d6659019.png"
+ },
+ {
+  "key": "endministrator2",
+  "name": "管理人",
+  "en": "Endministrator",
+  "rarity": "6",
+  "icons": [
+   "guard",
+   "physic"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator2.5ccb44a8.png"
+ },
+ {
+  "key": "endministrator1",
+  "name": "管理人",
+  "en": "Endministrator",
+  "rarity": "6",
+  "icons": [
+   "guard",
+   "physic"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator1.c391b13d.png"
+ },
+ {
+  "key": "perlica",
+  "name": "ペリカ",
+  "en": "Perlica",
+  "rarity": "5",
+  "icons": [
+   "caster",
+   "electric"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/prelica.d0bbdb53.png"
+ },
+ {
+  "key": "chen",
+  "name": "チェン・センユー",
+  "en": "Chen Qianyu",
+  "rarity": "5",
+  "icons": [
+   "guard",
+   "physic"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/chen.b0afd1ba.png"
+ },
+ {
+  "key": "lizhiyan",
+  "name": "オクギ",
+  "en": "Arcane",
+  "rarity": "6",
+  "icons": [
+   "caster",
+   "nature"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lizhiyan.7ada7b83.png"
+ },
+ {
+  "key": "liino",
+  "name": "リーノ",
+  "en": "Liino",
+  "rarity": "6",
+  "icons": [
+   "support",
+   "electric"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/liino.8d027d2a.png"
+ },
+ {
+  "key": "mifu",
+  "name": "ミ・フ",
+  "en": "Mi Fu",
+  "rarity": "6",
+  "icons": [
+   "guard",
+   "physic"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/mifu.e1d79970.png"
+ },
+ {
+  "key": "camille",
+  "name": "カミーユ",
+  "en": "Camille",
+  "rarity": "6",
+  "icons": [
+   "vanguard",
+   "fire"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/camille.a26b2443.png"
+ },
+ {
+  "key": "zhuangfy",
+  "name": "ゾアン・ファンイ",
+  "en": "Zhuang Fangyi",
+  "rarity": "6",
+  "icons": [
+   "assault",
+   "electric"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/zhuangfy.50a608b8.png"
+ },
+ {
+  "key": "tangtang",
+  "name": "タンタン",
+  "en": "Tangtang",
+  "rarity": "6",
+  "icons": [
+   "caster",
+   "ice"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/tangtang.b5cd99e9.png"
+ },
+ {
+  "key": "rossi",
+  "name": "ロッシ",
+  "en": "Rossi",
+  "rarity": "6",
+  "icons": [
+   "guard",
+   "physic"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/rossi.c58b721b.png"
+ },
+ {
+  "key": "laevatain",
+  "name": "レーヴァテイン",
+  "en": "Laevatain",
+  "rarity": "6",
+  "icons": [
+   "assault",
+   "fire"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/laevatain.edd103d4.png"
+ },
+ {
+  "key": "yvonne",
+  "name": "イヴォンヌ",
+  "en": "Yvonne",
+  "rarity": "6",
+  "icons": [
+   "assault",
+   "ice"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/yvonne.9695c304.png"
+ },
+ {
+  "key": "gilberta",
+  "name": "ギルベルタ",
+  "en": "Gilberta",
+  "rarity": "6",
+  "icons": [
+   "support",
+   "nature"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/gilberta.724f3503.png"
+ },
+ {
+  "key": "ardelia",
+  "name": "アルデリア",
+  "en": "Ardelia",
+  "rarity": "6",
+  "icons": [
+   "support",
+   "nature"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ardelia.565c75af.png"
+ },
+ {
+  "key": "ember",
+  "name": "エンバー",
+  "en": "Ember",
+  "rarity": "6",
+  "icons": [
+   "shielder",
+   "fire"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ember.6391acf9.png"
+ },
+ {
+  "key": "lastrite",
+  "name": "ラストライト",
+  "en": "Last Rite",
+  "rarity": "6",
+  "icons": [
+   "assault",
+   "ice"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lastrite.3860f541.png"
+ },
+ {
+  "key": "lifeng",
+  "name": "リーフォン",
+  "en": "Lifeng",
+  "rarity": "6",
+  "icons": [
+   "guard",
+   "physic"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lifeng.ef41bc3a.png"
+ },
+ {
+  "key": "pogranichnik",
+  "name": "ポグラニチニク",
+  "en": "Pogranichnik",
+  "rarity": "6",
+  "icons": [
+   "vanguard",
+   "physic"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/pogranichnik.80f2ddbb.png"
+ },
+ {
+  "key": "alesh",
+  "name": "アレッシュ",
+  "en": "Alesh",
+  "rarity": "5",
+  "icons": [
+   "vanguard",
+   "ice"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/alesh.d7f457d2.png"
+ },
+ {
+  "key": "arclight",
+  "name": "アークライト",
+  "en": "Arclight",
+  "rarity": "5",
+  "icons": [
+   "vanguard",
+   "electric"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/arclight.e31580d7.png"
+ },
+ {
+  "key": "avywenna",
+  "name": "アイビーエナ",
+  "en": "Avywenna",
+  "rarity": "5",
+  "icons": [
+   "assault",
+   "electric"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/avywenna.2a592659.png"
+ },
+ {
+  "key": "dapan",
+  "name": "ダパン",
+  "en": "Da Pan",
+  "rarity": "5",
+  "icons": [
+   "assault",
+   "physic"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/dapan.7cdb6a4e.png"
+ },
+ {
+  "key": "snowshine",
+  "name": "スノーシャイン",
+  "en": "Snowshine",
+  "rarity": "5",
+  "icons": [
+   "shielder",
+   "ice"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/snowshine.bb2c0bdc.png"
+ },
+ {
+  "key": "wulfgard",
+  "name": "ウルフガード",
+  "en": "Wulfgard",
+  "rarity": "5",
+  "icons": [
+   "caster",
+   "fire"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/wulfgard.609a252f.png"
+ },
+ {
+  "key": "xaihi",
+  "name": "ザイヒ",
+  "en": "Xaihi",
+  "rarity": "5",
+  "icons": [
+   "support",
+   "ice"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/xaihi.9ba3eb36.png"
+ },
+ {
+  "key": "akekuri",
+  "name": "アケクリ",
+  "en": "Akekuri",
+  "rarity": "4",
+  "icons": [
+   "vanguard",
+   "fire"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/akekuri.3603d013.png"
+ },
+ {
+  "key": "antal",
+  "name": "アンタル",
+  "en": "Antal",
+  "rarity": "4",
+  "icons": [
+   "support",
+   "electric"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/antal.763c87e4.png"
+ },
+ {
+  "key": "catcher",
+  "name": "キャッチャー",
+  "en": "Catcher",
+  "rarity": "4",
+  "icons": [
+   "shielder",
+   "physic"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/catcher.bc6bcfaa.png"
+ },
+ {
+  "key": "estella",
+  "name": "エステーラ",
+  "en": "Estella",
+  "rarity": "4",
+  "icons": [
+   "guard",
+   "ice"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/estella.38c423af.png"
+ },
+ {
+  "key": "fluorite",
+  "name": "フローライト",
+  "en": "Fluorite",
+  "rarity": "4",
+  "icons": [
+   "caster",
+   "nature"
+  ],
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/fluorite.5a8add29.png"
+ }
+]
