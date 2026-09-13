@@ -1,0 +1,84 @@
+---
+/**
+ * 「保存」ボタン（お気に入り）。
+ *
+ * 参考画像の記事ページには、タイトルの下に
+ * **閲覧数 ・ いいね ・ 保存** の行がある。こちらは閲覧数といいねを**数える仕組みが無い**ので
+ * 出さない（置くと嘘になる）。**保存だけ**を出す。
+ *
+ * ★ 保存先は `src/lib/user-data.ts` の1か所だけを見ている。
+ *   いまはこの端末の中（localStorage）。サーバーを入れるときも、このボタンは触らない。
+ *
+ * ★ ボタンの状態は**描画のあとに JS が当てる**。静的サイトなのでビルド時には分からない。
+ *   JS が動かない環境では押しても何も起きないため、**その場合はボタン自体を出さない**
+ *   （押しても何も起きないものは置かない、というこのサイトの決まり）。
+ */
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  /** `<コレクション>:<記事ID>` */
+  itemKey: string;
+  title: string;
+  href: string;
+  kind: string;
+  wiki: string;
+}
+const { itemKey, title, href, kind, wiki } = Astro.props;
+---
+
+<button
+  type="button"
+  class="save-btn"
+  data-save
+  data-key={itemKey}
+  data-title={title}
+  data-href={href}
+  data-kind={kind}
+  data-wiki={wiki}
+  aria-pressed="false"
+  hidden
+>
+  <Icon name="lucide:bookmark" class="save-icon-off" />
+  <Icon name="lucide:bookmark-check" class="save-icon-on" />
+  <span class="save-label">保存</span>
+</button>
+
+<script>
+  import { toggleFavorite, isFavorite, type ItemRef } from '../lib/user-data';
+
+  function refFrom(el: HTMLElement): ItemRef {
+    return {
+      key: el.dataset.key ?? '',
+      title: el.dataset.title ?? '',
+      href: el.dataset.href ?? '',
+      kind: el.dataset.kind ?? '',
+      wiki: el.dataset.wiki ?? '',
+      at: new Date().toISOString(),
+    };
+  }
+
+  function paint(el: HTMLElement, on: boolean) {
+    el.setAttribute('aria-pressed', String(on));
+    const label = el.querySelector('.save-label');
+    if (label) label.textContent = on ? '保存済み' : '保存';
+  }
+
+  async function setup() {
+    const buttons = Array.from(document.querySelectorAll<HTMLElement>('[data-save]'));
+    for (const el of buttons) {
+      // JS が動いた証。ここで初めて見える
+      el.hidden = false;
+      if (el.dataset.bound === '1') continue;
+      el.dataset.bound = '1';
+      paint(el, await isFavorite(el.dataset.key ?? ''));
+      el.addEventListener('click', async () => {
+        const on = await toggleFavorite(refFrom(el));
+        paint(el, on);
+      });
+    }
+  }
+
+  setup();
+  // ページ遷移（View Transitions）のあとにも当て直す
+  document.addEventListener('astro:page-load', setup);
+</script>

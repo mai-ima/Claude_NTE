@@ -275,6 +275,7 @@ export const PRIMARY_NAV = [
   { label: '用語集', href: '/terms/', icon: 'book-a' },
   { label: 'ツール', href: '/tools/', icon: 'wrench' },
   { label: 'ティア表', href: '/tools/tier-list/', icon: 'bar-chart-3' },
+  { label: '保存したページ', href: '/favorites/', icon: 'bookmark' },
   { label: '更新履歴', href: '/release-notes/', icon: 'history' },
   { label: '設定', href: '/settings/', icon: 'settings' },
 ];
@@ -284,6 +285,7 @@ export const BOTTOM_NAV = [
   { label: 'ホーム', href: '/', icon: 'home' },
   { label: 'キャラ', href: '/characters/', icon: 'users' },
   { label: 'ツール', href: '/tools/', icon: 'wrench' },
+  { label: '保存', href: '/favorites/', icon: 'bookmark' },
   { label: '設定', href: '/settings/', icon: 'settings' },
 ];
 

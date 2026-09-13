@@ -2872,3 +2872,134 @@ html[data-wiki]:not([data-wiki='nte']) {
   color: var(--text);
   font-variant-numeric: tabular-nums;
 }
+
+/* ---- 保存（お気に入り）ボタン --------------------------------------------
+   参考画像の記事ページにある「🔖 保存」。ピル型・枠線・淡い面。
+   押すと塗りつぶしに変わる（`aria-pressed` で状態を持つ）。
+   ★ JS が動くまで `hidden` なので、動かない環境では出ない。 */
+.save-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color 0.16s ease,
+    color 0.16s ease,
+    border-color 0.16s ease;
+}
+.save-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.save-btn svg {
+  width: 15px;
+  height: 15px;
+}
+/* 状態でアイコンを入れ替える。2つ置いて片方を隠す（差し替えより速い） */
+.save-btn .save-icon-on {
+  display: none;
+}
+.save-btn[aria-pressed='true'] {
+  border-color: transparent;
+  background: var(--accent);
+  color: var(--accent-contrast, #fff);
+}
+.save-btn[aria-pressed='true'] .save-icon-on {
+  display: inline-block;
+}
+.save-btn[aria-pressed='true'] .save-icon-off {
+  display: none;
+}
+
+/* ---- 保存・履歴の一覧 -----------------------------------------------------
+   `/favorites/` で使う。中身は JS が入れるので、空のときの案内も持たせる。 */
+.userlist {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.userlist-empty {
+  padding: 24px 16px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  text-align: center;
+}
+.userlist-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm, 12px);
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+}
+.userlist-row:hover {
+  border-color: var(--accent);
+}
+.userlist-main {
+  flex: 1;
+  min-width: 0;
+}
+.userlist-title {
+  display: block;
+  overflow: hidden;
+  font-weight: 700;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.userlist-sub {
+  display: flex;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 0.74rem;
+}
+/* 保存から外すボタン。行はリンクなので、押しても遷移しないよう JS 側で止めている。
+   丸ボタンの既定サイズだと行の中で大きすぎるので、ここで小さくする。 */
+.userlist-del {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.userlist-del:hover {
+  border-color: var(--danger, #e5484d);
+  color: var(--danger, #e5484d);
+}
+/* 節の見出しに並ぶ小さなボタン（「履歴を消す」）。
+   393px の画面で見出しと同じ行に収まる高さにする。 */
+.btn-mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn-mini:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}

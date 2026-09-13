@@ -1,0 +1,173 @@
+---
+/**
+ * 保存したページと、最近見たページ。
+ *
+ * ★ 中身は**この端末の中だけ**にある（→ `src/lib/user-data.ts`）。
+ *   サーバーへは送っていないので、ほかの端末では別の一覧になる。
+ *   静的サイトなので、描画はすべてブラウザ側で行う。
+ *
+ * ★ 参考画像の「お気に入り」「最近見たページ」に当たる画面。
+ *   画像には閲覧数やレベルも出ているが、**数える仕組みが無い**ので置いていない。
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { Icon } from 'astro-icon/components';
+import { withBase } from '../lib/path';
+---
+
+<BaseLayout
+  title="保存したページ"
+  description="この端末で保存したページと、最近見たページの一覧です。"
+>
+  <div class="layout">
+    <div class="content" style="width:100%;max-width:820px;margin-inline:auto;">
+      <nav class="text-sm muted cluster" style="margin-bottom:16px;" aria-label="パンくず">
+        <a href={withBase('/')}>ホーム</a>
+        <span aria-hidden="true"> › </span>
+        <span>保存したページ</span>
+      </nav>
+
+      <section class="page-head">
+        <p class="eyebrow">Saved</p>
+        <h1>保存したページ</h1>
+        <p class="lead">
+          記事の上にある「保存」で、あとで読みたいページを残せます。
+          保存した内容と履歴は<strong>この端末の中だけ</strong>にあり、ほかの端末には出ていきません。
+        </p>
+      </section>
+
+      <section style="margin-top:28px;">
+        <div class="row-between" style="margin-bottom:12px;">
+          <h2 style="margin:0;">保存した記事</h2>
+          <span class="muted text-sm" data-fav-count></span>
+        </div>
+        <div class="userlist" data-fav-list>
+          <div class="userlist-empty">
+            まだ保存したページはありません。記事の上にある「保存」から追加できます。
+          </div>
+        </div>
+      </section>
+
+      <section style="margin-top:32px;">
+        <div class="row-between" style="margin-bottom:12px;">
+          <h2 style="margin:0;">最近見たページ</h2>
+          <button type="button" class="btn-mini" data-history-clear hidden>
+            <Icon name="lucide:trash-2" style="width:14px;height:14px;" />
+            履歴を消す
+          </button>
+        </div>
+        <div class="userlist" data-history-list>
+          <div class="userlist-empty">まだ記録はありません。</div>
+        </div>
+      </section>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import {
+    getFavorites,
+    getHistory,
+    removeFavorite,
+    clearHistory,
+    relativeTime,
+    type ItemRef,
+  } from '../lib/user-data';
+  import { sectionByCollection } from '../lib/nav';
+
+  /** 種類の名前。分からないものはそのまま出さず、空にする */
+  function kindLabel(kind: string): string {
+    try {
+      return sectionByCollection(kind)?.label ?? '';
+    } catch {
+      return '';
+    }
+  }
+
+  function row(item: ItemRef, opts: { remove?: boolean } = {}): HTMLElement {
+    const a = document.createElement('a');
+    a.className = 'userlist-row';
+    a.href = item.href;
+
+    const main = document.createElement('div');
+    main.className = 'userlist-main';
+    const t = document.createElement('span');
+    t.className = 'userlist-title';
+    t.textContent = item.title;
+    const sub = document.createElement('div');
+    sub.className = 'userlist-sub';
+    const k = kindLabel(item.kind);
+    if (k) {
+      const ks = document.createElement('span');
+      ks.textContent = k;
+      sub.append(ks);
+    }
+    const when = relativeTime(item.at);
+    if (when) {
+      const ws = document.createElement('span');
+      ws.textContent = when;
+      sub.append(ws);
+    }
+    main.append(t, sub);
+    a.append(main);
+
+    if (opts.remove) {
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'userlist-del';
+      del.setAttribute('aria-label', `${item.title} を保存から外す`);
+      del.textContent = '×';
+      del.addEventListener('click', async (e) => {
+        // 行はリンクなので、消すときは遷移させない
+        e.preventDefault();
+        e.stopPropagation();
+        await removeFavorite(item.key);
+        void render();
+      });
+      a.append(del);
+    }
+    return a;
+  }
+
+  function fill(box: HTMLElement, items: ItemRef[], empty: string, opts: { remove?: boolean } = {}) {
+    box.textContent = '';
+    if (items.length === 0) {
+      const e = document.createElement('div');
+      e.className = 'userlist-empty';
+      e.textContent = empty;
+      box.append(e);
+      return;
+    }
+    for (const it of items) box.append(row(it, opts));
+  }
+
+  async function render() {
+    const favBox = document.querySelector<HTMLElement>('[data-fav-list]');
+    const hisBox = document.querySelector<HTMLElement>('[data-history-list]');
+    const count = document.querySelector<HTMLElement>('[data-fav-count]');
+    const clear = document.querySelector<HTMLElement>('[data-history-clear]');
+    if (!favBox || !hisBox) return;
+
+    const [favs, hist] = await Promise.all([getFavorites(), getHistory()]);
+    fill(favBox, favs, 'まだ保存したページはありません。記事の上にある「保存」から追加できます。', {
+      remove: true,
+    });
+    fill(hisBox, hist, 'まだ記録はありません。');
+    if (count) count.textContent = favs.length > 0 ? `全 ${favs.length} 件` : '';
+    if (clear) clear.hidden = hist.length === 0;
+  }
+
+  function setup() {
+    const clear = document.querySelector<HTMLElement>('[data-history-clear]');
+    if (clear && clear.dataset.bound !== '1') {
+      clear.dataset.bound = '1';
+      clear.addEventListener('click', async () => {
+        await clearHistory();
+        void render();
+      });
+    }
+    void render();
+  }
+
+  setup();
+  document.addEventListener('astro:page-load', setup);
+</script>

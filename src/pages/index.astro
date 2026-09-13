@@ -114,6 +114,19 @@ const latest = RELEASE_NOTES[0];
         )
       }
 
+      {/* 最近見たページ。**この端末に記録があるときだけ**出る（無いときは空の枠を置かない）。
+          中身は下の script が入れる。記録の置き場は src/lib/user-data.ts。 */}
+      <section style="margin-top:40px;" data-recent-section hidden>
+        <div class="row row-between">
+          <h2 style="margin:0;">
+            <Icon name="lucide:history" style="width:20px;height:20px;color:var(--accent);vertical-align:-3px;" />{' '}
+            最近見たページ
+          </h2>
+          <a class="text-sm" href={withBase('/favorites/')}>もっと見る</a>
+        </div>
+        <div class="userlist" style="margin-top:16px;" data-recent-list></div>
+      </section>
+
       <section style="margin-top:40px;">
         <h2>
           <Icon name="lucide:database" style="width:20px;height:20px;color:var(--accent);vertical-align:-3px;" />{' '}
@@ -389,4 +402,60 @@ const latest = RELEASE_NOTES[0];
     }
     section.hidden = shown.length === 0;
   })();
+</script>
+
+<script>
+  /* 最近見たページ。記録があるときだけ節を出す。
+     置き場は src/lib/user-data.ts（この端末の中）。 */
+  import { getHistory, relativeTime } from '../lib/user-data';
+  import { sectionByCollection } from '../lib/nav';
+
+  async function renderRecent() {
+    const section = document.querySelector<HTMLElement>('[data-recent-section]');
+    const box = document.querySelector<HTMLElement>('[data-recent-list]');
+    if (!section || !box) return;
+
+    const items = (await getHistory()).slice(0, 5);
+    if (items.length === 0) {
+      section.hidden = true;
+      return;
+    }
+    box.textContent = '';
+    for (const it of items) {
+      const a = document.createElement('a');
+      a.className = 'userlist-row';
+      a.href = it.href;
+      const main = document.createElement('div');
+      main.className = 'userlist-main';
+      const t = document.createElement('span');
+      t.className = 'userlist-title';
+      t.textContent = it.title;
+      const sub = document.createElement('div');
+      sub.className = 'userlist-sub';
+      let label = '';
+      try {
+        label = sectionByCollection(it.kind)?.label ?? '';
+      } catch {
+        label = '';
+      }
+      if (label) {
+        const s = document.createElement('span');
+        s.textContent = label;
+        sub.append(s);
+      }
+      const when = relativeTime(it.at);
+      if (when) {
+        const s = document.createElement('span');
+        s.textContent = when;
+        sub.append(s);
+      }
+      main.append(t, sub);
+      a.append(main);
+      box.append(a);
+    }
+    section.hidden = false;
+  }
+
+  void renderRecent();
+  document.addEventListener('astro:page-load', () => void renderRecent());
 </script>

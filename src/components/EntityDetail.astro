@@ -8,6 +8,7 @@ import { Icon } from 'astro-icon/components';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Sidebar from './Sidebar.astro';
 import StatusBadge from './StatusBadge.astro';
+import SaveButton from './SaveButton.astro';
 import Toc from './Toc.astro';
 import Avatar from './Avatar.astro';
 import PersonalNote from './PersonalNote';
@@ -129,7 +130,14 @@ const editHref = editPath ? editUrl(editPath) : editUrlFor(collection, currentId
             対応していないブラウザと「モーションを減らす」のときは出ない。
           */}
           <div class="read-progress" aria-hidden="true"></div>
-          <article data-pagefind-body>
+          {/* 「最近見たページ」に積むための目印。中身は下の script が読む */}
+          <article
+            data-pagefind-body
+            data-page-key={`${collection}:${currentId}`}
+            data-page-title={title}
+            data-page-kind={collection}
+            data-page-wiki={w.id}
+          >
             <header class="page-head" style="margin-bottom:16px;">
               <p class="eyebrow" data-pagefind-meta="category">{sectionLabel}</p>
               <h1>{title}</h1>
@@ -177,6 +185,16 @@ const editHref = editPath ? editUrl(editPath) : editUrlFor(collection, currentId
                 {tags.map((t) => (
                   <span class="badge" data-pagefind-filter="tag">#{t}</span>
                 ))}
+              </div>
+              {/* 参考画像の記事ページにある「保存」。閲覧数といいねは数える仕組みが無いので出さない */}
+              <div class="meta-row">
+                <SaveButton
+                  itemKey={`${collection}:${currentId}`}
+                  title={title}
+                  href={Astro.url.pathname}
+                  kind={collection}
+                  wiki={w.id}
+                />
               </div>
             </header>
 
@@ -338,3 +356,26 @@ const editHref = editPath ? editUrl(editPath) : editUrlFor(collection, currentId
     </div>
   </div>
 </BaseLayout>
+
+<script>
+  /* このページを「最近見たページ」に積む。
+     目印は <article data-page-key="..."> に付けてある（→ 上の markup）。
+     保存先は src/lib/user-data.ts の1か所だけ。いまはこの端末の中。 */
+  import { pushHistory } from '../lib/user-data';
+
+  function record() {
+    const el = document.querySelector<HTMLElement>('article[data-page-key]');
+    if (!el) return;
+    void pushHistory({
+      key: el.dataset.pageKey ?? '',
+      title: el.dataset.pageTitle ?? '',
+      href: location.pathname,
+      kind: el.dataset.pageKind ?? '',
+      wiki: el.dataset.pageWiki ?? '',
+      at: new Date().toISOString(),
+    });
+  }
+
+  record();
+  document.addEventListener('astro:page-load', record);
+</script>
