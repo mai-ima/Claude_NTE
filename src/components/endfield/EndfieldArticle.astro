@@ -170,14 +170,16 @@ const fmt = (d: Date) => d.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' 
     rows.length > 0 && (
       <div class="ef-block-head">
         <span>基本情報</span>
+        <span class="ef-barcode-label" aria-hidden="true">Details</span>
+        <span class="ef-barcode" aria-hidden="true" />
       </div>
     )
   }
   {
     rows.length > 0 && (
-      <div class="ef-list" style="margin-bottom:24px;">
+      <div class="ef-list ef-defs" style="margin-bottom:24px;">
         {rows.map((r) => (
-          <div class="ef-row" style="grid-template-columns:120px 1fr;">
+          <div class="ef-row" style="grid-template-columns:auto 1fr;">
             <span class="ef-row-meta">{r.label}</span>
             <span class="ef-row-body">{r.value}</span>
           </div>

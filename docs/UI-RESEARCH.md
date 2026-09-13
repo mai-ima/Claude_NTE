@@ -783,6 +783,31 @@ API の並びから、公式wikiが持っている項目が読み取れる。
 
 NTE 側のアイテム記事に効きそうなので、宿題として `NOW.md` に残した。
 
+### 公式サイトの CSS を読み直して足したもの（2026-09-13）
+
+公式CSS 390KB を再度読み、**まだ入れていなかった作法**を実装した。値はすべて実測。
+
+| 実測 | 実装 |
+| --- | --- |
+| `.SubpageTab_divider`: 幅 .1875rem・高さ 2.5rem・`#d9d9d9` | `.ef-viewbar .ef-divider` |
+| `.Button_button:hover`: 背景 `#484848`・文字 `#fff`・**角丸6px**（ふだんは角ばっている） | `.ef-viewbtn:hover` |
+| `.__20-NoticeDetail_close:hover`: `transform: rotate(90deg)` | `.ef-close:hover` |
+| `ScrollViewer_scrollBreathing`: `scale(1)` → `scale(1.2)` | `@keyframes ef-scroll-breath` |
+| `ScrollViewer_scrollTipMove`: `translateY` ＋ opacity 0→1→0 | `@keyframes ef-scroll-move` |
+| `subpage-deco-rt` の薄い等高線 | `.ef-subhead::after`（不透明度 0.35） |
+
+**同梱した UI パーツ**（`public/images/official/endfield/ui/`）:
+`arrow` / `color-bar` / `star` / `scroll-tip` / `subpage-deco-lb` / `subpage-deco-rt` /
+`title-bolt` / `triangles.svg` / `deco.svg` / `block-bg.svg` / `th-deco-rt.svg`。
+
+> **`star.webp` が公式のレア度記号**（★ではなく矢羽根型）。
+> これを CSS のマスクとして使い、レア度の数だけ並べている。
+
+**3色ラインの色（画素を読んで実測）**:
+公式サイトの縦バー `color-bar.png` は上から **マゼンタ `#fd1ba9` → 緑 `#00ffa4` → 黄 `#fffa00`**。
+ただし**公式wikiの横ラインは マゼンタ → 黄 → 緑** の順で、こちらとは並びが違う。
+本サイトの `.ef-title-bar` は**公式wikiの並び**に合わせてある（利用者の画面と一致）。
+
 ### 次に試すなら
 
 公式wikiの中身そのものが必要なら、ログインした状態で保存した HTML か、

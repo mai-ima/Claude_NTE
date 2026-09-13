@@ -98,6 +98,7 @@ const fmt = (d: unknown) =>
         <button class="ef-viewbtn" type="button" data-ef-view-set="grid" aria-pressed="false">
           <Icon name="lucide:layout-grid" />タイル
         </button>
+        <span class="ef-divider" aria-hidden="true"></span>
         <button class="ef-viewbtn" type="button" data-ef-view-set="detail" aria-pressed="false">
           <Icon name="lucide:align-left" />詳しく
         </button>
@@ -214,6 +215,17 @@ const fmt = (d: unknown) =>
             </a>
           );
         })}
+      </div>
+    )
+  }
+
+  {
+    sorted.length > 6 && (
+      /* 公式は画面の下端に「SCROLL」の絵を置き、上下に動かして先があることを示す。
+         記事が少ないときは出さない（スクロールの余地が無いため）。 */
+      <div class="ef-scrolltip" aria-hidden="true">
+        <img src={withBase('/images/official/endfield/ui/scroll-tip.webp')} alt="" width="48" height="38" loading="lazy" />
+        <i />
       </div>
     )
   }

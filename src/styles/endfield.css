@@ -1978,11 +1978,13 @@ html[data-ef-view='grid'] .ef-thumb {
   font-size: 1.02rem;
   letter-spacing: -0.01em;
 }
-.ef-block-head > span::before {
+/* 角括弧を付けるのは**見出しの本体だけ**。
+   右に添える "Details" まで括ると、公式の見え方と変わってしまう。 */
+.ef-block-head > span:first-child::before {
   content: '[ ';
   color: var(--ef-muted);
 }
-.ef-block-head > span::after {
+.ef-block-head > span:first-child::after {
   content: ' ]';
   color: var(--ef-muted);
 }
@@ -2032,17 +2034,26 @@ html[data-ef-view='grid'] .ef-thumb {
   object-fit: contain;
 }
 /* レア度。公式wikiは★ではなく**矢羽根のような記号**を数だけ並べている。
-   同じ形は用意できないので、**傾けた三角**を並べて代わりにする。 */
+   その記号そのもの（公式サイトの `star.png`）を同梱して使う。
+   画像が読めないときのために、地に同じ形の clip-path を残してある。 */
 .ef-stars {
   display: inline-flex;
   gap: 3px;
   margin-left: 2px;
 }
 .ef-stars > i {
-  width: 13px;
+  width: 14px;
   height: 15px;
-  background: var(--ef-ink);
+  background-color: var(--ef-ink);
   clip-path: polygon(50% 0, 100% 62%, 50% 42%, 0 62%);
+  -webkit-mask: url('/images/official/endfield/ui/star.webp') center / contain no-repeat;
+  mask: url('/images/official/endfield/ui/star.webp') center / contain no-repeat;
+}
+/* マスクが効く環境では clip-path を外す（二重に切ると形が崩れる） */
+@supports (mask: url('')) or (-webkit-mask: url('')) {
+  .ef-stars > i {
+    clip-path: none;
+  }
 }
 .ef-hero-tags {
   display: flex;
@@ -2082,4 +2093,218 @@ html[data-ef-theme='dark'] .ef-hero-panel {
     rgba(255, 255, 255, 0.03) 0 2px,
     transparent 2px 8px
   );
+}
+
+/* ---- 公式サイトの細部（2026-09-13 の再調査で足したもの）-----------------
+   公式CSS（390KB）を読み直し、**まだ入れていなかった作法**だけを足す。
+   値はすべて公式CSSの実測。 */
+
+/* タブの区切り線。実測 `.SubpageTab_divider`: 幅 .1875rem・高さ 2.5rem・#d9d9d9 */
+.ef-viewbar .ef-divider {
+  display: inline-block;
+  width: 3px;
+  height: 40px;
+  margin: 0 8px;
+  background: #d9d9d9;
+  flex: none;
+}
+/* ボタンのホバー。実測 `.Button_button:hover`: 背景 #484848・文字 #fff・**角丸6px**
+   （ふだんは角ばっているのに、触れたときだけ丸くなる） */
+.ef-viewbtn:hover {
+  background: #484848;
+  color: #fff;
+  border-radius: 6px;
+}
+.ef-viewbtn[aria-pressed='true']:hover {
+  background: var(--ef-ink);
+}
+/* 閉じる「×」は**触れると90度回る**。実測 `.__20-NoticeDetail_close:hover` */
+.ef-close:hover {
+  transform: rotate(90deg);
+}
+.ef-close {
+  transition: transform var(--ef-slow) ease;
+}
+
+/* スクロールの誘導。公式は下端に「SCROLL」の絵を置き、
+   **上下にゆっくり動かしながら**（scrollTipMove）**大きさを呼吸させる**（scrollBreathing）。
+   実測の keyframes:
+     scrollTipMove   0% { translateY(0); opacity:0 } 60% { opacity:1 } …
+     scrollBreathing 0% { scale(1) } 50% { scale(1.2) } */
+.ef-scrolltip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin: 26px 0 8px;
+  opacity: 0.75;
+}
+.ef-scrolltip > img {
+  width: 48px;
+  height: auto;
+  animation: ef-scroll-breath 2.4s ease-in-out infinite;
+}
+.ef-scrolltip > i {
+  display: block;
+  width: 22px;
+  height: 22px;
+  background: var(--ef-muted);
+  -webkit-mask: url('/images/official/endfield/ui/arrow.webp') center / contain no-repeat;
+  mask: url('/images/official/endfield/ui/arrow.webp') center / contain no-repeat;
+  animation: ef-scroll-move 2.4s ease-in-out infinite;
+}
+@keyframes ef-scroll-breath {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+}
+@keyframes ef-scroll-move {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ef-scrolltip > img,
+  .ef-scrolltip > i {
+    animation: none;
+  }
+}
+
+/* 下層ヘッダーの隅の装飾。公式は左下と右上に**薄い等高線の図**を置いている
+   （実測 `subpage-deco-lb` / `subpage-deco-rt`）。邪魔にならないよう薄くする。 */
+.ef-subhead {
+  overflow: hidden;
+}
+.ef-subhead::after {
+  content: '';
+  position: absolute;
+  right: -20px;
+  top: -10px;
+  width: 160px;
+  height: 95px;
+  background: url('/images/official/endfield/ui/subpage-deco-rt.webp') right top / contain no-repeat;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* 見出しの右に置く**バーコード風の飾り**。
+   公式wikiは `[ おすすめ武器 ]` の右に、細い縦線の群れと極小の "Details" を添えている。
+   画像ではなく**不規則な幅の縦縞**として作る（拡大しても崩れない）。 */
+.ef-barcode {
+  display: inline-block;
+  width: 46px;
+  height: 10px;
+  flex: none;
+  opacity: 0.5;
+  background-image: repeating-linear-gradient(
+      90deg,
+      var(--ef-ink) 0 1px,
+      transparent 1px 3px
+    ),
+    repeating-linear-gradient(90deg, var(--ef-ink) 0 2px, transparent 2px 7px);
+}
+.ef-barcode-label {
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--ef-muted);
+  text-transform: uppercase;
+  flex: none;
+}
+
+/* 長い文章を畳む「詳細 ▼」。公式wikiのプロフィール欄と同じ作り。
+   閉じているときは**3行だけ**見せ、下を薄くぼかす。 */
+.ef-more {
+  margin: 0 0 18px;
+}
+.ef-more > div {
+  position: relative;
+  overflow: hidden;
+  max-height: 5.4em;
+  transition: max-height 0.25s ease;
+}
+.ef-more > div::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2.2em;
+  background: linear-gradient(180deg, transparent, var(--ef-bg));
+  pointer-events: none;
+}
+.ef-more[open] > div {
+  max-height: 200em;
+}
+.ef-more[open] > div::after {
+  content: none;
+}
+.ef-more > summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 0 0;
+  color: var(--ef-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+  order: 2;
+}
+.ef-more > summary::-webkit-details-marker {
+  display: none;
+}
+.ef-more {
+  display: flex;
+  flex-direction: column;
+}
+.ef-more > summary::after {
+  content: '▼';
+  font-size: 0.7em;
+}
+.ef-more[open] > summary::after {
+  content: '▲';
+}
+@media (prefers-reduced-motion: reduce) {
+  .ef-more > div {
+    transition: none;
+  }
+}
+
+/* 記事の「基本情報」。公式wikiは**項目名が左・値が右**で、行ごとに細い罫線。
+   一覧の行（`.ef-row`）と同じ部品を使い回すので、ここだけクラスで分ける。 */
+.ef-defs .ef-row {
+  align-items: baseline;
+  padding: 12px 14px;
+  min-height: 0;
+  cursor: default;
+}
+.ef-defs .ef-row:hover {
+  background: none;
+  border-left-color: transparent;
+}
+.ef-defs .ef-row-meta {
+  color: var(--ef-muted);
+  font-size: 0.84rem;
+  white-space: nowrap;
+}
+/* `.ef-row-body` は一覧用に `display: flex` にしてあるので、
+   **text-align では右に寄らない**。`justify-content` で寄せる（実際に踏んだ）。 */
+.ef-defs .ef-row-body {
+  justify-content: flex-end;
+  text-align: right;
+  font-weight: 700;
 }
