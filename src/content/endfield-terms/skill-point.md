@@ -27,7 +27,7 @@ HPバーの上に**3本線**で表示され、戦技1回につき1本を消費�
 - **ジャスト回避**
 - 特定のスキル
 
-[職分](/endfield/terms/class/)の「**先鋒**」は、この回復を担う役割とされている。
+[職業](/endfield/terms/class/)の「**先鋒**」は、この回復を担う役割とされている。
 
 ## 連携技との違い
 
@@ -37,4 +37,4 @@ HPバーの上に**3本線**で表示され、戦技1回につき1本を消費�
 > 🛠 **要確認**: 上限の本数（3本で固定かどうか）、回復速度、
 > 各行動での回復量は確認できていません。
 
-関連: [戦闘の基礎](/endfield/systems/combat/) ／ [職分（クラス）](/endfield/terms/class/) ／ [ブレイク](/endfield/terms/break/)
+関連: [戦闘の基礎](/endfield/systems/combat/) ／ [職業（クラス）](/endfield/terms/class/) ／ [ブレイク](/endfield/terms/break/)

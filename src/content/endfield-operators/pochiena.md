@@ -26,7 +26,7 @@ sources:
 
 **プチエナ** は、バージョン「[雪氷の幽夢](/endfield/events/snow-dream/)」で実装された
 **★5** の[オペレーター](/endfield/terms/operator/)。
-[職分](/endfield/terms/class/)は**重装**、[属性](/endfield/terms/element/)は**物理**。
+[職業](/endfield/terms/class/)は**重装**、[属性](/endfield/terms/element/)は**物理**。
 
 ## 特徴
 
@@ -46,4 +46,4 @@ sources:
 
 > 🛠 **要確認**: 配布の終了日、必要なクエストの条件は確認できていません。
 
-関連: [ティフォロス](/endfield/operators/typhoeus/) ／ [雪氷の幽夢](/endfield/events/snow-dream/) ／ [職分](/endfield/terms/class/)
+関連: [ティフォロス](/endfield/operators/typhoeus/) ／ [雪氷の幽夢](/endfield/events/snow-dream/) ／ [職業](/endfield/terms/class/)

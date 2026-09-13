@@ -33,4 +33,4 @@ sources:
 > 🛠 **要確認**: 属性ごとの**相性倍率**、敵の耐性・弱点の数値は確認できていません。
 > 数値が確かめられ次第、このページに追記します。
 
-関連: [職分（クラス）](/endfield/terms/class/) ／ [オペレーター](/endfield/terms/operator/)
+関連: [職業（クラス）](/endfield/terms/class/) ／ [オペレーター](/endfield/terms/operator/)

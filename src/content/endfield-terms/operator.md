@@ -18,7 +18,7 @@ sources:
 ## 概要
 
 **オペレーター** は、編成して操作するキャラクターの呼び名。
-それぞれに[職分](/endfield/terms/class/)と[属性](/endfield/terms/element/)が設定されている。
+それぞれに[職業](/endfield/terms/class/)と[属性](/endfield/terms/element/)が設定されている。
 
 ## レアリティ
 
@@ -34,4 +34,4 @@ sources:
 
 > 🛠 **要確認**: 昇進・潜在（重ね）の仕組みと必要な素材の個数は確認できていません。
 
-関連: [職分（クラス）](/endfield/terms/class/) ／ [属性](/endfield/terms/element/) ／ [スカウト](/endfield/systems/scout/)
+関連: [職業（クラス）](/endfield/terms/class/) ／ [属性](/endfield/terms/element/) ／ [スカウト](/endfield/systems/scout/)

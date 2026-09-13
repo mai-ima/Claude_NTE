@@ -1766,3 +1766,147 @@ html[data-ef-view='compact'] .ef-row-name {
 html[data-ef-view='compact'] .ef-row-no {
   opacity: 0.55;
 }
+
+/* ---- 一覧の絞り込みと、行に添える絵 ------------------------------------
+   利用者の指示（2026-09-13）で、公式サイトのキャラアイコン・職業/属性アイコンを
+   同梱して使えるようになった。公式のオペレーター一覧と同じ絵を、行の左に置く。
+
+   ★ NTE 側のクラス（.chip / .filterbar / .list-count）は**使わない**。
+     混ざると `pnpm test:ui` の STYLE_MARKS 検査で落ちる。ここは `ef-` で独立させる。 */
+.ef-filter {
+  margin: 14px 0 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--ef-line);
+  background: var(--ef-bg);
+}
+.ef-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.ef-filter-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ef-muted);
+  min-width: 3.6em;
+}
+/* 公式は角丸をほとんど使わない（実測: 4px と 2px だけ）。ピルにはしない */
+.ef-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border: 1px solid var(--ef-line);
+  border-radius: 2px;
+  background: var(--ef-bg);
+  color: var(--ef-text);
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    background-color var(--ef-fast) ease,
+    border-color var(--ef-fast) ease;
+}
+.ef-chip > img {
+  display: block;
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+.ef-chip:hover {
+  border-color: var(--ef-ink);
+}
+/* 選んでいるものは**黄色の面に黒文字**（公式のボタンと同じ扱い）。
+   黄色を文字色にはしない（白地だと読めないため） */
+.ef-chip.is-on {
+  background: var(--ef-accent);
+  border-color: var(--ef-accent);
+  color: var(--ef-ink);
+}
+.ef-count {
+  margin: 2px 0 0;
+  font-size: 0.76rem;
+  color: var(--ef-muted);
+}
+.ef-count > b {
+  font-size: 1.05rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ef-ink);
+}
+
+/* 行の左に置く顔のアップ。公式の一覧と同じ絵（同梱） */
+.ef-row {
+  grid-template-columns: 40px auto 1fr auto;
+}
+.ef-row:not(:has(.ef-thumb)) {
+  grid-template-columns: 40px 1fr auto;
+}
+.ef-thumb {
+  position: relative;
+  display: block;
+  width: 56px;
+  height: 56px;
+  background-size: cover;
+  background-position: center top;
+  background-color: var(--ef-bg-2);
+  border: 1px solid var(--ef-line);
+}
+/* 左上に職業、その下に属性。公式のカードと同じ並び */
+.ef-thumb-ic {
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+.ef-thumb-ic.is-el {
+  top: 19px;
+}
+/* レア度は名前の右に小さく */
+.ef-rar {
+  margin-left: 6px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--ef-muted);
+  white-space: nowrap;
+}
+/* タイル表示のときは絵を大きく見せる */
+html[data-ef-view='grid'] .ef-thumb {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+}
+
+/* 狭い画面では、行の右にある「要確認・更新日」を本文の下へ送る。
+   絵（56px）を足したぶん本文の幅が足りず、説明が2文字で折り返していたため
+   （実測 393px で「雪氷の / 幽夢」…）。名前とレア度は同じ行に置く。 */
+.ef-row-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 6px;
+}
+.ef-row-desc {
+  flex: 1 1 100%;
+  margin: 2px 0 0;
+}
+@media (max-width: 639px) {
+  .ef-row:has(.ef-thumb) {
+    grid-template-columns: 26px 56px minmax(0, 1fr);
+    row-gap: 6px;
+  }
+  .ef-row:has(.ef-thumb) .ef-row-meta {
+    grid-column: 3;
+    text-align: left;
+  }
+  .ef-thumb {
+    width: 52px;
+    height: 52px;
+  }
+}

@@ -20,7 +20,7 @@ sources:
 ## 1. 編成の軸をつかむ
 
 [オペレーター](/endfield/terms/operator/)には
-[職分](/endfield/terms/class/)（役割）と[属性](/endfield/terms/element/)（性質）があります。
+[職業](/endfield/terms/class/)（役割）と[属性](/endfield/terms/element/)（性質）があります。
 まずはこの2つを見て、役割が偏らないように編成します。
 
 ## 2. 戦闘の要点

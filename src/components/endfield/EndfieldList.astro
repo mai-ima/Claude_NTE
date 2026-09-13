@@ -11,6 +11,8 @@ import { withBase } from '../../lib/path';
 import { hrefOf, titleOf } from '../../lib/content';
 import { sectionByCollection } from '../../lib/nav';
 import { wiki } from '../../lib/wikis';
+import { findLocalImage } from '../../lib/asset';
+import { EF_CLASSES, EF_ELEMENTS, efClassKey, efElementKey } from '../../lib/endfield';
 
 interface Props {
   collection: string;
@@ -35,6 +37,21 @@ const sorted = [...entries].sort((a, b) => {
   if (oa !== ob) return oa - ob;
   return titleOf(a as never).localeCompare(titleOf(b as never), 'ja');
 });
+
+/** 絵の置き場。`endfieldOperators` → `public/images/official/endfield/operators/` */
+const imgDir = collection.replace(/^endfield/, '').toLowerCase();
+/** その記事の絵（公式サイトから同梱したもの）。無ければ null */
+const imageOf = (id: string) => findLocalImage(`official/endfield/${imgDir}`, id);
+
+/* 絞り込みの軸。**値が2つ以上あるときだけ**出す（1種類しかない軸を並べても押せないだけ）。 */
+const valuesOf = (field: string) =>
+  [...new Set(sorted.map((e) => (e.data as Record<string, unknown>)[field]).filter(Boolean))].map(
+    String,
+  );
+const classValues = EF_CLASSES.filter((c) => valuesOf('class').includes(c.label));
+const elementValues = EF_ELEMENTS.filter((e) => valuesOf('element').includes(e.label));
+const rarityValues = ['★6', '★5', '★4', '★3'].filter((r) => valuesOf('rarity').includes(r));
+const hasFilter = classValues.length + elementValues.length + rarityValues.length > 1;
 
 const no = (i: number) => String(i + 1).padStart(2, '0');
 const fmt = (d: unknown) =>
@@ -92,6 +109,63 @@ const fmt = (d: unknown) =>
   }
 
   {
+    hasFilter && (
+      /* 絞り込み。常に見えている（開閉しない）。押すと CSS の `hidden` で行を隠し、
+         件数を数え直す。JS が動かない端末でも**全件が見えたまま**なので壊れない。 */
+      <div class="ef-filter" data-ef-filter>
+        <div class="ef-filter-row">
+          <span class="ef-filter-label">絞り込み</span>
+          <button class="ef-chip is-on" type="button" data-ef-f="all" aria-pressed="true">
+            すべて
+          </button>
+          {rarityValues.map((r) => (
+            <button class="ef-chip" type="button" data-ef-f="rarity" data-ef-v={r} aria-pressed="false">
+              {r}
+            </button>
+          ))}
+        </div>
+        {classValues.length > 1 && (
+          <div class="ef-filter-row">
+            <span class="ef-filter-label">職業</span>
+            {classValues.map((c) => (
+              <button
+                class="ef-chip"
+                type="button"
+                data-ef-f="class"
+                data-ef-v={c.label}
+                aria-pressed="false"
+              >
+                <img src={withBase(`/images/official/endfield/classes/${c.key}.webp`)} alt="" width="18" height="18" />
+                {c.label}
+              </button>
+            ))}
+          </div>
+        )}
+        {elementValues.length > 1 && (
+          <div class="ef-filter-row">
+            <span class="ef-filter-label">属性</span>
+            {elementValues.map((el) => (
+              <button
+                class="ef-chip"
+                type="button"
+                data-ef-f="element"
+                data-ef-v={el.label}
+                aria-pressed="false"
+              >
+                <img src={withBase(`/images/official/endfield/elements/${el.key}.webp`)} alt="" width="18" height="18" />
+                {el.label}
+              </button>
+            ))}
+          </div>
+        )}
+        <p class="ef-count">
+          全 <b data-ef-count>{sorted.length}</b> 件
+        </p>
+      </div>
+    )
+  }
+
+  {
     sorted.length === 0 ? (
       <div class="ef-empty">
         <strong>この項目はまだ準備中です</strong>
@@ -109,11 +183,28 @@ const fmt = (d: unknown) =>
           const u = d.updated instanceof Date ? d.updated : null;
           const c = d.checked instanceof Date ? d.checked : null;
           const fresh = c && (!u || c > u) ? { kind: '確認', date: c } : u ? { kind: '更新', date: u } : null;
+          const img = imageOf(e.id);
+          const ck = efClassKey(d.class as string | undefined);
+          const ek = efElementKey(d.element as string | undefined);
           return (
-            <a class="ef-row" href={hrefOf(collection, e.id)}>
+            <a
+              class="ef-row"
+              href={hrefOf(collection, e.id)}
+              data-class={d.class as string | undefined}
+              data-element={d.element as string | undefined}
+              data-rarity={d.rarity as string | undefined}
+            >
               <span class="ef-row-no">{no(i)}</span>
+              {img && (
+                /* 顔のアップ（公式サイトの一覧と同じ絵）。左上に職業、その下に属性を重ねる */
+                <span class="ef-thumb" aria-hidden="true" style={`background-image:url('${img}')`}>
+                  {ck && <img class="ef-thumb-ic" src={withBase(`/images/official/endfield/classes/${ck}.webp`)} alt="" width="20" height="20" />}
+                  {ek && <img class="ef-thumb-ic is-el" src={withBase(`/images/official/endfield/elements/${ek}.webp`)} alt="" width="20" height="20" />}
+                </span>
+              )}
               <span class="ef-row-body">
                 <span class="ef-row-name">{titleOf(e as never)}</span>
+                {d.rarity && <span class="ef-rar">{d.rarity as string}</span>}
                 {d.description && <p class="ef-row-desc">{d.description as string}</p>}
               </span>
               <span class="ef-row-meta">
@@ -195,5 +286,53 @@ const fmt = (d: unknown) =>
       mark();
     });
     mark();
+  })();
+</script>
+
+{/*
+  絞り込み。職業・属性・レア度を **AND** で掛ける（同じ軸の中は1つだけ選べる）。
+  行の `data-*` を見て隠すだけなので、並び順や表示形式とぶつからない。
+*/}
+<script is:inline data-astro-rerun>
+  (function () {
+    var bar = document.querySelector('[data-ef-filter]');
+    var list = document.querySelector('.ef-list');
+    if (!bar || !list || bar.dataset.bound) return;
+    bar.dataset.bound = '1';
+    var pick = {};
+    function apply() {
+      var rows = list.querySelectorAll('.ef-row');
+      var n = 0;
+      for (var r of rows) {
+        var ok = true;
+        for (var k in pick) {
+          if (pick[k] && r.dataset[k] !== pick[k]) ok = false;
+        }
+        r.hidden = !ok;
+        if (ok) n++;
+      }
+      var out = bar.querySelector('[data-ef-count]');
+      if (out) out.textContent = String(n);
+      var none = Object.keys(pick).every(function (k) {
+        return !pick[k];
+      });
+      for (var b of bar.querySelectorAll('[data-ef-f]')) {
+        var f = b.dataset.efF;
+        var on = f === 'all' ? none : pick[f] === b.dataset.efV;
+        b.setAttribute('aria-pressed', String(on));
+        b.classList.toggle('is-on', on);
+      }
+    }
+    bar.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-ef-f]');
+      if (!btn) return;
+      if (btn.dataset.efF === 'all') pick = {};
+      else {
+        var f = btn.dataset.efF;
+        pick[f] = pick[f] === btn.dataset.efV ? '' : btn.dataset.efV;
+      }
+      apply();
+    });
+    apply();
   })();
 </script>

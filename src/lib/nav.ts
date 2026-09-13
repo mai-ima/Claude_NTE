@@ -168,7 +168,7 @@ export const ENDFIELD_SECTIONS: SectionMeta[] = [
     href: '/endfield/operators/',
     label: 'オペレーター',
     icon: 'users',
-    blurb: '★6/★5/★4 のオペレーター。職分・属性・武器種で引ける。',
+    blurb: '★6/★5/★4 のオペレーター。職業・属性・武器種で引ける。',
   },
   {
     collection: 'endfieldWeapons',

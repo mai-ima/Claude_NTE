@@ -28,11 +28,11 @@
 | 販売・運営 | GRYPHLINE（GRYPH FRONTIER 株式会社） | A/B | [PR TIMES](https://prtimes.jp/main/html/rd/p/000000040.000126152.html)（発表元）／gamebiz |
 | 公式サイト | <https://endfield.gryphline.com/ja-jp> | A | 公式ドメイン |
 | レアリティ | ★6 / ★5 / ★4 | C×2 | [ゲームエイト](https://game8.jp/arknights-endfield/681604) ／ [AppMedia](https://appmedia.jp/arknights_endfield/79762838) |
-| 職分（6種） | 先鋒 / 前衛 / 重装 / 術師 / 補助 / 突撃 | C×2 | 同上 |
+| 職業（6種） | 先鋒 / 前衛 / 重装 / 術師 / 補助 / 突撃 | C×2 | 同上 |
 | 属性（5種） | 物理 / 灼熱 / 寒冷 / 電磁 / 自然 | C×2 | 同上 |
 | ガチャの呼称 | 「スカウト」（特別スカウト「冬狩」） | A/B | PR TIMES ／ gamebiz |
 
-> ⚠ 職分の説明文は攻略サイト間で**同じ文が使い回されている**箇所がある
+> ⚠ 職業の説明文は攻略サイト間で**同じ文が使い回されている**箇所がある
 > （「突撃」と「前衛」に同一の説明）。**名称は複数一致で採るが、役割の説明は
 > 各サイトの表現に依存する**ため、記事では断定を避ける。
 
@@ -42,7 +42,7 @@
 | --- | --- | --- | --- |
 | 配信日 | **2026年9月2日** | A/B | PR TIMES ／ gamebiz ／ [Game*Spark](https://www.gamespark.jp/article/2026/09/02/171648.html) |
 | 予告番組 | 2026年8月21日 | B | [4Gamer](https://www.4gamer.net/games/622/G062211/20260821063/) ／ PR TIMES |
-| 新★6 | **ティフォロス**（自然属性・**突撃**・ロドスから来た「再旅者」） | A | PR TIMES（職分＝突撃）。gamebiz は職分の記載なし |
+| 新★6 | **ティフォロス**（自然属性・**突撃**・ロドスから来た「再旅者」） | A | PR TIMES（職業＝突撃）。gamebiz は職業の記載なし |
 | ティフォロスの特徴 | 遠距離射撃／浮遊状態を活かした高機動力／広範囲への継続攻撃 | A/B | PR TIMES ／ gamebiz |
 | 新★5 | **プチエナ**（物理属性・**重装**。無料配布） | A/B | PR TIMES ／ gamebiz |
 | 新エリア | **雪松林**（武陵）／**遂明**（謎解きマップ） | A/B | PR TIMES ／ gamebiz |

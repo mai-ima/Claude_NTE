@@ -13,7 +13,7 @@ const d = entry.data as Record<string, any>;
 // 冒頭の要点。値があるものだけを拾う（空行を出さない）
 const rows = [
   ["レア度", d.rarity],
-  ["職分", d.class],
+  ["職業", d.class],
   ["属性", d.element],
   ["武器種", d.weaponType ?? d.type],
   ["部位", d.slot],

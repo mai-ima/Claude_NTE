@@ -2,7 +2,7 @@
 title: "戦闘の基礎"
 category: "システム"
 order: 1
-description: "編成したオペレーターを切り替えながら戦う。職分と属性の組み合わせが編成の軸になる。"
+description: "編成したオペレーターを切り替えながら戦う。職業と属性の組み合わせが編成の軸になる。"
 status: "draft"
 updated: 2026-09-09
 checked: 2026-09-09
@@ -19,14 +19,14 @@ sources:
 ## 概要
 
 戦闘は、編成した[オペレーター](/endfield/terms/operator/)を切り替えながら進める。
-編成を考えるときの軸になるのが、[職分](/endfield/terms/class/)と[属性](/endfield/terms/element/)。
+編成を考えるときの軸になるのが、[職業](/endfield/terms/class/)と[属性](/endfield/terms/element/)。
 
 ## 編成の考え方
 
-- **職分**で役割を散らす（火力・守り・支援）。
+- **職業**で役割を散らす（火力・守り・支援）。
 - **属性**は敵によって通りやすさが変わる。
 - 戦技（スキル）の使用には**[戦技ポイント](/endfield/terms/skill-point/)** が要り、
-  [職分](/endfield/terms/class/)の「先鋒」がその回復を担うとされる。
+  [職業](/endfield/terms/class/)の「先鋒」がその回復を担うとされる。
 
 ## 戦闘で覚えること
 
@@ -46,4 +46,4 @@ sources:
 
 - 「雪氷の幽夢」で、**浮遊状態**を活かして戦う[ティフォロス](/endfield/operators/typhoeus/)が追加された。
 
-関連: [職分（クラス）](/endfield/terms/class/) ／ [属性](/endfield/terms/element/) ／ [集成工業](/endfield/industry/aic/)
+関連: [職業（クラス）](/endfield/terms/class/) ／ [属性](/endfield/terms/element/) ／ [集成工業](/endfield/industry/aic/)

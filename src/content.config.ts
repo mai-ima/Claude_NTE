@@ -291,7 +291,7 @@ const endfieldOperators = defineCollection({
       en: z.string().optional(),
       reading: z.string().optional(),
       rarity: z.enum(EF_RARITIES).optional(),
-      class: z.string().optional(), // 職分（クラス）
+      class: z.string().optional(), // 職業（クラス）
       element: z.string().optional(), // 属性
       weaponType: z.string().optional(), // 片手剣 / 大剣 / 長柄武器 / 拳銃 / アーツユニット
       faction: z.string().optional(),

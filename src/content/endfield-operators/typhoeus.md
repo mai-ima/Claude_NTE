@@ -27,7 +27,7 @@ sources:
 
 **ティフォロス** は、バージョン「[雪氷の幽夢](/endfield/events/snow-dream/)」（**2026年9月2日**）で実装された
 **★6** の[オペレーター](/endfield/terms/operator/)。
-[職分](/endfield/terms/class/)は**突撃**、[属性](/endfield/terms/element/)は**自然**。
+[職業](/endfield/terms/class/)は**突撃**、[属性](/endfield/terms/element/)は**自然**。
 
 **ロドス**から訪れた「**再旅者**」として、物語イベント「[冬の夢は霧の中に](/endfield/story/winter-dream/)」で
 [雪松林](/endfield/areas/snow-pine-forest/)にて登場する。
@@ -51,4 +51,4 @@ sources:
 > スカウトの排出率と天井の回数は公式の数値を確認できていないため、
 > [スカウト](/endfield/systems/scout/)のページにも載せていません。
 
-関連: [プチエナ](/endfield/operators/pochiena/) ／ [雪松林](/endfield/areas/snow-pine-forest/) ／ [職分](/endfield/terms/class/)
+関連: [プチエナ](/endfield/operators/pochiena/) ／ [雪松林](/endfield/areas/snow-pine-forest/) ／ [職業](/endfield/terms/class/)
