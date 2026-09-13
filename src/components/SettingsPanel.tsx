@@ -341,8 +341,11 @@ export default function SettingsPanel() {
         <p class="muted text-sm" style={{ marginTop: '-2px' }}>
           配色とは別に、画面のつくりそのものを切り替えます。いつでも従来UIに戻せます。
         </p>
+        {/* ふだん使う5つはそのまま並べ、遊びの見た目は「おまけ」に畳む
+            （利用者の決定 2026-09-13。増えすぎて選びにくくなったため）。
+            選んでいるものが「おまけ」の中にあるときは、最初から開いておく。 */}
         <div class="ui-tiles" role="radiogroup" aria-label="UIモード">
-          {UI_MODES.map((m) => (
+          {UI_MODES.filter((m) => m.group === 'main').map((m) => (
             <button
               key={m.value}
               type="button"
@@ -357,6 +360,28 @@ export default function SettingsPanel() {
             </button>
           ))}
         </div>
+        <details
+          class="ui-extra"
+          open={UI_MODES.some((m) => m.group === 'extra' && m.value === ui)}
+        >
+          <summary>おまけの見た目（{UI_MODES.filter((m) => m.group === 'extra').length}種類）</summary>
+          <div class="ui-tiles" role="radiogroup" aria-label="おまけのUIモード">
+            {UI_MODES.filter((m) => m.group === 'extra').map((m) => (
+              <button
+                key={m.value}
+                type="button"
+                role="radio"
+                aria-checked={ui === m.value}
+                class={`ui-tile ${ui === m.value ? 'is-active' : ''}`}
+                onClick={() => chooseUI(m.value)}
+                title={m.hint}
+              >
+                <span class="ui-tile-name">{m.label}</span>
+                <span class="muted ui-tile-hint">{m.hint}</span>
+              </button>
+            ))}
+          </div>
+        </details>
       </Section>
 
       {/* 読みやすさ */}

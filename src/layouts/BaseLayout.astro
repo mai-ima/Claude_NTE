@@ -12,6 +12,7 @@ import '../styles/ui-terminal.css';
 import '../styles/ui-clay.css';
 import '../styles/ui-blueprint.css';
 import '../styles/ui-nte.css';
+import '../styles/ui-old-base.css';
 import '../styles/ui-base.css';
 import '../styles/prefs.css';
 import '../styles/ios.css';
@@ -193,6 +194,14 @@ const jsonLd = JSON.stringify({ '@context': 'https://schema.org', '@graph': ldGr
 
           var ui = localStorage.getItem('nte.ui');
           if (ui === 'beta') ui = 'editorial'; // 旧ベータからの移行
+          // 旧 Base を選んでいた端末は old-Base へ（**一度だけ**。印は src/lib/ui.ts と共有）
+          if (ui === 'base' && localStorage.getItem('nte.ui.migrated') !== '1') {
+            try {
+              localStorage.setItem('nte.ui.migrated', '1');
+              localStorage.setItem('nte.ui', 'old-base');
+            } catch (e) {}
+            ui = 'old-base';
+          }
           if (uiValues.indexOf(ui) === -1) ui = 'classic';
           document.documentElement.setAttribute('data-ui', ui);
           // キャラ画像の出どころ（管理ページで切り替える。base UI のときだけ CSS が拾う）。

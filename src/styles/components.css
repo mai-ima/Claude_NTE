@@ -1879,6 +1879,32 @@ body {
 }
 
 /* UIモード: 説明を1行に抑えたタイル。10個並んでも縦に伸びすぎない */
+/* 「おまけの見た目」の畳み。見た目が12種類に増えて選びにくくなったので、
+   ふだん使う5つだけを前に出し、残りはここに畳む（利用者の決定 2026-09-13）。 */
+.ui-extra {
+  margin-top: 8px;
+}
+.ui-extra > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 0;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  list-style: none;
+}
+.ui-extra > summary::-webkit-details-marker {
+  display: none;
+}
+.ui-extra > summary::before {
+  content: '＋';
+}
+.ui-extra[open] > summary::before {
+  content: '－';
+}
+
 .ui-tiles {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
