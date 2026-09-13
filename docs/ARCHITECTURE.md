@@ -429,3 +429,41 @@ pnpm verify   # test → test:content → check(astro check) → build → test:
 
 個別に走らせるなら `pnpm test` / `pnpm test:content` / `pnpm check` / `pnpm build` /
 `pnpm test:ui` / `pnpm test:links`。詳細と「何を禁じているか」は [CHECKS.md](./CHECKS.md)。
+
+## 利用者ごとのデータ（2026-09-13 追加）
+
+| ファイル | 役割 |
+| --- | --- |
+| `src/lib/user-data.ts` | **お気に入り・最近見たページ**。保存先を差し替えられる層 |
+| `src/components/SaveButton.astro` | 記事の「保存」ボタン |
+| `src/pages/favorites.astro` | 保存したページと履歴の一覧 |
+
+**要点**
+
+- 読み書きは `source`（`UserDataSource`）を通る。**ここだけを差し替えれば保存先が変わる**。
+  既定は `localSource`（この端末の localStorage）。サーバーを入れるときは `setSource()` を1回呼ぶ。
+- API は**すべて Promise**。localStorage は同期だが、あとで非同期の保存先に替えても
+  呼び出し側（画面）を書き換えずに済むようにしてある。
+- 形は `ItemRef`（`key` / `title` / `href` / `kind` / `wiki` / `at`）。
+  `key` は `<コレクション>:<記事ID>`。iOS アプリ側も同じ形にする（→ `docs/IOS-APP.md`）。
+- 履歴は**同じページを重ねず**、新しい方から `HISTORY_LIMIT`（30）件まで。
+- 規則は `test/user-data.test.ts` が固定している。変えるときはテストも直す。
+
+### localStorage のキー（追加分）
+
+| キー | 中身 |
+| --- | --- |
+| `nte.favorites` | 保存したページ（`ItemRef[]`） |
+| `nte.history` | 最近見たページ（`ItemRef[]`・最大30件） |
+
+## 記事データの JSON 書き出し（2026-09-13 追加）
+
+| ファイル | 出るもの |
+| --- | --- |
+| `src/pages/api/index.json.ts` | `/api/index.json` — 目次（wiki とコレクション、件数） |
+| `src/pages/api/[collection].json.ts` | `/api/<コレクション名>.json` — 記事の全件（frontmatter ＋ 本文の Markdown） |
+
+- **公開済みの記事だけ**（`publishedEntries` が下書きを外す）。
+- 日付は `YYYY-MM-DD` の文字列に揃える（JSON に Date 型は無い）。
+- 形を変えるときは `API_VERSION` を上げる。アプリ側がこれを見る。
+- 用途と読み方は **`docs/IOS-APP.md`**。

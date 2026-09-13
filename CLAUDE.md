@@ -31,6 +31,7 @@
 | [docs/WIKIS.md](./docs/WIKIS.md) | **wiki 一覧の正**。6つの wiki の URL・状態・UI・コレクション |
 | [docs/CHANGELOG-INTERNAL.md](./docs/CHANGELOG-INTERNAL.md) | **開発の詳細な変更履歴**。実測値・調べ方・失敗と原因 |
 | [docs/UI-RESEARCH.md](./docs/UI-RESEARCH.md) | 各ゲームのUIを観察した記録。**調べ方の手順つき** |
+| [docs/IOS-APP.md](./docs/IOS-APP.md) | **iOS アプリへ移すための設計**。データの取り方・画面構成・権利の注意 |
 
 新しく分かったことは、その場で該当ファイルに追記すること。
 

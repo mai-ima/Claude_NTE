@@ -1397,3 +1397,52 @@ html[data-ui='base'][data-listview='tile'] .grid-cards > .card-link:not(.char-ca
 html[data-ui='base'] .entity-aside {
   order: -1;
 }
+
+/* ---- 48. 保存は右下の丸ボタン（狭い画面） -------------------------------
+   参考画像4枚目のキャラページは、**右下に浮いた丸いボタン**で保存する。
+   ページの中に埋めるのではなく、スクロールしても手の届く所に居続ける形。
+
+   ★ base UI の狭い画面だけ。ほかの見た目と、パソコン幅では
+     今までどおり見出しの下のピル型（→ `components.css` の `.save-btn`）。
+   ★ 下のタブバーは 58px ＋ セーフエリア（`components.css` の `.bottom-nav`）。
+     その上に 16px 空けて置く。タブバーを隠す設定のときも、余白が増えるだけで重ならない。 */
+@media (max-width: 959px) {
+  html[data-ui='base'] .save-btn {
+    position: fixed;
+    right: 16px;
+    bottom: calc(58px + 16px + env(safe-area-inset-bottom, 0px));
+    /* 下のタブバー(45)より下、ドロワー(50)より下に置く */
+    z-index: 35;
+    width: 52px;
+    height: 52px;
+    padding: 0;
+    justify-content: center;
+    border-color: transparent;
+    background: var(--b-grad);
+    color: #fff;
+    box-shadow: 0 8px 22px color-mix(in srgb, var(--b-accent) 45%, transparent);
+  }
+  html[data-ui='base'] .save-btn svg {
+    width: 22px;
+    height: 22px;
+  }
+  /* 丸の中に文字は入らない。読み上げ用に aria-label をボタン側で持たせている */
+  html[data-ui='base'] .save-btn .save-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  /* 保存済みは塗りをアクセントの単色にして、押した状態を分かりやすくする */
+  html[data-ui='base'] .save-btn[aria-pressed='true'] {
+    background: var(--b-accent-2);
+  }
+  /* ボタンを浮かせたので、元の行は場所を取らないようにする。
+     `display: none` にすると**中のボタンごと消える**ので `contents` にする
+     （親の箱だけを外し、子はそのまま残す）。 */
+  html[data-ui='base'] .page-head .meta-row:has(.save-btn) {
+    display: contents;
+  }
+}

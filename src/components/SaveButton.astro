@@ -36,6 +36,7 @@ const { itemKey, title, href, kind, wiki } = Astro.props;
   data-kind={kind}
   data-wiki={wiki}
   aria-pressed="false"
+  aria-label="このページを保存"
   hidden
 >
   <Icon name="lucide:bookmark" class="save-icon-off" />
@@ -61,6 +62,8 @@ const { itemKey, title, href, kind, wiki } = Astro.props;
     el.setAttribute('aria-pressed', String(on));
     const label = el.querySelector('.save-label');
     if (label) label.textContent = on ? '保存済み' : '保存';
+    // base UI の狭い画面では丸ボタンになり、文字が見えない。読み上げ用に入れ替える
+    el.setAttribute('aria-label', on ? 'このページの保存を外す' : 'このページを保存');
   }
 
   async function setup() {
