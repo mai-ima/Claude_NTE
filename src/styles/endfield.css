@@ -1910,3 +1910,44 @@ html[data-ef-view='grid'] .ef-thumb {
     height: 52px;
   }
 }
+
+/* 記事の上に置く絵。公式サイトのカードに倣い、角丸を使わず細い罫線で囲む。
+   姿が2つあるもの（管理人）は横に並べる。 */
+.ef-figs {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin: 0 0 20px;
+}
+.ef-figs[data-count='2'] {
+  grid-template-columns: 1fr 1fr;
+}
+.ef-fig {
+  position: relative;
+  margin: 0;
+  border: 1px solid var(--ef-line);
+  background: var(--ef-bg-2);
+  overflow: hidden;
+}
+.ef-fig > img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+/* `.ef-fig > img` に幅100%が当たっているので、**同じ詳細度以上**で上書きする
+   （`.ef-fig-ic` だけだと (0,1,0) で負け、アイコンが全幅に伸びる。実測で踏んだ） */
+.ef-fig > img.ef-fig-ic {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+.ef-fig > img.ef-fig-ic.is-el {
+  top: 26px;
+}
+/* 1枚だけのときは幅を抑える（顔のアップなので、広げると粗が出る。実測 303×386） */
+.ef-figs[data-count='1'] .ef-fig {
+  max-width: 320px;
+}

@@ -39,6 +39,13 @@ interface Props {
   sources?: { label: string; url: string }[];
   prev?: LinkRef | null;
   next?: LinkRef | null;
+  /**
+   * 記事の絵（サイト内のパス）。公式サイトから同梱したもの。
+   * 2枚目があるときは左右に並べる（「管理人」は姿が2つある）。
+   */
+  images?: string[];
+  /** 絵の上に重ねるアイコン（職業・属性）のサイト内パス */
+  icons?: string[];
 }
 const {
   collection,
@@ -53,6 +60,8 @@ const {
   sources = [],
   prev,
   next,
+  images = [],
+  icons = [],
 } = Astro.props;
 
 const section = sectionByCollection(collection);
@@ -88,6 +97,23 @@ const fmt = (d: Date) => d.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' 
         出典で裏が取れていない数値・仕様には本文中に「要確認」と付けています。
         ゲーム内および公式のお知らせで最終確認してください。
       </p>
+    )
+  }
+
+  {
+    images.length > 0 && (
+      /* 公式サイトの絵。姿が2つあるものは並べて置く。
+         左上に職業、その下に属性のアイコンを重ねる（公式のカードと同じ並び）。 */
+      <div class="ef-figs" data-count={images.length}>
+        {images.map((src) => (
+          <figure class="ef-fig">
+            <img src={src} alt={`${title}の姿`} loading="lazy" decoding="async" />
+            {icons.map((ic, k) => (
+              <img class:list={['ef-fig-ic', { 'is-el': k === 1 }]} src={ic} alt="" width="26" height="26" />
+            ))}
+          </figure>
+        ))}
+      </div>
     )
   }
 
