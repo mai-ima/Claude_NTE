@@ -6,7 +6,7 @@ import { boldToHtml } from '../lib/inline-md';
 import { SECTIONS, elementMeta, roleMeta } from '../lib/nav';
 import { TOOLS } from '../components/tools/registry';
 import Avatar from '../components/Avatar.astro';
-import { RELEASE_NOTES } from '../data/releaseNotes';
+import { RELEASE_NOTES, changeOf } from '../data/releaseNotes';
 import { NOTICES, noticeHref, noticeDate, sortNotices, levelOf } from '../lib/notices';
 import { loadNavSections, recentEntries, publishedEntries, titleOf, enNameOf, hrefOf, loadEvents } from '../lib/content';
 import { WIKI_LIST } from '../lib/wikis';
@@ -316,8 +316,9 @@ const latest = RELEASE_NOTES[0];
                 </div>
                 <ul class="text-sm" style="margin-top:10px;padding-left:1.2em;">
                   {latest.changes.slice(0, 4).map((c) => (
-                    /* `**強調**` を太字にする（→ src/lib/inline-md.ts） */
-                    <li set:html={boldToHtml(c)} />
+                    /* トップは**簡略版だけ**。詳しい説明は更新履歴のページで開く。
+                       `**強調**` を太字にする（→ src/lib/inline-md.ts） */
+                    <li set:html={boldToHtml(changeOf(c).summary)} />
                   ))}
                 </ul>
               </div>

@@ -1,34 +1,61 @@
 ---
+/**
+ * 更新履歴（リリースノート）。
+ *
+ * ★ 2つの版を持つ（利用者の指示 2026-09-13）
+ *   - **簡略版**（`summary`）… 既定で見える。1文で、何が変わったかだけ
+ *   - **詳細版**（`detail`）… 「詳しく」を開くと出る
+ *
+ * ★ 古いバージョンは畳んである（最新だけ開く）。全部を開いたままだと長すぎるため。
+ *
+ * 文中の `**強調**` は `boldToHtml` で太字にする（→ src/lib/inline-md.ts）。
+ * Markdown を通していない場所なので、ここで変換しないと `**` が画面に出る。
+ */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { RELEASE_NOTES } from '../data/releaseNotes';
+import { Icon } from 'astro-icon/components';
+import { RELEASE_NOTES, changeOf } from '../data/releaseNotes';
 import { boldToHtml } from '../lib/inline-md';
 ---
 
 <BaseLayout title="更新履歴">
   <div class="layout">
-    <div class="content" style="max-width:760px;margin:0 auto;">
+    <div class="content" style="width:100%;max-width:760px;margin:0 auto;">
       <section class="page-head">
         <p class="eyebrow">更新履歴</p>
         <h1>リリースノート</h1>
-        <p class="lead">このサイトの変更履歴です（各バージョンで追記）。</p>
+        <p class="lead">
+          このサイトの変更履歴です。各項目は要点だけを出しています。
+          「詳しく」を開くと、その項目の詳しい説明が読めます。
+        </p>
       </section>
 
-      <div class="stack" style="gap:20px;">
+      <div class="stack" style="gap:14px;">
         {
-          RELEASE_NOTES.map((note) => (
-            <article class="card card-pad">
-              <div class="cluster" style="margin-bottom:10px;">
+          RELEASE_NOTES.map((note, i) => (
+            <details class="card release-note" open={i === 0}>
+              <summary class="release-head">
                 <span class="badge badge-accent">{note.version}</span>
-                <strong>{note.title}</strong>
-                <span class="muted text-sm">{note.date}</span>
-              </div>
-              <ul style="padding-left:1.2em;">
-                {note.changes.map((c) => (
-                  /* 文面の `**強調**` を太字にする。中身はエスケープ済み（→ src/lib/inline-md.ts） */
-                  <li set:html={boldToHtml(c)} />
-                ))}
+                <strong class="release-title">{note.title}</strong>
+                <span class="muted text-sm release-date">{note.date}</span>
+                <Icon name="lucide:chevron-down" class="release-chevron" />
+              </summary>
+              <ul class="release-list">
+                {note.changes.map((raw) => {
+                  const c = changeOf(raw);
+                  return (
+                    <li>
+                      <span set:html={boldToHtml(c.summary)} />
+                      {c.detail && (
+                        <details class="release-detail">
+                          <summary>詳しく</summary>
+                          <p set:html={boldToHtml(c.detail)} />
+                        </details>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
-            </article>
+            </details>
           ))
         }
       </div>
@@ -41,5 +68,97 @@ import { boldToHtml } from '../lib/inline-md';
      スマホ幅をはみ出さないよう、語中での折り返しを許可する。 */
   .content :is(li, strong, p) {
     overflow-wrap: anywhere;
+  }
+
+  .release-note {
+    padding: 0;
+  }
+  /* 版の見出し。押すと開閉する。既定の三角は消して自前のシェブロンを出す */
+  .release-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 8px;
+    padding: 14px 16px;
+    cursor: pointer;
+    list-style: none;
+  }
+  .release-head::-webkit-details-marker {
+    display: none;
+  }
+  /* 狭い画面では、版・日付・シェブロンを1行目に、題を2行目に送る。
+     3つを横に並べると題が縦に潰れて読めなくなる（実測 393px）。 */
+  .release-title {
+    flex: 1 1 100%;
+    order: 3;
+    min-width: 0;
+  }
+  .release-date {
+    flex: none;
+    margin-left: auto;
+  }
+  @media (min-width: 560px) {
+    /* 広い画面なら1行に収まる */
+    .release-title {
+      flex: 1 1 auto;
+      order: 0;
+    }
+    .release-date {
+      margin-left: 0;
+    }
+  }
+  .release-chevron {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    color: var(--text-muted);
+    transition: transform 0.18s ease;
+  }
+  .release-note[open] .release-chevron {
+    transform: rotate(180deg);
+  }
+  .release-list {
+    margin: 0;
+    padding: 0 16px 16px 2.1em;
+  }
+  .release-list > li {
+    margin-bottom: 10px;
+  }
+
+  /* 「詳しく」。行の下に小さく置く */
+  .release-detail > summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 4px;
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    list-style: none;
+  }
+  .release-detail > summary::-webkit-details-marker {
+    display: none;
+  }
+  .release-detail > summary::before {
+    content: '＋';
+    font-size: 0.9em;
+  }
+  .release-detail[open] > summary::before {
+    content: '－';
+  }
+  .release-detail > p {
+    margin: 6px 0 0;
+    padding: 10px 12px;
+    border-left: 3px solid var(--border);
+    background: var(--surface-2, var(--surface));
+    color: var(--text-muted);
+    font-size: 0.88rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .release-chevron {
+      transition: none;
+    }
   }
 </style>
