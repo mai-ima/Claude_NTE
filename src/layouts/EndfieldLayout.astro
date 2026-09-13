@@ -87,7 +87,9 @@ const crumbItems = [{ name: 'エンドフィールド', href: withBase('/endfiel
     <meta name="generator" content={Astro.generator} />
 
     {/* 描画前にテーマとテーマカラーを確定させる（チラつき防止）。
-        この wiki は**暗色が既定**なので、既定値は暗色側の色にする。 */}
+        この wiki は**明色（白）が既定**で、**OS の設定には追従しない**。
+        公式サイトの本編が白地で、黒はローディング画面だけだったため
+        （→ endfield.css の :root[data-ef-theme='dark'] の解説）。 */}
     <script is:inline>
       (function () {
         try {
@@ -102,10 +104,10 @@ const crumbItems = [{ name: 'エンドフィールド', href: withBase('/endfiel
           if (t === 'dark' || t === 'light') {
             document.documentElement.setAttribute('data-ef-theme', t);
           }
-          // 既定は暗色。OS が明色でかつ手動指定が無いときだけ明色。
-          var light =
-            t === 'light' ||
-            (!t && window.matchMedia('(prefers-color-scheme: light)').matches);
+          // 既定は明色（白）。**手動で暗色を選んだときだけ**暗くする。
+          // OS に追従させると、CSS 側（白が既定）とずれて
+          // 「画面は白いのにテーマカラーだけ黒」という食い違いが起きる。
+          var light = t !== 'dark';
           var m = document.createElement('meta');
           m.name = 'theme-color';
           m.content = light ? '#f4f4f2' : '#191919';

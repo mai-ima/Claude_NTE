@@ -27,7 +27,7 @@ const CONTENT_DIR = path.resolve('src/content');
  * `dir` は src/content 配下のディレクトリ名、`base` は URL のベース。
  * src/lib/nav.ts の SECTIONS / ALPHA_SECTIONS と対応させること。
  */
-const WIKI_GROUPS = [
+export const WIKI_GROUPS = [
   {
     id: 'nte',
     collections: [
@@ -42,6 +42,8 @@ const WIKI_GROUPS = [
       { dir: 'items', base: '/items/' },
       { dir: 'vehicles', base: '/vehicles/' },
       { dir: 'events', base: '/events/' },
+      { dir: 'guides', base: '/guides/' },
+      { dir: 'story', base: '/story/' },
     ],
   },
   {
@@ -59,6 +61,8 @@ const WIKI_GROUPS = [
       { dir: 'endfield-systems', base: '/endfield/systems/' },
       { dir: 'endfield-items', base: '/endfield/items/' },
       { dir: 'endfield-events', base: '/endfield/events/' },
+      { dir: 'endfield-guides', base: '/endfield/guides/' },
+      { dir: 'endfield-story', base: '/endfield/story/' },
     ],
   },
   {
@@ -192,7 +196,15 @@ export default function rehypeTermLinks() {
     const m = /[\\/]content[\\/]([a-z0-9-]+)[\\/]([a-z0-9-]+)\.(md|mdx)$/.exec(fpath);
     if (!m) return;
     // 記事の属する wiki の辞書だけを適用する（wiki 間で用語が混ざらない）
-    const dict = dictFor(DIR_TO_WIKI.get(m[1]) ?? 'nte');
+    //
+    // ★ 見つからないときに既定（NTE）へ落とさないこと。
+    //   以前は `?? 'nte'` と書いていたため、`WIKI_GROUPS` に載せ忘れた
+    //   `endfield-guides` の記事に **NTE の用語リンクが張られ、別 wiki へ飛ばされた**。
+    //   載せ忘れても「リンクが付かない」で済むよう、ここで打ち切る。
+    //   載せ忘れ自体は `test/rehype-term-links.test.ts` が検出する。
+    const wikiId = DIR_TO_WIKI.get(m[1]);
+    if (!wikiId) return;
+    const dict = dictFor(wikiId);
     if (!dict.length) return;
     const selfKey = `${m[1]}/${m[2]}`;
     const seen = new Set();

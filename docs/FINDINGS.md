@@ -682,3 +682,87 @@ html[data-ui='base'][data-images='official'] .avatar.has-img-official { … }
 
 **教訓**: 繰り返しの中で対応づけるときは、**距離ではなく「同じ鍵を持つか」**で結ぶ。
 距離で拾ったら、必ず**別の根拠**（ここでは名前ロゴ画像と紹介文の固有名詞）で裏を取る。
+
+## 自動リンクの辞書に載せ忘れると、別の wiki へ飛ばされる（2026-09-13）
+
+**症状**: `/endfield/guides/beginner/` の本文から、NTE の記事へリンクが張られていた。
+
+```html
+<a href="/terms/role/" class="auto-term">役割</a>
+<a href="/items/upgrade-materials/" class="auto-term">育成素材</a>
+```
+
+**原因**: `src/lib/rehype-term-links.mjs` の `WIKI_GROUPS` に
+**`endfield-guides` と `endfield-story` を載せ忘れていた**。
+載っていないディレクトリは、当時のコードでは
+
+```js
+const dict = dictFor(DIR_TO_WIKI.get(m[1]) ?? 'nte');   // ← 既定が NTE
+```
+
+と書かれており、**既定の NTE 辞書が当たっていた**。
+エンドフィールドの記事なのに NTE の用語が引っかかり、読者が別の wiki へ飛ばされる。
+
+**直し方（2つとも要る）**
+
+1. **既定へ落とさない**。辞書に無いディレクトリは**リンクを当てずに打ち切る**。
+   ```js
+   const wikiId = DIR_TO_WIKI.get(m[1]);
+   if (!wikiId) return;        // 載せ忘れても「リンクが付かない」で済む
+   ```
+2. **載せ忘れを検査する**。`test/rehype-term-links.test.ts` が
+   `src/content/` の全ディレクトリと `WIKI_GROUPS` を突き合わせる。
+
+**教訓**: 「見つからなければ既定」は、**別の wiki のデータを混ぜる方向に倒れる**と事故になる。
+分離が目的の仕組みでは、**既定を持たず、分からなければ何もしない**方が安全。
+
+## 自動リンクを直したのにビルド結果が変わらない（Astro のキャッシュ）（2026-09-13）
+
+**症状**: 上の修正を入れて `rm -rf dist && pnpm build` しても、
+`dist/endfield/guides/beginner/index.html` に古いリンクが残ったまま。
+
+**原因**: Astro のコンテンツキャッシュ。`.astro/` と `node_modules/.astro/` に
+**変換後の記事**が残っており、`dist` を消しても再変換されない。
+rehype プラグイン（`src/lib/rehype-term-links.mjs`）を書き換えたときは、
+**記事の再変換が必要**なのにキャッシュが効いてしまう。
+
+**直し方**
+
+```bash
+rm -rf .astro node_modules/.astro && pnpm build
+```
+
+**教訓**: **remark / rehype プラグインを直したときは、`dist` だけでなくキャッシュも消す。**
+「直したのに変わらない」と感じたら、まずここを疑う。
+
+## 白地に蛍光イエローの文字は読めない（2026-09-13）
+
+**症状**: エンドフィールド wiki の明るいテーマで、パンくず・本文リンク・シートの見出しが読めない。
+
+**原因**: 公式の実測色 `#fffa00` を**文字色**に使っていた。
+白地に `#fffa00` は**コントラスト比 約1.07:1**（WCAG AA の最低 4.5:1 を大きく下回る）。
+`--ef-accent-text`（明色では黒・暗色では黄色）という配慮用トークンを用意してあったのに、
+使われていない箇所が6つ残っていた。
+
+**直し方**: **黄色は「面・罫線・下線・発光」にだけ使い、文字色には使わない。**
+公式サイトも同じで、黄色い文字は**黒帯の上**にしか出てこない。
+リンクは「黒い文字＋**黄色い下線**」にすると、色覚に依らず分かって読める。
+
+**確認のしかた**: 計算後スタイルで拾うと確実。
+
+```js
+for (const el of document.querySelectorAll('*')) {
+  const c = getComputedStyle(el).color;
+  if (/rgb\(255,\s*250,\s*0\)/.test(c) && el.textContent.trim()) { /* 地の色を確かめる */ }
+}
+```
+
+## wiki の `accent` は「NTE 側の画面で文字色にもなる」（2026-09-13）
+
+`src/lib/wikis.ts` の `WikiMeta.accent` は `--wiki-accent` として `<html>` に付き、
+`components.css` で **`--accent` に代入される**（＝文字色にも使われる）。
+
+エンドフィールドの公式色は `#fffa00` だが、**この値をそのまま `accent` に入れると
+NTE 側の wiki 一覧などで白地に黄色の文字が出て読めない**。
+同じ色相のまま暗くした値（`#8a7a00`・白地で約4.6:1）を入れ、
+**wiki の中の配色は `endfield.css` の `--ef-accent`（`#fffa00`）が正**、と役割を分けた。

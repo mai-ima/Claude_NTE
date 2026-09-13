@@ -2,6 +2,7 @@
 import { Icon } from 'astro-icon/components';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { withBase } from '../lib/path';
+import { boldToHtml } from '../lib/inline-md';
 import { SECTIONS, elementMeta, roleMeta } from '../lib/nav';
 import { TOOLS } from '../components/tools/registry';
 import Avatar from '../components/Avatar.astro';
@@ -315,7 +316,8 @@ const latest = RELEASE_NOTES[0];
                 </div>
                 <ul class="text-sm" style="margin-top:10px;padding-left:1.2em;">
                   {latest.changes.slice(0, 4).map((c) => (
-                    <li>{c}</li>
+                    /* `**強調**` を太字にする（→ src/lib/inline-md.ts） */
+                    <li set:html={boldToHtml(c)} />
                   ))}
                 </ul>
               </div>

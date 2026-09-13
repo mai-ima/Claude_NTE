@@ -157,7 +157,12 @@ const ENDFIELD: WikiMeta = {
   tagline: '惑星タロIIの開拓を進めるための攻略・データベース',
   description:
     'アークナイツ：エンドフィールド（Arknights: Endfield）の攻略・データベースをまとめた非公式ファンwiki。オペレーター・武器・集成工業システム・エリアなどを収録します。',
-  accent: '#f0a020',
+  /* 公式の実測は蛍光イエロー #fffa00 だが、この値は NTE 側の画面で
+     **文字色**にもなる（components.css の --wiki-accent → --accent）。
+     白地に #fffa00 はコントラスト比 約1.07:1 で読めないため、
+     同じ色相のまま暗くした値を使う（白地で約4.6:1）。
+     wiki の中の配色は endfield.css の --ef-accent（#fffa00）が正。 */
+  accent: '#8a7a00',
   footer:
     'アークナイツ：エンドフィールド 攻略wiki — 非公式ファンサイトです。各記事は出典を明記し、未確認情報には「要確認」を付しています。ゲームの著作権はすべて Hypergryph / MOUNTAIN CONTOUR / GRYPHLINE に帰属します。',
   sections: ENDFIELD_SECTIONS,

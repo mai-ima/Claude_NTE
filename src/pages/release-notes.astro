@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { RELEASE_NOTES } from '../data/releaseNotes';
+import { boldToHtml } from '../lib/inline-md';
 ---
 
 <BaseLayout title="更新履歴">
@@ -23,7 +24,8 @@ import { RELEASE_NOTES } from '../data/releaseNotes';
               </div>
               <ul style="padding-left:1.2em;">
                 {note.changes.map((c) => (
-                  <li>{c}</li>
+                  /* 文面の `**強調**` を太字にする。中身はエスケープ済み（→ src/lib/inline-md.ts） */
+                  <li set:html={boldToHtml(c)} />
                 ))}
               </ul>
             </article>

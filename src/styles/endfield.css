@@ -461,7 +461,12 @@ a:hover {
   color: var(--ef-muted);
 }
 .ef-crumbs a:hover {
-  color: var(--ef-accent);
+  /* 白地に黄色の文字は読めない（コントラスト比 約1.07:1）。
+     暗色のときだけ黄色になる --ef-accent-text を使い、明色では下線で示す。 */
+  color: var(--ef-accent-text);
+  text-decoration: underline;
+  text-decoration-color: var(--ef-accent);
+  text-decoration-thickness: 2px;
 }
 .ef-crumbs svg {
   width: 13px;
@@ -750,8 +755,13 @@ a:hover {
   color: var(--ef-text);
 }
 .ef-prose a {
-  color: var(--ef-accent);
+  /* 公式サイトはリンクを**色で示さず**、前に黄色の小さな縦棒を置く
+     （実測 `a:before { width:.5rem; height:1.875rem; background:#fffa00 }`）。
+     白地に黄色の文字は読めないので、こちらもその作法に倣う。 */
+  color: var(--ef-accent-text);
   text-decoration: underline;
+  text-decoration-color: var(--ef-accent);
+  text-decoration-thickness: 2px;
   text-underline-offset: 2px;
 }
 .ef-prose ul,
@@ -887,7 +897,8 @@ a:hover {
   letter-spacing: 0.08em;
   font-size: 0.8rem;
   text-transform: uppercase;
-  color: var(--ef-accent);
+  /* 白地なので黄色の文字は使わない（暗色のときだけ黄色になる） */
+  color: var(--ef-accent-text);
 }
 .ef-sheet-close {
   margin-left: auto;
@@ -928,7 +939,9 @@ a:hover {
   text-decoration: none;
 }
 .ef-sheet-item[aria-current='page'] {
-  color: var(--ef-accent);
+  /* 現在地は**左の黄色い帯**で示す。文字まで黄色にすると白地で読めない */
+  color: var(--ef-accent-text);
+  font-weight: 800;
   box-shadow: inset var(--ef-bar) 0 0 var(--ef-accent);
 }
 .ef-sheet-item svg {
@@ -942,7 +955,7 @@ a:hover {
   color: var(--ef-muted);
 }
 .ef-sheet-item[aria-current='page'] .ef-sheet-no {
-  color: var(--ef-accent);
+  color: var(--ef-accent-text);
 }
 
 /* シートを開いている間は背面をスクロールさせない */
@@ -979,7 +992,11 @@ body.ef-sheet-open {
   text-underline-offset: 2px;
 }
 .ef-foot a:hover {
-  color: var(--ef-accent);
+  /* 白地では黄色の文字が読めないので、下線で示す */
+  color: var(--ef-accent-text);
+  text-decoration: underline;
+  text-decoration-color: var(--ef-accent);
+  text-decoration-thickness: 2px;
 }
 .ef-foot-links {
   display: flex;
