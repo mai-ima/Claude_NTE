@@ -1954,3 +1954,132 @@ html[data-ef-view='grid'] .ef-thumb {
     radial-gradient(120% 80% at 50% 10%, rgba(255, 250, 0, 0.08), transparent 60%),
     var(--ef-bg-2);
 }
+
+/* ---- 公式wiki（SKPORT）の作法 -------------------------------------------
+   利用者から公式wikiの画面を4枚いただいて読み取ったもの（2026-09-13）。
+
+   | 読み取ったこと | ここでの実装 |
+   | --- | --- |
+   | 見出しは `[ おすすめ武器 ]` の**角括弧**。右に極小の英字とバーコード風の飾り | `.ef-block-head` |
+   | 見出しの下に**左が濃く右が薄い灰色のバー** | `.ef-block-head::after` |
+   | カードの中は `// ゲーム内推奨` の**スラッシュ2本**の小見出し | `.ef-hero-kicker` |
+   | 名前の下に**職業・属性のアイコン**と**レア度（矢印型を数だけ）** | `.ef-hero-meta` / `.ef-stars` |
+   | その下に**マゼンタ→黄→緑の3色ライン** | 既存の `.ef-title-bar` を流用 |
+   | `陣営｜ロドス・アイランド` の**黒タグ＋灰タグの組** | `.ef-tagpair` |
+   | せりふは**鉤括弧**で1行 | `.ef-hero-quote` |
+   | 地は**薄い灰色に斜めのストライプ** | `.ef-hero-panel` の背景 */
+
+.ef-block-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 26px 0 10px;
+  font-weight: 800;
+  font-size: 1.02rem;
+  letter-spacing: -0.01em;
+}
+.ef-block-head > span::before {
+  content: '[ ';
+  color: var(--ef-muted);
+}
+.ef-block-head > span::after {
+  content: ' ]';
+  color: var(--ef-muted);
+}
+/* 見出しの下の灰色バー（左が濃く、右へ消えていく） */
+.ef-block-head::after {
+  content: '';
+  flex: 1;
+  height: 6px;
+  background: linear-gradient(90deg, var(--ef-line), transparent);
+}
+
+/* ヒーローの下のパネル */
+.ef-hero-panel {
+  margin: 0 0 22px;
+  padding: 14px 14px 16px;
+  border: 1px solid var(--ef-line);
+  /* 斜めのストライプ。公式wikiの地と同じ作り（角度と間隔は目視で合わせた） */
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(0, 0, 0, 0.02) 0 2px,
+    transparent 2px 8px
+  );
+  background-color: var(--ef-bg);
+}
+.ef-hero-kicker {
+  margin: 0;
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--ef-muted);
+}
+.ef-hero-name {
+  margin: 2px 0 8px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.ef-hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.ef-hero-ic {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+/* レア度。公式wikiは★ではなく**矢羽根のような記号**を数だけ並べている。
+   同じ形は用意できないので、**傾けた三角**を並べて代わりにする。 */
+.ef-stars {
+  display: inline-flex;
+  gap: 3px;
+  margin-left: 2px;
+}
+.ef-stars > i {
+  width: 13px;
+  height: 15px;
+  background: var(--ef-ink);
+  clip-path: polygon(50% 0, 100% 62%, 50% 42%, 0 62%);
+}
+.ef-hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 0;
+}
+/* ラベルは黒地に白、値は薄い地に黒。すき間なくくっつける */
+.ef-tagpair {
+  display: inline-flex;
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1;
+}
+.ef-tagpair > b {
+  padding: 6px 8px;
+  background: var(--ef-ink);
+  color: var(--ef-bg);
+}
+.ef-tagpair > span {
+  padding: 6px 10px;
+  background: var(--ef-bg-2);
+  color: var(--ef-text);
+  border: 1px solid var(--ef-line);
+  border-left: none;
+}
+.ef-hero-quote {
+  margin: 12px 0 0;
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+/* 暗いテーマでは、ストライプを白側にする（黒地に黒い線は見えない） */
+html[data-ef-theme='dark'] .ef-hero-panel {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.03) 0 2px,
+    transparent 2px 8px
+  );
+}

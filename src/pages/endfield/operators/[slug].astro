@@ -12,12 +12,20 @@ const { entry, prev, next } = Astro.props;
 const { Content, headings } = await renderEntry(entry);
 const d = entry.data as Record<string, any>;
 
-// 冒頭の要点。値があるものだけを拾う（空行を出さない）
+/* 冒頭の要点。値があるものだけを拾う（空行を出さない）。
+   並びは**公式wiki の「基本情報」に合わせた**（コードネーム→性別→陣営→誕生日→属性→種族→CV）。 */
 const rows = [
   ["レア度", d.rarity],
   ["職業", d.class],
   ["属性", d.element],
   ["武器種", d.weaponType ?? d.type],
+  ["性別", d.gender],
+  ["誕生日", d.birthday],
+  ["種族", d.race],
+  ["メイン能力", d.mainStat],
+  ["サブ能力", d.subStat],
+  ["中国語CV", d.cvCn],
+  ["英語CV", d.cvEn],
   ["部位", d.slot],
   ["区分", d.category],
   ["入手", d.acquisition],
@@ -58,6 +66,15 @@ const icons = [
   sources={d.sources}
   images={images}
   icons={icons}
+  hero={{
+    icons,
+    rarity: d.rarity,
+    tags: [
+      d.faction ? { label: "陣営", value: d.faction } : null,
+      d.weaponType ? { label: "武器種類", value: d.weaponType } : null,
+    ].filter(Boolean) as { label: string; value: string }[],
+    quote: d.quote,
+  }}
   prev={prev ? { href: `/endfield/operators/${prev.id}/`, title: titleOf(prev) } : null}
   next={next ? { href: `/endfield/operators/${next.id}/`, title: titleOf(next) } : null}
 >

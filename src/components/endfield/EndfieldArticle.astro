@@ -46,6 +46,16 @@ interface Props {
   images?: string[];
   /** 絵の上に重ねるアイコン（職業・属性）のサイト内パス */
   icons?: string[];
+  /**
+   * ヒーローの下に出す帯（公式wiki の作りに合わせたもの）。
+   * 職業・属性のアイコン、レア度の記号、ラベルと値の組、決めぜりふ。
+   */
+  hero?: {
+    icons?: string[];
+    rarity?: string;
+    tags?: { label: string; value: string }[];
+    quote?: string;
+  };
 }
 const {
   collection,
@@ -62,7 +72,11 @@ const {
   next,
   images = [],
   icons = [],
+  hero,
 } = Astro.props;
+
+/** レア度の「★6」から数字だけ取り出す（記号を6個並べるため） */
+const stars = hero?.rarity ? Number(hero.rarity.replace(/[^0-9]/g, '')) : 0;
 
 const section = sectionByCollection(collection);
 const toc = headings.filter((h) => h.depth === 2);
@@ -117,6 +131,48 @@ const fmt = (d: Date) => d.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' 
     )
   }
 
+  {
+    hero && (
+      /* 公式wiki のヒーロー下のパネル。
+         極小の英字ラベル → 名前 → 職業/属性＋レア度 → 3色ライン → ラベルと値 → せりふ */
+      <div class="ef-hero-panel">
+        <p class="ef-hero-kicker" aria-hidden="true">// ARKNIGHTS: ENDFIELD</p>
+        <p class="ef-hero-name">[ {title} ]</p>
+        <div class="ef-hero-meta">
+          {(hero.icons ?? []).map((ic) => (
+            <img class="ef-hero-ic" src={ic} alt="" width="26" height="26" />
+          ))}
+          {stars > 0 && (
+            <span class="ef-stars" aria-label={`レア度 ${stars}`}>
+              {Array.from({ length: stars }).map(() => (
+                <i aria-hidden="true" />
+              ))}
+            </span>
+          )}
+        </div>
+        <p class="ef-title-bar" aria-hidden="true" />
+        {(hero.tags ?? []).length > 0 && (
+          <div class="ef-hero-tags">
+            {(hero.tags ?? []).map((t) => (
+              <span class="ef-tagpair">
+                <b>{t.label}</b>
+                <span>{t.value}</span>
+              </span>
+            ))}
+          </div>
+        )}
+        {hero.quote && <p class="ef-hero-quote">「{hero.quote}」</p>}
+      </div>
+    )
+  }
+
+  {
+    rows.length > 0 && (
+      <div class="ef-block-head">
+        <span>基本情報</span>
+      </div>
+    )
+  }
   {
     rows.length > 0 && (
       <div class="ef-list" style="margin-bottom:24px;">

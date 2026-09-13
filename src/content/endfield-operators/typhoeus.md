@@ -4,14 +4,24 @@ en: "Typhoeus"
 rarity: "★6"
 class: "突撃"
 element: "自然"
-faction: "ロドス（再旅者）"
+faction: "ロドス・アイランド"
+gender: "女性"
+birthday: "1月13日"
+race: "サルカズ"
+cvCn: "畠四白"
+cvEn: "Hanna Johansson"
+weaponType: "アーツユニット"
+mainStat: "敏捷"
+subStat: "意志"
+recommendedWeapons: ["寒夜の影"]
+quote: "いい物語といい狩人は同じ。最初に狙うのは、心臓だ。"
 version: "雪氷の幽夢（2026/9/2）"
 implemented: true
 order: 1
 description: "「雪氷の幽夢」で実装された★6オペレーター。自然属性・突撃。浮遊状態を活かした高い機動力と、広範囲への継続攻撃が持ち味。"
 status: "draft"
-updated: 2026-09-09
-checked: 2026-09-09
+updated: 2026-09-13
+checked: 2026-09-13
 tags: ["★6", "突撃", "自然", "雪氷の幽夢", "ロドス"]
 aliases: ["Typhoeus"]
 sources:
@@ -21,6 +31,8 @@ sources:
     url: "https://gamebiz.jp/news/432114"
   - label: "Game*Spark — 新バージョン「雪氷の幽夢」配信開始"
     url: "https://www.gamespark.jp/article/2026/09/02/171648.html"
+  - label: "公式wiki（SKPORT）— オペレーター情報"
+    url: "https://wiki.skport.com/endfield"
 ---
 
 ## 概要
@@ -28,9 +40,49 @@ sources:
 **ティフォロス** は、バージョン「[雪氷の幽夢](/endfield/events/snow-dream/)」（**2026年9月2日**）で実装された
 **★6** の[オペレーター](/endfield/terms/operator/)。
 [職業](/endfield/terms/class/)は**突撃**、[属性](/endfield/terms/element/)は**自然**。
+扱う[武器種](/endfield/terms/weapon-type/)は**アーツユニット**。
 
-**ロドス**から訪れた「**再旅者**」として、物語イベント「[冬の夢は霧の中に](/endfield/story/winter-dream/)」で
+> 「いい物語といい狩人は同じ。最初に狙うのは、心臓だ。」
+
+**ロドス・アイランド**から訪れた「**再旅者**」として、物語イベント「[冬の夢は霧の中に](/endfield/story/winter-dream/)」で
 [雪松林](/endfield/areas/snow-pine-forest/)にて登場する。
+
+## 基本情報
+
+公式wikiの「オペレーター情報」に載っている項目。
+
+| 項目 | 内容 |
+| --- | --- |
+| コードネーム | ティフォロス |
+| 性別 | 女性 |
+| 陣営 | ロドス・アイランド |
+| 誕生日 | 1月13日 |
+| [属性](/endfield/terms/element/) | 自然 |
+| 種族 | サルカズ |
+| 中国語CV | 畠四白 |
+| 英語CV | Hanna Johansson |
+
+> 🛠 **要確認**: 日本語CVは公式wikiに載っていませんでした。
+
+## 能力値と武器
+
+- 能力値のうち**メイン能力は敏捷**、**サブ能力は意志**。
+  このほかに筋力・知性・基礎攻撃力が表示される。
+- ゲーム内で推奨される武器のひとつが「**[寒夜の影](/endfield/weapons/cold-night-shadow/)**」。
+
+> 🛠 **要確認**: 各レベルでの具体的な数値は載せていません。
+
+## 人物
+
+ロドスから来た**荒野の狩人**。世界への尽きぬ好奇心を抱き、まだ誰も足を踏み入れたことのない
+地を巡って、人々の記憶から失われた物語を掘り起こしたいと願っている。
+
+タロII では、**サーミ**にまつわる伝説が少しずつ風化し、サーミの人々でさえ、
+それを覚えている者はわずかしか残されていない。ティフォロスはその一人ひとりを訪ね歩き、
+失われかけた記憶をノートに書き留めていく。
+
+エンドフィールドに加わってからは、追い求める物語が失われた伝説だけに留まらず、
+多くの友人に出会い、各地の人々と身近に起きた物語を分かち合うようになった。
 
 ## 特徴
 

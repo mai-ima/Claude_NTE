@@ -296,6 +296,20 @@ const endfieldOperators = defineCollection({
       weaponType: z.string().optional(), // 片手剣 / 大剣 / 長柄武器 / 拳銃 / アーツユニット
       faction: z.string().optional(),
       cv: z.string().optional(),
+      /* 公式wiki（SKPORT）の「基本情報」に並んでいる項目。
+         並びも公式に合わせてある: コードネーム／性別／陣営／誕生日／属性／種族／CV。 */
+      gender: z.string().optional(), // 性別
+      birthday: z.string().optional(), // 誕生日
+      race: z.string().optional(), // 種族（サルカズ・フェリーンなど）
+      cvCn: z.string().optional(), // 中国語CV
+      cvEn: z.string().optional(), // 英語CV
+      /** 公式wikiの「おすすめ武器（ゲーム内推奨）」に並ぶもの */
+      recommendedWeapons: z.array(z.string()).default([]),
+      /** 能力値の主・副（公式wikiの「レベルアップ」に「メイン能力」「サブ能力」と出る） */
+      mainStat: z.string().optional(),
+      subStat: z.string().optional(),
+      /** 決めぜりふ（公式wikiのヒーロー下に鉤括弧で出るもの） */
+      quote: z.string().optional(),
       version: z.string().optional(), // 実装バージョン
       implemented: z.boolean().default(true), // false = 実装予定（告知済み）
       aliases: z.array(z.string()).default([]),
