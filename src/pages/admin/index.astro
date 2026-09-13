@@ -43,6 +43,9 @@ import {
   modeOf,
 } from '../../lib/site-state';
 import { NOTICE_LEVELS, NOTICES } from '../../lib/notices';
+import { WIKI_LIST } from '../../lib/wikis';
+import { STORE_PREFIX } from '../../lib/store';
+import { FAVORITES_NAME, HISTORY_NAME, HISTORY_LIMIT } from '../../lib/user-data';
 import {
   IMAGE_SOURCES,
   IMAGES_KEY,
@@ -71,6 +74,70 @@ const localCount = fs.existsSync(localDir)
   ? fs.readdirSync(localDir).filter((f) => /\.(webp|avif|png|jpe?g)$/i.test(f)).length
   : 0;
 
+/**
+ * 記事の状況を数える（ビルド時）。
+ *
+ * 「どれだけ書けていて、どこに穴があるか」を1画面で見るための集計。
+ * 下書き・出典なし・確認が古いものは、**直す順番を決める手がかり**になる。
+ * 数字はビルドした時点のもので、この端末の操作とは関係がない。
+ */
+const STALE_DAYS = 120;
+const staleBefore = Date.now() - STALE_DAYS * 24 * 60 * 60 * 1000;
+
+interface WikiStat {
+  id: string;
+  name: string;
+  total: number;
+  draft: number;
+  noSource: number;
+  stale: number;
+  collections: { collection: string; label: string; href: string; count: number; draft: number }[];
+}
+
+const wikiStats: WikiStat[] = [];
+for (const w of WIKI_LIST) {
+  const stat: WikiStat = { id: w.id, name: w.siteName, total: 0, draft: 0, noSource: 0, stale: 0, collections: [] };
+  for (const sec of w.sections) {
+    let all: { data: Record<string, unknown> }[] = [];
+    try {
+      all = (await getCollection(sec.collection as Parameters<typeof getCollection>[0])) as unknown as {
+        data: Record<string, unknown>;
+      }[];
+    } catch {
+      // まだ記事が1件も無いコレクション（準備中の wiki）は空として扱う
+      all = [];
+    }
+    let draft = 0;
+    for (const e of all) {
+      const d = e.data;
+      if (d.status === 'draft') draft++;
+      // ダミーの wiki（実在しないゲームの検証用データ）は出典が存在しないので数えない。
+      // ここを数えると「出典なし8本」と出て、直しようのない警告が居座る。
+      if (w.kind !== 'sample') {
+        const sources = d.sources;
+        if (!Array.isArray(sources) || sources.length === 0) stat.noSource++;
+      }
+      // 「確認した日」があればそちらを見る（本文を変えていなくても確かめていれば新しい）
+      const when = (d.checked ?? d.updated) as Date | undefined;
+      if (when instanceof Date && when.getTime() < staleBefore) stat.stale++;
+    }
+    stat.total += all.length;
+    stat.draft += draft;
+    stat.collections.push({
+      collection: sec.collection,
+      label: sec.label,
+      href: sec.href,
+      count: all.length,
+      draft,
+    });
+  }
+  if (stat.total > 0) wikiStats.push(stat);
+}
+const totalArticles = wikiStats.reduce((n, w) => n + w.total, 0);
+const totalDraft = wikiStats.reduce((n, w) => n + w.draft, 0);
+const totalNoSource = wikiStats.reduce((n, w) => n + w.noSource, 0);
+const totalStale = wikiStats.reduce((n, w) => n + w.stale, 0);
+
 /** 画面に出すためのラベル表（内部の値をそのまま見せないため JS へ渡す） */
 const modeLabels = Object.fromEntries(SITE_MODES.map((m) => [m.value, m.label]));
 const levelLabels = Object.fromEntries(NOTICE_LEVELS.map((l) => [l.value, l.label]));
@@ -81,12 +148,23 @@ const STORED = [
   { key: NOTICES_KEY, label: 'この端末のお知らせ', hint: 'ここで作ったお知らせ' },
   { key: IMAGES_KEY, label: 'キャラクターの画像', hint: '絵をどこから出すか' },
   { key: ADMIN_KEY, label: 'ロックを外した印', hint: '次に開いたときも開いたままにする' },
+  {
+    key: `${STORE_PREFIX}${FAVORITES_NAME}`,
+    label: '保存したページ',
+    hint: '記事の「保存」で足したもの',
+  },
+  {
+    key: `${STORE_PREFIX}${HISTORY_NAME}`,
+    label: '最近見たページ',
+    hint: `開いた記事の記録（新しい方から ${HISTORY_LIMIT} 件まで）`,
+  },
 ];
 
 const TABS = [
   { id: 'state', label: 'サイトの状態', icon: 'toggle-left' },
   { id: 'notices', label: 'お知らせ', icon: 'megaphone' },
   { id: 'view', label: '表示', icon: 'image' },
+  { id: 'content', label: '記事', icon: 'file-text' },
   { id: 'data', label: 'この端末のデータ', icon: 'database' },
 ];
 ---
@@ -391,6 +469,99 @@ const TABS = [
           </p>
         </section>
 
+        {/* -- 記事 -- */}
+        <section
+          class="card card-pad admin-pane"
+          role="tabpanel"
+          id="pane-content"
+          aria-labelledby="tab-content"
+          data-pane="content"
+          hidden
+        >
+          <h2 style="margin-top:0;">記事</h2>
+          <p class="muted text-sm">
+            いま何本あり、どこに穴があるかをまとめています。数字は<strong>ビルドした時点</strong>のもので、
+            この端末の操作とは関係ありません。
+          </p>
+
+          <div class="stat-band" style="margin-top:16px;">
+            <div class="stat"><span class="stat-num">{totalArticles}</span><span class="stat-label">記事</span></div>
+            <div class="stat"><span class="stat-num">{totalDraft}</span><span class="stat-label">要確認の下書き</span></div>
+            <div class="stat"><span class="stat-num">{totalNoSource}</span><span class="stat-label">出典なし</span></div>
+            <div class="stat"><span class="stat-num">{totalStale}</span><span class="stat-label">{STALE_DAYS}日以上そのまま</span></div>
+          </div>
+
+          {
+            totalNoSource > 0 && (
+              <div class="callout callout-warning" style="margin-top:16px;">
+                <Icon name="lucide:alert-circle" />
+                <div>
+                  <p style="margin:0;">
+                    <strong>出典の無い記事が {totalNoSource} 本あります。</strong>
+                    このサイトは出典で裏が取れた内容だけを載せる決まりなので、先に埋めるのが安全です。
+                  </p>
+                </div>
+              </div>
+            )
+          }
+
+          {
+            wikiStats.map((w) => (
+              <div style="margin-top:24px;">
+                <h3 style="margin:0 0 8px;">{w.name}</h3>
+                <div class="admin-list">
+                  {w.collections
+                    .filter((c) => c.count > 0)
+                    .map((c) => (
+                      <div class="admin-row">
+                        <div>
+                          {/* 別の wiki へ渡るリンクは、見た目ごと切り替えるために
+                              いったん読み込み直す（→ scripts/check-ui.mjs が見ている） */}
+                          <a
+                            href={withBase(c.href)}
+                            style="font-weight:700;"
+                            data-astro-reload={w.id !== 'nte' ? '' : undefined}
+                          >
+                            {c.label}
+                          </a>
+                          <div class="muted text-sm">{c.collection}</div>
+                        </div>
+                        <span class="cluster" style="gap:6px;">
+                          {c.draft > 0 && <span class="badge">下書き {c.draft}</span>}
+                          <span class="badge badge-accent">{c.count} 件</span>
+                        </span>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            ))
+          }
+
+          <h3 style="margin-top:28px;">データの書き出し</h3>
+          <p class="muted text-sm">
+            全記事を機械が読める形（JSON）でも出しています。アプリから読むときや、
+            別の置き場へ移すときに使います。出しているのは<strong>公開済みの記事だけ</strong>で、下書きは入りません。
+          </p>
+          <div class="admin-list">
+            <div class="admin-row">
+              <div>
+                <a href={withBase('/api/index.json')} style="font-weight:700;">
+                  目次
+                </a>
+                <div class="muted text-sm">/api/index.json</div>
+              </div>
+              <span class="badge">{wikiStats.length} wiki</span>
+            </div>
+            <div class="admin-row">
+              <div>
+                <span style="font-weight:700;">各コレクション</span>
+                <div class="muted text-sm">/api/&lt;コレクション名&gt;.json</div>
+              </div>
+              <span class="badge">{wikiStats.reduce((n, w) => n + w.collections.filter((c) => c.count > 0).length, 0)} 本</span>
+            </div>
+          </div>
+        </section>
+
         {/* -- この端末のデータ -- */}
         <section
           class="card card-pad admin-pane"
@@ -415,7 +586,7 @@ const TABS = [
             </button>
           </div>
           <p class="muted text-sm" style="margin-top:12px;">
-            消えるのは上に挙げた4つだけです。読みやすさなどの表示設定は消えません。
+            消えるのは上に挙げたものだけです。読みやすさなどの表示設定は消えません。
           </p>
         </section>
       </div>
