@@ -2,6 +2,7 @@
 import EntityDetail from '../../components/EntityDetail.astro';
 import { detailPaths, renderEntry, baseDetailProps } from '../../lib/detail';
 import type { Row, Pill } from '../../components/EntityDetail.astro';
+import { findLocalImage } from '../../lib/asset';
 
 export async function getStaticPaths() {
   return detailPaths('arcs', { relatedBy: 'rarity' });
@@ -18,12 +19,19 @@ if (d.free !== undefined) rows.push({ k: '無課金入手', v: d.free ? '可' : 
 if (d.recommendedFor) rows.push({ k: 'おすすめ', v: d.recommendedFor });
 
 const pills: Pill[] = [{ kind: 'rarity', value: d.rarity }];
+
+/* 絵があるものだけ大きな図形を出す。無いものは今までどおりアイコンの枠。
+   置いていない弧盤に灰色の頭文字を出しても、情報が増えないため。 */
+const hasImage = !!(findLocalImage('arcs', entry.id) ?? findLocalImage('from-wiki/arcs', entry.id));
 ---
 <EntityDetail
   {...baseDetailProps('arcs', entry, prev, next)}
   pills={pills}
   rows={rows}
   headings={headings}
+  heroAvatar={hasImage
+    ? { name: d.title ?? entry.id, element: d.form ?? '', rarity: d.rarity, id: entry.id, dir: 'arcs' }
+    : undefined}
   related={related}
   relatedLabel={`${d.rarity}ランクの弧盤`}
 >

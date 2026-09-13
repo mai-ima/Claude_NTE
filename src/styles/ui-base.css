@@ -854,7 +854,7 @@ html[data-ui='base']:not([data-images='frame']) .avatar.has-img-official::before
    記事の上の大きな絵（`.avatar-block`）は全身のままにする。
    ★ 置いた画像（`--img-local`）は構図が分からないので触らない。 */
 html[data-ui='base']:not([data-images='frame'])
-  .avatar.has-img-official:not(.has-img-local):not(.avatar-block)::before {
+  .avatar[data-dir='characters'].has-img-official:not(.has-img-local):not(.avatar-block)::before {
   /* 200%・24% で「胸から上」になる。これ以上寄せると、キャラによって
      顔が枠から外れる（頭頂の位置が絵ごとに違うため）。実測して決めた値 */
   background-size: 200% auto;
@@ -946,10 +946,24 @@ html[data-ui='base'] .grid-cards[data-hscroll] > .card-link .el-badge {
 
    こちらの `.avatar-block` は 16:10 の横長（絵が無いときに間延びしないための比率）。
    **絵があるときだけ縦長にする**。切るのは下からなので顔が残る
-   （`background-position: center top` → 31節）。 */
-html[data-ui='base'] .avatar-block.has-img-local,
-html[data-ui='base']:not([data-images='frame']) .avatar-block.has-img-official {
+   （`background-position: center top` → 31節）。
+
+   ★ 縦長にするのは**キャラの立ち絵だけ**。弧盤などのアイコンは正方形なので、
+   縦長にすると上下に余白が出て間延びする（`data-dir` で分ける）。 */
+html[data-ui='base'] .avatar-block[data-dir='characters'].has-img-local,
+html[data-ui='base']:not([data-images='frame'])
+  .avatar-block[data-dir='characters'].has-img-official {
   aspect-ratio: 3 / 4;
+}
+/* アイコン（弧盤・アイテムなど）は正方形で、**小さいまま中央に**置く。
+   元の絵が 220px しか無いので、幅いっぱいに伸ばすとぼやける（実測 1080px で粗が出た）。 */
+html[data-ui='base'] .avatar-block:not([data-dir='characters']).has-img-local,
+html[data-ui='base']:not([data-images='frame'])
+  .avatar-block:not([data-dir='characters']).has-img-official {
+  aspect-ratio: 1 / 1;
+  width: min(180px, 60%);
+  margin-inline: auto;
+  border-radius: 14px;
 }
 
 /* ---- 34. 目次を「すべて開く」でたたむ ----------------------------------

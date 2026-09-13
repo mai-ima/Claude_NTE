@@ -59,6 +59,8 @@ interface Props {
     /** 記事の ID と公式画像の URL。base UI のときだけ絵が重なる（→ `src/lib/images.ts`） */
     id?: string;
     officialImage?: string;
+    /** 画像を探すフォルダ名。省略するとキャラ用。弧盤なら 'arcs' のようにコレクション名を渡す */
+    dir?: string;
   };
   /** 関連項目（同カテゴリの兄弟など）。Wikipedia的な回遊用 */
   related?: LinkRef[];
@@ -331,6 +333,7 @@ const editHref = editPath ? editUrl(editPath) : editUrlFor(collection, currentId
                       rarity={heroAvatar.rarity}
                       id={heroAvatar.id}
                       officialImage={heroAvatar.officialImage}
+                      dir={heroAvatar.dir}
                       block
                     />
                   ) : (

@@ -1,0 +1,78 @@
+{
+  "_meta": {
+    "出どころ": "Game8 のNTE攻略wiki（https://game8.jp/nte/782300 弧盤一覧）",
+    "取得日": "2026-09-13",
+    "なぜwikiから": "公式サイトにキャラのポスターしか無く、弧盤・アイテムの画像が1枚も無いため（2026-09-13 に公式サイトの全画像を洗って確認）",
+    "決まり": "名前が一覧と完全に一致するものだけ。食い違うものは入れない（下の「保留」を見ること）",
+    "保留": [
+      "last-rose（自サイト「ラスト・ローズ」）— 一覧に「ラストローズ」と「最後のバラ」の両方があり、どちらか決められない",
+      "post-adolescence（自サイト「執行の青春妄想」）— 一覧は「漆黒の青春妄想」。名前そのものが食い違う",
+      "astro-caller（アストロ・コーラー）と kuishinjin（喰心刃）— 一覧に無い"
+    ]
+  },
+  "arcs": [
+    {
+      "id": "eternal-waltz",
+      "name": "永遠のワルツ",
+      "form": "集合",
+      "rarity": "S",
+      "img": "https://img.game8.jp/12528268/0ea2f1eac06589878539bfe8fd24435e.webp/thumb"
+    },
+    {
+      "id": "flame-soul-hurricane",
+      "name": "炎魂ハリケーン",
+      "form": "プラズマ",
+      "rarity": "S",
+      "img": "https://img.game8.jp/12528300/38402514fab999edbedbdaa9bb8f3e30.webp/thumb"
+    },
+    {
+      "id": "frenzy-vortex",
+      "name": "熱狂の渦",
+      "form": "固体",
+      "rarity": "S",
+      "img": "https://img.game8.jp/12528304/1438e4ef20f8505508b8b992b2e5c19c.webp/thumb"
+    },
+    {
+      "id": "galaxy-afterimage",
+      "name": "銀河の残像",
+      "form": "プラズマ",
+      "rarity": "S",
+      "img": "https://img.game8.jp/12528287/f8cad40c41b3239e198c113ad9a4666b.webp/thumb"
+    },
+    {
+      "id": "ora-ora",
+      "name": "オラオラ！",
+      "form": "プラズマ",
+      "rarity": "A",
+      "img": "https://img.game8.jp/12528293/603ac6a916453b6bdc726c8ed1f09b0a.webp/thumb"
+    },
+    {
+      "id": "prepare",
+      "name": "プリペア",
+      "form": "プラズマ",
+      "rarity": "S",
+      "img": "https://img.game8.jp/12528285/0747a19642473c6b3f80537916a33077.webp/thumb"
+    },
+    {
+      "id": "reality-shelter",
+      "name": "現実の避難所",
+      "form": "固体",
+      "rarity": "S",
+      "img": "https://img.game8.jp/12528290/c88908eee99d7b3d1f486789c3e0f7d9.webp/thumb"
+    },
+    {
+      "id": "tears-under-mask",
+      "name": "仮面の下の涙",
+      "form": "気体",
+      "rarity": "S",
+      "img": "https://img.game8.jp/12528278/b85273d387fe7f458acfe059bf0889a8.webp/thumb"
+    },
+    {
+      "id": "whale-song",
+      "name": "鯨の歌",
+      "form": "プラズマ",
+      "rarity": "S",
+      "img": "https://img.game8.jp/12528286/f438bda36e4ffb2da29282600b330bb8.webp/thumb"
+    }
+  ]
+}

@@ -5,6 +5,8 @@ import Search from 'astro-pagefind/components/Search';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Sidebar from './Sidebar.astro';
 import StatusBadge from './StatusBadge.astro';
+import Avatar from './Avatar.astro';
+import { findLocalImage } from '../lib/asset';
 import { elementMeta } from '../lib/nav';
 import { publishedEntries, titleOf, hrefOf } from '../lib/content';
 import { wikiOfCollection } from '../lib/wikis';
@@ -44,6 +46,16 @@ const {
 
 // このコレクションが属する wiki（ブランド・ナビ・サイドバーの切替に使う）
 const w = wikiOfCollection(collection);
+
+/**
+ * その記事の絵がサイトの中に置いてあるか。
+ * 探す順は「自分で置いたもの → 同梱の公式 → 攻略wiki由来」で、Avatar の中と同じ。
+ * ここでは**有無だけ**を見て、絵が無いカードは今までどおり文字だけにする。
+ */
+const imageOf = (id: string) =>
+  findLocalImage(collection, id) ??
+  findLocalImage(`official/nte/${collection}`, id) ??
+  findLocalImage(`from-wiki/${collection}`, id);
 const entries = await publishedEntries(collection);
 
 type Item = (typeof entries)[number];
@@ -186,7 +198,22 @@ const ordVars = (item: Item) =>
                       style={el ? `--el:${el.hue};${ordVars(item)}` : ordVars(item)}
                     >
                       <div class="row row-between" style="align-items:flex-start;gap:8px;">
-                        <span style="font-weight:700;">{titleOf(item)}</span>
+                        {/* 絵があるものだけ小さく添える。無いものは今までどおり文字だけ
+                            （置いていないものに頭文字の図形を出しても情報が増えないため） */}
+                        {imageOf(item.id) ? (
+                          <span class="row" style="gap:8px;align-items:center;min-width:0;">
+                            <Avatar
+                              name={titleOf(item)}
+                              element={d.element ?? d.form ?? ''}
+                              id={item.id}
+                              dir={collection}
+                              size={40}
+                            />
+                            <span style="font-weight:700;">{titleOf(item)}</span>
+                          </span>
+                        ) : (
+                          <span style="font-weight:700;">{titleOf(item)}</span>
+                        )}
                         <StatusBadge status={d.status} />
                       </div>
                       {d.description && (

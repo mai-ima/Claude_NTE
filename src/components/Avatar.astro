@@ -56,7 +56,9 @@ const initial = (name.match(/[A-Za-z]/)?.[0] ?? name.charAt(0)).toUpperCase();
 // 置いてある画像だけを書き出す（無いものの URL を書くとキャラの数だけ 404 が飛ぶ）
 const local = id ? findLocalImage(dir, id) : null;
 // 同梱した公式画像。あれば外部 URL より優先する（速い・消えない・幅を揃えてある）
-const bundled = id ? findLocalImage(`official/nte/${dir}`, id) : null;
+// 公式に無いものは攻略wiki由来（`from-wiki/`）へ落ちる。→ docs/IMAGE-SOURCES.md
+const bundled =
+  id ? (findLocalImage(`official/nte/${dir}`, id) ?? findLocalImage(`from-wiki/${dir}`, id)) : null;
 const official = bundled ?? officialImage ?? null;
 const imgVars =
   (local ? `--img-local:url('${local}');` : '') +
@@ -76,6 +78,7 @@ const imgVars =
     },
   ]}
   style={`--el:${hue};${imgVars}${block ? '' : `width:${size}px;height:${size}px;`}`}
+  data-dir={dir}
   aria-hidden="true"
 >
   <span class="avatar-initial" style={block ? 'font-size:3.2rem;' : `font-size:${Math.round(size * 0.42)}px;`}>
