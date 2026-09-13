@@ -678,3 +678,77 @@ const d = ctx.getImageData(x, y, 1, 1).data;   // → #rrggbb
 - 「モーションを減らす」設定と端末の設定の**両方**で止まる。
   タッチ端末（`hover: none`）では何もしない
 - 更新は `requestAnimationFrame` で 1フレーム1回に抑える
+
+---
+
+## 公式wiki（SKPORT）の調査 — 2026-09-13
+
+利用者から「エンドフィールドには公式wikiがある」と教わり、場所と作りを調べた記録。
+
+### 場所
+
+| 何 | URL |
+| --- | --- |
+| 公式wiki | <https://wiki.skport.com/endfield> |
+| 埋め込み用 | 同じ URL に `?header=0`（ヘッダーを消して表示する。iframe 用と思われる） |
+| 親サービス | SKPORT（Gryphline の公式コミュニティ）<https://www.skport.com/ja-jp> |
+
+**見つけ方**（次に似たものを探すときのために）:
+SKPORT のフロントエンド JS（`static.skport.com/skport-fe-static/skport-bbs/main.*.js`）から
+webpack のチャンク一覧を取り出して全部落とし、`grep` したところ
+`SK_HOST_WIKI:"https://wiki.skport.com"` が見つかった。
+
+### 取れなかった。理由
+
+**ページは SPA で、HTML には中身が無い**（1.1KB の骨だけ）。
+中身は API から取る。API のホストは `zonai.skport.com`。
+
+エンドポイント（JS から抽出。**このうち一つも叩けていない**）:
+
+```
+/web/v1/wiki/item/catalog     項目のカタログ
+/web/v1/wiki/item/list        項目の一覧
+/web/v1/wiki/item/info        項目の中身
+/web/v1/wiki/item/search      検索
+/web/v1/wiki/char-pool        キャラのプール
+/web/v1/wiki/weapon-pool      武器のプール
+/web/v1/wiki/banner           バナー
+/web/v1/wiki/head-pic         見出しの絵
+/web/v1/wiki/quickaccess      近道
+/web/v1/wiki/activity         イベント
+/web/v1/wiki/update-log/list  更新履歴
+/web/v1/wiki/contribute/rank  貢献ランキング
+```
+
+**すべて 401**（`{"code":10000,"message":"请求异常"}`）。署名が要る。
+
+署名の作り方は JS から読み取れた（`94976` モジュール）:
+
+```
+s    = path + (GET なら query、POST なら body) + timestamp
+       + JSON.stringify({platform, timestamp, dId, vName})
+sign = MD5( HmacSHA256(s, secret) )
+ヘッダ: platform:"3" / vName:"1.0.0" / timestamp / dId（端末の指紋）
+```
+
+**鍵（`secret`）はログインで得るトークン**で、ログイン画面は
+`user.hypergryph.com/identity`。つまり**アカウントでログインしないと作れない**。
+この環境にはアカウントが無く、ブラウザから外部サイトへも出られないため、
+**ここで打ち切った**。
+
+### 分かったこと（設計の参考になる）
+
+API の並びから、公式wikiが持っている項目が読み取れる。
+
+- **キャラと武器はプール（`char-pool` / `weapon-pool`）として別枠**で持っている
+- **近道（`quickaccess`）** と **バナー** がトップにある＝入口を絞って見せる作り
+- **更新履歴**（`update-log/list`）を wiki 自体が持っている
+- **貢献ランキング**（`contribute/rank`）がある＝利用者が編集に参加する作り
+
+こちらの wiki では、近道（FAB とシート）と更新履歴（リリースノート）は既にある。
+貢献ランキングに当たるものは**数える仕組みが無いので作らない**（従来どおり）。
+
+### 次に試すなら
+
+利用者がログインした状態で取得したデータ（JSON でも HTML でも）を
+添付していただければ、それを元に記事を作れる。こちらから取りに行く方法は無い。

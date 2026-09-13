@@ -1,17 +1,21 @@
 ---
 title: "銀河の残像"
 rarity: "S"
-form: "（要確認）"
+form: "プラズマ"
 acquisition: "初心者ログインボーナス10日目（無料配布）"
 free: true
 recommendedFor: "海月（みつき）"
 order: 33
 description: "魂の異象（アノマリー）ダメージを与えると会心ダメージが上がるSランク弧盤。ガチャではなく初心者ログイン10日目に無料配布される。海月（みつき）のおすすめ弧盤。"
 status: "verified"
-updated: 2026-06-16
-checked: 2026-09-06
+updated: 2026-09-13
+checked: 2026-09-13
 tags: ["弧盤", "S", "魂", "海月", "武器"]
 sources:
+  - label: "ゲームウィズ — 弧盤(武器)一覧"
+    url: "https://gamewith.jp/nte/557408"
+  - label: "ゲームエイト — 弧盤一覧"
+    url: "https://game8.jp/nte/782300"
   - label: "ゲームウィズ — 海月(みつき)の評価とおすすめ編成・武器"
     url: "https://gamewith.jp/nte/557062"
 ---

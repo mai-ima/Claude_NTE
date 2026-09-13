@@ -1,17 +1,21 @@
 ---
 title: "炎魂ハリケーン"
 rarity: "S"
-form: "（要確認）"
+form: "プラズマ"
 acquisition: "橋間地の異象依頼「デュラハンの脅威」クリア報酬"
 free: true
 recommendedFor: "ハソール"
 order: 10
 description: "無課金で入手できるSランク弧盤。橋間地の異象依頼「デュラハンの脅威」をクリアすると獲得でき、序盤の強力な選択肢として知られる。"
 status: "verified"
-updated: 2026-06-13
-checked: 2026-09-06
+updated: 2026-09-13
+checked: 2026-09-13
 tags: ["弧盤", "S", "無課金", "武器"]
 sources:
+  - label: "ゲームウィズ — 弧盤(武器)一覧"
+    url: "https://gamewith.jp/nte/557408"
+  - label: "ゲームエイト — 弧盤一覧"
+    url: "https://game8.jp/nte/782300"
   - label: "ゲームウィズ — 炎魂ハリケーンの入手方法とおすすめキャラ"
     url: "https://gamewith.jp/nte/557442"
   - label: "AppMedia — 炎魂ハリケーンの性能と入手方法"

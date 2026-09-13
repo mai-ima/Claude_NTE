@@ -2,17 +2,21 @@
 title: "プリペア"
 en: "Prepare"
 rarity: "S"
-form: "（要確認）"
+form: "プラズマ"
 acquisition: "弧盤研究計画（武器ガチャ）の限定モチーフ弧盤（期間限定）"
 free: false
 recommendedFor: "ナナリ"
 order: 30
 description: "ナナリのモチーフ（限定）Sランク弧盤。バイレールスキルやEXレール終結の発動で通常攻撃のダメージを強化する。"
 status: "verified"
-updated: 2026-06-16
-checked: 2026-09-06
+updated: 2026-09-13
+checked: 2026-09-13
 tags: ["弧盤", "S", "限定", "モチーフ", "ナナリ"]
 sources:
+  - label: "ゲームウィズ — 弧盤(武器)一覧"
+    url: "https://gamewith.jp/nte/557408"
+  - label: "ゲームエイト — 弧盤一覧"
+    url: "https://game8.jp/nte/782300"
   - label: "ゲームウィズ — ナナリの評価とおすすめ編成・武器"
     url: "https://gamewith.jp/nte/555738"
   - label: "神ゲー攻略 — ナナリの評価とおすすめパーティ・武器"

@@ -1,17 +1,19 @@
 ---
 title: "オラオラ！"
 rarity: "A"
-form: "（要確認）"
+form: "プラズマ"
 acquisition: "弧盤研究計画（武器ガチャ）"
 free: false
 recommendedFor: "汎用（A以下のアタッカー）"
 order: 50
 description: "攻撃を重ねるほどダメージが上がるAランク弧盤。レア度の高い専用弧盤が無いときの汎用おすすめとして挙げられる。"
 status: "verified"
-updated: 2026-06-16
-checked: 2026-09-06
+updated: 2026-09-13
+checked: 2026-09-13
 tags: ["弧盤", "A", "汎用", "武器"]
 sources:
+  - label: "ゲームエイト — 弧盤一覧"
+    url: "https://game8.jp/nte/782300"
   - label: "神ゲー攻略 — ナナリの評価とおすすめパーティ・武器"
     url: "https://kamigame.jp/nte/page/419962778661424987.html"
   - label: "ゲームウィズ — 弧盤(武器)一覧とおすすめキャラ"

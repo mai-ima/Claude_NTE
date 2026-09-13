@@ -1,17 +1,21 @@
 ---
 title: "鯨の歌"
 rarity: "S"
-form: "（要確認）"
+form: "プラズマ"
 acquisition: "異象依頼「深藍の嘆き」クリア報酬"
 free: true
 recommendedFor: "（要確認）"
 order: 20
 description: "無課金で入手できるSランク弧盤。異象依頼「深藍の嘆き」をクリアすると獲得できる。"
 status: "verified"
-updated: 2026-06-13
-checked: 2026-09-06
+updated: 2026-09-13
+checked: 2026-09-13
 tags: ["弧盤", "S", "無課金", "武器"]
 sources:
+  - label: "ゲームウィズ — 弧盤(武器)一覧"
+    url: "https://gamewith.jp/nte/557408"
+  - label: "ゲームエイト — 弧盤一覧"
+    url: "https://game8.jp/nte/782300"
   - label: "ゲームエイト — 無課金Sランク弧盤の無料入手方法"
     url: "https://game8.jp/nte/783182"
   - label: "ゲームウィズ — Sランク弧盤の無料入手方法"

@@ -9,9 +9,11 @@ order: 13
 description: "リンコのモチーフ（限定）Sランク弧盤。サポートスキルを連発するリンコと噛み合い、スキル・EX終結の火力を底上げする。"
 status: "draft"
 updated: 2026-09-09
-checked: 2026-09-09
+checked: 2026-09-13
 tags: ["弧盤", "S", "限定", "モチーフ", "リンコ", "v1.3", "プラズマ"]
 sources:
+  - label: "ゲームウィズ — 弧盤(武器)一覧"
+    url: "https://gamewith.jp/nte/557408"
   - label: "NTE公式 — 2026年9月9日 メンテナンスのお知らせ"
     url: "https://nte.perfectworld.com/jp/article/news/gamenews/20260908/263946.html"
   - label: "神ゲー攻略 — Ver1.3予告番組の内容まとめ"

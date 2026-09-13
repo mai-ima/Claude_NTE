@@ -1,17 +1,21 @@
 ---
 title: "ラスト・ローズ"
 rarity: "S"
-form: "（要確認）"
+form: "液体"
 acquisition: "弧盤研究計画（武器ガチャ）の限定モチーフ弧盤（期間限定）"
 free: false
 recommendedFor: "レクイエム"
 order: 31
 description: "レクイエムのモチーフ（限定）Sランク弧盤。継続ダメージを与えるほど会心ダメージが上がり、悪夢（DoT）を撒くレクイエムと好相性。"
 status: "verified"
-updated: 2026-06-16
-checked: 2026-09-06
+updated: 2026-09-13
+checked: 2026-09-13
 tags: ["弧盤", "S", "限定", "モチーフ", "レクイエム"]
 sources:
+  - label: "ゲームウィズ — 弧盤(武器)一覧"
+    url: "https://gamewith.jp/nte/557408"
+  - label: "ゲームエイト — 弧盤一覧"
+    url: "https://game8.jp/nte/782300"
   - label: "ゲームウィズ — レクイエムの評価とおすすめ編成・武器"
     url: "https://gamewith.jp/nte/559773"
 ---

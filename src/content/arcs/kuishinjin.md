@@ -9,8 +9,11 @@ order: 12
 description: "残虹のモチーフ（限定）Sランク弧盤。会心率を上げ、呪異能ダメージを与えるたびに会心ダメージが累積する。"
 status: "verified"
 updated: 2026-09-05
+checked: 2026-09-13
 tags: ["弧盤", "S", "限定", "モチーフ", "残虹", "v1.3", "気体"]
 sources:
+  - label: "ゲームウィズ — 弧盤(武器)一覧"
+    url: "https://gamewith.jp/nte/557408"
   - label: "NTE公式 — Ver.1.3「霧月夜に星還りて」アップデートのお知らせ"
     url: "https://nte.perfectworld.com/jp/article/news/gamenews/20260817/263606.html"
   - label: "AppMedia — 喰心刃の性能と弧盤効果"

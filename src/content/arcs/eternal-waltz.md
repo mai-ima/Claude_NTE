@@ -1,17 +1,19 @@
 ---
 title: "永遠のワルツ"
 rarity: "S"
-form: "（要確認）"
+form: "集合"
 acquisition: "世界ボス「踊りだせアラクネ」撃破（無料入手）"
 free: true
 recommendedFor: "ファルディーヤ"
 order: 32
 description: "ファルディーヤのモチーフSランク弧盤。ガチャではなく世界ボス「踊りだせアラクネ」撃破で無料入手できる。"
 status: "verified"
-updated: 2026-06-16
-checked: 2026-09-06
+updated: 2026-09-13
+checked: 2026-09-13
 tags: ["弧盤", "S", "無課金", "モチーフ", "ファルディーヤ"]
 sources:
+  - label: "ゲームエイト — 弧盤一覧"
+    url: "https://game8.jp/nte/782300"
   - label: "AppMedia — 最強武器ランキング｜キャラ別おすすめ"
     url: "https://appmedia.jp/nte/79995310"
   - label: "ゲームウィズ — 弧盤(武器)一覧とおすすめキャラ"
