@@ -1371,3 +1371,14 @@ html[data-ui='base'][data-listview='tile'] .grid-cards > .char-card > .row:first
 html[data-ui='base'][data-listview='tile'] .grid-cards > .card-link:not(.char-card) > .row:first-child::before {
   content: none;
 }
+
+/* ---- 47. キャラカードを本文の前に戻す ----------------------------------
+   7巡目で `.entity-grid` を1列にしたとき、**脇の列がそのまま下へ回った**。
+   記事ページで「絵＋基本情報」が本文の**2000px 以上下**に来ていて、
+   キャラのカードを見るのに記事を読み切る必要があった（実測 top 2521px）。
+
+   参考画像4枚目のキャラページは **絵 → 名前 → タグ → タブ → 基本情報 → 本文**
+   の順で、**基本情報は本文の前**にある。その順に戻す。 */
+html[data-ui='base'] .entity-aside {
+  order: -1;
+}

@@ -30,6 +30,8 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { Icon } from 'astro-icon/components';
 import { createHash } from 'node:crypto';
+import fs from 'node:fs';
+import { getCollection } from 'astro:content';
 import { withBase } from '../../lib/path';
 import {
   SITE_MODES,
@@ -54,6 +56,20 @@ const passHash = createHash('sha256').update(String(passcode)).digest('hex');
 const usingDefaultPass = !import.meta.env.ADMIN_PASSCODE;
 
 const today = new Date().toISOString().slice(0, 10);
+
+/**
+ * 画像がいくつ使える状態かを数える（ビルド時）。
+ *
+ * 「公式の画像も使う」に切り替えても何も出ない、ということが起きる。
+ * 原因は**登録が0件**なのだが、画面に出していないと故障に見える。
+ * ここで実数を出して、切り替えの前に分かるようにする。
+ */
+const charEntries = await getCollection('characters');
+const officialCount = charEntries.filter((c) => (c.data as { officialImage?: string }).officialImage).length;
+const localDir = 'public/images/characters';
+const localCount = fs.existsSync(localDir)
+  ? fs.readdirSync(localDir).filter((f) => /\.(webp|avif|png|jpe?g)$/i.test(f)).length
+  : 0;
 
 /** 画面に出すためのラベル表（内部の値をそのまま見せないため JS へ渡す） */
 const modeLabels = Object.fromEntries(SITE_MODES.map((m) => [m.value, m.label]));
@@ -335,6 +351,40 @@ const TABS = [
               </p>
             </div>
           </div>
+          <div class="admin-list" style="margin-top:14px;">
+            <div class="admin-row">
+              <div>
+                <strong>置いてある画像</strong>
+                <br />
+                <span class="muted text-sm">public/images/characters/ にあるファイルの数</span>
+              </div>
+              <span class:list={['badge', localCount > 0 && 'badge-accent']}>{localCount} 件</span>
+            </div>
+            <div class="admin-row">
+              <div>
+                <strong>公式の画像の登録</strong>
+                <br />
+                <span class="muted text-sm">記事の officialImage に書かれた URL の数</span>
+              </div>
+              <span class:list={['badge', officialCount > 0 && 'badge-accent']}>{officialCount} 件</span>
+            </div>
+          </div>
+          {
+            officialCount === 0 && (
+              <div class="callout callout-warning" style="margin-top:12px;">
+                <Icon name="lucide:alert-circle" />
+                <div>
+                  <p style="margin:0;">
+                    <strong>公式の画像はまだ1件も登録されていません。</strong>
+                    「公式の画像も使う」に切り替えても、参照する URL が無いため表示は変わりません。
+                  </p>
+                  <p style="margin:8px 0 0;">
+                    記事の frontmatter に <code>officialImage: https://…</code> を書くと、ここの数が増えます。
+                  </p>
+                </div>
+              </div>
+            )
+          }
           <p class="muted text-sm" style="margin-top:12px;">
             公開されている既定: <strong>{imageSourceOf(DEFAULT_IMAGE_SOURCE).label}</strong>
             （<code>src/lib/images.ts</code> の <code>DEFAULT_IMAGE_SOURCE</code>）
