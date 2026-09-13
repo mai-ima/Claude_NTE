@@ -2,8 +2,10 @@
 /**
  * 規約・ポリシーの目次。
  *
- * 4本の文書の入口。フッターからはこのページだけを指し、
- * 個別の文書はここから辿る（フッターに4本並べると横に溢れる）。
+ * 各文書の入口。フッターからはこのページだけを指し、
+ * 個別の文書はここから辿る（フッターに全部並べると横に溢れる）。
+ * 一覧は `LEGAL_DOCS`（src/lib/legal.ts）から作るので、文書を足しても
+ * このページは触らなくてよい。
  */
 import { Icon } from 'astro-icon/components';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -13,7 +15,7 @@ import { LEGAL_DOCS, LEGAL_UPDATED, CONTACT_URL, legalHref } from '../../lib/leg
 
 <BaseLayout
   title="規約・ポリシー"
-  description="利用規約・プライバシーポリシー・免責事項・著作権表記をまとめています。"
+  description="利用規約・プライバシーポリシー・免責事項・著作権表記などをまとめています。"
 >
   <div class="layout">
     <div class="content" style="max-width:760px;margin-inline:auto;">
