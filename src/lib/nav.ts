@@ -340,7 +340,7 @@ export const TRIO_REACTIONS = [
     els: ['Cosmos', 'Anima', 'Lakshana'],
     name: 'Charge',
     ja: '充蓄',
-    effect: 'アルティメットエネルギーを獲得',
+    effect: 'EXレール終結のエネルギーを獲得',
   },
   {
     els: ['Chaos', 'Psyche', 'Incantation'],

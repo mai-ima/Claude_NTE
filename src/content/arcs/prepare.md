@@ -7,7 +7,7 @@ acquisition: "弧盤研究計画（武器ガチャ）の限定モチーフ弧盤
 free: false
 recommendedFor: "ナナリ"
 order: 30
-description: "ナナリのモチーフ（限定）Sランク弧盤。バイレールスキルやEXエンディングの発動で通常攻撃のダメージを強化する。"
+description: "ナナリのモチーフ（限定）Sランク弧盤。バイレールスキルやEXレール終結の発動で通常攻撃のダメージを強化する。"
 status: "verified"
 updated: 2026-06-16
 checked: 2026-09-06
@@ -21,13 +21,13 @@ sources:
 
 ## 概要
 
-**プリペア（Prepare）** は、[ナナリ](/characters/nanally/)のモチーフ（限定）[Sランク弧盤](/terms/arc/)。**[バイレール](/terms/bilrail/)スキル**や**EXエンディング**の発動で**通常攻撃のダメージを強化**する、ナナリの火力回転と噛み合う武器。
+**プリペア（Prepare）** は、[ナナリ](/characters/nanally/)のモチーフ（限定）[Sランク弧盤](/terms/arc/)。**[バイレールスキル](/terms/bilrail/)**や**EXレール終結**の発動で**通常攻撃のダメージを強化**する、ナナリの火力回転と噛み合う武器。
 
 ## 入手・対応
 
 - **入手**: 弧盤研究計画（武器ガチャ）の**期間限定モチーフ弧盤**。開催を逃すと入手できない（復刻は要確認）。
-- **おすすめ**: [ナナリ](/characters/nanally/)。通常攻撃主体の火力をバイレール/EXで底上げする。
+- **おすすめ**: [ナナリ](/characters/nanally/)。通常攻撃主体の火力をバイレールスキルとEXレール終結で底上げする。
 
 > 具体的な倍率・物質形態は出典により幅があるため**要確認**（→[弧盤システム](/systems/arc-weapons/)）。
 
-関連: [ナナリ](/characters/nanally/) ／ [弧盤](/terms/arc/) ／ [バイレール](/terms/bilrail/) ／ [弧盤（武器）一覧](/arcs/)
+関連: [ナナリ](/characters/nanally/) ／ [弧盤](/terms/arc/) ／ [バイレールスキル](/terms/bilrail/) ／ [弧盤（武器）一覧](/arcs/)
