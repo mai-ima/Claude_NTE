@@ -8,7 +8,9 @@
    "assault",
    "nature"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/typhoea.87cfb4cd.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/typhoea.87cfb4cd.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/typhoea.c4a79f82.png",
+  "id": "typhoeus"
  },
  {
   "key": "purrche",
@@ -19,7 +21,9 @@
    "shielder",
    "physic"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/purrche.d6659019.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/purrche.d6659019.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/purrche.bdb051d3.png",
+  "id": "pochiena"
  },
  {
   "key": "endministrator2",
@@ -30,7 +34,9 @@
    "guard",
    "physic"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator2.5ccb44a8.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator2.5ccb44a8.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator2.1ec20a16.png",
+  "id": "endministrator-2"
  },
  {
   "key": "endministrator1",
@@ -41,7 +47,9 @@
    "guard",
    "physic"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator1.c391b13d.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator1.c391b13d.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator1.ec409283.png",
+  "id": "endministrator"
  },
  {
   "key": "perlica",
@@ -52,7 +60,9 @@
    "caster",
    "electric"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/prelica.d0bbdb53.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/prelica.d0bbdb53.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/perlica.6710bc97.png",
+  "id": "perlica"
  },
  {
   "key": "chen",
@@ -63,7 +73,9 @@
    "guard",
    "physic"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/chen.b0afd1ba.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/chen.b0afd1ba.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/chen.2a091fd4.png",
+  "id": "chen-qianyu"
  },
  {
   "key": "lizhiyan",
@@ -74,7 +86,9 @@
    "caster",
    "nature"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lizhiyan.7ada7b83.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lizhiyan.7ada7b83.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lizhiyan.5e6e07c8.png",
+  "id": "arcane"
  },
  {
   "key": "liino",
@@ -85,7 +99,9 @@
    "support",
    "electric"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/liino.8d027d2a.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/liino.8d027d2a.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/liino.f5676406.png",
+  "id": "liino"
  },
  {
   "key": "mifu",
@@ -96,7 +112,9 @@
    "guard",
    "physic"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/mifu.e1d79970.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/mifu.e1d79970.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/mifu.7b3a74cf.png",
+  "id": "mi-fu"
  },
  {
   "key": "camille",
@@ -107,7 +125,9 @@
    "vanguard",
    "fire"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/camille.a26b2443.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/camille.a26b2443.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/camille.81d81ef7.png",
+  "id": "camille"
  },
  {
   "key": "zhuangfy",
@@ -118,7 +138,9 @@
    "assault",
    "electric"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/zhuangfy.50a608b8.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/zhuangfy.50a608b8.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/zhuangfy.c6750f9c.png",
+  "id": "zhuang-fangyi"
  },
  {
   "key": "tangtang",
@@ -129,7 +151,9 @@
    "caster",
    "ice"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/tangtang.b5cd99e9.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/tangtang.b5cd99e9.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/tangtang.2602b587.png",
+  "id": "tangtang"
  },
  {
   "key": "rossi",
@@ -140,7 +164,9 @@
    "guard",
    "physic"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/rossi.c58b721b.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/rossi.c58b721b.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/rossi.b7ae95b5.png",
+  "id": "rossi"
  },
  {
   "key": "laevatain",
@@ -151,7 +177,9 @@
    "assault",
    "fire"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/laevatain.edd103d4.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/laevatain.edd103d4.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/laevatain.d0ca2837.png",
+  "id": "laevatain"
  },
  {
   "key": "yvonne",
@@ -162,7 +190,9 @@
    "assault",
    "ice"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/yvonne.9695c304.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/yvonne.9695c304.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/yvonne.a74396e6.png",
+  "id": "yvonne"
  },
  {
   "key": "gilberta",
@@ -173,7 +203,9 @@
    "support",
    "nature"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/gilberta.724f3503.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/gilberta.724f3503.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/gilberta.92aa17d4.png",
+  "id": "gilberta"
  },
  {
   "key": "ardelia",
@@ -184,7 +216,9 @@
    "support",
    "nature"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ardelia.565c75af.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ardelia.565c75af.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ardelia.36d836c7.png",
+  "id": "ardelia"
  },
  {
   "key": "ember",
@@ -195,7 +229,9 @@
    "shielder",
    "fire"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ember.6391acf9.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ember.6391acf9.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ember.9364370e.png",
+  "id": "ember"
  },
  {
   "key": "lastrite",
@@ -206,7 +242,9 @@
    "assault",
    "ice"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lastrite.3860f541.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lastrite.3860f541.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lastrite.4a02d8bb.png",
+  "id": "last-rite"
  },
  {
   "key": "lifeng",
@@ -217,7 +255,9 @@
    "guard",
    "physic"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lifeng.ef41bc3a.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lifeng.ef41bc3a.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lifeng.7253579c.png",
+  "id": "lifeng"
  },
  {
   "key": "pogranichnik",
@@ -228,7 +268,9 @@
    "vanguard",
    "physic"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/pogranichnik.80f2ddbb.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/pogranichnik.80f2ddbb.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/pogranichnik.6983f122.png",
+  "id": "pogranichnik"
  },
  {
   "key": "alesh",
@@ -239,7 +281,9 @@
    "vanguard",
    "ice"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/alesh.d7f457d2.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/alesh.d7f457d2.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/alesh.bfe6a583.png",
+  "id": "alesh"
  },
  {
   "key": "arclight",
@@ -250,7 +294,9 @@
    "vanguard",
    "electric"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/arclight.e31580d7.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/arclight.e31580d7.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/arclight.e46ed671.png",
+  "id": "arclight"
  },
  {
   "key": "avywenna",
@@ -261,7 +307,9 @@
    "assault",
    "electric"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/avywenna.2a592659.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/avywenna.2a592659.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/avywenna.3346feee.png",
+  "id": "avywenna"
  },
  {
   "key": "dapan",
@@ -272,7 +320,9 @@
    "assault",
    "physic"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/dapan.7cdb6a4e.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/dapan.7cdb6a4e.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/dapan.8a1d195a.png",
+  "id": "da-pan"
  },
  {
   "key": "snowshine",
@@ -283,7 +333,9 @@
    "shielder",
    "ice"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/snowshine.bb2c0bdc.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/snowshine.bb2c0bdc.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/snowshine.1f6d3a0e.png",
+  "id": "snowshine"
  },
  {
   "key": "wulfgard",
@@ -294,7 +346,9 @@
    "caster",
    "fire"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/wulfgard.609a252f.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/wulfgard.609a252f.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/wulfgard.53a6686b.png",
+  "id": "wulfgard"
  },
  {
   "key": "xaihi",
@@ -305,7 +359,9 @@
    "support",
    "ice"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/xaihi.9ba3eb36.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/xaihi.9ba3eb36.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/xaihi.43d608d9.png",
+  "id": "xaihi"
  },
  {
   "key": "akekuri",
@@ -316,7 +372,9 @@
    "vanguard",
    "fire"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/akekuri.3603d013.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/akekuri.3603d013.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/akekuri.751608ae.png",
+  "id": "akekuri"
  },
  {
   "key": "antal",
@@ -327,7 +385,9 @@
    "support",
    "electric"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/antal.763c87e4.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/antal.763c87e4.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/antal.5a3548af.png",
+  "id": "antal"
  },
  {
   "key": "catcher",
@@ -338,7 +398,9 @@
    "shielder",
    "physic"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/catcher.bc6bcfaa.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/catcher.bc6bcfaa.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/catcher.d4e72ab0.png",
+  "id": "catcher"
  },
  {
   "key": "estella",
@@ -349,7 +411,9 @@
    "guard",
    "ice"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/estella.38c423af.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/estella.38c423af.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/estella.0c009bcd.png",
+  "id": "estella"
  },
  {
   "key": "fluorite",
@@ -360,6 +424,8 @@
    "caster",
    "nature"
   ],
-  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/fluorite.5a8add29.png"
+  "img": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/fluorite.5a8add29.png",
+  "illust": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/fluorite.cf452cf1.png",
+  "id": "fluorite"
  }
 ]

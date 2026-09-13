@@ -28,12 +28,14 @@ const rows = [
 
 const badges = [d.en, d.reading ? `よみ: ${d.reading}` : null].filter(Boolean) as string[];
 
-/* 公式サイトから同梱した絵。姿が2つあるものは `<id>-2.webp` も置いてある（管理人）。
+/* 公式サイトから同梱した絵。記事では**全身の立ち絵**（illust）を出し、
+   無ければ顔のアップ（operators）へ落ちる。
+   姿が2つあるものは `<id>-2.webp` も置いてある（管理人）。
    置いていないものは絵なしで、今までどおりの見た目になる。 */
-const images = [
-  findLocalImage("official/endfield/operators", entry.id),
-  findLocalImage("official/endfield/operators", `${entry.id}-2`),
-].filter(Boolean) as string[];
+const pic = (id: string) =>
+  findLocalImage("official/endfield/illust", id) ??
+  findLocalImage("official/endfield/operators", id);
+const images = [pic(entry.id), pic(`${entry.id}-2`)].filter(Boolean) as string[];
 /* 絵に重ねる職業・属性のアイコン。日本語の表記から公式のキーへ引き直す */
 const ck = efClassKey(d.class);
 const ek = efElementKey(d.element);

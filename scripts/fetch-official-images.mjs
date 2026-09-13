@@ -101,12 +101,27 @@ async function fetchEndfield() {
   );
   console.log(`エンドフィールド オペレーター: ${data.length} 件`);
   const lines = [];
+  /* ファイル名は**記事のID**にそろえる（`id` が無ければ公式のキー）。
+     そろえておかないと、画面側が「記事ID.webp」を探しても見つからない。 */
   for (const op of data) {
-    const r = await grab(op.img, path.join(OUT, 'endfield/operators', `${op.key}.webp`), {
+    const id = op.id ?? op.key;
+    const r = await grab(op.img, path.join(OUT, 'endfield/operators', `${id}.webp`), {
       width: 750,
     });
     console.log(r.line);
-    lines.push({ ...r, id: op.key, url: op.img });
+    lines.push({ ...r, id, url: op.img });
+  }
+  /* 立ち絵（全身のイラスト）。公式は 1800px 超・1枚 13MB のものがあるので、
+     **幅900に縮めて WebP** にしてから置く。記事の上に大きく出すのはこちら。
+     顔のアップ（上の operators/）は一覧用。 */
+  for (const op of data) {
+    if (!op.illust) continue;
+    const id = op.id ?? op.key;
+    const r = await grab(op.illust, path.join(OUT, 'endfield/illust', `${id}.webp`), {
+      width: 900,
+    });
+    console.log(r.line);
+    lines.push({ ...r, id: `illust/${id}`, url: op.illust });
   }
   for (const [key, file] of Object.entries(EF_CLASSES)) {
     const r = await grab(EF_MEDIA + file, path.join(OUT, 'endfield/classes', `${key}.webp`));

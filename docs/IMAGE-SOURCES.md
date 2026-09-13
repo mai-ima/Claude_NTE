@@ -57,44 +57,93 @@
 | `akekuri.webp` | アケクリ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/akekuri.3603d013.png) | 34KB | 2026-09-13 |
 | `alesh.webp` | アレッシュ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/alesh.d7f457d2.png) | 35KB | 2026-09-13 |
 | `antal.webp` | アンタル | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/antal.763c87e4.png) | 27KB | 2026-09-13 |
+| `arcane.webp` | オクギ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lizhiyan.7ada7b83.png) | 40KB | 2026-09-13 |
 | `arclight.webp` | アークライト | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/arclight.e31580d7.png) | 30KB | 2026-09-13 |
 | `ardelia.webp` | アルデリア | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ardelia.565c75af.png) | 39KB | 2026-09-13 |
 | `avywenna.webp` | アイビーエナ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/avywenna.2a592659.png) | 32KB | 2026-09-13 |
 | `camille.webp` | カミーユ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/camille.a26b2443.png) | 30KB | 2026-09-13 |
 | `catcher.webp` | キャッチャー | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/catcher.bc6bcfaa.png) | 26KB | 2026-09-13 |
-| `chen.webp` | チェン・センユー | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/chen.b0afd1ba.png) | 33KB | 2026-09-13 |
-| `dapan.webp` | ダパン | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/dapan.7cdb6a4e.png) | 20KB | 2026-09-13 |
+| `chen-qianyu.webp` | チェン・センユー | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/chen.b0afd1ba.png) | 33KB | 2026-09-13 |
+| `da-pan.webp` | ダパン | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/dapan.7cdb6a4e.png) | 20KB | 2026-09-13 |
 | `ember.webp` | エンバー | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ember.6391acf9.png) | 39KB | 2026-09-13 |
-| `endministrator1.webp` | 管理人 | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator1.c391b13d.png) | 32KB | 2026-09-13 |
-| `endministrator2.webp` | 管理人 | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator2.5ccb44a8.png) | 30KB | 2026-09-13 |
+| `endministrator.webp` | 管理人 | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator1.c391b13d.png) | 30KB | 2026-09-13 |
+| `endministrator-2.webp` | 管理人 | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator2.5ccb44a8.png) | 32KB | 2026-09-13 |
 | `estella.webp` | エステーラ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/estella.38c423af.png) | 22KB | 2026-09-13 |
 | `fluorite.webp` | フローライト | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/fluorite.5a8add29.png) | 30KB | 2026-09-13 |
 | `gilberta.webp` | ギルベルタ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/gilberta.724f3503.png) | 42KB | 2026-09-13 |
 | `laevatain.webp` | レーヴァテイン | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/laevatain.edd103d4.png) | 37KB | 2026-09-13 |
-| `lastrite.webp` | ラストライト | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lastrite.3860f541.png) | 46KB | 2026-09-13 |
+| `last-rite.webp` | ラストライト | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lastrite.3860f541.png) | 46KB | 2026-09-13 |
 | `lifeng.webp` | リーフォン | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lifeng.ef41bc3a.png) | 30KB | 2026-09-13 |
 | `liino.webp` | リーノ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/liino.8d027d2a.png) | 47KB | 2026-09-13 |
-| `lizhiyan.webp` | オクギ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lizhiyan.7ada7b83.png) | 40KB | 2026-09-13 |
-| `mifu.webp` | ミ・フ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/mifu.e1d79970.png) | 44KB | 2026-09-13 |
+| `mi-fu.webp` | ミ・フ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/mifu.e1d79970.png) | 44KB | 2026-09-13 |
 | `perlica.webp` | ペリカ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/prelica.d0bbdb53.png) | 35KB | 2026-09-13 |
+| `pochiena.webp` | プチエナ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/purrche.d6659019.png) | 26KB | 2026-09-13 |
 | `pogranichnik.webp` | ポグラニチニク | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/pogranichnik.80f2ddbb.png) | 36KB | 2026-09-13 |
-| `purrche.webp` | プチエナ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/purrche.d6659019.png) | 26KB | 2026-09-13 |
 | `rossi.webp` | ロッシ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/rossi.c58b721b.png) | 35KB | 2026-09-13 |
 | `snowshine.webp` | スノーシャイン | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/snowshine.bb2c0bdc.png) | 29KB | 2026-09-13 |
 | `tangtang.webp` | タンタン | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/tangtang.b5cd99e9.png) | 33KB | 2026-09-13 |
-| `typhoea.webp` | ティフォロス | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/typhoea.87cfb4cd.png) | 44KB | 2026-09-13 |
+| `typhoeus.webp` | ティフォロス | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/typhoea.87cfb4cd.png) | 44KB | 2026-09-13 |
 | `wulfgard.webp` | ウルフガード | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/wulfgard.609a252f.png) | 30KB | 2026-09-13 |
 | `xaihi.webp` | ザイヒ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/xaihi.9ba3eb36.png) | 39KB | 2026-09-13 |
 | `yvonne.webp` | イヴォンヌ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/yvonne.9695c304.png) | 39KB | 2026-09-13 |
-| `zhuangfy.webp` | ゾアン・ファンイ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/zhuangfy.50a608b8.png) | 36KB | 2026-09-13 |
+| `zhuang-fangyi.webp` | ゾアン・ファンイ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/zhuangfy.50a608b8.png) | 36KB | 2026-09-13 |
+
+### 立ち絵（`illust/`）
+
+**全身のイラスト**。公式サイトのオペレーター個別表示（CSS の
+`.__02-Operator_illustration__…[data-key=…]`）が使っている絵で、
+一覧の顔アップ（`operators/`）とは**別のファイル**。
+
+原寸は 1800px 前後・1枚あたり最大 13MB（ティフォロスで実測 12.9MB）あるため、
+**幅900に縮めて WebP** にしてから同梱している（33枚で約 6.7MB）。
+ファイル名は記事のIDに合わせてある（公式のキーとは違うものがある。例: `typhoea` → `typhoeus`）。
+
+| ファイル | オペレーター | 出どころ | 容量 | 取得日 |
+| --- | --- | --- | --- | --- |
+| `akekuri.webp` | アケクリ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/akekuri.751608ae.png) | 161KB | 2026-09-13 |
+| `alesh.webp` | アレッシュ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/alesh.bfe6a583.png) | 221KB | 2026-09-13 |
+| `antal.webp` | アンタル | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/antal.5a3548af.png) | 198KB | 2026-09-13 |
+| `arcane.webp` | オクギ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lizhiyan.5e6e07c8.png) | 199KB | 2026-09-13 |
+| `arclight.webp` | アークライト | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/arclight.e46ed671.png) | 133KB | 2026-09-13 |
+| `ardelia.webp` | アルデリア | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ardelia.36d836c7.png) | 202KB | 2026-09-13 |
+| `avywenna.webp` | アイビーエナ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/avywenna.3346feee.png) | 175KB | 2026-09-13 |
+| `camille.webp` | カミーユ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/camille.81d81ef7.png) | 175KB | 2026-09-13 |
+| `catcher.webp` | キャッチャー | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/catcher.d4e72ab0.png) | 163KB | 2026-09-13 |
+| `chen-qianyu.webp` | チェン・センユー | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/chen.2a091fd4.png) | 212KB | 2026-09-13 |
+| `da-pan.webp` | ダパン | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/dapan.8a1d195a.png) | 176KB | 2026-09-13 |
+| `ember.webp` | エンバー | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ember.9364370e.png) | 167KB | 2026-09-13 |
+| `endministrator.webp` | 管理人 | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator1.ec409283.png) | 201KB | 2026-09-13 |
+| `endministrator-2.webp` | 管理人 | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator2.1ec20a16.png) | 194KB | 2026-09-13 |
+| `estella.webp` | エステーラ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/estella.0c009bcd.png) | 222KB | 2026-09-13 |
+| `fluorite.webp` | フローライト | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/fluorite.cf452cf1.png) | 162KB | 2026-09-13 |
+| `gilberta.webp` | ギルベルタ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/gilberta.92aa17d4.png) | 228KB | 2026-09-13 |
+| `laevatain.webp` | レーヴァテイン | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/laevatain.d0ca2837.png) | 348KB | 2026-09-13 |
+| `last-rite.webp` | ラストライト | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lastrite.4a02d8bb.png) | 218KB | 2026-09-13 |
+| `lifeng.webp` | リーフォン | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lifeng.7253579c.png) | 243KB | 2026-09-13 |
+| `liino.webp` | リーノ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/liino.f5676406.png) | 282KB | 2026-09-13 |
+| `mi-fu.webp` | ミ・フ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/mifu.7b3a74cf.png) | 210KB | 2026-09-13 |
+| `perlica.webp` | ペリカ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/perlica.6710bc97.png) | 153KB | 2026-09-13 |
+| `pochiena.webp` | プチエナ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/purrche.bdb051d3.png) | 225KB | 2026-09-13 |
+| `pogranichnik.webp` | ポグラニチニク | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/pogranichnik.6983f122.png) | 155KB | 2026-09-13 |
+| `rossi.webp` | ロッシ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/rossi.b7ae95b5.png) | 190KB | 2026-09-13 |
+| `snowshine.webp` | スノーシャイン | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/snowshine.1f6d3a0e.png) | 225KB | 2026-09-13 |
+| `tangtang.webp` | タンタン | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/tangtang.2602b587.png) | 213KB | 2026-09-13 |
+| `typhoeus.webp` | ティフォロス | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/typhoea.c4a79f82.png) | 204KB | 2026-09-13 |
+| `wulfgard.webp` | ウルフガード | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/wulfgard.53a6686b.png) | 162KB | 2026-09-13 |
+| `xaihi.webp` | ザイヒ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/xaihi.43d608d9.png) | 250KB | 2026-09-13 |
+| `yvonne.webp` | イヴォンヌ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/yvonne.a74396e6.png) | 211KB | 2026-09-13 |
+| `zhuang-fangyi.webp` | ゾアン・ファンイ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/zhuangfy.c6750f9c.png) | 263KB | 2026-09-13 |
 
 ### 職業・属性のアイコン（`classes/` / `elements/`）
 
 公式サイトの CSS（`_next/static/media/`）で `[data-key]` ごとに指定されているもの。
 職業は黒地に白の記号、属性は色地に白の記号。**文字はどれにも入っていない**。
 
-> **要確認**: `classes/support.webp` だけ、記号が他の5つ（星・杖・剣・盾・爪痕）と系統が違って見える。
-> 公式サイトで職業ごとの表示を実際に開いて、割り当てが合っているか確かめること（段階5）。
+> **確認済み（2026-09-13）**: 公式サイトの絞り込み（職業のドロップダウン）に
+> `data-key` と日本語ラベルが対で入っていた。`guard=前衛 / caster=術師 / support=補助 /
+> shielder=重装 / vanguard=先鋒 / assault=突撃`。属性も同じ作りで
+> `fire=灼熱 / ice=寒冷 / electric=電磁 / nature=自然 / physic=物理`。
+> 割り当ては合っている（→ `src/lib/endfield.ts`）。
 
 | ファイル | 種類 | 出どころ | 容量 | 取得日 |
 | --- | --- | --- | --- | --- |

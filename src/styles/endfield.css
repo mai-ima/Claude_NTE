@@ -1947,7 +1947,10 @@ html[data-ef-view='grid'] .ef-thumb {
 .ef-fig > img.ef-fig-ic.is-el {
   top: 26px;
 }
-/* 1枚だけのときは幅を抑える（顔のアップなので、広げると粗が出る。実測 303×386） */
-.ef-figs[data-count='1'] .ef-fig {
-  max-width: 320px;
+/* 立ち絵は背景が透けているので、黒に近い地の上に置くと公式の見え方に近い。
+   幅900まで縮めてあるので、本文幅いっぱいに広げても粗は出ない。 */
+.ef-fig {
+  background:
+    radial-gradient(120% 80% at 50% 10%, rgba(255, 250, 0, 0.08), transparent 60%),
+    var(--ef-bg-2);
 }
