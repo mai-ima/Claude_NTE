@@ -2,9 +2,9 @@
 /**
  * アークナイツ：エンドフィールド wiki のトップ。
  *
- * まだ記事が無い段階なので、**収録状況をそのまま数字で見せる**（0件を隠さない）。
+ * **収録状況をそのまま数字で見せる**（0件のセクションも隠さない）。
  * 文章は読者向けの案内に留める（制作の過程や運営の事情は書かない）。
- * 何を扱う wiki なのか（セクション）と、公式サイトへの導線を先に用意しておく。
+ * 何を扱う wiki なのか（セクション）と、公式サイトへの導線を並べる。
  */
 import { Icon } from 'astro-icon/components';
 import EndfieldLayout from '../../layouts/EndfieldLayout.astro';
@@ -46,16 +46,17 @@ const fill = w.sections.length > 0 ? filled / w.sections.length : 0;
       <b>{total}</b><span>記事 / {w.sections.length} セクション</span>
     </p>
     <p class="ef-intro-note">
-      枠組みだけを先に用意しました。
-      出典で裏が取れたものから順に埋めていきます。
+      オペレーターは全員ぶん載せています。
+      そのほかの項目は、出典で裏が取れたものから順に埋めていきます。
     </p>
     <p class="ef-intro-en" aria-hidden="true">Planet Talos II · Field Guide</p>
   </section>
 
   <p class="ef-note">
-    <strong>この wiki は準備中です。</strong>
-    記事は、公式のお知らせや信頼できる情報源で<strong>裏が取れたものから順に</strong>
-    追加していきます。確かめられていない内容を先に置くことはしません。
+    <strong>記事は順次追加しています。</strong>
+    公式のお知らせや信頼できる情報源で<strong>裏が取れたものから</strong>載せています。
+    確かめられていない内容を先に置くことはしません。
+    スキルやステータスなど、まだ裏が取れていない項目には「要確認」と付けています。
   </p>
 
   <div class="ef-block">

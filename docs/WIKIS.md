@@ -13,7 +13,7 @@
 | id | URL | 状態 | UI | 記事 | ゲームの権利者 |
 | --- | --- | --- | --- | --- | --- |
 | `nte` | `/` | **運用中** | 共通（`BaseLayout` + `base/components/themes/ui-*.css`） | 267 | Hotta Studio / Perfect World Games |
-| `endfield` | `/endfield/` | **運用中** | **専用**（`EndfieldLayout` + `endfield.css`） | 0（準備中） | Hypergryph / MOUNTAIN CONTOUR / GRYPHLINE |
+| `endfield` | `/endfield/` | **運用中** | **専用**（`EndfieldLayout` + `endfield.css`） | 48（オペレーター32・そのほか16） | Hypergryph / MOUNTAIN CONTOUR / GRYPHLINE |
 | `genshin` | `/genshin/` | 準備中 | **専用**（`GenshinLayout` + `genshin.css`） | — | COGNOSPHERE PTE. LTD. / miHoYo |
 | `wuwa` | `/wuwa/` | 準備中 | **専用**（`WuwaLayout` + `wuwa.css`） | — | KURO GAMES |
 | `hsr` | `/hsr/` | 準備中 | **専用**（`HsrLayout` + `hsr.css`） | — | COGNOSPHERE PTE. LTD. / miHoYo |
