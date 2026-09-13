@@ -13,6 +13,7 @@ description: "日本版名「レクイエム」。2つの攻撃モードを切�
 status: "verified"
 updated: 2026-09-05
 tags: ["闇", "アタッカー", "DoT", "ブレイカー", "リセマラ"]
+officialImage: "https://nte.perfectworld.com/public/m/images/main260603/role-poster-an.png"
 sources:
   - label: "ゲームウィズ — レクイエム"
     url: "https://gamewith.jp/nte/559773"

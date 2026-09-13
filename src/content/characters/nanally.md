@@ -14,6 +14,7 @@ description: "ローンチ最強格の霊属性メインアタッカー。通常
 status: "verified"
 updated: 2026-09-05
 tags: ["霊", "アタッカー", "メインアタッカー", "リセマラ"]
+officialImage: "https://nte.perfectworld.com/public/m/images/main260402/role-poster-nanally.png"
 sources:
   - label: "Game8（日本版）— ナナリ"
     url: "https://game8.jp/nte/782354"

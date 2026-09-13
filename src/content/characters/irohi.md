@@ -14,6 +14,7 @@ description: "Ver.1.2 後半の限定S。霊（Anima）属性のヒーラー兼�
 status: "verified"
 updated: 2026-09-05
 tags: ["霊", "サポート", "ヒーラー", "v1.2", "トランス"]
+officialImage: "https://nte.perfectworld.com/public/m/images/main260729/role-poster-yi.png"
 sources:
   - label: "AppMedia — イロヒの性能と声優"
     url: "https://appmedia.jp/nte/80067481"

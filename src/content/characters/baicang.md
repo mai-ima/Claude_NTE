@@ -13,6 +13,7 @@ description: "ETD-4のお調子者隊長。文字を発生させ、EXレール�
 status: "verified"
 updated: 2026-09-05
 tags: ["呪", "アタッカー"]
+officialImage: "https://nte.perfectworld.com/public/m/images/main260402/role-poster-baicang.png"
 sources:
   - label: "カノウィキ — 白蔵(NTE)"
     url: "https://wiki.kanotype.net/ja/%E7%99%BD%E8%94%B5(NTE)"

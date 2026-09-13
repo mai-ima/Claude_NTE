@@ -15,6 +15,7 @@ status: "draft"
 updated: 2026-09-09
 checked: 2026-09-09
 tags: ["霊", "サブアタッカー", "追撃", "v1.3", "E.T.D"]
+officialImage: "https://nte.perfectworld.com/public/m/images/main260909/role-poster-lingke.png"
 sources:
   - label: "NTE公式 — Ver.1.3「霧月夜に星還りて」アップデートのお知らせ"
     url: "https://nte.perfectworld.com/jp/article/news/gamenews/20260817/263606.html"

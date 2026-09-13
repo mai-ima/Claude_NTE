@@ -13,6 +13,7 @@ description: "日本版名「ちぃちゃん」。最良の無料DPS。通常攻
 status: "verified"
 updated: 2026-09-05
 tags: ["光", "アタッカー", "無料", "無課金"]
+officialImage: "https://nte.perfectworld.com/public/m/images/main260402/role-poster-xiaozhi.png"
 sources:
   - label: "神ゲー攻略 — 声優（CV）一覧"
     url: "https://kamigame.jp/nte/page/419364570465864671.html"

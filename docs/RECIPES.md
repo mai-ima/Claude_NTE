@@ -355,8 +355,19 @@ public/images/characters/<記事のID>.webp   # avif / png / jpg / jpeg も可
 
 ### 公式サイトの画像を参照する場合
 
-1. 記事の frontmatter に `officialImage: https://…` を書く（**同梱ではなく参照**）
+1. 記事の frontmatter に `officialImage: "https://…"` を書く（**同梱ではなく参照**）
 2. 管理ページ（`/admin/`）→「キャラクターの画像」→「公式の画像も使う」を選ぶ
+
+**NTE のエスパー17人は登録済み**（2026-09-13）。追加するときの調べ方:
+
+- 絵は公式サイトのトップ（`/jp/main.html`）のキャラ紹介スライドの中にある。
+  **スマホ版**（`/public/m/images/mainYYMMDD/role-poster-<名>.png`）を使う。
+  750×836・**上半分が透過**で、こちらの属性色の地と馴染む。
+  パソコン版（`/public/images/…/*.jpg`）は 1920×1080 の横長なので**使わない**。
+- `<名>` は**中国語名や音写**で、記事の ID とは一致しない。
+  対応は `.claude/state/DECISIONS.md` 2026-09-13 の表を見る。
+  新しいキャラは**名前ロゴ画像**（`role-name-<名>.png`）を開いて読むのが速い。
+- 日付の部分（`main260402`）は**キャラごとに違う**。トップの HTML から拾うこと。
 
 `localStorage` に入るので、**選んだ端末でだけ**効く（`site-state.ts` と同じ作り）。
 

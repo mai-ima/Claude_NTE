@@ -13,6 +13,7 @@ description: "ローンチ唯一のS級攻撃力バッファー。全体攻撃�
 status: "verified"
 updated: 2026-09-05
 tags: ["呪", "バッファー", "攻撃バフ"]
+officialImage: "https://nte.perfectworld.com/public/m/images/main260402/role-poster-zaowu.png"
 sources:
   - label: "Game8 — 早霧（さきり）"
     url: "https://game8.jp/nte/782353"

@@ -15,6 +15,7 @@ status: "verified"
 updated: 2026-07-24
 checked: 2026-09-06
 tags: ["光", "アタッカー", "v1.2", "リセマラ", "充蓄"]
+officialImage: "https://nte.perfectworld.com/public/m/images/main260708/role-poster-zhen.png"
 sources:
   - label: "Game8 — 真紅の評価とスキル"
     url: "https://game8.jp/nte/795905"

@@ -14,6 +14,7 @@ status: "verified"
 updated: 2026-06-08
 checked: 2026-09-06
 tags: ["光", "アタッカー", "無料", "主人公"]
+officialImage: "https://nte.perfectworld.com/public/m/images/main260402/role-poster-zero-male.png"
 sources:
   - label: "ゲームウィズ — 主人公(異能者・零)"
     url: "https://gamewith.jp/nte/555725"

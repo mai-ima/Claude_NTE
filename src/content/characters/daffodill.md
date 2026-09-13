@@ -13,6 +13,7 @@ description: "ブレイク特化の闇属性アタッカー。控えから登場
 status: "verified"
 updated: 2026-09-05
 tags: ["闇", "アタッカー", "ブレイク"]
+officialImage: "https://nte.perfectworld.com/public/m/images/main260402/role-poster-dfde.png"
 sources:
   - label: "Game8 — ダフォディール"
     url: "https://game8.jp/nte/782349"

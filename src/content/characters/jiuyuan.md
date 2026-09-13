@@ -14,6 +14,7 @@ status: "verified"
 updated: 2026-06-11
 checked: 2026-09-06
 tags: ["霊", "アタッカー", "バースト"]
+officialImage: "https://nte.perfectworld.com/public/m/images/main260402/role-poster-jiuyuan.png"
 sources:
   - label: "Game8 — 九原（じょえん）"
     url: "https://game8.jp/nte/782348"

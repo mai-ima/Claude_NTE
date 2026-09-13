@@ -14,6 +14,7 @@ status: "verified"
 updated: 2026-09-09
 checked: 2026-09-09
 tags: ["光", "バッファー", "サポート", "時間停止"]
+officialImage: "https://nte.perfectworld.com/public/m/images/main260513/role-poster-xun.png"
 sources:
   - label: "Game8 — 潯（ほとり）"
     url: "https://game8.jp/nte/784101"

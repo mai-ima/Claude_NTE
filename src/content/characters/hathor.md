@@ -13,6 +13,7 @@ description: "相属性のアタッカー。延滞（Remora）反応を強く後
 status: "verified"
 updated: 2026-09-05
 tags: ["相", "アタッカー"]
+officialImage: "https://nte.perfectworld.com/public/m/images/main260402/role-poster-hasuoer.png"
 sources:
   - label: "神ゲー攻略 — ハソールの評価と使い方・おすすめ編成・育成素材"
     url: "https://kamigame.jp/nte/page/420125995119420697.html"

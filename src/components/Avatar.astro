@@ -43,7 +43,17 @@ const imgVars =
 ---
 
 <div
-  class:list={['avatar', { 'avatar-block': block, 'has-img': !!(local || officialImage) }]}
+  class:list={[
+    'avatar',
+    {
+      'avatar-block': block,
+      // 出どころごとに分ける。まとめて `has-img` にすると、
+      // 「置いた画像だけ」を選んでいる端末でも**公式の登録があるだけで**
+      // 縁と縦長の比率が当たってしまう（絵は出ないのに枠だけ変わる）
+      'has-img-local': !!local,
+      'has-img-official': !!officialImage,
+    },
+  ]}
   style={`--el:${hue};${imgVars}${block ? '' : `width:${size}px;height:${size}px;`}`}
   aria-hidden="true"
 >

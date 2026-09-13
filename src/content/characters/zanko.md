@@ -14,6 +14,7 @@ description: "Ver.1.3 前半の限定S。呪属性の継続ダメージ（DoT）
 status: "verified"
 updated: 2026-09-05
 tags: ["呪", "アタッカー", "v1.3", "DoT", "継続ダメージ", "緋文字"]
+officialImage: "https://nte.perfectworld.com/public/m/images/main260819/role-poster-canhong.png"
 sources:
   - label: "NTE公式 — Ver.1.3「霧月夜に星還りて」アップデートのお知らせ"
     url: "https://nte.perfectworld.com/jp/article/news/gamenews/20260817/263606.html"

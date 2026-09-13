@@ -836,7 +836,8 @@ html[data-ui='base'] .page-head .lead {
    出どころは管理ページで切り替える（→ `src/lib/images.ts`）。
    `--img-local` / `--img-official` は**置いてあるものだけ**が書き出される
    （`src/lib/asset.ts` がビルド時に確かめる）ので、404 は飛ばない。 */
-html[data-ui='base'] .avatar.has-img::before {
+html[data-ui='base'] .avatar.has-img-local::before,
+html[data-ui='base'][data-images='official'] .avatar.has-img-official::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -847,6 +848,18 @@ html[data-ui='base'] .avatar.has-img::before {
   background-position: center top;
   background-repeat: no-repeat;
 }
+/* 公式のポスターは**全身の立ち絵**（実測 750×836・上半分は透明で、
+   顔の中心が縦およそ30%・横50%）。46px の丸にそのまま入れると顔が小さすぎるので、
+   一覧の小さいアバターだけ**顔のあたりへ寄せる**。
+   記事の上の大きな絵（`.avatar-block`）は全身のままにする。
+   ★ 置いた画像（`--img-local`）は構図が分からないので触らない。 */
+html[data-ui='base'][data-images='official'] .avatar.has-img-official:not(.has-img-local):not(.avatar-block)::before {
+  /* 200%・24% で「胸から上」になる。これ以上寄せると、キャラによって
+     顔が枠から外れる（頭頂の位置が絵ごとに違うため）。実測して決めた値 */
+  background-size: 200% auto;
+  background-position: 50% 24%;
+}
+
 /* 既定（属性 data-images なし）＝置いた画像だけを使う */
 html[data-ui='base'] .avatar {
   --av-img: var(--img-local, none);
@@ -856,7 +869,8 @@ html[data-ui='base'][data-images='official'] .avatar {
   --av-img: var(--img-official, var(--img-local, none));
 }
 /* 絵があるときは、地のグラデを少し落ち着かせる（縁が浮いて見えるのを防ぐ） */
-html[data-ui='base'] .avatar.has-img {
+html[data-ui='base'] .avatar.has-img-local,
+html[data-ui='base'][data-images='official'] .avatar.has-img-official {
   box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
 }
 
@@ -931,7 +945,8 @@ html[data-ui='base'] .grid-cards[data-hscroll] > .card-link .el-badge {
    こちらの `.avatar-block` は 16:10 の横長（絵が無いときに間延びしないための比率）。
    **絵があるときだけ縦長にする**。切るのは下からなので顔が残る
    （`background-position: center top` → 31節）。 */
-html[data-ui='base'] .avatar-block.has-img {
+html[data-ui='base'] .avatar-block.has-img-local,
+html[data-ui='base'][data-images='official'] .avatar-block.has-img-official {
   aspect-ratio: 3 / 4;
 }
 

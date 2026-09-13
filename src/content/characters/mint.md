@@ -13,6 +13,7 @@ description: "霊属性のアタッカー（A級）。1凸で真価を発揮し�
 status: "verified"
 updated: 2026-09-05
 tags: ["霊", "アタッカー"]
+officialImage: "https://nte.perfectworld.com/public/m/images/main260402/role-poster-mint.png"
 sources:
   - label: "神ゲー攻略 — 声優（CV）一覧"
     url: "https://kamigame.jp/nte/page/419364570465864671.html"

@@ -13,6 +13,7 @@ description: "ETD-4の謎多きメンバー。被ダメージを敵に共有し�
 status: "verified"
 updated: 2026-09-05
 tags: ["魂", "サバイバル", "耐久"]
+officialImage: "https://nte.perfectworld.com/public/m/images/main260402/role-poster-fadiya.png"
 sources:
   - label: "Game8 — ファルディーヤ"
     url: "https://game8.jp/nte/782350"
