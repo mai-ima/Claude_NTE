@@ -22,4 +22,4 @@ sources:
 
 戦闘ではこの設定がそのまま反映され、残虹は**現実状態**と**幻境状態**という2つの独立した形態を[バイレール](/terms/bilrail/)スキルで行き来しながら戦う。
 
-関連: [残虹](/characters/zanko/) ／ [心蝕](/terms/mind-erosion/) ／ [異能（エスパー）](/terms/esper/)
+関連: [残虹](/characters/zanko/) ／ [心蝕](/terms/mind-erosion/) ／ [異能（キャラクター）](/terms/esper/)

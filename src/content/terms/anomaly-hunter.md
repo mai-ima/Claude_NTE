@@ -20,7 +20,7 @@ sources:
 
 - **エイボンのクルー**: 主人公が拠点とするエイボン骨董品店（[橋間地](/locations/bridge-crossings/)のハンカク街）のメンバーが異象ハンターであり、プレイヤーと行動を共にする。鑑定士が「見極める側」なら、ハンターは「現場で対処する側」という役割分担になる。
 - **管理局との関係**: [BAC](/terms/bac/)が異象ハンターの活動を統括し、依頼や情報を通じて連携する。一方で[ザ・サークル](/terms/the-circle/)のように異象を悪用する勢力とも対峙する立場にある。
-- **戦闘の流れ**: 異象が生む[異象界](/terms/anomaly-zone/)に踏み込み、[エスパー](/terms/esper/)を率いて異象を討伐する。属性[連環反応](/systems/esper-cycle/)を軸に弱点を突くのが基本で、ボスや高難度では弱点属性を事前に確認して編成を組む。
+- **戦闘の流れ**: 異象が生む[異象界](/terms/anomaly-zone/)に踏み込み、[キャラクター](/terms/esper/)を率いて異象を討伐する。属性[連環反応](/systems/esper-cycle/)を軸に弱点を突くのが基本で、ボスや高難度では弱点属性を事前に確認して編成を組む。
 - **舞台**: 活動の場は異象と日常が共存する巨大都市[ヘテロシティ](/terms/hethereau/)。[未聞浦](/locations/unheard-shores/)・[ミゲル区](/locations/miguel-district/)・[ニューホランド](/locations/new-herland-district/)など各区にまたがって事件が発生する。
 
 ## ハンターレベルとの関係
@@ -42,4 +42,4 @@ sources:
 - 「異象ハンター」は職能・役割の呼称であり、特定の一人物を指す固有名ではない。エイボンのクルーを含む現場の戦力全般を指す。
 - 個々のハンターの素性・経歴やBACとの細かな関係はストーリーで描かれる部分が多く、未確定な要素は**要確認**として扱う。
 
-関連: [異象](/terms/anomaly/) ／ [異象管理局](/terms/bac/) ／ [鑑定士](/terms/appraiser/) ／ [ハンターレベル](/terms/hunter-level/) ／ [エイボン骨董品店](/shops/eibon-antique/) ／ [エスパー](/terms/esper/) ／ [軌道外領域](/terms/beyond-the-rails/)
+関連: [異象](/terms/anomaly/) ／ [異象管理局](/terms/bac/) ／ [鑑定士](/terms/appraiser/) ／ [ハンターレベル](/terms/hunter-level/) ／ [エイボン骨董品店](/shops/eibon-antique/) ／ [キャラクター](/terms/esper/) ／ [軌道外領域](/terms/beyond-the-rails/)

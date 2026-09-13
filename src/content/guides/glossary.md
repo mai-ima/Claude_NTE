@@ -64,7 +64,7 @@ sources:
 | 異象管理局 | Bureau of Anomaly Control (BAC) |
 | エイボン骨董品店 | Eibon Antique Shop |
 | 鑑定士 | Appraiser（プレイヤー） |
-| エスパー（異能者） | Esper |
+| キャラクター（異能者） | Esper |
 | 異象ハンター | Anomaly Hunter |
 | ハンターレベル | Hunter Level |
 | 本性ピクセル | Character Pixels（戦闘スタミナ） |

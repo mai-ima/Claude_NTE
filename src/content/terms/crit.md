@@ -33,6 +33,6 @@ sources:
 ## 注意点・要確認
 
 - 会心の判定式・上限・属性弱点との乗算順序など**正確な計算式は要確認**（攻略サイトでも数式は概算で語られることが多い）。本ページは「会心率×会心ダメージで期待値が決まる」という基本の理解にとどめ、断定的な数値計算は載せない。
-- [クリティカルドッジ](/terms/crit-dodge/)・[クリティカルリポスト](/terms/crit-riposte/)は**異能連環の精密回避/パリィ**を指す別概念で、本項の「会心（ステータス）」とは異なる。混同に注意。
+- [極限回避](/terms/crit-dodge/)・[極限反撃](/terms/crit-riposte/)は**異能連環の精密回避/パリィ**を指す別概念で、本項の「会心（ステータス）」とは異なる。混同に注意。
 
-関連: [弧盤](/terms/arc/) ／ [ギア（駆動コア）](/terms/console-gear/) ／ [上限解放](/terms/ascension/) ／ [ダメージの種類](/terms/damage-types/) ／ [クリティカルドッジ](/terms/crit-dodge/)
+関連: [弧盤](/terms/arc/) ／ [ギア（駆動コア）](/terms/console-gear/) ／ [上限解放](/terms/ascension/) ／ [ダメージの種類](/terms/damage-types/) ／ [極限回避](/terms/crit-dodge/)

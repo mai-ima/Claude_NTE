@@ -20,7 +20,7 @@ sources:
 
 - **代表的なゾーン**: [コインクロニクル](/terms/coin-chronicle/)・[バブル缶工場](/terms/bubble-can-factory/)・[フディニの奇術劇](/terms/fudini-magic/)など、テーマの異なるワールドが用意される。
 - **周回コスト**: 戦闘スタミナ「[本性ピクセル](/terms/character-pixels/)」を消費して挑む。1回あたり **40**（倍取りで **80**）ピクセルが目安。
-- **入手物**: EXP 素材・[Arc](/terms/arc-project/)育成素材・[エスパー](/terms/esper/)能力素材・[コンソール（装備）](/terms/console-gear/)などをドロップし、キャラ育成の主な供給源になる。
+- **入手物**: EXP 素材・[Arc](/terms/arc-project/)育成素材・[キャラクター](/terms/esper/)能力素材・[コンソール（装備）](/terms/console-gear/)などをドロップし、キャラ育成の主な供給源になる。
 
 ## 数値・データ
 

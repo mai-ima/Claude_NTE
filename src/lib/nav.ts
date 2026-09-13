@@ -30,7 +30,7 @@ export const SECTIONS: SectionMeta[] = [
     href: '/characters/',
     label: 'キャラクター',
     icon: 'users',
-    blurb: 'エスパー（プレイアブル）の属性・ロール・性能まとめ。',
+    blurb: 'キャラクター（プレイアブル）の属性・ロール・性能まとめ。',
   },
   {
     collection: 'people',
