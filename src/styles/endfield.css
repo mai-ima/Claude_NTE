@@ -2464,3 +2464,87 @@ html[data-ef-theme='dark'] .ef-hero-panel {
   vertical-align: top;
 }
 
+
+/* =========================================================================
+   26. 公式wiki（SKPORT）の実測を反映する
+   ------------------------------------------------------------------------
+   2026-09-14 に公式wikiを**本物のブラウザに描かせて**計算後の値を取った
+   （`node scripts/capture-ui.mjs`。集計は docs/UI-RESEARCH.md）。
+   公式サイト（黒地＋黄色＋尖った意匠）と公式wiki（白地＋小さい文字）は
+   別物なので、**読むための画面はwikiの方に寄せる**。
+
+   いちばんの特徴は**左上だけ直角の角丸**。
+     border-radius: 0 8px 4px 4px   … カード（66要素）
+     border-radius: 0 11px 7px 7px  … 大きめのカード（33要素）
+   動きは **.16s ease-in-out**（公式サイトは .2s〜.3s）。
+   ========================================================================= */
+
+:root {
+  /* 公式wiki の角の落とし方。左上だけ直角にする */
+  --ef-wiki-corner: 0 8px 4px 4px;
+  --ef-wiki-corner-lg: 0 11px 7px 7px;
+  /* 公式wiki の動きの速さ */
+  --ef-wiki-ease: 0.16s ease-in-out;
+}
+
+/* 一覧のサムネ。公式wikiのカードと同じ角にする */
+.ef-thumb {
+  border-radius: var(--ef-wiki-corner);
+  overflow: hidden;
+  transition:
+    border-color var(--ef-wiki-ease),
+    box-shadow var(--ef-wiki-ease);
+}
+.ef-row:hover .ef-thumb {
+  border-color: var(--ef-accent-flat, var(--ef-line));
+  /* 影は公式wikiの実測値そのまま */
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 12px;
+}
+
+/* 記事の絵も同じ角に。1枚だけのときは大きい方の角丸 */
+.ef-figs[data-count='1'] .ef-fig {
+  border-radius: var(--ef-wiki-corner-lg);
+  overflow: hidden;
+}
+
+/* 行の当たり。公式wikiは地の色だけを .16s で変える */
+.ef-row {
+  transition: background-color var(--ef-wiki-ease);
+}
+
+/* 記事の絵の大きさは**中身で変える**。
+   オペレーターは縦長の立ち絵なので幅いっぱい。
+   武器・装備・アイテム・設備・脅威は**正方形の小さなアイコン**なので、
+   全幅に引き伸ばすと粗くて間が抜ける。上限を決めて中央に置く。 */
+.ef-figs:not([data-dir='operators']) {
+  max-width: 300px;
+  margin-inline: auto;
+}
+.ef-figs:not([data-dir='operators']) .ef-fig {
+  aspect-ratio: 1 / 1;
+  display: grid;
+  place-items: center;
+  background: var(--ef-bg-2);
+}
+.ef-figs:not([data-dir='operators']) .ef-fig > img {
+  width: auto;
+  max-width: 86%;
+  max-height: 86%;
+  object-fit: contain;
+}
+
+/* 絞り込みの札に付く件数。公式wikiのタブも「ファンアート(999+)」のように数を出す */
+.ef-chip-n {
+  margin-left: 5px;
+  padding: 0 5px;
+  font-size: 0.78em;
+  font-style: normal;
+  font-weight: 700;
+  color: var(--ef-text-3, #737373);
+  background: var(--ef-bg-2);
+  border-radius: 2px;
+}
+.ef-chip.is-on .ef-chip-n {
+  color: inherit;
+  background: rgba(0, 0, 0, 0.12);
+}

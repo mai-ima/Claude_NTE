@@ -3,51 +3,48 @@
 > **区切りごとに丸ごと上書きする**（追記しない）。40行以内に収めること。
 > 長くなったら、それは `CONTEXT.md` の「作業ログ」へ送るべき内容。
 
-最終更新: 2026-09-13 / ブランチ `claude/claude-nte-audit-E1OnP` / `ver.bate.0.14.5`
+最終更新: 2026-09-14 / ブランチ `claude/claude-nte-audit-E1OnP` / `ver.bate.0.14.5`
 
-## いまやっていること
+## いちばん大きな変化 — 公式wikiが読めるようになった
 
-**10巡目（21項目の指示）を実行中。段階1〜5・7・8・9 が完了、段階6 が残り。**
+**エンドフィールド公式wiki（wiki.skport.com）の API は、ログイン不要で全部読める。**
+以前「ログインが要るので無理」と書いたのは**誤り**（→ `docs/FINDINGS.md`）。
 
-| 段階 | 内容 | 状態 |
-| --- | --- | --- |
-| 1 | 不具合4件（自動リンクの誤爆・`**`・黄色文字・旧値） | ✅ |
-| 2 | `ver.bate.0.14.5`／リリースノートの折りたたみと2つの版 | ✅ |
-| 3-4 | 画像の同梱（NTE 17・エンドフィールド 65・弧盤 9）と台帳 | ✅ |
-| 5 | エンドフィールド（オペレーター32本・絞り込み・職業への言い換え・装備/アイテム） | ✅ |
-| 7 | base UI の刷新（old-Base へ改名／新 Base／5＋7に整理） | ✅ |
-| 8-9 | 法的文書を8本に拡充／iOS は「予定なし」へ | ✅ |
-| 6 | 弧盤13本・ガチャのファクトチェック（宿題 J の弧盤側） | ✅ |
-| **6の残り** | **キャラ25・敵18・用語105 などの通し確認** | ⏳ **次はここ** |
+```bash
+node scripts/fetch-endfield-wiki.mjs --all         # 全1116件（15分ほど）
+node scripts/fetch-endfield-wiki-images.mjs --all  # 画像1446枚（WebP に縮めて同梱）
+node scripts/gen-endfield-operators.mjs            # 記事を書き出す
+node scripts/gen-endfield-weapons.mjs
+node scripts/gen-endfield-entries.mjs              # 脅威・装備・アイテム・設備
+node scripts/capture-ui.mjs <名前> <URL>           # 見た目の実測値を取る
+```
+
+手順と癖は **`docs/ENDFIELD-SOURCES.md` 6章** と `scripts/lib/skport.mjs` の冒頭。
+
+## いまの状態
+
+- 記事 **1354本**（エンドフィールドが 1073本）／ ページ 1423／ `pnpm verify` は通る
+- 同梱画像 **1446枚**（`public/images/official/endfield/` 約30MB）
+- 一覧・記事に**絵が出る**。絞り込みに武器種・部位・区分が増えた
 
 ## 次の一手
 
-1. **宿題 J の残り**: 恒常S級6体（`systems/gacha.md`・`terms/banner-types.md`・
-   `terms/scarborough-fair.md`）が **Ver.1.1 時点のまま**。攻略サイトのガチャ記事に
-   恒常S級の内訳が載っていないため、**まだ裏が取れていない**。
-   ガチャの天井・確率・恒常ボード名（奇縁物語）は2026-09-13 に確認済み。
-2. **宿題 I**: 未実装キャラ3体（`akane-rin`/`blackbird`/`neisha`）の現況
-3. キャラ25本を1本ずつ攻略サイトと突き合わせる（弧盤と同じやり方。
-   **2サイト一致で `verified`、1サイトだけなら下書きのまま**）
-4. **原神wiki（HoYoWiki）の作法は `/genshin/` を作るときに使う**（→ `docs/UI-RESEARCH.md`）。
-   **エンドフィールドには混ぜない**（一度混ぜて指摘を受けた）。
-5. エンドフィールドのオペレーター32本のうち、**公式wikiの情報が入ったのはティフォロスだけ**。
-   残り31本は名前・レア度・職業・属性しか無い（利用者に画面を見せてもらう必要がある）
-
-## 決まりごと（今回ぶん）
-
-- **公式wiki（wiki.skport.com）は API にログインが要る**ので取得できない。深追いしない。
-- エンドフィールド公式は **`/ja-jp/operator` と `/ja-jp/news` だけ**が静的に取れる。
-- 画像は**1枚ずつ `docs/IMAGE-SOURCES.md` に記録**してから同梱する。
-- UIモードの改名は **`ui.ts` と `BaseLayout.astro` の二重管理**。移し替えは `nte.ui.migrated` で一度だけ。
+1. **段階6（NTE 側288本のファクトチェック）が丸ごと残っている**。
+   宿題 J（恒常S級6体）と宿題 I（未実装キャラ3体）が未解決。
+2. エンドフィールドの**エリア・ストーリー・イベント・システム**は公式wikiに項目が無い。
+   ここは攻略サイト頼りのまま（`endfield-areas` 1本・`endfield-story` 1本）。
+3. 段階7（base UI の刷新）・段階8-9（法的文書・iOS）はプランでは済み扱いだが、
+   **宿題 G（`ui-old-base.css` の 23節・28節が死んでいる）**が残っている。
+4. 原神wiki（HoYoWiki）の作法は `/genshin/` を作るときに使う。**エンドフィールドには混ぜない**。
 
 ## つまずきやすい所
 
 ```bash
-pnpm verify        # test → 記事検査 → 型 → build → UI検査 → リンク検査
+pnpm verify        # test → 記事検査 → 型 → build → UI検査 → リンク検査（build だけで約70秒）
 pnpm test:browser  # 実機相当（build の後・単独で）
 ```
 
 - **`pkill` は使わない** ／ **`test:browser` 中に `build` を走らせない**
 - **`pnpm build` を `grep` に繋ぐと途中で切れる**（dist が不完全になる。実際に踏んだ）
+- **この環境の Chromium は外部サイトへ出られない**。`page.route()` で Node に肩代わりさせる
 - **本番に出るのは `main` だけ**。PR を作るかは**利用者が決める**

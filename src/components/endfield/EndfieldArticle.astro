@@ -15,6 +15,7 @@ import { Icon } from 'astro-icon/components';
 import EndfieldLayout from '../../layouts/EndfieldLayout.astro';
 import { withBase } from '../../lib/path';
 import { sectionByCollection } from '../../lib/nav';
+import { findLocalImage } from '../../lib/asset';
 
 interface LinkRef {
   href: string;
@@ -26,6 +27,12 @@ interface Row {
 }
 interface Props {
   collection: string;
+  /**
+   * 記事の id（ファイル名）。渡すと、`images` を省いても
+   * `public/images/official/endfield/<分類>/<id>.webp` を自動で探して出す。
+   * 公式wikiから同梱したアイコンが、そのまま記事の絵になる。
+   */
+  entryId?: string;
   title: string;
   description?: string;
   /** 見出し（目次用）。depth 2 のみ使う */
@@ -59,6 +66,7 @@ interface Props {
 }
 const {
   collection,
+  entryId,
   title,
   description,
   headings,
@@ -77,6 +85,16 @@ const {
 
 /** レア度の「★6」から数字だけ取り出す（記号を6個並べるため） */
 const stars = hero?.rarity ? Number(hero.rarity.replace(/[^0-9]/g, '')) : 0;
+
+/* `images` が渡されていなければ、コレクション名と記事の id から自動で探す。
+   置き場は一覧（EndfieldList）と同じ規則: `endfieldWeapons` → `official/endfield/weapons/`。 */
+const autoDir = collection.replace(/^endfield/, '').toLowerCase();
+const pics =
+  images.length > 0
+    ? images
+    : entryId
+      ? ([findLocalImage(`official/endfield/${autoDir}`, entryId)].filter(Boolean) as string[])
+      : [];
 
 const section = sectionByCollection(collection);
 const toc = headings.filter((h) => h.depth === 2);
@@ -115,11 +133,11 @@ const fmt = (d: Date) => d.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' 
   }
 
   {
-    images.length > 0 && (
+    pics.length > 0 && (
       /* 公式サイトの絵。姿が2つあるものは並べて置く。
          左上に職業、その下に属性のアイコンを重ねる（公式のカードと同じ並び）。 */
-      <div class="ef-figs" data-count={images.length}>
-        {images.map((src) => (
+      <div class="ef-figs" data-count={pics.length} data-dir={autoDir}>
+        {pics.map((src) => (
           <figure class="ef-fig">
             <img src={src} alt={`${title}の姿`} loading="lazy" decoding="async" />
             {icons.map((ic, k) => (

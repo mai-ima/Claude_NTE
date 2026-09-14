@@ -27,6 +27,56 @@ export function slugify(en) {
     .replace(/^-+|-+$/g, '');
 }
 
+/** 日本語名の末尾に付くギリシャ文字（強化版の印）→ slug に足す語 */
+const GREEK = { α: 'alpha', β: 'beta', γ: 'gamma', δ: 'delta', ε: 'epsilon' };
+
+/**
+ * 分類ひとつぶんの「itemId → slug」を作る。
+ *
+ * **取得スクリプトと生成スクリプトで必ず同じ結果になること**が大事なので、
+ * ここ1か所に寄せている（画像のファイル名と記事の slug がずれると絵が出ない）。
+ *
+ * 決め方
+ *   1. 既にある記事の題名と一致すれば、**その記事の slug をそのまま使う**
+ *   2. 英語名を slug にする
+ *   3. 日本語名の末尾が「…α」「…δ」なら `-alpha` `-delta` を足す
+ *      （公式は強化版に同じ英語名を付けていて、そのままだとぶつかる）
+ *   4. それでもぶつかるときは `-<itemId>` を足す
+ *   5. 英語名が無いものは `item-<itemId>`
+ *
+ * @param entries `[itemId, { name, en }]` の配列
+ * @param known   既にある記事の「題名 → slug」
+ */
+export function buildSlugMap(entries, known = {}) {
+  const out = {};
+  const used = new Map(); // slug → itemId
+  const byName = new Map(); // 正規化した名前 → slug
+  const norm = (m) => String(m.name ?? '').trim().replace(/（[男女]）$/, '');
+  /* 既にある記事の slug は先に押さえる（後から来たものに奪わせない） */
+  for (const [itemId, meta] of entries) {
+    const s = known[norm(meta)];
+    if (s && !used.has(s)) { out[itemId] = s; used.set(s, itemId); byName.set(norm(meta), s); }
+  }
+  for (const [itemId, meta] of entries) {
+    if (out[itemId]) continue;
+    const name = norm(meta);
+    /* **名前が同じものは同じ slug にする**。公式wikiには同名の項目が別々に
+       登録されていることがある（例: 白亜・アンゲロミラ が2件）。
+       記事は1本にまとめたいので、ここで同じ行き先にしておく。 */
+    if (byName.has(name)) { out[itemId] = byName.get(name); continue; }
+    const base = slugify(meta.en);
+    if (!base) { out[itemId] = `item-${itemId}`; used.set(out[itemId], itemId); byName.set(name, out[itemId]); continue; }
+    const greek = GREEK[String(meta.name ?? '').trim().slice(-1)];
+    let s = base;
+    if (used.has(s) && greek) s = `${base}-${greek}`;
+    if (used.has(s)) s = `${base}-${itemId}`;
+    out[itemId] = s;
+    used.set(s, itemId);
+    byName.set(name, s);
+  }
+  return out;
+}
+
 /* ------------------------------------------------------------------ *
  * 素材の参照と表
  * ------------------------------------------------------------------ */
@@ -99,7 +149,17 @@ export function linesToMd(lines, resolve, headingLevel = '###') {
     }
     if (l.kind === 'quote') { out.push(`> ${resolve(l.text)}`); continue; }
     if (l.kind === 'p') { out.push(resolve(l.text)); continue; }
-    if (l.kind === 'table') { out.push(mdTable(l.rows, resolve)); continue; }
+    if (l.kind === 'table') {
+      /* 公式の `rowHeader` は「1行目が見出しか」。false のまま Markdown にすると
+         1行目（＝ふつうのデータ）が見出しに化ける。2列の縦並びの表がこれに当たるので、
+         そのときだけ「項目／内容」の見出しを足す。 */
+      const cols = Math.max(...l.rows.map((r) => r.length));
+      const needHead = l.rowHeader === false && cols === 2;
+      out.push(mdTable(needHead ? [['項目', '内容'], ...l.rows] : l.rows, resolve, {
+        dropEmptyFirstColumn: !needHead,
+      }));
+      continue;
+    }
   }
   return out.filter(Boolean).join('\n\n');
 }

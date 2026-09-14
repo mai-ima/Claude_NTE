@@ -1,0 +1,29 @@
+---
+title: "焔霧オリジムシ"
+en: "Blazemist Originium Slug"
+type: "野生の生物"
+order: 56
+description: "野生の生物に属する敵。通常クラス。"
+status: "verified"
+updated: 2026-09-14
+checked: 2026-09-14
+tags: ["脅威", "通常クラス", "野生の生物"]
+aliases: ["Blazemist Originium Slug"]
+sources:
+  - label: "公式wiki（SKPORT）— 脅威"
+    url: "https://wiki.skport.com/endfield"
+---
+
+## 概要
+
+**焔霧オリジムシ**（Blazemist Originium Slug）は、**野生の生物**に属する敵。**通常クラス**。
+
+> 野生の感染生物で、極めて高い体温を持つ。背部の甲殻に含まれる源石粉塵は通常よりも高い活性を示し、生きた溶岩とも言える存在。近づかないことを強く推奨する。
+
+## 脅威記録（特性）
+
+| **物理耐性** | **灼熱耐性** | **電磁耐性** | **寒冷耐性** | **自然耐性** |
+| --- | --- | --- | --- | --- |
+| C | C | D | D | C |
+
+関連: [敵・ボス](/endfield/enemies/) ／ [エリア](/endfield/areas/)

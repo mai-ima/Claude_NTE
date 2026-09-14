@@ -13,7 +13,7 @@
 | id | URL | 状態 | UI | 記事 | ゲームの権利者 |
 | --- | --- | --- | --- | --- | --- |
 | `nte` | `/` | **運用中** | 共通（`BaseLayout` + `base/components/themes/ui-*.css`） | 267 | Hotta Studio / Perfect World Games |
-| `endfield` | `/endfield/` | **運用中** | **専用**（`EndfieldLayout` + `endfield.css`） | 48（オペレーター32・そのほか16） | Hypergryph / MOUNTAIN CONTOUR / GRYPHLINE |
+| `endfield` | `/endfield/` | **運用中** | **専用**（`EndfieldLayout` + `endfield.css`） | **1084**（内訳は下の表） | Hypergryph / MOUNTAIN CONTOUR / GRYPHLINE |
 | `genshin` | `/genshin/` | 準備中 | **専用**（`GenshinLayout` + `genshin.css`） | — | COGNOSPHERE PTE. LTD. / miHoYo |
 | `wuwa` | `/wuwa/` | 準備中 | **専用**（`WuwaLayout` + `wuwa.css`） | — | KURO GAMES |
 | `hsr` | `/hsr/` | 準備中 | **専用**（`HsrLayout` + `hsr.css`） | — | COGNOSPHERE PTE. LTD. / miHoYo |
@@ -53,20 +53,24 @@
 
 ## エンドフィールドのセクション（12種）
 
-| # | コレクション | dir | URL |
-| --- | --- | --- | --- |
-| 01 | `endfieldOperators` | `endfield-operators` | `/endfield/operators/` |
-| 02 | `endfieldWeapons` | `endfield-weapons` | `/endfield/weapons/` |
-| 03 | `endfieldGear` | `endfield-gear` | `/endfield/gear/` |
-| 04 | `endfieldIndustry` | `endfield-industry` | `/endfield/industry/` |
-| 05 | `endfieldEnemies` | `endfield-enemies` | `/endfield/enemies/` |
-| 06 | `endfieldAreas` | `endfield-areas` | `/endfield/areas/` |
-| 07 | `endfieldSystems` | `endfield-systems` | `/endfield/systems/` |
-| 08 | `endfieldItems` | `endfield-items` | `/endfield/items/` |
-| 09 | `endfieldEvents` | `endfield-events` | `/endfield/events/` |
-| 10 | `endfieldStory` | `endfield-story` | `/endfield/story/` |
-| 11 | `endfieldGuides` | `endfield-guides` | `/endfield/guides/` |
-| 12 | `endfieldTerms` | `endfield-terms` | `/endfield/terms/` |
+| # | コレクション | dir | URL | 記事 | 出どころ |
+| --- | --- | --- | --- | --- | --- |
+| 01 | `endfieldOperators` | `endfield-operators` | `/endfield/operators/` | 32 | 公式wiki |
+| 02 | `endfieldWeapons` | `endfield-weapons` | `/endfield/weapons/` | 80 | 公式wiki（1本は報道） |
+| 03 | `endfieldGear` | `endfield-gear` | `/endfield/gear/` | 196 | 公式wiki |
+| 04 | `endfieldIndustry` | `endfield-industry` | `/endfield/industry/` | 149 | 公式wiki |
+| 05 | `endfieldEnemies` | `endfield-enemies` | `/endfield/enemies/` | 84 | 公式wiki |
+| 06 | `endfieldAreas` | `endfield-areas` | `/endfield/areas/` | 1 | **公式wikiに項目なし** |
+| 07 | `endfieldSystems` | `endfield-systems` | `/endfield/systems/` | 2 | **公式wikiに項目なし** |
+| 08 | `endfieldItems` | `endfield-items` | `/endfield/items/` | 530 | 公式wiki |
+| 09 | `endfieldEvents` | `endfield-events` | `/endfield/events/` | 2 | **公式wikiに項目なし** |
+| 10 | `endfieldStory` | `endfield-story` | `/endfield/story/` | 1 | **公式wikiに項目なし** |
+| 11 | `endfieldGuides` | `endfield-guides` | `/endfield/guides/` | 1 | **公式wikiに項目なし** |
+| 12 | `endfieldTerms` | `endfield-terms` | `/endfield/terms/` | 6 | 公式サイト・攻略サイト |
+
+> 2026-09-14 に**公式wikiから一括で作った**（→ `docs/ENDFIELD-SOURCES.md` 6章）。
+> **エリア・システム・イベント・ストーリー・ガイドは公式wikiに項目が無い**ので、
+> 引き続き公式サイトと攻略サイト頼り。ここを増やすのが次の課題。
 
 ## 準備中の wiki を足す／運用中に変えるとき
 

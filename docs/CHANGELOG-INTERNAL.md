@@ -17,6 +17,103 @@
 
 ---
 
+## ver.bate.0.14.5 追記 — 公式wikiからの一括取得（2026-09-14）
+
+### 1. 公式wiki の API を読む
+
+**ホスト**は `https://zonai.skport.com`（画面の `wiki.skport.com` ではない）。
+
+```
+s    = パス + (GET なら query 文字列、そうでなければ body)
+       + timestamp + JSON.stringify({platform, timestamp, dId, vName})
+sign = MD5(HmacSHA256(s, token)).toString()
+```
+
+- `platform: '3'` / `vName: '1.0.0'` / `dId: ''`（**dId はヘッダに載せなくてよいが、署名の文字列には入れる**）
+- `token` は `/web/v1/auth/refresh` が返すもの。**ログインは要らない**
+- 言語は `sk-language`。**`ja`**。`ja-jp` だと `code:0` のまま `data` が空
+
+**解読の手順**: `assets.skport.com/_static_assets/wiki/main.*.js` が webpack の
+ローダーで、チャンクの対応表（152本）を持っている。全部落として
+`grep -r 'vName'` で署名の実装に当たった（`chunks/928.*.js`）。
+
+### 2. 主な API
+
+| パス | 中身 |
+| --- | --- |
+| `/web/v1/auth/refresh` | 匿名トークン |
+| `/web/v1/wiki/item/catalog` | 目録。`onlyOnline=false` で全分類、`typeMainId`+`typeSubId` で項目一覧 |
+| `/web/v1/wiki/item/info?id=` | 記事1本ぶん（ブロック文書） |
+
+`item/catalog` の項目一覧には `brief.cover`（アイコン）・`tagIds`・`caption`（紹介文）が入る。
+`caption` の1行目はオペレーターの**決めぜりふ**。
+
+### 3. ブロック文書の形
+
+```
+document
+ ├ chapterGroup[]        章（オペレーター情報 / 能力値 / 能力拡張 …）
+ │   └ widgets[]         ブロック（基本情報 / 戦闘スキル …）
+ ├ widgetCommonMap{}     ブロックの中身。type = table | common | audio
+ │   ├ tableList[]       {label, value} の組（type=table）
+ │   ├ tabList[]         タブ（LV.1 / LV.20 …）。**空のときは tabDataMap.default を見る**
+ │   └ tabDataMap{}      {intro:{name,type,imgUrl,description}, content, audioList}
+ └ documentMap{}         本文。intro.description と content は**このキーの参照**
+     └ blockMap{}        text(body/heading2/heading3) / table / quote / image /
+                         externalVideo / horizontalLine
+```
+
+- 表のセルは `cellMap["<行ID>_<列ID>"]`。`rowHeader` は「**1行目が見出しか**」、
+  `colHeader` は「1列目が見出しか」。**`rowHeader:false` の2列の表は、
+  Markdown にすると1行目が見出しに化ける**ので「項目／内容」を足している。
+- インラインの `entry` は素材などの参照。`{{entry:ID×個数}}` として残し、
+  書き出すときに `index.json` の名前へ引き直す。
+- 色名は `light_function_green`（属性）・`light_function_brown`（数値）など。
+  数値は `**…**` に寄せ、属性の色づけは `rehype-ef-color.mjs` に任せる。
+
+### 4. 画像
+
+| 種類 | 元 | 同梱 |
+| --- | --- | --- |
+| アイコン 1069枚 | PNG 400KB 前後 | WebP 256px・品質82（計 18.5MB） |
+| スキル 377枚 | GIF **8MB**（アニメーション） | 1枚目だけ WebP 96px（計 0.4MB） |
+
+`sharp(buf, { animated: false })` で GIF の1枚目だけを取る。
+**落としながら変換して元は捨てる**ので、ピークのディスク使用量は並列数×元サイズで済む。
+
+### 5. 実測した見た目
+
+`scripts/capture-ui.mjs` を新設。ブラウザに描かせて `getComputedStyle` を
+1500要素ぶん拾い、色・角丸・字送り・動きを**出現数で集計**する。
+「よく出る値ほどそのサイトらしさ」なので、上位を取れば再現の当たりが付く。
+
+公式wiki の特徴（→ `docs/UI-RESEARCH.md`）
+
+- カードの角丸 **`0 8px 4px 4px`**（左上だけ直角）が99要素
+- 本文 **12px / 行間 13.8px**（かなり詰めている）・字送りは normal
+- 動きは **`.16s ease-in-out`**（公式サイトは `.2s`〜`.3s`）
+
+### 6. つまずいた点と直し方
+
+| 症状 | 原因 | 直し方 |
+| --- | --- | --- |
+| API が 401 | 署名の鍵がない | `/web/v1/auth/refresh` の匿名トークンを使う |
+| `code:0` なのに中身が空 | `sk-language: ja-jp` | **`ja`** にする |
+| Chromium が `ERR_CONNECTION_RESET` | この環境の Chromium は外へ出られない | `page.route()` で Node の `fetch` に肩代わりさせる |
+| 表がスマホで1文字ずつ折り返す | 後ろの `.ef-prose table { width:100% }` に負けた | `.ef-prose .ef-table-scroll table` で詳細度を上げる |
+| slug が12件ぶつかる | 英語名が同じ（α版と無印） | 日本語名の末尾のギリシャ文字を `-alpha` として足す |
+| 同名の記事が2本できる | 公式wikiに同名の項目が2件ある | 1本にまとめ、2件目の章に「（2）」を付ける |
+| アイテムの絵が全幅に伸びる | `.ef-fig > img { width:100% }` | `.ef-figs[data-dir]` で分け、正方形は上限300pxで中央 |
+
+### 7. 記事に載せなかったもの（権利への配慮）
+
+せりふ全文・プロファイルの読み物（第一〜第四資料）・ギャラリー・外観の
+スクリーンショットは、**取得の時点で落としている**（`SKIP_CHAPTER` / `SKIP_BLOCK`）。
+載せるのは遊ぶときに要る**ゲーム内のデータ**だけ。
+判断の経緯は `.claude/state/DECISIONS.md` 2026-09-14。
+
+---
+
 ## beta v0.12.0 — wiki を6つに増やす／UIの実測再現／本格リリース準備
 
 ### 1. マルチwiki基盤を6つに広げた

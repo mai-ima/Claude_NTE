@@ -389,3 +389,52 @@ public/images/characters/<記事のID>.webp   # avif / png / jpg / jpeg も可
 - `.avatar::after` は**斜めの光沢**に使われている。絵は `::before`。
 - **置いていない画像の URL を書き出さない。** 全カードに書くとキャラの数だけ 404 が飛ぶ。
 - 権利はゲームの運営元にある。**同梱しない**作りを崩さないこと。
+
+---
+
+## 11. エンドフィールドの記事を公式wikiから作り直す
+
+公式wiki（`wiki.skport.com`）が更新されたとき、記事を作り直す手順。
+**中身を手で写さない**。取得 → 生成の2段で通す。
+
+### 手順
+
+```bash
+# 1. 材料を取る（.cache/ に生の応答が残るので、2回目以降は速い）
+node scripts/fetch-endfield-wiki.mjs --all        # 全1116件・15分ほど
+node scripts/fetch-endfield-wiki-images.mjs --all # 画像1446枚
+
+# 2. 記事を書き出す
+node scripts/gen-endfield-operators.mjs   # オペレーター
+node scripts/gen-endfield-weapons.mjs     # 武器
+node scripts/gen-endfield-entries.mjs     # 脅威・装備・アイテム・設備
+
+# 3. 検査
+pnpm verify
+```
+
+新しいものだけ取り直したいときは `.cache/endfield-wiki/<itemId>.json` を消す。
+
+### 触るファイル
+
+| # | 場所 | 役割 |
+| --- | --- | --- |
+| 1 | `scripts/lib/skport.mjs` | API（署名つき）とブロック文書の変換。**API の癖は冒頭のコメントに全部書いてある** |
+| 2 | `scripts/lib/efgen.mjs` | slug・表・frontmatter の共通処理 |
+| 3 | `scripts/fetch-endfield-wiki.mjs` | 取得。`SKIP_CHAPTER` / `SKIP_BLOCK` で**載せないもの**を決める |
+| 4 | `scripts/fetch-endfield-wiki-images.mjs` | 画像。`SUB_TO_DIR` で分類→置き場を決める |
+| 5 | `scripts/gen-endfield-entries.mjs` | `KINDS` に分類ごとの frontmatter と導入文 |
+| 6 | `src/content.config.ts` | 新しい欄を足すときはスキーマも |
+| 7 | `src/pages/endfield/<分類>/[slug].astro` | 記事の「要点」に出す項目 |
+| 8 | `src/components/endfield/EndfieldList.astro` | 一覧の絞り込み（`KIND_FIELD`） |
+
+### 落とし穴
+
+- **slug は `buildSlugMap()` が決める。画像の取得と記事の生成で同じ関数を使うこと。**
+  ずれると絵が出なくなる。
+- 手で書いた節（「入手」など公式wikiに無い話）は**引き継ぐようにしてある**。
+  引き継ぎたい節を増やすときは、各 gen スクリプトの `old.sections` を見ている箇所を直す。
+- `status` は公式wikiに中身があれば `verified`、無ければ `draft`。
+  **実装前（`dotType: preview`）のものは `draft`** にする。
+- 公式wikiに**同名の項目が2件**あることがある。1本の記事にまとめ、
+  2件目の章に「（2）」を付ける（実装済み）。

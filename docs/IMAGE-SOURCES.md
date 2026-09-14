@@ -161,6 +161,53 @@
 
 ---
 
+## 公式wiki（SKPORT）由来 — 2026-09-14 に一括で同梱
+
+出どころはすべて **エンドフィールド公式wiki** <https://wiki.skport.com/endfield>（日本語版）。
+`static.skport.com` に置かれている画像を、`node scripts/fetch-endfield-wiki-images.mjs --all` で取得した。
+
+**1枚ずつの URL は `scripts/data/endfield-wiki/images-ledger.json` にある**（1446件）。
+枚数が多いのでこのファイルには内訳だけを書く。
+
+| 置き場 | 枚数 | 容量 | 中身 |
+| --- | --- | --- | --- |
+| `official/endfield/operators/` | 33 | 1.1MB | オペレーターの顔アイコン |
+| `official/endfield/weapons/` | 79 | 1.2MB | 武器のアイコン |
+| `official/endfield/gear/` | 195 | 2.8MB | 装備のアイコン |
+| `official/endfield/items/` | 529 | 8.4MB | アイテム・貴重品・基質のアイコン |
+| `official/endfield/industry/` | 148 | 3.0MB | 設備・システム図面のアイコン |
+| `official/endfield/enemies/` | 85 | 2.0MB | 脅威のアイコン |
+| `official/endfield/wiki/skills/` | 377 | 0.4MB | スキルのアイコン（**アニメーションGIFの1枚目**） |
+
+### そのままでは同梱できなかった
+
+公式の元画像は **PNG で1枚400KB前後**、スキルのアニメーション GIF は **1枚8MB** ある。
+1629枚あるので素で落とすと数百MBになる。**落としながら WebP へ縮めて、元は捨てている**。
+
+| 種類 | 元 | 同梱したもの |
+| --- | --- | --- |
+| アイコン | PNG 400KB 前後 | WebP 256px・品質82（1枚 2〜18KB） |
+| スキル | GIF 8MB（アニメーション） | **1枚目だけ**を WebP 96px（1枚 約1KB） |
+
+### ファイル名の決め方
+
+**記事の slug と同じ名前**で保存している。`src/components/Avatar.astro` と
+`EndfieldList.astro` が `official/endfield/<分類>/<記事のid>` を探すので、
+置くだけで一覧にも記事にも絵が出る。
+
+slug は `scripts/lib/efgen.mjs` の `buildSlugMap()` が決める。
+**画像の取得と記事の生成で同じ関数を使う**こと（ずれると絵が出なくなる）。
+
+### 目視で確かめたこと（2026-09-14）
+
+- 一覧ページと記事ページを**実際に表示して**、絵が出ていることを確認した
+  （武器・装備・アイテム・敵の4分類、スマホ幅とパソコン幅の両方）。
+- アイコンは**器物・人物の切り抜き**で、**日本語以外の言語の文字は写っていない**。
+- 記事に出すときは、オペレーターだけ幅いっぱい（縦長の立ち絵）、
+  それ以外は**上限300pxで中央**に置く（正方形の小さなアイコンのため）。
+
+---
+
 ## 攻略wiki由来（`public/images/from-wiki/`）
 
 **公式サイトに無いものだけ**。NTE の公式サイト（`nte.perfectworld.com/jp/`）の画像を

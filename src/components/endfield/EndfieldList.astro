@@ -50,8 +50,34 @@ const valuesOf = (field: string) =>
   );
 const classValues = EF_CLASSES.filter((c) => valuesOf('class').includes(c.label));
 const elementValues = EF_ELEMENTS.filter((e) => valuesOf('element').includes(e.label));
-const rarityValues = ['★6', '★5', '★4', '★3'].filter((r) => valuesOf('rarity').includes(r));
-const hasFilter = classValues.length + elementValues.length + rarityValues.length > 1;
+const rarityValues = ['★6', '★5', '★4', '★3', '★2', '★1'].filter((r) => valuesOf('rarity').includes(r));
+
+/* 職業・属性を持たない項目（武器・装備・アイテム・設備・脅威）にも絞り込みを出す。
+   どの欄を使うかはコレクションごとに違うので、ここで対応づける。 */
+const KIND_FIELD: Record<string, { label: string; field: string }> = {
+  endfieldWeapons: { label: '武器種', field: 'type' },
+  endfieldGear: { label: '部位', field: 'slot' },
+  endfieldItems: { label: '区分', field: 'type' },
+  endfieldIndustry: { label: '区分', field: 'category' },
+  endfieldEnemies: { label: '分類', field: 'type' },
+};
+const kind = KIND_FIELD[collection];
+/** 件数の多い順。1件しかない値を並べても押せないだけなので落とす */
+const kindValues = kind
+  ? [...new Set(sorted.map((e) => (e.data as Record<string, unknown>)[kind.field]).filter(Boolean))]
+      .map(String)
+      .map((v) => ({
+        v,
+        n: sorted.filter((e) => String((e.data as Record<string, unknown>)[kind.field] ?? '') === v).length,
+      }))
+      .filter((x) => x.n > 1)
+      .sort((a, b) => b.n - a.n)
+      .slice(0, 12)
+  : [];
+const kindOf = (d: Record<string, unknown>) => (kind ? (d[kind.field] as string | undefined) : undefined);
+
+const hasFilter =
+  classValues.length + elementValues.length + rarityValues.length + kindValues.length > 1;
 
 const no = (i: number) => String(i + 1).padStart(2, '0');
 const fmt = (d: unknown) =>
@@ -159,6 +185,17 @@ const fmt = (d: unknown) =>
             ))}
           </div>
         )}
+        {kind && kindValues.length > 1 && (
+          <div class="ef-filter-row">
+            <span class="ef-filter-label">{kind.label}</span>
+            {kindValues.map((k) => (
+              <button class="ef-chip" type="button" data-ef-f="kind" data-ef-v={k.v} aria-pressed="false">
+                {k.v}
+                <em class="ef-chip-n">{k.n}</em>
+              </button>
+            ))}
+          </div>
+        )}
         <p class="ef-count">
           全 <b data-ef-count>{sorted.length}</b> 件
         </p>
@@ -194,6 +231,7 @@ const fmt = (d: unknown) =>
               data-class={d.class as string | undefined}
               data-element={d.element as string | undefined}
               data-rarity={d.rarity as string | undefined}
+              data-kind={kindOf(d as Record<string, unknown>)}
             >
               <span class="ef-row-no">{no(i)}</span>
               {img && (

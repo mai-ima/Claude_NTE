@@ -766,3 +766,83 @@ for (const el of document.querySelectorAll('*')) {
 NTE 側の wiki 一覧などで白地に黄色の文字が出て読めない**。
 同じ色相のまま暗くした値（`#8a7a00`・白地で約4.6:1）を入れ、
 **wiki の中の配色は `endfield.css` の `--ef-accent`（`#fffa00`）が正**、と役割を分けた。
+
+## 公式wiki（SKPORT）は**ログイン不要**で読める（2026-09-14）
+
+**誤** — 「公式wiki は API に**ログインが要る**ので取得できない。深追いしない」
+（`NOW.md` にそう書いて2セッション放置していた）
+
+**正** — **ログインは要らない**。`/web/v1/auth/refresh` が**誰にでも**トークンを返し、
+そのトークンを鍵にして署名すれば、すべての読み取り API が通る。
+
+**なぜ間違えたか**: フロントの JS に
+`var u = e.secret; u || (u = e.token);` とあり、`token` は `localStorage` から
+読んでいた。そこで「＝ログインで得るもの」と決めつけた。実際には
+**ログインしていない人にも配られる**匿名トークンで、ログイン後はそれが
+本人のものに差し替わるだけだった。
+
+**気づいた決め手**: ブラウザで公式wikiを開いたら**中身がちゃんと出た**こと。
+通信を見ると `401 → /auth/refresh → 200` の順で、**ログインせずに200 が返っていた**。
+
+> **教訓**: 「認証が要る」と判断する前に、**ログインしていないブラウザで開いて
+> 中身が出るか**を見る。出るなら、必ず取る道がある。
+
+## `sk-language: ja-jp` は「成功したまま空」で返る（2026-09-14）
+
+公式wiki の API は言語を `sk-language` ヘッダで指定する。
+
+```
+sk-language: ja      → 中身が返る
+sk-language: ja-jp   → code:0 / message:"OK" のまま data が空
+```
+
+**エラーにならない**ので気づきにくい。`catalog: []` を見て「権限が足りない」と
+読み違えかけた。**件数が 0 のときは、まず言語コードを疑う。**
+
+なお `en` にすると**英語名**が返る。日本語名からは作れない**記事の slug** は、
+これで作っている（`scripts/lib/efgen.mjs` の `slugify()`）。
+
+## この環境の Chromium は外部サイトへ出られない（2026-09-14）
+
+`chromium.launch()` で外のサイトを開くと、必ず `ERR_CONNECTION_RESET` になる。
+プロキシの記録を見ると「1768 B 送って 39 B 受け取ったところで切断」。
+`--proxy-server` を渡しても、後量子鍵交換を切っても変わらなかった。
+**curl / Node の `fetch` は同じ相手に通る**ので、遮断ではなく Chromium 固有の問題。
+
+**回避**: **通信だけ Node に肩代わりさせる**。
+
+```js
+await ctx.route('**/*', async (route) => {
+  const req = route.request();
+  const headers = { ...req.headers() };
+  delete headers['accept-encoding'];   // fetch が自動で解くので外す
+  delete headers['host'];
+  const res = await fetch(req.url(), { method: req.method(), headers, ... });
+  const buf = Buffer.from(await res.arrayBuffer());
+  const out = {};
+  res.headers.forEach((v, k) => {
+    // 中身は解凍済みなので、これらを残すと壊れる
+    if (!['content-encoding', 'content-length', 'transfer-encoding'].includes(k)) out[k] = v;
+  });
+  await route.fulfill({ status: res.status, headers: out, body: buf });
+});
+```
+
+これで **SPA がブラウザの中で普通に動く**。署名つきの API 呼び出しも、
+サイト自身の JS が作るのでそのまま通る。公式wikiの画面を撮るのに使った。
+
+## 表のスクロール箱は「後ろのルールに負ける」（2026-09-14）
+
+`.ef-table-scroll table { width: max-content }` を書いたのに効かず、
+スマホで列が潰れて**1文字ずつ縦に折り返した**。
+
+原因は **`endfield.css` の後ろ（24節）に `.ef-prose table { width: 100% }` がある**こと。
+どちらも詳細度 (0,1,1) なので、**後ろ勝ち**で `width: 100%` が残る。
+
+**直し方**: `.ef-prose .ef-table-scroll table` にして (0,2,1) にする。
+同じファイルの中でも**前に書いたルールは後ろに負ける**。
+節をまたいで同じ要素を触るときは、詳細度を上げるか、後ろに書く。
+
+**ついでに**: 横に長い表は**左端の見出し列を `position: sticky; left: 0`** にすると、
+RANK1〜スキル特化3 のような表でも「何の行か」を見失わずに読める。
+背景は透けないよう `var(--ef-bg)` を敷く。

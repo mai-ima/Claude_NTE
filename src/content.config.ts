@@ -339,6 +339,7 @@ const endfieldGear = defineCollection({
     z.object({
       ...base,
       title: z.string(),
+      en: z.string().optional(),
       slot: z.string().optional(), // 胴 / 腕 / アクセサリー
       quality: z.string().optional(),
       setName: z.string().optional(), // セット名
