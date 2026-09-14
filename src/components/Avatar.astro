@@ -60,7 +60,14 @@ const local = id ? findLocalImage(dir, id) : null;
 /* 小さく出すときは**丸い顔アイコン**を先に探す。
    同梱しているポスターは 750×836 の縦長なので、小さな枠に入れると顔が切れる。
    顔アイコンは公式のキャラページのタブから取ったもの（→ scripts/fetch-nte-faces.mjs）。 */
-const face = id && dir === 'characters' && size <= 64 ? findLocalImage('official/nte/faces', id) : null;
+/* ★ `!block` が要る。`block`（記事の上の大きな絵）のときは `size` を渡していないので
+   既定の 48 が入り、**64以下の判定に引っかかって顔アイコンが選ばれていた**。
+   256×256 の顔アイコンを縦長の枠いっぱいに引き伸ばすことになり、
+   「絵がずれている・大きすぎる」の一因だった（実測で踏んだ）。 */
+const face =
+  id && dir === 'characters' && !block && size <= 64
+    ? findLocalImage('official/nte/faces', id)
+    : null;
 const bundled =
   face ??
   (id ? (findLocalImage(`official/nte/${dir}`, id) ?? findLocalImage(`from-wiki/${dir}`, id)) : null);
@@ -80,6 +87,11 @@ const imgVars =
       // 縁と縦長の比率が当たってしまう（絵は出ないのに枠だけ変わる）
       'has-img-local': !!local,
       'has-img-official': !!official,
+      /* 顔だけを切り出した正方形のアイコンを使っているか。
+         CSS 側は「絵が縦長のポスターなら顔のあたりへ寄せる」という細工をしている。
+         **顔アイコンにその細工を当てると、顔をさらに拡大してずらしてしまう**ので、
+         ここで見分けられるようにしておく（実測で踏んだ。→ docs/FINDINGS.md）。 */
+      'has-img-face': !!face,
     },
   ]}
   style={`--el:${hue};${imgVars}${block ? '' : `width:${size}px;height:${size}px;`}`}

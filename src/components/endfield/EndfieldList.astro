@@ -138,10 +138,23 @@ const fmt = (d: unknown) =>
   {
     hasFilter && (
       /* 絞り込み。常に見えている（開閉しない）。押すと CSS の `hidden` で行を隠し、
-         件数を数え直す。JS が動かない端末でも**全件が見えたまま**なので壊れない。 */
+         件数を数え直す。JS が動かない端末でも**全件が見えたまま**なので壊れない。
+
+         外側の `.ef-widget` は**公式wikiのかたまりの作法**
+         （薄いグレーの帯 44px ＋ 16px 太字の見出し ＋ 左に 32×8 の飾り）。
+         → docs/UI-RESEARCH.md 2026-09-14 の実測 */
+      <section class="ef-widget">
+        <header class="ef-widget-head">
+          <span class="ef-widget-tag" aria-hidden="true" />
+          <h2 class="ef-widget-title">絞り込み</h2>
+          <span class="ef-widget-n">
+            <b data-ef-count>{sorted.length}</b> 件
+          </span>
+        </header>
+        <div class="ef-widget-body">
       <div class="ef-filter" data-ef-filter>
         <div class="ef-filter-row">
-          <span class="ef-filter-label">絞り込み</span>
+          {/* 「絞り込み」の見出しは**上の帯に出してある**ので、ここには置かない（二重になる） */}
           <button class="ef-chip is-on" type="button" data-ef-f="all" aria-pressed="true">
             すべて
           </button>
@@ -196,10 +209,10 @@ const fmt = (d: unknown) =>
             ))}
           </div>
         )}
-        <p class="ef-count">
-          全 <b data-ef-count>{sorted.length}</b> 件
-        </p>
+        {/* 件数も**上の帯**に出してある。ここで繰り返さない */}
       </div>
+        </div>
+      </section>
     )
   }
 
@@ -212,7 +225,17 @@ const fmt = (d: unknown) =>
         </p>
       </div>
     ) : (
-      // 区切りは公式に倣って**中央寄せ90%幅の細線**にする（is-hairline）
+      /* 一覧も公式wikiと同じ「かたまり」に入れる（薄いグレーの帯＋太字の見出し）。
+         区切りは公式に倣って**中央寄せ90%幅の細線**にする（is-hairline）。 */
+      <section class="ef-widget">
+        <header class="ef-widget-head">
+          <span class="ef-widget-tag" aria-hidden="true" />
+          <h2 class="ef-widget-title">{section.label}</h2>
+          <span class="ef-widget-n">
+            <b data-ef-count>{sorted.length}</b> 件
+          </span>
+        </header>
+        <div class="ef-widget-body">
       <div class="ef-list is-hairline ef-fade-b">
         {sorted.map((e, i) => {
           const d = e.data;
@@ -236,7 +259,11 @@ const fmt = (d: unknown) =>
               <span class="ef-row-no">{no(i)}</span>
               {img && (
                 /* 顔のアップ（公式サイトの一覧と同じ絵）。左上に職業、その下に属性を重ねる */
-                <span class="ef-thumb" aria-hidden="true" style={`background-image:url('${img}')`}>
+                <span class="ef-thumb" aria-hidden="true">
+                  {/* 背景画像ではなく `<img>` にしてある。
+                      アイテムの一覧は530件あり、背景画像だと**開いた瞬間に全部読みに行く**。
+                      `loading="lazy"` が効くのは `<img>` だけなので、こちらを使う。 */}
+                  <img class="ef-thumb-pic" src={img} alt="" loading="lazy" decoding="async" width="56" height="56" />
                   {ck && <img class="ef-thumb-ic" src={withBase(`/images/official/endfield/classes/${ck}.webp`)} alt="" width="20" height="20" />}
                   {ek && <img class="ef-thumb-ic is-el" src={withBase(`/images/official/endfield/elements/${ek}.webp`)} alt="" width="20" height="20" />}
                 </span>
@@ -254,6 +281,8 @@ const fmt = (d: unknown) =>
           );
         })}
       </div>
+        </div>
+      </section>
     )
   }
 
@@ -361,8 +390,11 @@ const fmt = (d: unknown) =>
         r.hidden = !ok;
         if (ok) n++;
       }
-      var out = bar.querySelector('[data-ef-count]');
-      if (out) out.textContent = String(n);
+      /* 件数は**2か所**にある（公式wikiに倣った見出しの帯と、絞り込みの下）。
+         `bar`（= `[data-ef-filter]`）の中だけを探すと**帯の方が古いまま**になるので、
+         枠（`.ef-widget`）まで広げて数え直す。 */
+      var scope = bar.closest('.ef-widget') || bar;
+      for (var out of scope.querySelectorAll('[data-ef-count]')) out.textContent = String(n);
       var none = Object.keys(pick).every(function (k) {
         return !pick[k];
       });

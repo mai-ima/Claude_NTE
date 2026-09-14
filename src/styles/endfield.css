@@ -60,28 +60,51 @@
 }
 
 :root {
-  /* 実測値をそのままトークンにする（実画面で確認した白地ベース） */
-  --ef-bg: #ffffff; /* 地は白 */
-  --ef-bg-2: #fafafa; /* 実測 rgb(250,250,250) */
-  --ef-panel: #f2f2f2; /* 実測 border 3px rgb(242,242,242) の面 */
-  --ef-line: #d9d9d9; /* 実測 rgb(217,217,217) */
-  --ef-line-soft: #ebebeb;
-  --ef-ink: #191919; /* UIパーツ・タグの黒。実測 rgb(25,25,25) */
-  --ef-text: #141414; /* 実測 rgb(20,20,20) */
-  --ef-text-2: #383838; /* 実測 rgb(56,56,56) */
-  --ef-muted: #8f8f8f; /* 実測 rgb(143,143,143) */
-  --ef-accent: #fffa00; /* 実測 rgb(255,250,0) */
+  /* ここから下は**公式wiki（SKPORT）が実際に配っているトークン**をそのまま写したもの。
+     以前は画面から色を数えて当てていたが、公式wikiの HTML に
+     デザイントークンが丸ごと埋まっていた（→ docs/UI-RESEARCH.md 2026-09-14）。
+     推測が要らなくなったので、**wiki の中身の色はこちらに合わせる**。
+
+     枠組み（帯・見出し・強調）は**公式サイト**の実測値（`#fffa00` など）のまま。
+     利用者の決定「公式サイト × 公式wiki の完全再現」→ .claude/state/DECISIONS.md */
+  --ef-bg: #ffffff; /* 公式wiki EHP7_bg_0 */
+  --ef-bg-2: #f6f6f6; /* 公式wiki EHP7_bg_1 / gray_1 */
+  --ef-panel: #f2f2f2; /* 公式wiki EHP7_gray_2 */
+  --ef-line: #e9e9e9; /* 公式wiki EHP7_gray_3 */
+  --ef-line-soft: #f2f2f2;
+  --ef-ink: #191919; /* UIパーツ・タグの黒。公式**サイト**の実測 rgb(25,25,25) */
+  --ef-text: #222222; /* 公式wiki EHP7_text_primary */
+  --ef-text-2: rgba(34, 34, 34, 0.7); /* 公式wiki EHP7_text_secondary */
+  --ef-muted: rgba(34, 34, 34, 0.5); /* 公式wiki EHP7_text_tertiary */
+  --ef-faint: rgba(34, 34, 34, 0.25); /* 公式wiki EHP7_text_quaternary */
+  --ef-accent: #fffa00; /* 公式**サイト**の実測 rgb(255,250,0) */
   --ef-accent-ink: #191919; /* 黄の上に置く文字 */
   --ef-ok: #00ffa2;
   --ef-hot: #ff1aac;
+
+  /* 公式wikiが「意味」で決めている色。表や注意書きに使う */
+  --ef-w-yellow: #fdfd1f; /* EHP7_game_endfleld（綴りは公式のまま） */
+  --ef-w-link: #90c208; /* EHP7_text_link — 公式wikiのリンクは**黄緑** */
+  --ef-w-error: #ff5a47;
+  --ef-w-warn: #ff941a;
+  --ef-w-ok: #90c208;
+  /* 数値を色分けするとき（暗いテーマの ZhXi_base_data_*） */
+  --ef-w-data-blue: #55bdf8;
+  --ef-w-data-yellow: #ffcc00;
+  --ef-w-data-green: #7afe65;
+  --ef-w-data-orange: #f89055;
+  --ef-w-data-red: #f85555;
+  --ef-w-data-purple: #d894ff;
 
   --ef-radius: 4px; /* 実測 .25rem（19回で最多）。50% の丸ボタンも別にある */
   --ef-gap: 16px;
   --ef-measure: 720px; /* 本文の最大幅。装飾より可読性を優先する */
   --ef-rail: 68px; /* 左の白いレールの幅（実画面の実測に合わせた） */
+  /* 公式wikiが日本語に当てている並びをそのまま写す（`body:lang(ja)` の指定）。
+     iPhone では先頭の "SF Pro JP" が当たるので、**公式wikiと同じ字面**になる。 */
   --ef-font:
-    ui-sans-serif, system-ui, -apple-system, 'Hiragino Kaku Gothic ProN', 'Noto Sans JP',
-    Meiryo, sans-serif;
+    'SF Pro JP', 'SF Pro', 'Noto Sans JP', 'Noto Sans', Meiryo, 'Yu Gothic', 'Hiragino Sans',
+    'Source Han Sans', Arial, system-ui, sans-serif;
 
   /* --- 2回目の解析で分かった「らしさ」の核（docs/UI-RESEARCH.md） --- */
 
@@ -123,15 +146,20 @@
  * 本編は白地なので**既定は白**（実画面の観察どおり）。
  */
 :root[data-ef-theme='dark'] {
-  --ef-bg: #191919; /* ローディング画面の黒（実測 #191919） */
-  --ef-bg-2: #101010;
-  --ef-panel: #35373c;
-  --ef-line: #3a3d43;
-  --ef-line-soft: #2a2c30;
+  /* **公式wikiの暗いテーマ（ZhXi）のトークンをそのまま写す**。
+     以前は公式サイトのローディング画面の黒（#191919）から起こしていたが、
+     公式wikiが暗いテーマの値を配っていたので、そちらに合わせる。 */
+  --ef-bg: #1e1e1e; /* ZhXi_bg_0 */
+  --ef-bg-2: #313131; /* ZhXi_card_1 / gray_1 */
+  --ef-panel: #535353; /* ZhXi_gray_2 */
+  --ef-line: #747474; /* ZhXi_gray_3 */
+  --ef-line-soft: #3d3d3d;
   --ef-ink: #ffffff; /* 暗色では UI パーツの色が反転する */
-  --ef-text: #ffffff;
-  --ef-text-2: #d9d9d9;
-  --ef-muted: #999999;
+  --ef-text: #e5e4e5; /* ZhXi_gray_4 */
+  --ef-text-2: rgba(255, 255, 255, 0.65); /* ZhXi_white_text_icon_65 */
+  --ef-muted: rgba(255, 255, 255, 0.45); /* ZhXi_white_text_icon_45 */
+  --ef-faint: rgba(255, 255, 255, 0.25); /* ZhXi_white_text_icon_25 */
+  --ef-w-yellow: #ffe500; /* ZhXi_brand_yellow — 暗い地ではこちら */
   --ef-shadow: 0 0 6.75px rgba(0, 0, 0, 0.5);
   color-scheme: dark;
 }
@@ -1652,6 +1680,11 @@ body.ef-sheet-open {
    罫線で区切る作法は保ったまま、横に並べて一度に見渡せるようにする。 */
 html[data-ef-view='grid'] .ef-list.is-hairline {
   display: grid;
+  /* 細い画面でも**2列**。1列だと絵が幅いっぱい（約360px）に伸びるが、
+     持っているアイコンは396角しかないので、細かい画面では粗く見えてしまう。
+     2列なら1枚180pxで、絵の半分以下に収まる（＝どの端末でも鮮明）。
+     一度に見渡せるので探しやすくもなる。 */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1px;
   background: var(--ef-line-soft);
   border: 1px solid var(--ef-line);
@@ -1662,14 +1695,21 @@ html[data-ef-view='grid'] .ef-list.is-hairline {
   }
 }
 html[data-ef-view='grid'] .ef-list.is-hairline .ef-row {
-  grid-template-columns: 34px 1fr;
+  /* 絵を**いちばん上に全幅で**置き、その下に番号・名前・説明。
+     `grid-template-areas` に `thumb` を書いていないと、絵が名前の**右隣に自動で入り**、
+     列が1つ増えて横にはみ出す（393px で 25px あふれていた。実測で踏んだ）。 */
+  grid-template-columns: 26px 1fr;
   grid-template-areas:
+    'thumb thumb'
     'no name'
     'no desc'
     'meta meta';
   align-items: start;
   row-gap: 4px;
   background: var(--ef-bg);
+}
+html[data-ef-view='grid'] .ef-list.is-hairline .ef-row .ef-thumb {
+  grid-area: thumb;
 }
 /* grid では 90% 幅の区切り線は使わない（1pxの隙間が罫線になるため） */
 html[data-ef-view='grid'] .ef-list.is-hairline .ef-row + .ef-row::before {
@@ -1875,10 +1915,17 @@ html[data-ef-view='compact'] .ef-row-no {
   display: block;
   width: 56px;
   height: 56px;
-  background-size: cover;
-  background-position: center top;
   background-color: var(--ef-bg-2);
   border: 1px solid var(--ef-line);
+}
+/* 絵そのもの。以前は背景画像だったが、**遅延読み込みを効かせる**ために `<img>` にした
+   （アイテムの一覧は530件あり、開いた瞬間に全部を読みに行っていた）。 */
+.ef-thumb-pic {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
 }
 /* 左上に職業、その下に属性。公式のカードと同じ並び */
 .ef-thumb-ic {
@@ -1920,16 +1967,23 @@ html[data-ef-view='grid'] .ef-thumb {
   flex: 1 1 100%;
   margin: 2px 0 0;
 }
+/* ★ `html:not([data-ef-view='grid'])` が要る。ここは**行で並べるとき**の指定で、
+   タイル表示（絵が上・2列）に当てると壊れる。実測で2つ踏んだ:
+     - `grid-column: 3` … タイルの升は2列しかないのに**3列目を作り**、
+       中身が 143px を要求して画面から 17px はみ出していた
+     - `.ef-thumb { width: 52px }` … タイルの絵が 47×63 に縮んでいた
+   メディアクエリの中は後ろに書いてあるぶん詳細度でも勝つので、
+   「タイルのときは当てない」と**入口で切る**のがいちばん確実。 */
 @media (max-width: 639px) {
-  .ef-row:has(.ef-thumb) {
+  html:not([data-ef-view='grid']) .ef-row:has(.ef-thumb) {
     grid-template-columns: 26px 56px minmax(0, 1fr);
     row-gap: 6px;
   }
-  .ef-row:has(.ef-thumb) .ef-row-meta {
+  html:not([data-ef-view='grid']) .ef-row:has(.ef-thumb) .ef-row-meta {
     grid-column: 3;
     text-align: left;
   }
-  .ef-thumb {
+  html:not([data-ef-view='grid']) .ef-thumb {
     width: 52px;
     height: 52px;
   }
@@ -1972,7 +2026,7 @@ html[data-ef-view='grid'] .ef-thumb {
   top: 26px;
 }
 /* 立ち絵は背景が透けているので、黒に近い地の上に置くと公式の見え方に近い。
-   幅900まで縮めてあるので、本文幅いっぱいに広げても粗は出ない。 */
+   幅1200まで縮めてあり、出すのは最大560pxなので、細かい画面でも粗は出ない。 */
 .ef-fig {
   background:
     radial-gradient(120% 80% at 50% 10%, rgba(255, 250, 0, 0.08), transparent 60%),
@@ -2501,6 +2555,35 @@ html[data-ef-theme='dark'] .ef-hero-panel {
   box-shadow: rgba(0, 0, 0, 0.1) 0 2px 12px;
 }
 
+/* ---- タイル表示のカードを、公式wikiの組み立てどおりにする（2026-09-14）----
+   公式wikiのオペレーターカードは **3枚重ね**だった（`measured.json` の実測）。
+
+   | 層 | クラス | 寸法 | 角丸 | 罫線 | 動き |
+   | --- | --- | --- | --- | --- | --- |
+   | 外枠 | `OperatorCard__Border` | 158×221 | `0 11px 7px 7px` | **3px solid 透明** | border-color / box-shadow .16s |
+   | 中身 | `OperatorCard__Wrapper` | 152×215 | `0 8px 4px 4px` | — | — |
+   | 覆い | `OperatorCard__Mask` | 152×215 | `0 8px 4px 4px` | — | background-color .16s |
+
+   要点は**3pxの透明な罫線を最初から確保しておく**こと。
+   こうすると、指が触れて色が付いても**中身がずれない**（あとから罫線を足すと1pxずつ動く）。
+   縦横は 152:215（およそ 1:√2）。ここも合わせる。
+
+   層を増やさず、`.ef-thumb` の罫線と中の `<img>` の角丸で同じ見え方にする。 */
+html[data-ef-view='grid'] .ef-list.is-hairline .ef-row .ef-thumb {
+  aspect-ratio: 152 / 215;
+  border: 3px solid transparent;
+  border-radius: var(--ef-wiki-corner-lg);
+  /* 地の色が罫線の下までにじまないようにする（罫線が透明なので要る） */
+  background-clip: padding-box;
+}
+html[data-ef-view='grid'] .ef-list.is-hairline .ef-row:hover .ef-thumb {
+  border-color: var(--ef-accent-flat, var(--ef-line));
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 12px;
+}
+html[data-ef-view='grid'] .ef-list.is-hairline .ef-thumb-pic {
+  border-radius: var(--ef-wiki-corner);
+}
+
 /* 記事の絵も同じ角に。1枚だけのときは大きい方の角丸 */
 .ef-figs[data-count='1'] .ef-fig {
   border-radius: var(--ef-wiki-corner-lg);
@@ -2513,11 +2596,22 @@ html[data-ef-theme='dark'] .ef-hero-panel {
 }
 
 /* 記事の絵の大きさは**中身で変える**。
-   オペレーターは縦長の立ち絵なので幅いっぱい。
-   武器・装備・アイテム・設備・脅威は**正方形の小さなアイコン**なので、
-   全幅に引き伸ばすと粗くて間が抜ける。上限を決めて中央に置く。 */
+   目安は「**持っている絵の半分までしか引き伸ばさない**」。
+   iPhone のような細かい画面は CSS の1pxを2つ以上の点で描くので、
+   半分を超えて伸ばすと**そこで初めて粗く見える**（「鮮明でない」の正体）。
+
+   | 置き場所 | 持っている絵 | 出す幅 | 倍率 |
+   | --- | --- | --- | --- |
+   | オペレーター（縦長の立ち絵） | 幅1200 | 560 | 2.1倍 |
+   | 武器・装備・アイテム・設備・脅威（正方形のアイコン） | 396角 | 240の86%＝206 | 1.9倍 |
+
+   アイコンを全幅に引き伸ばすと粗いうえ間が抜けるので、上限を決めて中央に置く。 */
+.ef-figs[data-dir='operators'] {
+  max-width: 560px;
+  margin-inline: auto;
+}
 .ef-figs:not([data-dir='operators']) {
-  max-width: 300px;
+  max-width: 240px;
   margin-inline: auto;
 }
 .ef-figs:not([data-dir='operators']) .ef-fig {
@@ -2560,4 +2654,87 @@ html[data-ef-theme='dark'] .ef-hero-panel {
   border: 1px solid var(--ef-line);
   border-radius: var(--ef-wiki-corner);
   background: var(--ef-bg-2);
+}
+
+/* ---- 公式wikiの「ウィジェット枠」（2026-09-14 の実測）--------------------
+   公式wikiは中身のかたまりを**すべて同じ枠**に入れている。実測値はこう。
+
+   | 部品 | クラス（公式） | 実測 |
+   | --- | --- | --- |
+   | 外枠 | `WidgetWrapper__Wrapper` | 角丸 **8px** |
+   | 見出しの帯 | `WidgetWrapper__Header` | 高さ **44px**・地 **rgb(217,217,217)** |
+   | 見出しの左の飾り | `WidgetWrapper__TitleTag` | **32×8** の小さな面 |
+   | 見出しの字 | `WidgetWrapper__Title` | **16px / 19.2px / 700** |
+   | 中身 | `WidgetWrapper__Content` | padding **20px 4px 9px 0** |
+
+   薄いグレーの帯に太字の見出し、左に小さなタグ。これが公式wikiの「かたまり」の作法。
+   枠組み（黄色の帯や斜めの意匠）は公式**サイト**のものを使い、
+   **中身の並べ方はここ**という組み合わせにする（→ .claude/state/DECISIONS.md 2026-09-14）。 */
+.ef-widget {
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--ef-bg);
+  margin: 0 0 18px;
+}
+.ef-widget-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 12px;
+  background: #d9d9d9;
+}
+:root[data-ef-theme='dark'] .ef-widget-head {
+  background: var(--ef-panel);
+}
+/* 左の小さな飾り。公式は 32×8 の面（色は持っていない＝地紋の一部）。
+   こちらは**黄色の面**にして、公式サイトの色づかいと繋げる。 */
+.ef-widget-tag {
+  flex: none;
+  width: 32px;
+  height: 8px;
+  background: var(--ef-accent);
+}
+.ef-widget-title {
+  margin: 0;
+  font-size: 16px;
+  line-height: 19.2px;
+  font-weight: 700;
+  color: var(--ef-ink);
+}
+:root[data-ef-theme='dark'] .ef-widget-title {
+  color: var(--ef-text);
+}
+/* 右端に置く小さな数（件数など） */
+.ef-widget-n {
+  margin-left: auto;
+  font-size: 12px;
+  line-height: 13.8px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: rgba(34, 34, 34, 0.7);
+}
+:root[data-ef-theme='dark'] .ef-widget-n {
+  color: var(--ef-text-2);
+}
+/* 中身。公式の padding は上だけ広く下と左右が狭い（20px 4px 9px 0）。
+   こちらは読みやすさを優先して左右にも少し入れる。 */
+.ef-widget-body {
+  padding: 14px 12px 12px;
+}
+/* 枠に入れたときは、中の部品が持っている外枠と余白を消す（二重の箱にしない） */
+.ef-widget-body > .ef-filter,
+.ef-widget-body > .ef-list {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  padding: 0;
+}
+
+/* 一覧そのものは**左右いっぱい**に使う。
+   枠の余白（12px）を足すと、393px の画面で名前が「アイテムと…」と切れてしまった。
+   罫線は `.ef-list.is-hairline` が中央寄せ90%で引くので、端に付いても窮屈に見えない。 */
+.ef-widget-body:has(> .ef-list) {
+  padding: 0 0 4px;
 }

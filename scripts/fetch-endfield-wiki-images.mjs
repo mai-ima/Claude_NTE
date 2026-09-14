@@ -4,11 +4,22 @@
  *   node scripts/fetch-endfield-wiki-images.mjs           # アイコン（全1116件）
  *   node scripts/fetch-endfield-wiki-images.mjs --skills  # スキルのアイコンも
  *   node scripts/fetch-endfield-wiki-images.mjs --all     # 全部
+ *   node scripts/fetch-endfield-wiki-images.mjs --all --force  # 作り直す
  *
  * ★ そのままでは同梱できない
  *   公式の元画像は **PNG で1枚400KB前後**、スキルのアニメーション GIF は
- *   **1枚8MB** ある。1629枚あるので、素で落とすと数百MBになる。
- *   落としながら **WebP へ小さくして、元は捨てる**。
+ *   **1枚8〜18MB** ある。1629枚あるので、素で落とすと数百MBになる。
+ *   落としながら **WebP にして、元は捨てる**。
+ *
+ * ★ 大きさは「元の寸法まで」（2026-09-14 に見直した）
+ *   はじめは 256px / 320px まで縮めていたが、**元より小さくすると粗くなる**。
+ *   実測すると元は アイコン 396×396・スキル 800×450 だったので、
+ *   **そこまでは落とさない**（`withoutEnlargement` があるので引き伸ばしはしない）。
+ *
+ *   | 種類 | 元 | 前 | いま |
+ *   | --- | --- | --- | --- |
+ *   | アイコン | 396×396 | 256px・q82 | **396px（等倍）・q88** |
+ *   | スキル | 800×450 | 320px・q82 | **800×450（等倍）・q85** |
  *
  * ★ 保存先（記事から自動で引けるように、**記事の slug で保存する**）
  *   public/images/official/endfield/<分類>/<slug>.webp   … 一覧と記事のアイコン
@@ -30,6 +41,8 @@ import { ROOT, DATA, readData, buildSlugMap, slugByTitle } from './lib/efgen.mjs
 const args = process.argv.slice(2);
 const wantSkills = args.includes('--skills') || args.includes('--all');
 const wantIcons = !args.includes('--skills') || args.includes('--all');
+/** すでにあるファイルも作り直す（大きさや品質を変えたとき） */
+const force = args.includes('--force');
 
 const OUT = path.join(ROOT, 'public/images/official/endfield');
 const index = readData('index');
@@ -86,8 +99,8 @@ for (const [itemId, meta] of Object.entries(index.items)) {
  *   （`{ pages: -1 }` で縦に連結してから `extract` する手は、
  *     `extract_area: bad extract area` になって使えなかった）
  */
-async function grab(url, dest, { size = 128, fit = 'cover', frame = 0 } = {}) {
-  if (fs.existsSync(dest)) return 0; // すでにある
+async function grab(url, dest, { size = 128, fit = 'cover', frame = 0, quality = 88 } = {}) {
+  if (fs.existsSync(dest) && !force) return 0; // すでにある
   const res = await fetch(url);
   if (!res.ok) throw new Error(`${res.status} ${url}`);
   const buf = Buffer.from(await res.arrayBuffer());
@@ -98,7 +111,8 @@ async function grab(url, dest, { size = 128, fit = 'cover', frame = 0 } = {}) {
   }
   const out = await sharp(buf, { page })
     .resize(size, size, { fit, withoutEnlargement: true })
-    .webp({ quality: 82 })
+    // effort を上げると、同じ品質でも数%小さくなる（作るときだけ遅い）
+    .webp({ quality, effort: 6 })
     .toBuffer();
   fs.mkdirSync(path.dirname(dest), { recursive: true });
   fs.writeFileSync(dest, out);
@@ -148,7 +162,8 @@ if (wantIcons) {
     const dest = path.join(OUT, dir, `${slug}.webp`);
     jobs.push({
       name: `${dir}/${slug}`,
-      fn: () => grab(meta.cover, dest, { size: 256 }),
+      /* 元が 396×396 なので、そこまでは落とさない（`fit: inside` で形も崩さない） */
+      fn: () => grab(meta.cover, dest, { size: 512, fit: 'inside', quality: 88 }),
     });
     ledger.push({ file: `official/endfield/${dir}/${slug}.webp`, from: meta.cover, name: meta.name, 分類: meta.sub });
   }
@@ -179,8 +194,8 @@ if (wantSkills) {
           const dest = path.join(OUT, 'wiki/skills', `${dir}-${slug}-${n}.webp`);
           jobs.push({
             name: `skill ${slug}-${n}`,
-            /* 記事に「技の様子」として置くので、小さすぎない大きさで取る */
-            fn: () => grab(url, dest, { size: 320, fit: 'inside', frame: 0.6 }),
+            /* 記事に「技の様子」として置く。元は 800×450 なので**等倍**で取る */
+            fn: () => grab(url, dest, { size: 800, fit: 'inside', frame: 0.6, quality: 85 }),
           });
           ledger.push({
             file: `official/endfield/wiki/skills/${dir}-${slug}-${n}.webp`,

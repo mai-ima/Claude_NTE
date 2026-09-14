@@ -403,6 +403,8 @@ public/images/characters/<記事のID>.webp   # avif / png / jpg / jpeg も可
 # 1. 材料を取る（.cache/ に生の応答が残るので、2回目以降は速い）
 node scripts/fetch-endfield-wiki.mjs --all        # 全1116件・15分ほど
 node scripts/fetch-endfield-wiki-images.mjs --all # 画像1446枚
+# 大きさや品質を変えたときは --force を付ける（すでにあるファイルも作り直す）
+node scripts/fetch-endfield-wiki-images.mjs --all --force
 
 # 2. 記事を書き出す
 node scripts/gen-endfield-operators.mjs   # オペレーター
@@ -432,6 +434,13 @@ pnpm verify
 
 - **slug は `buildSlugMap()` が決める。画像の取得と記事の生成で同じ関数を使うこと。**
   ずれると絵が出なくなる。
+- **画像の大きさは「元の寸法まで」**。決め打ちで縮めると粗くなる。
+  元は アイコン 396×396・スキル 800×450。`withoutEnlargement: true` があるので、
+  上限を元より大きくしても引き伸ばされない（上限を上げるだけで等倍になる）。
+- **記事本文に画像を置いたら、遅延読み込みと実寸は自動で入る**
+  （`src/lib/rehype-img-attrs.mjs`）。`<img>` を手で書くときは自分で付けること。
+- **一覧のサムネは `<img>`**。CSS の背景画像にすると**遅延読み込みが効かない**
+  （530件の一覧で全部読みに行ってしまう）。
 - 手で書いた節（「入手」など公式wikiに無い話）は**引き継ぐようにしてある**。
   引き継ぎたい節を増やすときは、各 gen スクリプトの `old.sections` を見ている箇所を直す。
 - `status` は公式wikiに中身があれば `verified`、無ければ `draft`。

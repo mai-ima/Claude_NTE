@@ -49,8 +49,20 @@ const EF_ELEMENTS = {
 
 const EF_MEDIA = 'https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/';
 
-/** 取得して WebP にして保存する。戻り値は結果の1行 */
-async function grab(url, outPath, { width } = {}) {
+/**
+ * 取得して WebP にして保存する。戻り値は結果の1行。
+ *
+ * ★ 幅の決め方（2026-09-14 に見直した）
+ *   画面の細かい端末（iPhone など）は **CSS の1pxを2〜3個の点で描く**。
+ *   だから「画面に出す幅の2倍」を持っていないと、そこで初めて粗く見える。
+ *   逆に2倍を超えるぶんは**容量が増えるだけで見た目は変わらない**ので、
+ *   出す幅の2倍強を目安にする（→ 立ち絵は本文560pxに対して1200px）。
+ *
+ * ★ `effort: 6`
+ *   WebP の圧縮にかける手間。既定の4より**同じ画質で1〜2割小さくなる**。
+ *   取り込みは1回きりなので、時間をかけて構わない。
+ */
+async function grab(url, outPath, { width, quality = 86 } = {}) {
   const rel = path.relative(ROOT, outPath);
   if (!FORCE && fs.existsSync(outPath)) return { skip: true, line: `- ${rel}（すでにある）` };
   let buf;
@@ -63,10 +75,10 @@ async function grab(url, outPath, { width } = {}) {
   }
   let img = sharp(buf);
   const meta = await img.metadata();
-  // 幅の指定があり、それより大きいときだけ縮める（拡大はしない）
+  // 幅の指定があり、それより大きいときだけ縮める（**拡大はしない**。粗くなるだけなので）
   if (width && (meta.width ?? 0) > width) img = img.resize({ width });
   await fs.promises.mkdir(path.dirname(outPath), { recursive: true });
-  await img.webp({ quality: 82 }).toFile(outPath);
+  await img.webp({ quality, effort: 6 }).toFile(outPath);
   const before = Math.round(buf.length / 1024);
   const after = Math.round(fs.statSync(outPath).size / 1024);
   return { ok: true, line: `  ${rel}  ${meta.width}x${meta.height}  ${before}KB → ${after}KB` };
@@ -101,24 +113,26 @@ async function fetchEndfield() {
   );
   console.log(`エンドフィールド オペレーター: ${data.length} 件`);
   const lines = [];
-  /* ファイル名は**記事のID**にそろえる（`id` が無ければ公式のキー）。
-     そろえておかないと、画面側が「記事ID.webp」を探しても見つからない。 */
-  for (const op of data) {
-    const id = op.id ?? op.key;
-    const r = await grab(op.img, path.join(OUT, 'endfield/operators', `${id}.webp`), {
-      width: 750,
-    });
-    console.log(r.line);
-    lines.push({ ...r, id, url: op.img });
-  }
+  /* ★ 顔のアップ（`endfield/operators/`）はここでは**取らない**。2026-09-14 に取りやめた。
+     同じ置き場所へ2つのスクリプトが書いていて、**後に走った方が勝つ**状態だった。
+       - 公式wiki（`fetch-endfield-wiki-images.mjs`）… 414×512
+       - 公式サイト（このファイル）              … 303×386  ← 小さい
+     気付かずにこちらを後から走らせると**解像度が下がる**。大きい方に一本化する。
+     ファイル名は公式wiki側も**記事のID**にそろえてあるので、画面側の探し方は変わらない。 */
+
   /* 立ち絵（全身のイラスト）。公式は 1800px 超・1枚 13MB のものがあるので、
-     **幅900に縮めて WebP** にしてから置く。記事の上に大きく出すのはこちら。
-     顔のアップ（上の operators/）は一覧用。 */
+     **幅1200に縮めて WebP** にしてから置く。記事の上に大きく出すのはこちら。
+     顔のアップ（上の operators/）は一覧用。
+
+     1200 の根拠: 本文の幅は 720px、立ち絵は `endfield.css` で 560px までに収めている。
+     その2倍が 1120px なので、少し余裕をみて 1200。
+     以前は 900 にしていたが、**細かい画面では 1.6倍しかなく、顔の線が甘く見えた**。 */
   for (const op of data) {
     if (!op.illust) continue;
     const id = op.id ?? op.key;
     const r = await grab(op.illust, path.join(OUT, 'endfield/illust', `${id}.webp`), {
-      width: 900,
+      width: 1200,
+      quality: 84,
     });
     console.log(r.line);
     lines.push({ ...r, id: `illust/${id}`, url: op.illust });

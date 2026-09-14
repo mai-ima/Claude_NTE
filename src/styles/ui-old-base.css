@@ -871,8 +871,13 @@ html[data-ui='old-base']:not([data-images='frame']) .avatar.has-img-official::be
    一覧の小さいアバターだけ**顔のあたりへ寄せる**。
    記事の上の大きな絵（`.avatar-block`）は全身のままにする。
    ★ 置いた画像（`--img-local`）は構図が分からないので触らない。 */
+/* ★ `:not(.has-img-face)` が要る。**顔だけを切り出したアイコン**を使っている人には
+     この細工を当ててはいけない（すでに顔だけなのに、さらに2倍へ拡大して
+     上から24%の位置へずらすので、顔が枠から外れる）。 */
 html[data-ui='old-base']:not([data-images='frame'])
-  .avatar[data-dir='characters'].has-img-official:not(.has-img-local):not(.avatar-block)::before {
+  .avatar[data-dir='characters'].has-img-official:not(.has-img-local):not(.has-img-face):not(
+    .avatar-block
+  )::before {
   /* 200%・24% で「胸から上」になる。これ以上寄せると、キャラによって
      顔が枠から外れる（頭頂の位置が絵ごとに違うため）。実測して決めた値 */
   background-size: 200% auto;

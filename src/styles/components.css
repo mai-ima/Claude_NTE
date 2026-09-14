@@ -3029,3 +3029,128 @@ html[data-wiki]:not([data-wiki='nte']) {
   border-color: var(--accent);
   color: var(--accent);
 }
+
+/* ---- 管理ページのギャラリー ---------------------------------------------
+   同梱している絵（1500枚超）を、出どころと用途で分けて並べる。
+
+   ★ 枚数が多いので、次の3つで軽くしてある。
+     1. 分類ごとに `<details>` で畳む（開いたぶんだけ読む）
+     2. `loading="lazy"` と実寸（`width`/`height`）を入れる
+     3. 一辺 92px の枠に収める（元の絵は 396〜1200px あるが、出すのは小さく）
+   ★ 絵は透過のものが多いので、**市松模様の地**を敷いて形が分かるようにする。 */
+.gal-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 10px;
+}
+.gal-search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  /* 狭い画面では検索欄を1行まるごと使い、ボタン2つを次の行に**横に並べる**
+     （`1 1 200px` のままだと検索欄が幅を取りすぎて、ボタンが縦に落ちる） */
+  flex: 1 1 100%;
+  min-width: 0;
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+.gal-search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  outline: none;
+}
+.gal-group {
+  margin-top: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+.gal-group > summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.gal-name {
+  flex: 1;
+  min-width: 0;
+}
+.gal-n {
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: var(--surface-2, rgba(128, 128, 128, 0.14));
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+}
+.gal-meta {
+  margin: 0;
+  padding: 0 12px 8px;
+}
+.gal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0 12px 14px;
+  list-style: none;
+}
+.gal-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.gal-thumb {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1 / 1;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  /* 透過の絵の形が分かるよう、薄い市松模様を敷く */
+  background-color: var(--surface);
+  background-image:
+    linear-gradient(45deg, rgba(128, 128, 128, 0.12) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(128, 128, 128, 0.12) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(128, 128, 128, 0.12) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(128, 128, 128, 0.12) 75%);
+  background-size: 12px 12px;
+  background-position:
+    0 0,
+    0 6px,
+    6px -6px,
+    -6px 0;
+  overflow: hidden;
+}
+.gal-thumb img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+.gal-cap {
+  font-size: 0.72rem;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.gal-dim {
+  font-size: 0.66rem;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+/* 絞り込みで消した升と、1枚も残らなかった分類 */
+.gal-cell[hidden],
+.gal-group[hidden] {
+  display: none !important;
+}

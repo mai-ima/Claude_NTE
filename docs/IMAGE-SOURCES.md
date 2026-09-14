@@ -52,7 +52,14 @@
 
 ### オペレーター（`operators/`）
 
-| ファイル | オペレーター | 出どころ | 容量 | 取得日 |
+> **2026-09-14 に出どころを公式wikiへ移した**。下の表は公式サイトから取っていた時期の記録。
+> 公式サイトの顔アップは **303×386** しかなく、公式wiki（SKPORT）の **414×512** の方が大きい。
+> 同じ置き場所に2つのスクリプトが書いていて**後に走った方が勝つ**状態だったため、
+> 大きい公式wiki側に一本化した（`fetch-official-images.mjs` のこの取得は止めてある）。
+> いま置いてあるファイルの出どころは
+> `scripts/data/endfield-wiki/images-ledger.json`（分類「オペレーター」33件）にある。
+
+| ファイル | オペレーター | 出どころ（2026-09-13 時点） | 容量 | 取得日 |
 | --- | --- | --- | --- | --- |
 | `akekuri.webp` | アケクリ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/akekuri.3603d013.png) | 34KB | 2026-09-13 |
 | `alesh.webp` | アレッシュ | [公式サイト](https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/alesh.d7f457d2.png) | 35KB | 2026-09-13 |
@@ -95,8 +102,14 @@
 一覧の顔アップ（`operators/`）とは**別のファイル**。
 
 原寸は 1800px 前後・1枚あたり最大 13MB（ティフォロスで実測 12.9MB）あるため、
-**幅900に縮めて WebP** にしてから同梱している（33枚で約 6.7MB）。
+**幅1200に縮めて WebP**（品質84）にしてから同梱している（33枚で 10.1MB）。
 ファイル名は記事のIDに合わせてある（公式のキーとは違うものがある。例: `typhoea` → `typhoeus`）。
+
+**1200 の根拠**（2026-09-14 に 900 から引き上げた）:
+本文の幅は 720px、立ち絵は `endfield.css` で **最大560px** に収めている。
+細かい画面は CSS の 1px を2つの点で描くので、**出す幅の2倍**＝1120px あればよい。
+900 では 1.6倍しかなく、顔の線が甘く見えていた（これが「一部の画像が鮮明でない」の正体）。
+逆に原寸のまま置いても見た目は変わらず、1枚1MB を超えて開くのが遅くなるだけ。
 
 | ファイル | オペレーター | 出どころ | 容量 | 取得日 |
 | --- | --- | --- | --- | --- |
@@ -169,15 +182,21 @@
 **1枚ずつの URL は `scripts/data/endfield-wiki/images-ledger.json` にある**（1446件）。
 枚数が多いのでこのファイルには内訳だけを書く。
 
-| 置き場 | 枚数 | 容量 | 中身 |
-| --- | --- | --- | --- |
-| `official/endfield/operators/` | 33 | 1.1MB | オペレーターの顔アイコン |
-| `official/endfield/weapons/` | 79 | 1.2MB | 武器のアイコン |
-| `official/endfield/gear/` | 195 | 2.8MB | 装備のアイコン |
-| `official/endfield/items/` | 529 | 8.4MB | アイテム・貴重品・基質のアイコン |
-| `official/endfield/industry/` | 148 | 3.0MB | 設備・システム図面のアイコン |
-| `official/endfield/enemies/` | 85 | 2.0MB | 脅威のアイコン |
-| `official/endfield/wiki/skills/` | 377 | 2.8MB | **技を出している様子**（320px。下の注を見ること） |
+**2026-09-14 に全部を原寸まで取り直した**（それまでは 256px / 320px に縮めていた）。
+下の枚数・容量・寸法は取り直したあとの実測。
+
+| 置き場 | 枚数 | 容量 | 寸法 | 中身 |
+| --- | --- | --- | --- | --- |
+| `official/endfield/operators/` | 33 | 1.9MB | 414×512 | オペレーターの顔アイコン |
+| `official/endfield/weapons/` | 79 | 2.2MB | 396×396 | 武器のアイコン |
+| `official/endfield/gear/` | 195 | 5.2MB | 396×396 | 装備のアイコン |
+| `official/endfield/items/` | 529 | 16.0MB | 396×396 | アイテム・貴重品・基質のアイコン |
+| `official/endfield/industry/` | 148 | 5.6MB | 396×396 | 設備・システム図面のアイコン |
+| `official/endfield/enemies/` | 85 | 3.7MB | 396×396 | 脅威のアイコン |
+| `official/endfield/wiki/skills/` | 377 | 15.1MB | 800×450 | **技を出している様子**（下の注を見ること） |
+
+**396×396 が原寸**。26枚だけ 256×256 なのは、**公式wiki側が 256 しか持っていない**もの
+（縮めた結果ではない。取得は `withoutEnlargement` で、原寸より大きくはしない）。
 
 ### そのままでは同梱できなかった
 
@@ -239,6 +258,53 @@ slug は `scripts/lib/efgen.mjs` の `buildSlugMap()` が決める。
 
 `adler` / `akane-rin` / `aurelia` / `blackbird` / `edgar` / `haniel` / `neisha` / `skia` の8人は、
 **公式サイトのキャラクターページに載っていない**。ここは引き続き空のまま。
+
+---
+
+## 画面から取った UI のパーツ（`public/images/official/<ゲーム>/ui-parts/`）— 2026-09-14
+
+`node scripts/capture-ui.mjs` で公式サイト・公式wikiの画面を開いたとき、
+**実際に読み込まれた画像を1枚残らず記録**しています（555枚）。
+
+| ファイル | 中身 |
+| --- | --- |
+| `scripts/data/captured-images.json` | **555枚ぶんの台帳**（出どころ・寸法・容量・形式・透過の有無・同梱したか） |
+| `public/images/official/endfield/ui-parts/` | 44枚 |
+| `public/images/official/nte/ui-parts/` | 101枚 |
+
+取り直しは `node scripts/save-captured-images.mjs --bundle` です。
+
+### 同梱するもの／しないもの
+
+| 入れる | 入れない |
+| --- | --- |
+| SVG | 写真・宣材（スライド・ポスター・立ち絵） |
+| 透過があって 64KB 未満 | 64KB 以上のもの |
+| 幅も高さも 512px 以下 | すでに同梱してあるもの |
+
+宣材写真まで入れるとリポジトリが数百MB増えるため、**台帳だけ**残しています。
+実体は `.cache/ui/<画面の名前>/images/` にあり、台帳の出どころから取り直せます。
+
+### 目視で確かめたこと（2026-09-14）
+
+**エンドフィールドの `ui-parts`（44枚）**
+
+- 名前が分かるもの（23枚）… ロゴ・配信ストアのボタン（App Store / Google Play / PS5 / Epic）・
+  ボタンの地の模様・「SCROLL」の誘導・切り替えの選択中の印・塔の上下の飾り・
+  左の縦組みの飾り文字。**オペレーターの顔（typhoea / purrche など）も混ざっている**が、
+  こちらは公式サイトの小さい版で、`operators/` にある公式wiki版のほうが大きい。
+- 名前がハッシュだけのもの（21枚）… 並べて目視した結果、
+  **レア度の記号（矢羽根型）を段階ごとに描き分けたもの**（白と黄色の本数が違う）、
+  **陣営のロゴ**、**素質・配属スキルのアイコン**（緑の四角）だった。
+  どれがどの段階かの対応づけまでは取っていないので、**名前はハッシュのまま**にしている。
+
+**NTE の `ui-parts`（101枚）**
+
+ロゴ（`NTE_logo` / `hotta-logo`）・前後送りの矢印（`brandNext` / `citySlidePrev` …）・
+メニューと閉じるボタン・「Coming Soon」の札・各種の小さなアイコン
+（`icon-local` / `icon-show` / `icon-enlargement` …）。**名前から用途が分かる**ものが大半。
+
+> ⚠ **日本語以外の言語の文字**は、いずれにも写っていない（配信ストアのボタンは英字ロゴ）。
 
 ---
 

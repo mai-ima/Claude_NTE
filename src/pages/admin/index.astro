@@ -33,6 +33,7 @@ import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import { getCollection } from 'astro:content';
 import { withBase } from '../../lib/path';
+import { buildGallery, gallerySummary } from '../../lib/gallery';
 import {
   SITE_MODES,
   DEFAULT_SITE_STATE,
@@ -165,8 +166,13 @@ const TABS = [
   { id: 'notices', label: 'お知らせ', icon: 'megaphone' },
   { id: 'view', label: '表示', icon: 'image' },
   { id: 'content', label: '記事', icon: 'file-text' },
+  { id: 'gallery', label: 'ギャラリー', icon: 'images' },
   { id: 'data', label: 'この端末のデータ', icon: 'database' },
 ];
+
+/* 同梱している絵の一覧（出どころと用途で分ける）。ビルドのときに `public/` を読む。 */
+const galleryGroups = buildGallery();
+const gallerySum = gallerySummary(galleryGroups);
 ---
 
 {/* 読者向けのページではないので検索には載せない（noindex） */}
@@ -560,6 +566,79 @@ const TABS = [
               <span class="badge">{wikiStats.reduce((n, w) => n + w.collections.filter((c) => c.count > 0).length, 0)} 本</span>
             </div>
           </div>
+        </section>
+
+        {/* -- ギャラリー（同梱している絵を、出どころと用途で分けて並べる）-- */}
+        <section
+          class="card card-pad admin-pane"
+          role="tabpanel"
+          id="pane-gallery"
+          aria-labelledby="tab-gallery"
+          data-pane="gallery"
+          hidden
+        >
+          <h2 style="margin-top:0;">ギャラリー</h2>
+          <p class="muted text-sm">
+            サイトに同梱している絵を、<strong>出どころ</strong>と<strong>用途</strong>で分けて並べています。
+            合わせて <strong>{gallerySum.count}</strong> 枚・{gallerySum.mb}MB。
+            見出しを押すと開きます（開いたぶんだけ読み込みます）。
+          </p>
+          <p class="muted text-sm">
+            絵の権利は各ゲームの運営元にあります。削除の求めがあれば速やかに外します。
+            1枚ずつの出どころは
+            <a href={withBase('/legal/copyright/')}>著作権について</a> の考え方に沿って控えています。
+          </p>
+
+          <div class="gal-bar">
+            <label class="gal-search">
+              <Icon name="lucide:search" />
+              <input type="search" id="gal-q" placeholder="名前で絞り込む" autocomplete="off" />
+            </label>
+            <button class="btn btn-ghost btn-sm" type="button" id="gal-open">すべて開く</button>
+            <button class="btn btn-ghost btn-sm" type="button" id="gal-close">すべて閉じる</button>
+          </div>
+          <p class="muted text-sm" id="gal-hit" hidden></p>
+
+          {
+            galleryGroups.map((g, gi) => (
+              <details class="gal-group" data-group={g.id} open={gi === 0}>
+                <summary>
+                  <span class="gal-name">{g.label}</span>
+                  <span class="gal-n">{g.items.length}</span>
+                </summary>
+                <p class="muted text-sm gal-meta">
+                  出どころ: {g.source} ／ 使いみち: {g.use}
+                </p>
+                <ul class="gal-grid">
+                  {g.items.map((it) => (
+                    <li class="gal-cell" data-name={`${it.name} ${it.title}`.toLowerCase()}>
+                      <a
+                        class="gal-thumb"
+                        href={withBase(it.src)}
+                        target="_blank"
+                        rel="noopener"
+                        title={it.from || it.src}
+                      >
+                        <img
+                          src={withBase(it.src)}
+                          alt={it.title || it.name}
+                          loading="lazy"
+                          decoding="async"
+                          width={it.w || undefined}
+                          height={it.h || undefined}
+                        />
+                      </a>
+                      <span class="gal-cap">{it.title || it.name}</span>
+                      {/* 寸法と容量は**行を分ける**。1行に並べると升（約106px）に入らず、
+                          「750×836 ・」「112KB」のような不自然な折り返しになる */}
+                      <span class="gal-dim">{it.w ? `${it.w}×${it.h}` : 'SVG'}</span>
+                      <span class="gal-dim">{it.kb}KB</span>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            ))
+          }
         </section>
 
         {/* -- この端末のデータ -- */}
@@ -1027,6 +1106,57 @@ const TABS = [
       toast('消しました。ロックも掛かります。');
       show(false);
     });
+
+    /* ---- ギャラリーの絞り込み ------------------------------------------
+       名前（ファイル名＋公式wikiの元の名前）で絞る。
+       ★ 1500枚あるので、打つたびに全部を触ると重い。**200ミリ秒待って**からまとめて動かす。
+       ★ 1枚も残らなかった分類は、見出しごと隠す（空の箱が並ぶのを防ぐ）。 */
+    var galQ = $('gal-q');
+    if (galQ && !galQ.dataset.bound) {
+      galQ.dataset.bound = '1';
+      var galGroups = Array.prototype.slice.call(document.querySelectorAll('.gal-group'));
+      var galTimer = 0;
+      var galHit = $('gal-hit');
+      var filterGallery = function () {
+        var q = galQ.value.trim().toLowerCase();
+        var hit = 0;
+        galGroups.forEach(function (g) {
+          var left = 0;
+          var cells = g.querySelectorAll('.gal-cell');
+          for (var i = 0; i < cells.length; i++) {
+            var ok = !q || (cells[i].dataset.name || '').indexOf(q) >= 0;
+            cells[i].hidden = !ok;
+            if (ok) left += 1;
+          }
+          g.hidden = q !== '' && left === 0;
+          /* 探しているときは開いておく（畳んだままだと見つけたものが見えない） */
+          if (q) g.open = left > 0;
+          hit += left;
+        });
+        if (galHit) {
+          galHit.hidden = q === '';
+          galHit.textContent = q ? hit + ' 枚が当てはまりました。' : '';
+        }
+      };
+      galQ.addEventListener('input', function () {
+        clearTimeout(galTimer);
+        galTimer = setTimeout(filterGallery, 200);
+      });
+      var galOpen = $('gal-open');
+      var galClose = $('gal-close');
+      if (galOpen)
+        galOpen.addEventListener('click', function () {
+          galGroups.forEach(function (g) {
+            g.open = true;
+          });
+        });
+      if (galClose)
+        galClose.addEventListener('click', function () {
+          galGroups.forEach(function (g) {
+            g.open = false;
+          });
+        });
+    }
 
     /* ---- 最初の表示（すべての変数を用意したあとで） ------------------- */
     try {

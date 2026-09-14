@@ -257,11 +257,21 @@ html[data-ui='base'] .avatar {
 html[data-ui='base'][data-images='frame'] .avatar {
   --av-img: var(--img-local, none);
 }
-/* 一覧の小さい絵は顔のあたりへ寄せる（立ち絵は顔が上にある） */
+/* 一覧の小さい絵は顔のあたりへ寄せる（立ち絵は顔が上にある）。
+   ★ `:not(.has-img-face)` が要る。**顔だけを切り出したアイコンを使っている人**には
+     この細工を当ててはいけない（すでに顔だけなのに、さらに2倍へ拡大して
+     上から24%の位置へずらすので、顔が枠から外れる）。 */
 html[data-ui='base']
-  .avatar[data-dir='characters'].has-img-official:not(.has-img-local):not(.avatar-block)::before {
+  .avatar[data-dir='characters'].has-img-official:not(.has-img-local):not(.has-img-face):not(
+    .avatar-block
+  )::before {
   background-size: 200% auto;
   background-position: 50% 24%;
+}
+/* 顔アイコンはそのまま枠いっぱいに。中央ぞろえでよい */
+html[data-ui='base'] .avatar.has-img-face::before {
+  background-size: cover;
+  background-position: center;
 }
 /* 記事の上の大きな絵。キャラは縦長、アイコンは正方形で小さく */
 html[data-ui='base'] .avatar-block[data-dir='characters'].has-img-official,
@@ -273,6 +283,36 @@ html[data-ui='base'] .avatar-block:not([data-dir='characters']).has-img-local {
   aspect-ratio: 1 / 1;
   width: min(180px, 60%);
   margin-inline: auto;
+}
+
+/* ---- 8-2. 狭い画面のキャラページ ----------------------------------------
+   実測で2つ出ていた（393px・iPhone 相当）。
+
+   | 症状 | 何が起きていたか |
+   | --- | --- |
+   | 絵と基本情報が**記事の最後**（上から2237px）にある | 1列になったとき、脇の列が本文の**下**へ回っていた |
+   | 絵が **359×479** で大きすぎる | 幅いっぱい＋縦横比 3:4。画面の高さの 56% を1枚が占めていた |
+
+   参考にしている公式アプリ（HoYoLAB / SKPORT）のキャラページは
+   **絵 → 名前 → タグ → 基本情報 → 本文**の順で、絵は画面の3分の1ほど。
+   パソコン幅は今までどおり2列（脇に置く）なので、**狭い画面だけ**直す。 */
+@media (max-width: 759px) {
+  html[data-ui='base'] .entity-aside {
+    order: -1;
+  }
+  html[data-ui='base'] .avatar-block[data-dir='characters'] {
+    max-width: 240px;
+    margin-inline: auto;
+  }
+  /* 同梱している公式のポスターは **750×836**（縦横比およそ 0.897）。
+     これを 3:4（0.75）の枠に `cover` で入れると、高さに合わせるぶん**左右が切られ**、
+     上端ぞろえなので**絵の上にあるキャラ名の英字が顔に重なって**見えていた。
+     絵の比そのままにすれば、全身が切れずに入る。
+     置いた画像（`--img-local`）は構図が分からないので 3:4 のままにする。 */
+  html[data-ui='base']
+    .avatar-block[data-dir='characters'].has-img-official:not(.has-img-local) {
+    aspect-ratio: 750 / 836;
+  }
 }
 
 /* ---- 9. 記事 ------------------------------------------------------------

@@ -16,6 +16,7 @@ import EndfieldLayout from '../../layouts/EndfieldLayout.astro';
 import { withBase } from '../../lib/path';
 import { sectionByCollection } from '../../lib/nav';
 import { findLocalImage } from '../../lib/asset';
+import { sizeAttrs } from '../../lib/img-size.mjs';
 
 interface LinkRef {
   href: string;
@@ -137,9 +138,19 @@ const fmt = (d: Date) => d.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' 
       /* 公式サイトの絵。姿が2つあるものは並べて置く。
          左上に職業、その下に属性のアイコンを重ねる（公式のカードと同じ並び）。 */
       <div class="ef-figs" data-count={pics.length} data-dir={autoDir}>
-        {pics.map((src) => (
+        {pics.map((src, i) => (
           <figure class="ef-fig">
-            <img src={src} alt={`${title}の姿`} loading="lazy" decoding="async" />
+            {/* 1枚目は**開いてすぐ目に入る場所**にあるので、後回しにせず先に読む。
+                ここを `lazy` にすると、画面に入っているのに読み始めが遅れ、
+                絵が出るまで枠だけが残る。2枚目から（姿が2つあるもの）は後回しでよい。 */}
+            <img
+              src={src}
+              alt={`${title}の姿`}
+              loading={i === 0 ? 'eager' : 'lazy'}
+              fetchpriority={i === 0 ? 'high' : undefined}
+              decoding="async"
+              {...sizeAttrs(src)}
+            />
             {icons.map((ic, k) => (
               <img class:list={['ef-fig-ic', { 'is-el': k === 1 }]} src={ic} alt="" width="26" height="26" />
             ))}
