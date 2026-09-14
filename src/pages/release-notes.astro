@@ -4,7 +4,17 @@
  *
  * ★ 2つの版を持つ（利用者の指示 2026-09-13）
  *   - **簡略版**（`summary`）… 既定で見える。1文で、何が変わったかだけ
- *   - **詳細版**（`detail`）… 「詳しく」を開くと出る
+ *   - **詳細版**（`detail`）… 切り替えると出る
+ *
+ * ★ 切り替えは**バージョン単位**（利用者の指示 2026-09-14）
+ *   > バージョン詳細と簡潔の切り替えはそのバージョンの1項目ずつではなく1バージョンずつにして
+ *
+ *   前は項目ごとに「詳しく」が付いていて、詳しく読みたいときに**何回も押す**必要があった。
+ *   いまは版の先頭のボタン1つで、その版の全項目がまとめて入れ替わる。
+ *
+ * ★ JavaScript を使わない
+ *   隠したチェックボックスと `label` で切り替える（`:checked ~ …` で CSS だけで動く）。
+ *   JS が動かない端末でも、**押せば切り替わる**。
  *
  * ★ 古いバージョンは畳んである（最新だけ開く）。全部を開いたままだと長すぎるため。
  *
@@ -24,39 +34,60 @@ import { boldToHtml } from '../lib/inline-md';
         <p class="eyebrow">更新履歴</p>
         <h1>リリースノート</h1>
         <p class="lead">
-          このサイトの変更履歴です。各項目は要点だけを出しています。
-          「詳しく」を開くと、その項目の詳しい説明が読めます。
+          このサイトの変更履歴です。はじめは要点だけを出しています。
+          バージョンごとの「詳しく読む」を押すと、その版の説明がまとめて詳しくなります。
         </p>
       </section>
 
       <div class="stack" style="gap:14px;">
         {
-          RELEASE_NOTES.map((note, i) => (
-            <details class="card release-note" open={i === 0}>
-              <summary class="release-head">
-                <span class="badge badge-accent">{note.version}</span>
-                <strong class="release-title">{note.title}</strong>
-                <span class="muted text-sm release-date">{note.date}</span>
-                <Icon name="lucide:chevron-down" class="release-chevron" />
-              </summary>
-              <ul class="release-list">
-                {note.changes.map((raw) => {
-                  const c = changeOf(raw);
-                  return (
-                    <li>
-                      <span set:html={boldToHtml(c.summary)} />
-                      {c.detail && (
-                        <details class="release-detail">
-                          <summary>詳しく</summary>
-                          <p set:html={boldToHtml(c.detail)} />
-                        </details>
-                      )}
-                    </li>
-                  );
-                })}
-              </ul>
-            </details>
-          ))
+          RELEASE_NOTES.map((note, i) => {
+            const items = note.changes.map(changeOf);
+            /* 詳しい説明を持つ項目が1つも無い版では、切り替えを出さない（押しても変わらないため） */
+            const hasDetail = items.some((c) => c.detail);
+            const toggleId = `rn-detail-${i}`;
+            return (
+              <details class="card release-note" open={i === 0}>
+                <summary class="release-head">
+                  <span class="badge badge-accent">{note.version}</span>
+                  <strong class="release-title">{note.title}</strong>
+                  <span class="muted text-sm release-date">{note.date}</span>
+                  <Icon name="lucide:chevron-down" class="release-chevron" />
+                </summary>
+
+                <div class="release-body">
+                  {hasDetail && (
+                    <>
+                      {/* 見た目には出さない。`label` を押すとここが切り替わる */}
+                      <input type="checkbox" id={toggleId} class="release-toggle" />
+                      <label class="release-switch" for={toggleId}>
+                        <span class="release-switch-on">
+                          <Icon name="lucide:list-tree" />
+                          このバージョンを詳しく読む
+                        </span>
+                        <span class="release-switch-off">
+                          <Icon name="lucide:list" />
+                          要点だけに戻す
+                        </span>
+                      </label>
+                    </>
+                  )}
+
+                  <ul class="release-list">
+                    {items.map((c) => (
+                      <li>
+                        <span class="release-brief" set:html={boldToHtml(c.summary)} />
+                        {/* 詳しい説明は**要点の下に足す**（入れ替えない）。
+                            入れ替えてしまうと「何の話か」が分からないまま説明だけが残る。
+                            詳しい説明が無い項目は、要点だけがそのまま残る。 */}
+                        {c.detail && <span class="release-full" set:html={boldToHtml(c.detail)} />}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </details>
+            );
+          })
         }
       </div>
     </div>
@@ -66,7 +97,7 @@ import { boldToHtml } from '../lib/inline-md';
 <style>
   /* 変更履歴の文中に含まれる長い英字トークン（例: article:modified_time）が
      スマホ幅をはみ出さないよう、語中での折り返しを許可する。 */
-  .content :is(li, strong, p) {
+  .content :is(li, strong, p, span) {
     overflow-wrap: anywhere;
   }
 
@@ -117,43 +148,92 @@ import { boldToHtml } from '../lib/inline-md';
   .release-note[open] .release-chevron {
     transform: rotate(180deg);
   }
+
+  .release-body {
+    padding: 0 16px 16px;
+  }
   .release-list {
     margin: 0;
-    padding: 0 16px 16px 2.1em;
+    padding-left: 1.3em;
   }
   .release-list > li {
     margin-bottom: 10px;
   }
 
-  /* 「詳しく」。行の下に小さく置く */
-  .release-detail > summary {
+  /* ---- 要点 ↔ 詳しく の切り替え（バージョン単位）------------------------
+     JavaScript を使わない。隠したチェックボックスの状態を CSS が読む。
+     `label` は `for` で結ばれているので、キーボードでも操作できる。 */
+  .release-toggle {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .release-switch {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    margin-top: 4px;
+    gap: 6px;
+    margin: 0 0 12px;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
     color: var(--accent);
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     font-weight: 700;
     cursor: pointer;
-    list-style: none;
   }
-  .release-detail > summary::-webkit-details-marker {
+  .release-switch:hover {
+    border-color: var(--accent);
+  }
+  /* キーボードで選んだときに、どこにいるか分かるようにする */
+  .release-toggle:focus-visible + .release-switch {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .release-switch :global(svg) {
+    width: 15px;
+    height: 15px;
+  }
+  /* 既定は「要点」。押すと入れ替わる */
+  .release-switch-off,
+  .release-full {
     display: none;
   }
-  .release-detail > summary::before {
-    content: '＋';
-    font-size: 0.9em;
+  .release-switch-on {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
   }
-  .release-detail[open] > summary::before {
-    content: '－';
+  .release-toggle:checked + .release-switch .release-switch-on {
+    display: none;
   }
-  .release-detail > p {
-    margin: 6px 0 0;
-    padding: 10px 12px;
+  .release-toggle:checked + .release-switch .release-switch-off {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  /* 詳しく出すときは、要点を**見出しのように太く**して、その下に説明を足す */
+  .release-toggle:checked ~ .release-list .release-brief {
+    display: block;
+    font-weight: 700;
+  }
+  .release-toggle:checked ~ .release-list .release-full {
+    display: block;
+    margin-top: 4px;
+    padding-left: 10px;
     border-left: 3px solid var(--border);
-    background: var(--surface-2, var(--surface));
     color: var(--text-muted);
-    font-size: 0.88rem;
+    font-size: 0.92rem;
+  }
+  /* 詳しく出しているときは、行の間を少し空けて読みやすくする */
+  .release-toggle:checked ~ .release-list > li {
+    margin-bottom: 14px;
   }
 
   @media (prefers-reduced-motion: reduce) {
