@@ -8,6 +8,7 @@ import pagefind from 'astro-pagefind';
 import { unified } from '@astrojs/markdown-remark';
 import remarkCjkFriendly from 'remark-cjk-friendly';
 import rehypeTermLinks from './src/lib/rehype-term-links.mjs';
+import rehypeEfColor from './src/lib/rehype-ef-color.mjs';
 
 // --- Deploy configuration ---------------------------------------------------
 // Deploy target: Vercel (static). Astro is auto-detected; `dist/` is served
@@ -35,10 +36,12 @@ export default defineConfig({
   //    全角の括弧・句読点だと強調として認識しない。日本語の本文では頻出するため、
   //    CJK に配慮した判定へ拡張する（英語などの挙動は変わらない）。
   //  - rehypeTermLinks: 本文中の用語をその用語ページへ自動リンク（Wikipedia風）。
+  //  - rehypeEfColor: エンドフィールドの記事で「自然ダメージ」などを属性の色にする
+  //    （公式wikiと同じ見え方。属性名だけの箇所には触らない）。
   markdown: {
     processor: unified({
       remarkPlugins: [remarkCjkFriendly],
-      rehypePlugins: [rehypeTermLinks],
+      rehypePlugins: [rehypeTermLinks, rehypeEfColor],
     }),
   },
   // 注: Markdown/MDX 内部リンクは「相対リンク」で記述しているため base 付与の

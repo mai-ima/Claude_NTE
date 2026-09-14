@@ -2308,3 +2308,187 @@ html[data-ef-theme='dark'] .ef-hero-panel {
   text-align: right;
   font-weight: 700;
 }
+
+/* ---- 公式wikiの中身の作法（2026-09-13・追加の画面5枚から）----------------
+   スキルの画面と、原神の公式wiki（HoYoWiki）の画面をいただいて読み取ったもの。 */
+
+/* 丸いアイコンのタブ。公式wikiはスキルの切り替えに使っている。
+   **選んでいるものだけ大きく・白地・外側に点のハーフトーン**、ほかは灰色の丸。 */
+.ef-icontabs {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 6px 2px 14px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.ef-icontabs::-webkit-scrollbar {
+  display: none;
+}
+.ef-icontab {
+  position: relative;
+  flex: none;
+  width: 52px;
+  height: 52px;
+  border: 0;
+  border-radius: 50%;
+  background: #b4b4b4;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition:
+    transform var(--ef-fast) ease,
+    background-color var(--ef-fast) ease;
+}
+.ef-icontab > img,
+.ef-icontab > svg {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+.ef-icontab[aria-selected='true'] {
+  width: 64px;
+  height: 64px;
+  background: #fff;
+  color: var(--ef-ink);
+  box-shadow: 0 0 0 2px var(--ef-ink);
+}
+/* 選んでいるものの外側に出る**点のハーフトーン**（公式の見え方） */
+.ef-icontab[aria-selected='true']::before {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  background-image: radial-gradient(currentColor 1px, transparent 1.2px);
+  background-size: 4px 4px;
+  opacity: 0.28;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* スキル名の上に出る細い区切り（黄色い丸＋バーコード＋横線） */
+.ef-rule {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0 12px;
+}
+.ef-rule::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  flex: none;
+  border-radius: 50%;
+  border: 3px solid var(--ef-accent);
+}
+.ef-rule::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--ef-line);
+}
+
+/* 左に縦棒を立てた小見出し（公式の「能力値強化」） */
+.ef-subsec {
+  margin: 16px 0 8px;
+  padding-left: 10px;
+  border-left: 3px solid var(--ef-line);
+  color: var(--ef-text-2);
+  font-weight: 700;
+}
+
+/* 分類の小さなタグ（公式の「通常攻撃」） */
+.ef-kind {
+  display: inline-block;
+  padding: 4px 10px;
+  background: var(--ef-bg-2);
+  border: 1px solid var(--ef-line);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--ef-text-2);
+}
+
+/* 本文の色分け。公式wikiは**属性の名前を属性の色**、**数値をオレンジ**にしている。
+   記事は Markdown なので、**自動リンクが付いた属性のリンク**に色を当てて近づける。 */
+.ef-prose .ef-el {
+  color: var(--ef-el, #5aa02c);
+  font-weight: 700;
+}
+.ef-prose .ef-num {
+  color: #e07b18;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 段階効果などの表。公式wikiは**見出し行が薄い灰色**、行は細い罫線で区切る。 */
+.ef-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 0.92rem;
+}
+.ef-prose thead th {
+  background: var(--ef-bg-2);
+  font-weight: 800;
+  text-align: left;
+}
+.ef-prose th,
+.ef-prose td {
+  padding: 10px 12px;
+  border: 1px solid var(--ef-line);
+  vertical-align: top;
+}
+
+/* アイコン＋ラベル＋件数のグリッド（原神の公式wikiのトップと同じ作り）。
+   何がどれだけ載っているかを、入口として一目で見せる。 */
+.ef-dirgrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px 8px;
+  margin: 16px 0 8px;
+}
+@media (max-width: 419px) {
+  .ef-dirgrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.ef-dircell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+  color: var(--ef-text);
+}
+.ef-dircell:hover {
+  text-decoration: none;
+  color: var(--ef-ink);
+}
+.ef-dirbadge {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px dashed var(--ef-line);
+  background: var(--ef-bg-2);
+  transition: background-color var(--ef-fast) ease;
+}
+.ef-dircell:hover .ef-dirbadge {
+  background: var(--ef-accent);
+}
+.ef-dirbadge svg {
+  width: 24px;
+  height: 24px;
+}
+.ef-dirlabel {
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+.ef-dircount {
+  font-size: 0.72rem;
+  color: var(--ef-muted);
+  font-variant-numeric: tabular-nums;
+}

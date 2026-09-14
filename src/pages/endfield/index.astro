@@ -59,9 +59,28 @@ const fill = w.sections.length > 0 ? filled / w.sections.length : 0;
     スキルやステータスなど、まだ裏が取れていない項目には「要確認」と付けています。
   </p>
 
+  {/*
+    収録する項目。公式wiki（原神の HoYoWiki）のトップと同じく、
+    **丸いアイコン＋名前＋件数**を並べて入口にする。
+    件数は実データなので、0 件の項目も隠さずそのまま出す。
+  */}
   <div class="ef-block">
     <h2>収録する項目</h2>
-    <div class="ef-list is-2col">
+    <div class="ef-dirgrid">
+      {
+        w.sections.map((s) => (
+          <a class="ef-dircell" href={withBase(s.href)}>
+            <span class="ef-dirbadge" aria-hidden="true">
+              <Icon name={`lucide:${s.icon}`} />
+            </span>
+            <span class="ef-dirlabel">{s.label}</span>
+            <span class="ef-dircount">{countOf(s.collection)}</span>
+          </a>
+        ))
+      }
+    </div>
+    {/* 一覧そのものも残す（説明が読めるほうが分かりやすいため） */}
+    <div class="ef-list is-2col" style="margin-top:16px;">
       {
         w.sections.map((s, i) => (
           <a class="ef-row" href={withBase(s.href)}>
