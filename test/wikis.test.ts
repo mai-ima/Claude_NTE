@@ -131,8 +131,11 @@ describe('セクション定義', () => {
     expect(sectionByCollection('alphaTerms')?.href).toBe('/alpha/terms/');
   });
 
-  it('エンドフィールドのセクションは12種そろっている', () => {
-    expect(ENDFIELD_SECTIONS).toHaveLength(12);
+  it('エンドフィールドのセクションは13種そろっている', () => {
+    /* 2026-09-14 に「任務」を足して 12 → 13 になった。
+       数を固定しているのは、**ページを作らずにセクションだけ足す**のを防ぐため
+       （一覧へのリンクだけできて中身が無い状態になる）。 */
+    expect(ENDFIELD_SECTIONS).toHaveLength(13);
   });
 
   it('αテストのセクションには実ディレクトリ名（dir）がある', () => {

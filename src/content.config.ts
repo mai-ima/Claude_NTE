@@ -446,6 +446,32 @@ const endfieldStory = defineCollection({
     }),
 });
 
+/**
+ * 任務（クエスト）。2026-09-14 に新設。
+ *
+ * ゲーム内の任務は **メインストーリー／サブ任務／拠点防衛** に分かれる。
+ * 1本の記事は「章」か「任務のまとまり」を単位にする
+ * （1任務1記事にすると61本になり、攻略サイトの丸写しに近づくため）。
+ */
+const endfieldQuests = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/endfield-quests' }),
+  schema: () =>
+    z.object({
+      ...base,
+      title: z.string(),
+      /** メイン / サブ / 拠点防衛 / オペレーター。一覧の絞り込みに使う */
+      kind: z.enum(['メイン', 'サブ', '拠点防衛', 'オペレーター']).default('メイン'),
+      /** 第1章・第2章・序章 など */
+      chapter: z.string().optional(),
+      /** 舞台になるエリア（四号谷地・武陵 など） */
+      area: z.string().optional(),
+      /** 並び順（小さいほど前） */
+      order: z.number().optional(),
+      /** 結末に触れるか。true のときは本文で畳む */
+      spoiler: z.boolean().default(false),
+    }),
+});
+
 const endfieldGuides = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/endfield-guides' }),
   schema: () =>
@@ -557,6 +583,7 @@ export const collections = {
   endfieldItems,
   endfieldEvents,
   endfieldStory,
+  endfieldQuests,
   endfieldGuides,
   endfieldTerms,
   // αテスト（仮）wiki

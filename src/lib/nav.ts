@@ -235,6 +235,14 @@ export const ENDFIELD_SECTIONS: SectionMeta[] = [
     blurb: 'バージョン更新・特別スカウト・期間限定イベント。',
   },
   {
+    collection: 'endfieldQuests',
+    dir: 'endfield-quests',
+    href: '/endfield/quests/',
+    label: '任務',
+    icon: 'scroll-text',
+    blurb: 'メインストーリー・サブ任務・拠点防衛。章ごとの流れと進め方。',
+  },
+  {
     collection: 'endfieldStory',
     dir: 'endfield-story',
     href: '/endfield/story/',

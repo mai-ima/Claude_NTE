@@ -47,6 +47,7 @@ const URL_BASE = {
   'endfield-items': '/endfield/items/',
   'endfield-events': '/endfield/events/',
   'endfield-story': '/endfield/story/',
+  'endfield-quests': '/endfield/quests/',
   'endfield-guides': '/endfield/guides/',
   'endfield-terms': '/endfield/terms/',
   // αテスト（仮）wiki

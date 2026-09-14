@@ -2938,3 +2938,147 @@ html[data-ef-view='grid'] .ef-list.is-hairline .ef-thumb-ic.is-el {
   position: relative;
   z-index: 1;
 }
+
+/* ---- 表が透ける問題を直す（2026-09-14）---------------------------------
+   症状: 記事の表の**セルの中と右の余りに、地の方眼模様が透けて見える**。
+   原因: 表もセルも地の色を持っていなかった。
+     `.ef-main` は方眼の下敷きを敷いているので、そのまま透ける。
+     スクロールする箱（`.ef-table-scroll`）も同じ。
+   直し方: **表・セル・箱の3つに地の色を敷く**。
+     セルにも敷かないと、貼り付けた左端の列（`position: sticky`）が
+     スクロールしたときに他のセルと重なって読めなくなる。 */
+.ef-prose table,
+.ef-table-scroll {
+  background: var(--ef-bg);
+}
+.ef-prose th,
+.ef-prose td {
+  background: var(--ef-bg);
+}
+.ef-prose thead th,
+.ef-prose .ef-table-scroll thead th {
+  background: var(--ef-bg-2);
+}
+/* 貼り付けた左端の列は、上の指定のあとでもう一度（順番で負けないように） */
+.ef-prose .ef-table-scroll th:first-child,
+.ef-prose .ef-table-scroll td:first-child {
+  background: var(--ef-bg);
+}
+.ef-prose .ef-table-scroll thead th:first-child {
+  background: var(--ef-bg-2);
+}
+
+/* ---- 狭い画面の表を読みやすくする ---------------------------------------
+   実測（393px）で3つ困っていた。
+     1. セルの余白が広く（10px 12px）、2列の表が縦に伸びる
+     2. `min-width: 7.5em` のせいで、短い値の列まで広く取られる
+     3. 横に長い表で**スクロールできることに気づけない**
+   狭いときだけ詰めて、スクロールできる表には右端に影を出す。 */
+@media (max-width: 639px) {
+  .ef-prose th,
+  .ef-prose td {
+    padding: 7px 8px;
+    font-size: 0.86rem;
+  }
+  .ef-prose .ef-table-scroll th,
+  .ef-prose .ef-table-scroll td {
+    min-width: 5.5em;
+  }
+  /* 「項目／内容」の2列だけの表は、左の列を狭く固定して右を広く使う */
+  .ef-prose .ef-defs-table th:first-child,
+  .ef-prose .ef-defs-table td:first-child {
+    width: 6.5em;
+  }
+}
+/* まだ右に続いていることを示す影。スクロールし切ると消える
+   （`animation-timeline: scroll()` に対応していない端末では**出しっぱなしにしない**） */
+@supports (animation-timeline: scroll(self inline)) {
+  .ef-table-scroll {
+    position: relative;
+    background-image: linear-gradient(
+      to left,
+      color-mix(in srgb, var(--ef-ink) 12%, transparent),
+      transparent 28px
+    );
+    background-repeat: no-repeat;
+    background-position: right center;
+    background-size: 28px 100%;
+    animation: ef-fade-scroll-end linear both;
+    animation-timeline: scroll(self inline);
+    animation-range: contain;
+  }
+}
+@keyframes ef-fade-scroll-end {
+  to {
+    background-size: 0 100%;
+  }
+}
+
+/* ---- 狭い画面の絞り込みを縦に伸ばさない（2026-09-14）--------------------
+   実測（393px・アイテム一覧）で、絞り込みの札が **11行** に折り返して
+   画面を1つぶん占領していた。目当ての一覧にたどり着く前に指が疲れる。
+
+   行ごとに**横へ流す**ことで、どの種類も1行に収まるようにする。
+   端で切れていることが分かるよう、右端をぼかす（`.ef-mask-x` と同じ作法）。 */
+@media (max-width: 639px) {
+  .ef-filter-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    /* 端で切れて見えるように、少しだけ余白を残す */
+    padding-bottom: 2px;
+    -webkit-overflow-scrolling: touch;
+    mask-image: linear-gradient(to right, #000 calc(100% - 24px), transparent);
+  }
+  .ef-filter-row::-webkit-scrollbar {
+    display: none;
+  }
+  .ef-filter-row > .ef-chip {
+    flex: none;
+  }
+  .ef-filter-label {
+    flex: none;
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    /* 流れる札の下に隠れないよう、地の色を敷く */
+    background: var(--ef-bg);
+    padding-right: 6px;
+  }
+}
+
+/* ---- 公式サイトの右端の黄色い帯（`decoRight`）---------------------------
+   実測: `__12-OperatorList_decoRight` 207×1000・`rgb(255,250,8)`。
+   本文の右の余白に、画面の高さいっぱいの黄色い帯が立っている。
+
+   ★ 本文を圧迫しない幅のときだけ出す。
+     1400px 未満では本文が余白を使い切っているので、出すと読む幅が減る。
+   ★ 触れない・読めない飾りなので、読み上げからは外す（`::after` は元々読まれない）。 */
+@media (min-width: 1400px) {
+  .ef-main {
+    position: relative;
+  }
+  .ef-main::after {
+    content: '';
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: clamp(48px, calc((100vw - 1080px - var(--ef-rail)) / 2), 207px);
+    background: var(--ef-accent);
+    pointer-events: none;
+    z-index: 0;
+  }
+  /* 帯の上に本文が来るように */
+  .ef-wrap {
+    position: relative;
+    z-index: 1;
+  }
+}
+@media (min-width: 1400px) and (prefers-reduced-motion: no-preference) {
+  /* 公式は画面の切り替わりで帯が伸び縮みする。こちらは**出したまま**にして、
+     読んでいる最中に動くものを増やさない。 */
+  .ef-main::after {
+    transition: width var(--ef-slow) ease;
+  }
+}

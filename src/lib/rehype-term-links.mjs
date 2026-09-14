@@ -63,6 +63,7 @@ export const WIKI_GROUPS = [
       { dir: 'endfield-events', base: '/endfield/events/' },
       { dir: 'endfield-guides', base: '/endfield/guides/' },
       { dir: 'endfield-story', base: '/endfield/story/' },
+      { dir: 'endfield-quests', base: '/endfield/quests/' },
     ],
   },
   {
@@ -80,11 +81,32 @@ export const WIKI_GROUPS = [
 const DIR_TO_WIKI = new Map();
 for (const g of WIKI_GROUPS) for (const c of g.collections) DIR_TO_WIKI.set(c.dir, g.id);
 
-/** 汎用すぎてリンクするとノイズになる語は除外 */
+/**
+ * 汎用すぎてリンクするとノイズになる語は除外する。
+ *
+ * ★ ここに足す基準（2026-09-14 に見直した）
+ *   **その語だけで記事を指せないもの**は入れる。
+ *   たとえば「素材」は1ページに何度も出てくる一般名詞で、
+ *   本文の「昇進素材」「素材消費」のような**語の一部**にも当たってしまう。
+ *   実測では「素材」418回・「装備」364回・「オペレーター」214回リンクされていて、
+ *   本文が青だらけになっていた。
+ *   記事へ導きたいときは、本文に手でリンクを書く。
+ */
 const DENY = new Set([
+  // --- NTE 側 ---
   '光', '霊', '呪', '闇', '魂', '相', '心', '凸', '例', '街', '島', '駅', '区',
   '本編', 'ガチャ', 'プレイヤー', '都市', '攻略', '戦闘', '育成', '電車', '移動',
   'キャラ', 'キャラクター', 'システム', 'イベント', 'アイテム', 'ショップ',
+  /* 一般語・動詞の活用形に当たるもの（2026-09-14 に実測して追加）
+     「確定情報」「確定した」の**確定**が天井のページへ、
+     「重ねて」「重ねる」の**重ね**が凸のページへ飛んでいた。 */
+  '確定', '役割', '交代', '重ね', '通常', '回避', '追撃', '挑戦', '編成',
+  // --- エンドフィールド側（2026-09-14 に追加）---
+  '素材', '装備', '武器', '工業', 'クラス', '属性', 'オペレーター', 'スキル',
+  'レベル', '昇進', '突破', '潜在', '素質', '設備', '施設', '資源', '生産',
+  '加工', '製造', '効果', '能力', '性能', '範囲', '回復', '攻撃', '防御',
+  '耐性', '弱点', '強化', '編成', '探索', '報酬', '消費', '獲得', '入手',
+  '使用', '解放', '開放', '条件', '方法', '手順', '拠点', '基地', '任務',
 ]);
 
 const SKIP_TAGS = new Set(['a', 'code', 'pre', 'script', 'style', 'kbd', 'h1', 'h2', 'h3']);
@@ -128,6 +150,12 @@ function parseAliases(front) {
 
 function buildDict(group) {
   const entries = [];
+  /* ★ リンクしない語（DENY）も、**長さの判定には使う**（2026-09-14）
+     「オペレーター」をリンク対象から外したら、別名の「オペ」が
+     「<a>オペ</a>レーター」のように当たってしまった。
+     DENY は「リンクしない」であって「その語が本文に無い」ではないので、
+     長い語として覚えておかないと、短い別名が内側に食い込む。 */
+  const allPhrases = new Set();
   for (const { dir: dirName, base } of group.collections) {
     const dir = path.join(CONTENT_DIR, dirName);
     let files = [];
@@ -160,6 +188,7 @@ function buildDict(group) {
       for (const a of aliases) phrases.add(a);
       for (const p of phrases) {
         if (p.length < 2) continue;
+        allPhrases.add(p);
         if (DENY.has(p)) continue;
         const ascii = /^[\x20-\x7e]+$/.test(p);
         // ASCII(英数記号)のみのフレーズは、単語境界チェックを要する＆3文字以上に限定
@@ -172,11 +201,25 @@ function buildDict(group) {
   entries.sort((a, b) => b.phrase.length - a.phrase.length);
   // 同一フレーズの重複は最初の1件（最長一致・コレクション順）だけ残す
   const seenPhrase = new Set();
-  return entries.filter((e) => {
+  const uniq = entries.filter((e) => {
     if (seenPhrase.has(e.phrase)) return false;
     seenPhrase.add(e.phrase);
     return true;
   });
+
+  /* ★ 「自分を内部に含む、もっと長いフレーズ」を覚えておく（2026-09-14）
+     なぜ要るか: リンクは**1記事・1宛先につき1回**なので、
+     長い語（例「集成工業」）が前の段落でリンク済みだと、そこから先は素通りする。
+     すると、あとから短い語（例「工業」）がその**文字列の一部**に当たり、
+     「集成工<a>工業</a>」のような、関係ない場所へのリンクができていた。
+     マッチした位置がより長い語の内側なら、リンクしないようにする。 */
+  const longer = [...allPhrases];
+  for (const e of uniq) {
+    e.containers = longer.filter(
+      (p) => p.length > e.phrase.length && p.includes(e.phrase),
+    );
+  }
+  return uniq;
 }
 
 /** wiki id → 辞書（ビルド中に一度だけ構築） */
@@ -238,10 +281,29 @@ function walk(node, skip, selfKey, dict, seen) {
 
 const WORD = /[A-Za-z0-9]/;
 
+/**
+ * `text` の `idx` から `len` 文字が、**もっと長い辞書の語の内側**に入っていないか。
+ * 入っていれば true（＝ここではリンクしない）。
+ *
+ * 例: 本文「集成工業の大…」で `phrase` が「工業」のとき、
+ *     `containers` に「集成工業」があり、それが idx をまたいで成立するので true。
+ */
+function inLongerPhrase(text, idx, len, containers) {
+  if (!containers || containers.length === 0) return false;
+  const end = idx + len;
+  for (const c of containers) {
+    /* c が idx をまたいで現れうる範囲だけを見る */
+    const from = Math.max(0, end - c.length);
+    const at = text.indexOf(c, from);
+    if (at !== -1 && at <= idx && at + c.length >= end) return true;
+  }
+  return false;
+}
+
 function linkify(text, selfKey, dict, seen) {
   let nodes = [{ type: 'text', value: text }];
   let changed = false;
-  for (const { phrase, dir, base, slug, ascii } of dict) {
+  for (const { phrase, dir, base, slug, ascii, containers } of dict) {
     const target = `${dir}/${slug}`;
     if (selfKey && target === selfKey) continue;
     // 同じ記事へは1ページ1回だけ（別名で何度もリンクしない）
@@ -249,13 +311,28 @@ function linkify(text, selfKey, dict, seen) {
     for (let n = 0; n < nodes.length; n++) {
       const nd = nodes[n];
       if (nd.type !== 'text') continue;
-      const idx = nd.value.indexOf(phrase);
-      if (idx === -1) continue;
-      if (ascii) {
-        const prev = nd.value[idx - 1];
-        const next = nd.value[idx + phrase.length];
-        if ((prev && WORD.test(prev)) || (next && WORD.test(next))) continue;
+      /* 見つかっても「長い語の内側」なら、その次の出現位置を探す。
+         1か所で諦めると、同じ段落にある**単独の**その語まで拾えなくなる。 */
+      let idx = -1;
+      let from = 0;
+      for (;;) {
+        idx = nd.value.indexOf(phrase, from);
+        if (idx === -1) break;
+        if (ascii) {
+          const prev = nd.value[idx - 1];
+          const next = nd.value[idx + phrase.length];
+          if ((prev && WORD.test(prev)) || (next && WORD.test(next))) {
+            from = idx + 1;
+            continue;
+          }
+        }
+        if (inLongerPhrase(nd.value, idx, phrase.length, containers)) {
+          from = idx + 1;
+          continue;
+        }
+        break;
       }
+      if (idx === -1) continue;
       const before = nd.value.slice(0, idx);
       const after = nd.value.slice(idx + phrase.length);
       const link = {

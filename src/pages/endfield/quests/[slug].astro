@@ -1,0 +1,35 @@
+---
+import EndfieldArticle from "../../../components/endfield/EndfieldArticle.astro";
+import { detailPaths, renderEntry } from "../../../lib/detail";
+import { titleOf } from "../../../lib/content";
+
+export async function getStaticPaths() {
+  return detailPaths("endfieldQuests");
+}
+const { entry, prev, next } = Astro.props;
+const { Content, headings } = await renderEntry(entry);
+const d = entry.data as Record<string, any>;
+
+// 冒頭の要点。値があるものだけを拾う（空行を出さない）
+const rows = [
+  ["区分", d.kind],
+  ["章", d.chapter],
+  ["エリア", d.area],
+].filter(([, v]) => v).map(([label, value]) => ({ label, value: String(value) }));
+---
+
+<EndfieldArticle
+  collection="endfieldQuests"
+  title={titleOf(entry)}
+  description={d.description}
+  headings={headings}
+  rows={rows}
+  status={d.status}
+  updated={d.updated}
+  checked={d.checked}
+  sources={d.sources}
+  prev={prev ? { href: `/endfield/quests/${prev.id}/`, title: titleOf(prev) } : null}
+  next={next ? { href: `/endfield/quests/${next.id}/`, title: titleOf(next) } : null}
+>
+  <Content />
+</EndfieldArticle>

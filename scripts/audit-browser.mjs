@@ -88,7 +88,7 @@ const PAGES = [
   // アークナイツ：エンドフィールド（独自UI）
   '/endfield/', '/endfield/operators/', '/endfield/weapons/', '/endfield/gear/',
   '/endfield/industry/', '/endfield/enemies/', '/endfield/areas/', '/endfield/systems/',
-  '/endfield/items/', '/endfield/events/', '/endfield/story/', '/endfield/guides/',
+  '/endfield/items/', '/endfield/events/', '/endfield/quests/', '/endfield/story/', '/endfield/guides/',
   '/endfield/terms/',
   // 準備中の wiki（それぞれ独自UI）
   '/genshin/', '/wuwa/', '/hsr/',
