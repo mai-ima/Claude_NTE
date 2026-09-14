@@ -3082,3 +3082,87 @@ html[data-ef-view='grid'] .ef-list.is-hairline .ef-thumb-ic.is-el {
     transition: width var(--ef-slow) ease;
   }
 }
+
+/* ---- 並び順のセレクト（公式サイトの `Dropdown`）--------------------------
+   実測: `Dropdown_trigger` 170×36・角丸 **2.25px**・地 **rgb(58,58,58)**・
+   字 白 14.625px・padding 0 11.25px。開くと白い板（`panel` 170×288・角丸2.25px）。
+
+   ここでは素の `<select>` を使う。見た目は公式に寄せるが、
+   **開いたときの一覧は端末のもの**にする（そのほうが指で選びやすく、読み上げも通る）。
+
+   並べ替えは CSS の `order` で行う（`EndfieldList.astro` が各行に順位を埋める）。
+   JS が動かない端末では**既定の並びのまま**で、一覧は普通に読める。 */
+.ef-sortbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 12px;
+}
+.ef-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.ef-sort-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ef-muted);
+}
+.ef-sort-select {
+  min-width: 170px;
+  height: 36px;
+  padding: 0 11.25px;
+  border: 0;
+  border-radius: 2.25px;
+  background: #3a3a3a;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14.625px;
+  line-height: 1;
+  cursor: pointer;
+  /* 端末の矢印を消して、公式と同じ「▾」を右に置く */
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, #ffffff 50%),
+    linear-gradient(135deg, #ffffff 50%, transparent 50%);
+  background-position:
+    calc(100% - 16px) 15px,
+    calc(100% - 11px) 15px;
+  background-size: 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 30px;
+}
+.ef-sort-select:focus-visible {
+  outline: 2px solid var(--ef-accent);
+  outline-offset: 2px;
+}
+@media (max-width: 480px) {
+  /* 狭い画面では幅いっぱいに。指で押しやすくする */
+  .ef-sortbar {
+    justify-content: stretch;
+  }
+  .ef-sort {
+    flex: 1;
+  }
+  .ef-sort-select {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+/* 並べ替え。行は flex/grid の子なので `order` が効く。
+   ★ `.ef-list` が grid のとき（タイル表示）も同じように効く。 */
+html[data-ef-sort='name'] .ef-list > .ef-row {
+  order: var(--ord-name, 0);
+}
+html[data-ef-sort='rarity'] .ef-list > .ef-row {
+  order: var(--ord-rarity, 0);
+}
+html[data-ef-sort='updated'] .ef-list > .ef-row {
+  order: var(--ord-updated, 0);
+}
+/* 並べ替えたときは、行に振ってある通し番号が飛ぶ。
+   番号は「元の並びでの位置」なので、並べ替え中は出さない（読み手が混乱する）。 */
+html[data-ef-sort] .ef-row-no {
+  visibility: hidden;
+}

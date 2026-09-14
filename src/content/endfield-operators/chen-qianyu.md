@@ -209,11 +209,11 @@ sources:
 
 ### 陣営
 
-エンドフィールド工業
+[エンドフィールド工業](/endfield/terms/factions/)
 
 ### 種族
 
-龍
+[龍](/endfield/terms/races/)
 
 ### 特長1（博識）
 

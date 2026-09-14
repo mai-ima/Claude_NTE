@@ -171,11 +171,11 @@ sources:
 
 ### 陣営
 
-環タロ商会
+[環タロ商会](/endfield/terms/factions/)
 
 ### 種族
 
-コータス
+[コータス](/endfield/terms/races/)
 
 ### 特長1（交渉術）
 

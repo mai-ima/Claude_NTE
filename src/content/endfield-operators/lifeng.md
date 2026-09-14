@@ -220,11 +220,11 @@ sources:
 
 ### 陣営
 
-宏山科学院
+[宏山科学院](/endfield/terms/factions/)
 
 ### 種族
 
-アナサ
+[アナサ](/endfield/terms/races/)
 
 ### 特長1（俊敏）
 

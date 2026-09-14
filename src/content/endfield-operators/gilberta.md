@@ -171,11 +171,11 @@ sources:
 
 ### 陣営
 
-ロドス・アイランド
+[ロドス・アイランド](/endfield/terms/factions/)
 
 ### 種族
 
-ヴァルポ
+[ヴァルポ](/endfield/terms/races/)
 
 ### 特長1（冒険）
 

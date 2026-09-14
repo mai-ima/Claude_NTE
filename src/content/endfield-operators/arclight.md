@@ -214,11 +214,11 @@ sources:
 
 ### 陣営
 
-衆生長地
+[衆生長地](/endfield/terms/factions/)
 
 ### 種族
 
-クランタ
+[クランタ](/endfield/terms/races/)
 
 ### 特長1（道具製造）
 

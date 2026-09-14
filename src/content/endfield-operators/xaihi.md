@@ -216,11 +216,11 @@ sources:
 
 ### 陣営
 
-静語伝道会
+[静語伝道会](/endfield/terms/factions/)
 
 ### 種族
 
-サルカズ
+[サルカズ](/endfield/terms/races/)
 
 ### 特長1（博識）
 

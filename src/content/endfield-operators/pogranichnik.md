@@ -230,11 +230,11 @@ sources:
 
 ### 陣営
 
-ロドス・アイランド
+[ロドス・アイランド](/endfield/terms/factions/)
 
 ### 種族
 
-リーベリ
+[リーベリ](/endfield/terms/races/)
 
 ### 特長1（戦術）
 

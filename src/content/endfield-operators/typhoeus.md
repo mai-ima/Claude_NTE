@@ -238,11 +238,11 @@ sources:
 
 ### 陣営
 
-ロドス・アイランド
+[ロドス・アイランド](/endfield/terms/factions/)
 
 ### 種族
 
-サルカズ
+[サルカズ](/endfield/terms/races/)
 
 ### 特長1（自然知識）
 

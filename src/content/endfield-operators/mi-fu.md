@@ -214,11 +214,11 @@ sources:
 
 ### 陣営
 
-宏山科学院
+[宏山科学院](/endfield/terms/factions/)
 
 ### 種族
 
-サルカズ
+[サルカズ](/endfield/terms/races/)
 
 ### 特長1（屈強）
 

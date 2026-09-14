@@ -220,11 +220,11 @@ sources:
 
 ### 陣営
 
-工業団連盟
+[工業団連盟](/endfield/terms/factions/)
 
 ### 種族
 
-アナティ
+[アナティ](/endfield/terms/races/)
 
 ### 特長1（サバイバル）
 

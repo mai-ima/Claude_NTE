@@ -208,11 +208,11 @@ sources:
 
 ### 陣営
 
-宏山科学院
+[宏山科学院](/endfield/terms/factions/)
 
 ### 種族
 
-ウルサス
+[ウルサス](/endfield/terms/races/)
 
 ### 特長1（調理）
 

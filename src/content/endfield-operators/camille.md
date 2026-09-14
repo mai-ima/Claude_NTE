@@ -222,11 +222,11 @@ sources:
 
 ### 陣営
 
-セシュカ
+[セシュカ](/endfield/terms/factions/)
 
 ### 種族
 
-サルカズ
+[サルカズ](/endfield/terms/races/)
 
 ### 特長1（情勢分析）
 

@@ -20,6 +20,7 @@ interface Props {
   /** 見出しの英字ラベル（01 / OPERATORS の右側） */
   eyebrow: string;
 }
+type Item = Props['entries'][number];
 const { collection, entries, eyebrow } = Astro.props;
 
 const section = sectionByCollection(collection)!;
@@ -37,6 +38,37 @@ const sorted = [...entries].sort((a, b) => {
   if (oa !== ob) return oa - ob;
   return titleOf(a as never).localeCompare(titleOf(b as never), 'ja');
 });
+
+/* ---- 並び替えの順位を先に計算しておく ------------------------------------
+   公式サイトの一覧には「オペレーター ▾」「総合順 ▾」の2つのセレクトがある
+   （`Dropdown_trigger` 170×36・地 rgb(58,58,58)・白文字 14.625px）。
+   こちらも**並び順を選べる**ようにする。
+
+   ★ JavaScript で並べ替えない。CSS の `order` を使う。
+     NTE 側（`EntityList.astro`）と同じ作法で、**JS が動かなくても既定の並びで読める**。
+     順位はここで計算して `style` に埋め、`endfield.css` が拾う。 */
+const freshMs = (e: Item) => {
+  const d = e.data as Record<string, unknown>;
+  const u = d.updated instanceof Date ? d.updated.getTime() : 0;
+  const c = d.checked instanceof Date ? d.checked.getTime() : 0;
+  return Math.max(u, c);
+};
+/** レア度の「★6」から数字を取り出す。無いものは0（いちばん後ろ） */
+const rarityNum = (e: Item) => Number(String((e.data as Record<string, unknown>).rarity ?? '').replace(/[^0-9]/g, '')) || 0;
+
+const ordName = new Map(
+  [...sorted].sort((a, b) => titleOf(a as never).localeCompare(titleOf(b as never), 'ja')).map((e, i) => [e.id, i]),
+);
+const ordUpdated = new Map([...sorted].sort((a, b) => freshMs(b) - freshMs(a)).map((e, i) => [e.id, i]));
+const ordRarity = new Map(
+  [...sorted]
+    .sort((a, b) => rarityNum(b) - rarityNum(a) || titleOf(a as never).localeCompare(titleOf(b as never), 'ja'))
+    .map((e, i) => [e.id, i]),
+);
+const ordVars = (e: Item) =>
+  `--ord-name:${ordName.get(e.id) ?? 0};--ord-updated:${ordUpdated.get(e.id) ?? 0};--ord-rarity:${ordRarity.get(e.id) ?? 0}`;
+/** レア度を持つ一覧でだけ「レア度順」を出す（武器・オペレーターなど） */
+const hasRarity = sorted.some((e) => rarityNum(e) > 0);
 
 /** 絵の置き場。`endfieldOperators` → `public/images/official/endfield/operators/` */
 const imgDir = collection.replace(/^endfield/, '').toLowerCase();
@@ -133,6 +165,25 @@ const fmt = (d: unknown) =>
         <button class="ef-viewbtn" type="button" data-ef-view-set="compact" aria-pressed="false">
           <Icon name="lucide:list" />詰めて
         </button>
+      </div>
+    )
+  }
+
+  {
+    sorted.length > 1 && (
+      /* 並び順。公式サイトのセレクト（`Dropdown_trigger` 170×36・地 rgb(58,58,58)）に倣う。
+         押すと `<html data-ef-sort>` が変わり、CSS の `order` で並びが入れ替わる。
+         **JS が動かなくても既定の並びで読める**ので、壊れても困らない。 */
+      <div class="ef-sortbar">
+        <label class="ef-sort" for="ef-sort">
+          <span class="ef-sort-label">並び順</span>
+          <select class="ef-sort-select" id="ef-sort" data-ef-sort-set>
+            <option value="default">標準</option>
+            <option value="name">名前</option>
+            {hasRarity && <option value="rarity">レア度が高い順</option>}
+            <option value="updated">新しい順</option>
+          </select>
+        </label>
       </div>
     )
   }
@@ -252,6 +303,7 @@ const fmt = (d: unknown) =>
           return (
             <a
               class="ef-row"
+              style={ordVars(e)}
               href={hrefOf(collection, e.id)}
               data-class={d.class as string | undefined}
               data-element={d.element as string | undefined}
@@ -367,6 +419,38 @@ const fmt = (d: unknown) =>
       mark();
     });
     mark();
+  })();
+</script>
+
+{/*
+  並び順。`<html data-ef-sort>` を変えるだけで、並べ替えは CSS の `order` が行う。
+  選んだ並びは localStorage に残り、次に開いたときも同じ順で出る。
+*/}
+<script is:inline data-astro-rerun>
+  (function () {
+    var sel = document.querySelector('[data-ef-sort-set]');
+    if (!sel || sel.dataset.bound) return;
+    sel.dataset.bound = '1';
+    var root = document.documentElement;
+    try {
+      var saved = localStorage.getItem('endfield.sort');
+      if (saved && [...sel.options].some((o) => o.value === saved)) {
+        sel.value = saved;
+        if (saved !== 'default') root.setAttribute('data-ef-sort', saved);
+      }
+    } catch (err) {
+      /* 読めなくても既定の並びで出る */
+    }
+    sel.addEventListener('change', function () {
+      var v = sel.value;
+      if (v === 'default') root.removeAttribute('data-ef-sort');
+      else root.setAttribute('data-ef-sort', v);
+      try {
+        localStorage.setItem('endfield.sort', v);
+      } catch (err) {
+        /* 保存できなくても並べ替えは効く */
+      }
+    });
   })();
 </script>
 

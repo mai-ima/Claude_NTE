@@ -422,7 +422,16 @@ function build(op, order, variants = []) {
   const person = blockOf(op, 'プロファイル', '個人情報');
   if (person?.tabs?.length) {
     md.push('## 人物');
-    for (const t of person.tabs) md.push(linesToMd(t.lines ?? [], '###'));
+    for (const t of person.tabs) {
+      let body = linesToMd(t.lines ?? [], '###');
+      /* 「陣営」「種族」は**まとめのページへ渡す**（2026-09-14）。
+         組織名や種族名だけを置くより、そこから世界の説明へ辿れる方がいい。
+         自動リンクは一般語を避けているので、ここは手で張る。 */
+      body = body
+        .replace(/(### 陣営\n\n)([^\n[]+)\n/, '$1[$2](/endfield/terms/factions/)\n')
+        .replace(/(### 種族\n\n)([^\n[]+)\n/, '$1[$2](/endfield/terms/races/)\n');
+      md.push(body);
+    }
   }
 
   /* 手で書いた「入手」まわりの節は消さずに引き継ぐ（公式wikiに無い情報のため） */

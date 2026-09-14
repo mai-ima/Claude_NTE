@@ -235,11 +235,11 @@ sources:
 
 ### 陣営
 
-宏山科学院
+[宏山科学院](/endfield/terms/factions/)
 
 ### 種族
 
-麒麟
+[麒麟](/endfield/terms/races/)
 
 ### 特長1（博識）
 

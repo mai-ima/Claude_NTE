@@ -170,13 +170,13 @@ sources:
 
 ### 陣営
 
-エンドフィールド工業
+[エンドフィールド工業](/endfield/terms/factions/)
 
  
 
 ### 種族
 
-ペッロー
+[ペッロー](/endfield/terms/races/)
 
  
 
