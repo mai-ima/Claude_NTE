@@ -155,7 +155,7 @@ export default function GachaSim() {
           </div>
           {last.some((p) => p.s) ? (
             <p class="text-sm" style={{ marginTop: '8px' }}>
-              🎉 このバッチで <strong>{last.filter((p) => p.s).length}</strong> 体の注目Sを獲得！
+              このバッチで <strong>{last.filter((p) => p.s).length}</strong> 体の注目Sを獲得！
             </p>
           ) : (
             <p class="text-sm muted" style={{ marginTop: '8px' }}>このバッチではSなし。天井が貯まっています。</p>

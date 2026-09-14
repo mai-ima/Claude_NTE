@@ -243,15 +243,67 @@ for (const dir of PROSE_DIRS) {
   }
 }
 
+/* -------------------------------------------------------------------------
+   10) 絵文字を使っていないか
+   -------------------------------------------------------------------------
+   利用者の決定（.claude/state/DECISIONS.md 2026-09-14「絵文字を使わない」）。
+
+   記事本文・画面の文言・内部のメモまで、絵文字は使わない。
+   目印が要るところは**文字**で書くか、すでにある lucide のアイコンを使う。
+
+   ★ `★` `☆`（レア度の表記）は**絵文字ではなく記号**なので見逃す。
+     ゲーム内が ★6 / ★5 / ★4 と書いているので、そのまま使う必要がある。
+   ★ 矢印（→ ← ↔）・チェック（✓）・かけ（✕）も記号なので、はじめから範囲の外。
+   ------------------------------------------------------------------------- */
+const EMOJI_RE =
+  /[\u{1F000}-\u{1FAFF}]|[\u{2600}-\u{26FF}]\u{FE0F}?|\u{2B50}|\u{2705}|\u{274C}/gu;
+const EMOJI_DIRS = ['src', 'docs', '.claude', 'scripts', 'test'];
+const EMOJI_EXT = ['.md', '.mdx', '.ts', '.tsx', '.astro', '.mjs', '.js', '.css'];
+/** 取ってきた元データは直せないので見逃す（公式wikiの本文に記号が入っている） */
+const EMOJI_SKIP = ['scripts/data/'];
+let emojiChecked = 0;
+
+function walkForEmoji(dir) {
+  let out = [];
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, e.name);
+    if (e.isDirectory()) {
+      if (e.name === 'node_modules' || e.name === '.git') continue;
+      out = out.concat(walkForEmoji(full));
+    } else if (EMOJI_EXT.some((x) => e.name.endsWith(x))) {
+      out.push(full);
+    }
+  }
+  return out;
+}
+
+for (const dir of EMOJI_DIRS) {
+  if (!fs.existsSync(dir)) continue;
+  for (const file of walkForEmoji(dir)) {
+    const rel = file.replace(/\\/g, '/');
+    if (EMOJI_SKIP.some((s) => rel.includes(s))) continue;
+    emojiChecked++;
+    const text = fs.readFileSync(file, 'utf8');
+    text.split('\n').forEach((line, i) => {
+      /* レア度の星は記号として残す（`★6` のようにゲーム内表記で使う） */
+      const found = (line.match(EMOJI_RE) ?? []).filter((c) => c !== '★' && c !== '☆');
+      if (found.length === 0) return;
+      problems.push(
+        `${rel}:${i + 1}: 絵文字「${found.join('')}」— 使わない決まりです（文字か lucide のアイコンに）`,
+      );
+    });
+  }
+}
+
 console.log(
   `HTML ${files.length} ファイル / アイコン参照 ${checkedUses} 件 / wiki跨ぎリンク ${crossLinks} 件 / ` +
-    `公開文の禁止表現 ${prosePhrases} 件を検査`,
+    `公開文の禁止表現 ${prosePhrases} 件 / 絵文字 ${emojiChecked} ファイルを検査`,
 );
 if (problems.length === 0) {
   console.log('✓ 問題は見つかりませんでした');
   process.exit(0);
 }
-console.log(`⚠ ${problems.length} 件の指摘:`);
+console.log(`${problems.length} 件の指摘:`);
 for (const p of problems.slice(0, 40)) console.log('  - ' + p);
 if (problems.length > 40) console.log(`  … ほか ${problems.length - 40} 件`);
 process.exit(1);

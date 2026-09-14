@@ -273,7 +273,7 @@ console.log('');
 
 if (problems.length === 0) console.log('✓ 問題は見つかりませんでした');
 else {
-  console.log(`⚠ ${problems.length} 件の指摘:`);
+  console.log(`${problems.length} 件の指摘:`);
   for (const p of problems) console.log('  - ' + p);
 }
 if (SHOW_ALL && notes.length) {

@@ -23,6 +23,6 @@ sources:
 
 > 楽曲数・難易度・解放条件はゲーム内および攻略サイトで**要確認**。
 >
-> ⚠️ ワールドボスの「[音ゲー魔王（Beat King）](/enemies/beat-king/)」（[絵空町](/terms/ekuusora/)・[バロック大通り](/terms/baroque-avenue/)）とは**別物**。あちらは戦闘ボスで、こちらはミニゲーム。混同に注意。
+> ワールドボスの「[音ゲー魔王（Beat King）](/enemies/beat-king/)」（[絵空町](/terms/ekuusora/)・[バロック大通り](/terms/baroque-avenue/)）とは**別物**。あちらは戦闘ボスで、こちらはミニゲーム。混同に注意。
 
 関連: [シティライフ](/systems/city-life/) ／ [ファンス](/terms/fons/) ／ [音ゲー魔王](/enemies/beat-king/)

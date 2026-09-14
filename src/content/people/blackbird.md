@@ -16,7 +16,7 @@ sources:
     url: "https://nerdschalk.com/neverness-to-everness-blackbird-witch-house-location-daily-divinations-and-nte-rewards-explained/"
 ---
 
-> ⚠️ **ネタバレ注意**：メインストーリー4章の内容に触れます。
+> **ネタバレ注意**：メインストーリー4章の内容に触れます。
 
 **クロバネ（英名 Blackbird）** は、[橋間地](/locations/bridge-crossings/)の「**魔女の家**」に住む魔女。日本語では「クロバネ」、英語版では「Blackbird」と表記される。メインストーリー**4章**に関わり、[ラヴィニア](/people/lavinia/)とも関係する。
 

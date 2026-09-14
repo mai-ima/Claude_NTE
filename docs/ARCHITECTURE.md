@@ -129,7 +129,7 @@ arcs / enemies / items / story
 **α の 4 セクション**: alphaCharacters / alphaSystems / alphaGuides / alphaTerms
 （`dir` はそれぞれ `alpha-characters` … のケバブ名）
 
-> ⚠ `nav.ts` の `PRIMARY_NAV` / `BOTTOM_NAV` は**現在どこからも使われていない死んだ定義**。
+> `nav.ts` の `PRIMARY_NAV` / `BOTTOM_NAV` は**現在どこからも使われていない死んだ定義**。
 > ナビの実体は `wikis.ts` の `WikiMeta.primaryNav` / `bottomNav`。
 > `BaseLayout.astro:54-55` が `const PRIMARY_NAV = w.primaryNav` とローカルに置き直しているため
 > 名前が同じで紛らわしい。**触るのは `wikis.ts` の方**。

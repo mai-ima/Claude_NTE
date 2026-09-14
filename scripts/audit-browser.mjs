@@ -15,11 +15,11 @@
  * dist/ を配信するサーバは**このスクリプトが自分で立てて自分で閉じる**（外部依存なし）。
  * すでに動いているサーバを使いたいときは `AUDIT_BASE=http://localhost:4322` を渡す。
  *
- * ⚠ 動かしたサーバを止めるのに `pkill` を使わないこと。
+ * 動かしたサーバを止めるのに `pkill` を使わないこと。
  *   heredoc の書き込み前に自分のシェルを kill して exit 144 になった実績がある
  *   （docs/FINDINGS.md）。
  *
- * ⚠ このスクリプトは**リポジトリ直下から**実行すること。
+ * このスクリプトは**リポジトリ直下から**実行すること。
  *   `playwright` は devDependencies にあるため、リポジトリ外から実行すると解決できない。
  */
 import { chromium, devices } from 'playwright';
@@ -215,7 +215,7 @@ console.log('');
 if (problems.length === 0) {
   console.log('✓ 問題は見つかりませんでした');
 } else {
-  console.log(`⚠ ${problems.length} 件の指摘:`);
+  console.log(`${problems.length} 件の指摘:`);
   for (const p of problems) console.log('  - ' + p);
 }
 process.exit(problems.length ? 1 : 0);

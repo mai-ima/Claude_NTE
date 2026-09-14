@@ -418,7 +418,7 @@ const endfieldItems = defineCollection({
 /**
  * バージョン更新・特別スカウト・期間限定イベント。
  * `start` / `end` は NTE の events と**同じ意味**で持つ（`phaseOf` が開催状況を出す）。
- * ⚠ `end` を空にすると**永久に「開催中」と表示される**（NTE で実際に起きた）。
+ * `end` を空にすると**永久に「開催中」と表示される**（NTE で実際に起きた）。
  *    終了日が未告知なら本文に「終了日は未告知」と書くこと。
  */
 const endfieldEvents = defineCollection({
