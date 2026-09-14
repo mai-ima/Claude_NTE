@@ -301,8 +301,10 @@ const endfieldOperators = defineCollection({
       gender: z.string().optional(), // 性別
       birthday: z.string().optional(), // 誕生日
       race: z.string().optional(), // 種族（サルカズ・フェリーンなど）
+      cvJa: z.string().optional(), // 日本語CV
       cvCn: z.string().optional(), // 中国語CV
       cvEn: z.string().optional(), // 英語CV
+      cvKr: z.string().optional(), // 韓国語CV
       /** 公式wikiの「おすすめ武器（ゲーム内推奨）」に並ぶもの */
       recommendedWeapons: z.array(z.string()).default([]),
       /** 能力値の主・副（公式wikiの「レベルアップ」に「メイン能力」「サブ能力」と出る） */

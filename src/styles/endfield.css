@@ -807,8 +807,32 @@ a:hover {
   border: 1px solid var(--ef-line);
   margin: 18px 0;
 }
-.ef-table-scroll table {
+/* ★ セレクタを `.ef-prose` から始めているのは**詳細度のため**。
+   このファイルの後ろ（24節）に `.ef-prose table { width: 100% }` があり、
+   同じ詳細度だと後ろ勝ちで潰れる。(0,2,1) にして確実に効かせる。 */
+.ef-prose .ef-table-scroll table {
   border: 0;
+  /* 箱の幅に無理やり詰め込ませない。列が潰れて1文字ずつ折り返すのを防ぐ */
+  width: max-content;
+  min-width: 100%;
+}
+.ef-prose .ef-table-scroll th,
+.ef-prose .ef-table-scroll td {
+  min-width: 7.5em;
+  max-width: 24em;
+}
+/* 左端の見出し列は貼り付けたままにする。
+   RANK1〜スキル特化3 のような横長の表を、何の行か見失わずに読めるように。 */
+.ef-prose .ef-table-scroll th:first-child,
+.ef-prose .ef-table-scroll td:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--ef-bg);
+  border-right: 1px solid var(--ef-line);
+}
+.ef-prose .ef-table-scroll thead th:first-child {
+  background: var(--ef-bg-2);
 }
 
 /* =========================================================================

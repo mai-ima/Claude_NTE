@@ -1,19 +1,30 @@
 ---
 title: "プチエナ"
-en: "Pochiena"
+en: "Purrchena"
 rarity: "★5"
 class: "重装"
 element: "物理"
+weaponType: "片手剣"
+faction: "環タロ商会"
+gender: "女性"
+race: "フェリーン"
+cvJa: "井澤詩織"
+cvCn: "韩娇娇"
+cvEn: "Christine Marie Cabanos"
+cvKr: "박이서"
+quote: "よおし、わたしの……『やあ！』……ふわわあっ、寝ちゃってました！"
 version: "雪氷の幽夢（2026/9/2）"
-implemented: true
+implemented: false
 order: 2
-description: "「雪氷の幽夢」で実装された★5オペレーター。物理属性・重装。イベントで無料配布され、最大潜在まで育てられる。"
+description: "★5 の重装／物理属性のオペレーター（実装前に公開された情報）。"
 status: "draft"
-updated: 2026-09-09
-checked: 2026-09-09
-tags: ["★5", "重装", "物理", "雪氷の幽夢", "配布"]
-aliases: ["Pochiena", "プチェナ"]
+updated: 2026-09-14
+checked: 2026-09-14
+tags: ["オペレーター", "★5", "重装", "物理", "片手剣", "環タロ商会"]
+aliases: ["Purrchena"]
 sources:
+  - label: "公式wiki（SKPORT）— オペレーター"
+    url: "https://wiki.skport.com/endfield"
   - label: "GRYPH FRONTIER（PR TIMES） — 新バージョン「雪氷の幽夢」情報公開"
     url: "https://prtimes.jp/main/html/rd/p/000000040.000126152.html"
   - label: "gamebiz — 新バージョン「雪氷の幽夢」を本日開放"
@@ -24,17 +35,28 @@ sources:
 
 ## 概要
 
-**プチエナ** は、バージョン「[雪氷の幽夢](/endfield/events/snow-dream/)」で実装された
-**★5** の[オペレーター](/endfield/terms/operator/)。
+**プチエナ**（Purrchena）は、**★5** の[オペレーター](/endfield/terms/operator/)。
 [職業](/endfield/terms/class/)は**重装**、[属性](/endfield/terms/element/)は**物理**。
+扱う[武器種](/endfield/terms/weapon-type/)は**片手剣**で、所属は**環タロ商会**。
 
-## 特徴
+> 「よおし、わたしの……『やあ！』……ふわわあっ、寝ちゃってました！」
 
-- **盾による防御**を軸に、味方を守る。
-- 味方への**支援・加護・回復**を持つとされる。
+> 🛠 **要確認**: この項目は**実装前に公開された情報**です。
+> 実装時に数値や効果が変わることがあります。
 
-> 🛠 **要確認**: スキルの名称・効果・倍率、ステータス、昇進素材は
-> 確認できていません。**数値は載せていません**。
+## 基本情報
+
+| 項目 | 内容 |
+| --- | --- |
+| コードネーム | プチエナ |
+| 性別 | 女性 |
+| 陣営 | 環タロ商会 |
+| 属性 | 物理 |
+| 種族 | フェリーン |
+| 中国語CV | 韩娇娇 |
+| 英語CV | Christine Marie Cabanos |
+| 日本語CV | 井澤詩織 |
+| 韓国語CV | 박이서 |
 
 ## 入手（無料配布）
 
@@ -46,4 +68,4 @@ sources:
 
 > 🛠 **要確認**: 配布の終了日、必要なクエストの条件は確認できていません。
 
-関連: [ティフォロス](/endfield/operators/typhoeus/) ／ [雪氷の幽夢](/endfield/events/snow-dream/) ／ [職業](/endfield/terms/class/)
+関連: [オペレーター](/endfield/terms/operator/) ／ [職業](/endfield/terms/class/) ／ [属性](/endfield/terms/element/) ／ [武器種](/endfield/terms/weapon-type/)

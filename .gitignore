@@ -27,3 +27,7 @@ Thumbs.db
 # → public/images/characters/README.md
 public/images/characters/*
 !public/images/characters/README.md
+
+# 公式wiki から取った生の応答（作り直せるので追跡しない）
+# → scripts/fetch-endfield-wiki.mjs
+.cache/
