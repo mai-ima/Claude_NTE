@@ -5,13 +5,17 @@ category: "ガチャ・通貨"
 order: 21
 description: "NTE ガチャの2系統。期間限定の注目キャラを狙う限定ボードと、いつでも引ける恒常ボードの違い。"
 status: "verified"
-updated: 2026-06-11
-checked: 2026-09-06
+updated: 2026-09-14
+checked: 2026-09-14
 tags: ["ガチャ", "限定", "恒常"]
 aliases: ["限定ガチャ", "恒常ガチャ", "ピックアップ"]
 sources:
   - label: "神ゲー攻略 — ガチャの種類と仕様"
     url: "https://kamigame.jp/nte/page/419228463136778102.html"
+  - label: "神ゲー攻略 — Sランク常設キャラ選択箱の入手方法とおすすめキャラ"
+    url: "https://kamigame.jp/nte/page/420144434320018826.html"
+  - label: "ゲームウィズ — 選べる恒常Sキャラ配布は誰がおすすめ？"
+    url: "https://gamewith.jp/nte/556612"
 ---
 
 NTE のガチャ（[スカボロー市場](/terms/scarborough-fair/)）の[ボード](/terms/board-shift/)は、**限定（ピックアップ）ボード**と**標準（恒常）ボード**の2系統に分かれる。使う[サイコロ](/terms/dice/)も排出対象も異なるため、何を狙うかで使い分ける。
@@ -31,6 +35,7 @@ NTE のガチャ（[スカボロー市場](/terms/scarborough-fair/)）の[ボ�
 | 確定 | 90連で注目S | （恒常Sを排出） |
 
 - 恒常S級は **早霧／ダフォディール／白蔵／九原／ファルディーヤ／ハソール** の6体。
+  **2026年9月時点（Ver.1.3）でも同じ6体**で、恒常への追加はまだ無い。
 
 ## 使い方・コツ
 

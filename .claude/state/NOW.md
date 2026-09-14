@@ -17,25 +17,26 @@ node scripts/gen-endfield-operators.mjs            # 記事を書き出す
 node scripts/gen-endfield-weapons.mjs
 node scripts/gen-endfield-entries.mjs              # 脅威・装備・アイテム・設備
 node scripts/capture-ui.mjs <名前> <URL>           # 見た目の実測値を取る
+node scripts/fetch-nte-faces.mjs                   # NTE の顔アイコン
 ```
 
-手順と癖は **`docs/ENDFIELD-SOURCES.md` 6章** と `scripts/lib/skport.mjs` の冒頭。
+手順と癖は **`docs/ENDFIELD-SOURCES.md` 6章**／レシピは `docs/RECIPES.md` の11。
 
 ## いまの状態
 
-- 記事 **1354本**（エンドフィールドが 1073本）／ ページ 1423／ `pnpm verify` は通る
-- 同梱画像 **1446枚**（`public/images/official/endfield/` 約30MB）
+- 記事 **1354本**（エンドフィールドが 1084本）／ ページ 1423／ `pnpm verify` は通る
+- 同梱画像 **1464枚**（エンドフィールド 1446＋NTE の顔 18／約34MB）
 - 一覧・記事に**絵が出る**。絞り込みに武器種・部位・区分が増えた
+- **宿題 G・I・J を解消**（死んでいた CSS／未実装キャラ3体／恒常S級6体）
 
 ## 次の一手
 
-1. **段階6（NTE 側288本のファクトチェック）が丸ごと残っている**。
-   宿題 J（恒常S級6体）と宿題 I（未実装キャラ3体）が未解決。
-2. エンドフィールドの**エリア・ストーリー・イベント・システム**は公式wikiに項目が無い。
-   ここは攻略サイト頼りのまま（`endfield-areas` 1本・`endfield-story` 1本）。
-3. 段階7（base UI の刷新）・段階8-9（法的文書・iOS）はプランでは済み扱いだが、
-   **宿題 G（`ui-old-base.css` の 23節・28節が死んでいる）**が残っている。
-4. 原神wiki（HoYoWiki）の作法は `/genshin/` を作るときに使う。**エンドフィールドには混ぜない**。
+1. **段階6（NTE 側288本のファクトチェック）の本体が残っている**。
+   キャラ25本を1本ずつ攻略サイトと突き合わせる（2サイト一致で `verified`）。
+2. エンドフィールドの**エリア・システム・イベント・ストーリー・ガイド**は
+   公式wikiに項目が無く、1〜2本のまま。攻略サイト頼りで増やすしかない。
+3. 段階7（base UI の刷新）・段階8-9（法的文書・iOS）はプランでは済み扱い。
+4. 原神wiki（HoYoWiki）の作法は `/genshin/` を作るときに使う。**混ぜない**。
 
 ## つまずきやすい所
 

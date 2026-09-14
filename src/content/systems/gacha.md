@@ -4,8 +4,8 @@ category: "ガチャ"
 order: 10
 description: "サイコロでボードを進める独自ガチャ。70連でボード転換（確率上昇）、限定90連で天井・すり抜けなし。"
 status: "verified"
-updated: 2026-09-13
-checked: 2026-09-13
+updated: 2026-09-14
+checked: 2026-09-14
 tags: ["ガチャ", "天井", "通貨"]
 sources:
   - label: "AppMedia（日本版）— ガチャ仕様"
@@ -16,6 +16,10 @@ sources:
     url: "https://dengekionline.com/article/202605/73807"
   - label: "ゲームエイト — ガチャの仕様と確率・おすすめの引き方"
     url: "https://game8.jp/nte/782292"
+  - label: "神ゲー攻略 — Sランク常設キャラ選択箱の入手方法とおすすめキャラ"
+    url: "https://kamigame.jp/nte/page/420144434320018826.html"
+  - label: "ゲームウィズ — 選べる恒常Sキャラ配布は誰がおすすめ？"
+    url: "https://gamewith.jp/nte/556612"
 ---
 
 ## 仕組み（ボードゲーム式）
@@ -24,7 +28,7 @@ NTE（Neverness to Everness）のガチャは **「スカボロー市場（Scarb
 
 - **限定ボード:** 期間限定の注目キャラ。**本質サイコロ**を使用。
 - **標準ボード（恒常ボードの名前は「奇縁物語」）:** **虚質サイコロ**を使用。
-  **初回に限り、50連でSランクを1体選んで入手できる**。恒常S級は **[早霧](/characters/sakiri/) / [ダフォディール](/characters/daffodill/) / [白蔵](/characters/baicang/) / [九原](/characters/jiuyuan/) / [ファルディーヤ](/characters/fadia/) / [ハソール](/characters/hathor/)** の6体（Ver.1.1 時点で確認。恒常追加の有無は**要確認**）。
+  **初回に限り、50連でSランクを1体選んで入手できる**。恒常S級は **[早霧](/characters/sakiri/) / [ダフォディール](/characters/daffodill/) / [白蔵](/characters/baicang/) / [九原](/characters/jiuyuan/) / [ファルディーヤ](/characters/fadia/) / [ハソール](/characters/hathor/)** の6体。**2026年9月時点（Ver.1.3）でも同じ6体**で、恒常への追加はまだ無い。
 
 ## 排出率と天井（ピティ）
 

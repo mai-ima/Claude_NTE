@@ -238,7 +238,8 @@ const editHref = editPath ? editUrl(editPath) : editUrlFor(collection, currentId
                 <section style="margin-top:32px;">
                   <h2>関連記事</h2>
                   <p class="muted text-sm" style="margin-top:-6px;">このページを参照しているページ。</p>
-                  <div class="cluster" style="margin-top:10px;">
+                  {/* `related-list` は old-base UI が「押せる並び」に見せるための目印 */}
+                  <div class="cluster related-list" style="margin-top:10px;">
                     {backlinks.map((b) => (
                       <a class="badge badge-accent" href={b.href} style="text-decoration:none;">
                         {b.title}
@@ -254,7 +255,7 @@ const editHref = editPath ? editUrl(editPath) : editUrlFor(collection, currentId
               related.length > 0 && (
                 <section style="margin-top:32px;">
                   <h2>{relatedLabel}</h2>
-                  <div class="cluster" style="margin-top:10px;">
+                  <div class="cluster related-list" style="margin-top:10px;">
                     {related.map((r) => (
                       <a class="badge" href={r.href} style="text-decoration:none;">
                         {r.title}

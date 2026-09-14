@@ -713,11 +713,12 @@ html[data-ui='old-base'] [data-group-count] {
   font-variant-numeric: tabular-nums;
 }
 
-/* ---- 23. 関連リンクのカード --------------------------------------------
-   画像の記事末尾は「この記事を読んだ人はこちらも見ています」という
-   **左にサムネ・右にシェブロン**の1行カード。
-   こちらの記事末尾の関連リンクも、同じ押しやすい行にする。 */
-html[data-ui='old-base'] .content > .grid-cards > .card-link {
+/* ---- 23. 記事末尾のカード -----------------------------------------------
+   記事の下に並ぶカード（関連ページの一覧など）の角を、参考画像の丸みに寄せる。
+   ※ 以前は `.content > .grid-cards > .card-link` と書いていたが、
+     記事ページの `.content` 直下に `.grid-cards` は無く**当たっていなかった**。
+     いまは記事の本文より下にあるカード全部を対象にする。 */
+html[data-ui='old-base'] .content .grid-cards > .card-link {
   border-radius: 16px;
 }
 
@@ -780,17 +781,20 @@ html[data-ui='old-base'] .filterbar .chip[aria-pressed='true'] .el-dot {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
 }
 
-/* ---- 28. 記事の関連リンクを「行カード」にする --------------------------
-   参考画像の記事末尾は「左に絵・中央に文字・右にシェブロン」の1行カード
-   （この記事を読んだ人はこちらも見ています）。
-   こちらの関連リンクも同じ**押しやすい1行**にそろえる。 */
-html[data-ui='old-base'] .prose + .grid-cards > .card-link,
-html[data-ui='old-base'] .related-list > .card-link {
+/* ---- 28. 関連リンクを「押せる」と分かる形にする ------------------------
+   参考画像の記事末尾は「左に絵・中央に文字・右にシェブロン」の1行カード。
+   こちらの関連項目は**タグ状の並び**（`.cluster > .badge`）で、
+   同じ情報をずっと省スペースに出せている。作り替えるより、
+   **押せることが分かる**ようにする方が実利があるので、右に小さな `›` を付ける。
+
+   ※ 以前は `.related-list > .card-link` と書いていたが、
+     `related-list` を付けた要素も `card-link` も無く、**丸ごと死んでいた**。
+     いまは `EntityDetail.astro` の関連項目・関連記事に `related-list` を付けてある。 */
+html[data-ui='old-base'] .prose + .grid-cards > .card-link {
   position: relative;
   padding-right: 34px;
 }
-html[data-ui='old-base'] .prose + .grid-cards > .card-link::after,
-html[data-ui='old-base'] .related-list > .card-link::after {
+html[data-ui='old-base'] .prose + .grid-cards > .card-link::after {
   content: '›';
   position: absolute;
   right: 14px;
@@ -798,6 +802,20 @@ html[data-ui='old-base'] .related-list > .card-link::after {
   transform: translateY(-50%);
   color: var(--muted);
   font-size: 1.3rem;
+  line-height: 1;
+}
+html[data-ui='old-base'] .related-list > a {
+  position: relative;
+  padding-right: 20px;
+}
+html[data-ui='old-base'] .related-list > a::after {
+  content: '›';
+  position: absolute;
+  right: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted);
+  font-size: 1.05rem;
   line-height: 1;
 }
 
