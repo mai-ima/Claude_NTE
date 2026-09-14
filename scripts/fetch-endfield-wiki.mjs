@@ -68,6 +68,12 @@ for (const main of catalog.catalog) {
           : {}),
       };
     }
+    /* 英語名も引いておく。**記事の slug を作るのに要る**（日本語名からは作れない）。 */
+    const en = await get('/web/v1/wiki/item/catalog', { typeMainId: main.id, typeSubId: sub.id }, 'en');
+    for (const it of en.catalog?.[0]?.typeSub?.[0]?.items ?? []) {
+      if (index[it.itemId]) index[it.itemId].en = it.name.trim();
+    }
+
     console.log(`目録: ${main.name} / ${sub.name} → ${items.length} 件`);
   }
 }
@@ -108,8 +114,8 @@ const resolveDoc = (doc, v) => (typeof v === 'string' ? doc.documentMap?.[v] : v
  * - プロファイルの長い読み物（第一〜第四資料）も同じ理由で残さない。
  *   必要になったら `.cache/` から作り直せる。
  */
-const SKIP_CHAPTER = new Set(['メディア']);
-const SKIP_BLOCK = new Set(['音声記録', 'プロファイル']);
+const SKIP_CHAPTER = new Set(['メディア', 'メディア資料', '資料']);
+const SKIP_BLOCK = new Set(['音声記録', 'プロファイル', 'ギャラリー']);
 
 /** 1項目 → 記事の材料 */
 function distill(raw) {
