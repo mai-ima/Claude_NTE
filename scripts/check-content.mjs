@@ -199,8 +199,15 @@ for (const a of articles) {
   }
 
   // 内部リンクの記法・宛先
-  for (const m of a.body.matchAll(/\]\((\/[^)\s]*)\)/g)) {
-    const href = m[1];
+  //
+  // ★ 画像（`![](/images/…)`）は対象外。
+  //   ページのリンクは `trailingSlash: 'always'` なので末尾の `/` が要るが、
+  //   画像は**ファイルそのもの**なので付けてはいけない。
+  //   `/images/` 配下と、拡張子つきのファイル参照を除く。
+  for (const m of a.body.matchAll(/(!?)\]\((\/[^)\s]*)\)/g)) {
+    const isImage = m[1] === '!';
+    const href = m[2];
+    if (isImage || href.startsWith('/images/') || /\.(webp|avif|png|jpe?g|gif|svg)$/i.test(href)) continue;
     if (/\.mdx?$/.test(href)) {
       add('warn', a.file, `内部リンクに拡張子が付いています: ${href}`);
       continue;

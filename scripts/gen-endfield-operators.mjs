@@ -23,6 +23,32 @@ const local = JSON.parse(fs.readFileSync(path.join(ROOT, 'scripts/data/endfield-
 const TODAY = new Date().toISOString().slice(0, 10);
 const SOURCE = { label: '公式wiki（SKPORT）— オペレーター', url: 'https://wiki.skport.com/endfield' };
 
+/**
+ * スキルの様子（技を出している瞬間）。
+ * `scripts/fetch-endfield-wiki-images.mjs` が同梱したものを、
+ * **台帳（images-ledger.json）経由で**引く。
+ * 連番だけで当てにいくと、取得と生成で数え方がずれたときに黙って別の絵が出る。
+ * 台帳には「オペレーター名 — スキル名」が入っているので、そこで突き合わせる。
+ *
+ * ★ 公式の元画像は**アニメーション GIF**（技の実演）。
+ *   小さいアイコンではないので、**見出しには置かず、説明の下に1枚置く**。
+ */
+const skillIcon = {};
+try {
+  const ledger = JSON.parse(
+    fs.readFileSync(path.join(ROOT, 'scripts/data/endfield-wiki/images-ledger.json'), 'utf8'),
+  );
+  for (const x of ledger.items ?? []) {
+    if (x.分類 !== 'スキルの様子') continue;
+    const m = String(x.file).match(/skills\/operators-(.+)-\d+\.webp$/);
+    const skill = String(x.name ?? '').split(' — ')[1]?.trim();
+    if (!m || !skill) continue;
+    skillIcon[`${m[1]}::${skill}`] = `/images/${x.file}`;
+  }
+} catch {
+  /* 台帳が無いときはアイコン無しで書き出す（絵が出ないだけ） */
+}
+
 /* ------------------------------------------------------------------ *
  * 下ごしらえ
  * ------------------------------------------------------------------ */
@@ -336,9 +362,13 @@ function build(op, order, variants = []) {
   if (skills?.tabs?.length) {
     md.push('## 戦闘スキル');
     for (const t of skills.tabs) {
+      const skillName = (t.intro?.name ?? '').trim();
       const head = [t.intro?.name, t.intro?.type ? `（${t.intro.type}）` : ''].join('');
       md.push(`### ${head || 'スキル'}`);
       if (t.intro?.text) md.push(resolveEntries(t.intro.text).split('\n').join('\n\n'));
+      /* 技を出している様子。同梱していないときは何も出ないだけ（壊れない） */
+      const shot = skillIcon[`${slug}::${skillName}`];
+      if (shot) md.push(`![${skillName || 'スキル'}の様子](${shot})`);
       const tbl = t.lines?.find((l) => l.kind === 'table');
       if (tbl) md.push(mdTable(tbl.rows));
     }

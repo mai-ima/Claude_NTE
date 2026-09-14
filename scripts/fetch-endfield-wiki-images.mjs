@@ -75,17 +75,31 @@ for (const [itemId, meta] of Object.entries(index.items)) {
   if (base) slugOf[itemId] = `${slugOf[base[0]]}-2`;
 }
 
-/** 1枚落として WebP にする。成功したら byte 数を返す */
-async function grab(url, dest, { size = 128, fit = 'cover' } = {}) {
+/**
+ * 1枚落として WebP にする。成功したら byte 数を返す。
+ *
+ * ★ GIF の扱い
+ *   スキルの絵は**技を実演するアニメーション GIF**（1枚8〜18MB・95コマ前後）。
+ *   1コマ目は技を出す前の「構え」で、縮めると何も写っていないように見える。
+ *   **6割あたりのコマ**を取ると、技が出ている瞬間になる。
+ *   コマの指定は `sharp(buf, { page: N })`。
+ *   （`{ pages: -1 }` で縦に連結してから `extract` する手は、
+ *     `extract_area: bad extract area` になって使えなかった）
+ */
+async function grab(url, dest, { size = 128, fit = 'cover', frame = 0 } = {}) {
   if (fs.existsSync(dest)) return 0; // すでにある
   const res = await fetch(url);
   if (!res.ok) throw new Error(`${res.status} ${url}`);
   const buf = Buffer.from(await res.arrayBuffer());
-  /* GIF は1枚目だけ。アニメーションのまま持つと重すぎる */
-  const img = sharp(buf, { animated: false })
+  let page = 0;
+  if (frame > 0) {
+    const meta = await sharp(buf, { pages: -1 }).metadata().catch(() => null);
+    if (meta?.pages > 1) page = Math.min(meta.pages - 1, Math.floor(meta.pages * frame));
+  }
+  const out = await sharp(buf, { page })
     .resize(size, size, { fit, withoutEnlargement: true })
-    .webp({ quality: 82 });
-  const out = await img.toBuffer();
+    .webp({ quality: 82 })
+    .toBuffer();
   fs.mkdirSync(path.dirname(dest), { recursive: true });
   fs.writeFileSync(dest, out);
   return out.length;
@@ -163,12 +177,16 @@ if (wantSkills) {
           seen.add(url);
           n += 1;
           const dest = path.join(OUT, 'wiki/skills', `${dir}-${slug}-${n}.webp`);
-          jobs.push({ name: `skill ${slug}-${n}`, fn: () => grab(url, dest, { size: 96, fit: 'inside' }) });
+          jobs.push({
+            name: `skill ${slug}-${n}`,
+            /* 記事に「技の様子」として置くので、小さすぎない大きさで取る */
+            fn: () => grab(url, dest, { size: 320, fit: 'inside', frame: 0.6 }),
+          });
           ledger.push({
             file: `official/endfield/wiki/skills/${dir}-${slug}-${n}.webp`,
             from: url,
             name: `${it.name} — ${t.intro?.name ?? ''}`,
-            分類: 'スキルのアイコン',
+            分類: 'スキルの様子',
           });
         }
       }

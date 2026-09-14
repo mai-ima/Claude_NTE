@@ -57,8 +57,13 @@ const initial = (name.match(/[A-Za-z]/)?.[0] ?? name.charAt(0)).toUpperCase();
 const local = id ? findLocalImage(dir, id) : null;
 // 同梱した公式画像。あれば外部 URL より優先する（速い・消えない・幅を揃えてある）
 // 公式に無いものは攻略wiki由来（`from-wiki/`）へ落ちる。→ docs/IMAGE-SOURCES.md
+/* 小さく出すときは**丸い顔アイコン**を先に探す。
+   同梱しているポスターは 750×836 の縦長なので、小さな枠に入れると顔が切れる。
+   顔アイコンは公式のキャラページのタブから取ったもの（→ scripts/fetch-nte-faces.mjs）。 */
+const face = id && dir === 'characters' && size <= 64 ? findLocalImage('official/nte/faces', id) : null;
 const bundled =
-  id ? (findLocalImage(`official/nte/${dir}`, id) ?? findLocalImage(`from-wiki/${dir}`, id)) : null;
+  face ??
+  (id ? (findLocalImage(`official/nte/${dir}`, id) ?? findLocalImage(`from-wiki/${dir}`, id)) : null);
 const official = bundled ?? officialImage ?? null;
 const imgVars =
   (local ? `--img-local:url('${local}');` : '') +

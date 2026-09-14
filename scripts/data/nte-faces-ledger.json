@@ -1,0 +1,95 @@
+{
+ "取得日": "2026-09-14",
+ "items": [
+  {
+   "file": "official/nte/faces/baicang.webp",
+   "from": "https://nte.perfectworld.com/public/images/main260402/role-tab-baicang.png",
+   "bytes": 12252
+  },
+  {
+   "file": "official/nte/faces/chaos.webp",
+   "from": "https://nte.perfectworld.com/public/images/main260618/role-tab-ka.png",
+   "bytes": 10380
+  },
+  {
+   "file": "official/nte/faces/chiz.webp",
+   "from": "https://nte.perfectworld.com/public/images/main260402/role-tab-xiaozhi.png",
+   "bytes": 12782
+  },
+  {
+   "file": "official/nte/faces/daffodill.webp",
+   "from": "https://nte.perfectworld.com/public/images/main260402/role-tab-dfde.png",
+   "bytes": 11960
+  },
+  {
+   "file": "official/nte/faces/fadia.webp",
+   "from": "https://nte.perfectworld.com/public/images/main260402/role-tab-fadiya.png",
+   "bytes": 13904
+  },
+  {
+   "file": "official/nte/faces/hathor.webp",
+   "from": "https://nte.perfectworld.com/public/images/main260402/role-tab-hasuoer.png",
+   "bytes": 11950
+  },
+  {
+   "file": "official/nte/faces/hotori.webp",
+   "from": "https://nte.perfectworld.com/public/images/main260513/role-tab-xun.png",
+   "bytes": 10262
+  },
+  {
+   "file": "official/nte/faces/irohi.webp",
+   "from": "https://nte.perfectworld.com/public/images/main260729/role-tab-yi.png",
+   "bytes": 11482
+  },
+  {
+   "file": "official/nte/faces/jiuyuan.webp",
+   "from": "https://nte.perfectworld.com/public/images/main260402/role-tab-jiuyuan.png",
+   "bytes": 12146
+  },
+  {
+   "file": "official/nte/faces/lacrimosa.webp",
+   "from": "https://nte.perfectworld.com/public/images/main260603/role-tab-an.png",
+   "bytes": 11510
+  },
+  {
+   "file": "official/nte/faces/mint.webp",
+   "from": "https://nte.perfectworld.com/public/images/main260402/role-tab-mint.png",
+   "bytes": 13786
+  },
+  {
+   "file": "official/nte/faces/nanally.webp",
+   "from": "https://nte.perfectworld.com/public/images/main260402/role-tab-nanally.png",
+   "bytes": 11708
+  },
+  {
+   "file": "official/nte/faces/rinko.webp",
+   "from": "https://nte.perfectworld.com/public/images/main260909/role-tab-lingke.png",
+   "bytes": 12304
+  },
+  {
+   "file": "official/nte/faces/sakiri.webp",
+   "from": "https://nte.perfectworld.com/public/images/main260402/role-tab-zaowu.png",
+   "bytes": 13128
+  },
+  {
+   "file": "official/nte/faces/shinku.webp",
+   "from": "https://nte.perfectworld.com/public/images/main260708/role-tab-zhen.png",
+   "bytes": 10562
+  },
+  {
+   "file": "official/nte/faces/zanko.webp",
+   "from": "https://nte.perfectworld.com/public/images/main260819/role-tab-canhong.png",
+   "bytes": 11228
+  },
+  {
+   "file": "official/nte/faces/zero.webp",
+   "from": "https://nte.perfectworld.com/public/images/main260402/role-tab-zero-male.png",
+   "bytes": 10378
+  },
+  {
+   "file": "official/nte/faces/zero-2.webp",
+   "from": "https://nte.perfectworld.com/public/images/main260402/role-tab-zero-female.png",
+   "bytes": 11472
+  }
+ ]
+}

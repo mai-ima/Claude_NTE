@@ -2548,3 +2548,16 @@ html[data-ef-theme='dark'] .ef-hero-panel {
   color: inherit;
   background: rgba(0, 0, 0, 0.12);
 }
+
+/* 本文に置く絵（スキルを出している様子など）。
+   公式wikiは同じ位置にアニメーション GIF を置いているが、こちらは**静止画1枚**。
+   幅いっぱいに伸ばすと粗いので上限を決める。 */
+.ef-prose p > img {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  margin: 4px 0 2px;
+  border: 1px solid var(--ef-line);
+  border-radius: var(--ef-wiki-corner);
+  background: var(--ef-bg-2);
+}
