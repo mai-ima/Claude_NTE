@@ -994,3 +994,80 @@ CSS 変数は `--swiper-theme-color` など Swiper のものだけで、**色は
 
 **注意**: Next.js の App Router なので、**存在しないパスでも HTTP は 200 を返す**。
 ステータスでは判別できない。
+
+---
+
+## 公式**サイト**の組み立てを部品ごとに読んだ（2026-09-14）
+
+`.cache/ui/ef-operator/measured.json`（508要素）から。クラス名が
+`ComponentName_partName__hash` の形なので、**部品の入れ子がそのまま読める**。
+
+### ページ全体
+
+```
+sections_sectionViewer            1440×1514
+  SectionViewer_sectionViewer     1440×1000
+    Header_pcHeaderContainer      68×1000   白  ← 左の縦レール
+    SectionViewer_contentContainer 1373×1000
+      __12-OperatorList_sectionContainer
+        __12-OperatorList_backgroundDeco  1373×279
+          HallowText_hollowText           1248×279  font-size 279px  色は透明
+        __12-OperatorList_decoRight       207×1000  rgb(255,250,8)  ← 右端の黄色い帯
+        __12-OperatorList_dropdowns       362×36
+        __12-OperatorList_list            1210×1452
+          OperatorItem_operatorItem × 33
+```
+
+### 左の縦レール（`Header_*`）
+
+| 部品 | 実測 |
+| --- | --- |
+| `pcHeaderContainer` | **68×1000**・白 |
+| `navItem` | 68×41・文字 `rgb(25,25,25)` |
+| `buttonFrameBg` | 34×138・角丸 **16.875px**・地 `#f2f2f2` |
+| `buttonPreserveBg` | 41×113・角丸 4px・地 `#191919`、中の `bg` が **`#fffa00`** |
+| `buttonShareBg` | 41×25・角丸 4px・地 `#e5e5e5` |
+
+→ こちらの `--ef-rail: 68px` は**正しかった**。
+
+### 中抜きの大文字（`HallowText`）
+
+**1248×279・font-size 279px・line-height 279px・文字色 `rgba(0,0,0,0)`**。
+塗らずに**輪郭だけ**を出し、見出しの後ろに敷く。
+
+### 並び順のセレクト（`Dropdown_*`）
+
+| 部品 | 実測 |
+| --- | --- |
+| `trigger` | 170×36・角丸 **2.25px**・地 **`rgb(58,58,58)`**・字 白 14.625px・padding 0 11.25px |
+| `panel` | 170×288・角丸 2.25px・**白**・padding 2.25px 0 |
+| `option` | 170×41・字 12.375px・padding-left **22.5px** |
+| `bg`（選択中） | `rgb(143,143,143)` |
+
+### オペレーターのカード（`OperatorItem_*`）
+
+| 部品 | 実測 |
+| --- | --- |
+| カード | **171×218**・角丸 **1.6875px**・`transition: transform .2s` |
+| 絵 | 171×218（カードいっぱい） |
+| 下の帯 | **171×46**・**白**（絵の下端に重なる） |
+| 名前 | 101×15、字 **15.1875px** |
+| 細い区切り | 101×7・**`rgb(217,217,217)`** |
+| アイコン | 51×25（**25×25 が2つ**） |
+
+**公式wikiのカードとは別物**。公式wikiは 152×215・左上だけ直角の角丸・3層。
+
+| | 公式サイト | 公式wiki |
+| --- | --- | --- |
+| 大きさ | 171×218 | 152×215 |
+| 角 | ほぼ直角（1.6875px） | 左上だけ直角（`0 8px 4px 4px`） |
+| 名前 | **絵の上に白い帯**を重ねる | カードの下に別行 |
+| 動き | `transform .2s` | `border-color` / `box-shadow` .16s |
+
+→ **形と動きは公式サイト、角と当たりの色は公式wiki**として組み合わせた。
+
+### まだ実装していない意匠
+
+- `decoRight`（右端の 207px の黄色い帯）… 本文幅を圧迫するので見送り
+- `Dropdown`（並び順）… 並び替えの仕組みはあるが、見た目は公式に寄せていない
+- ページ送りの動き（`SectionViewer` が画面ごとに切り替わる）… 静的サイトの構造と合わない

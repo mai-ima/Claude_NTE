@@ -1,7 +1,2899 @@
 {
  "取得日": "2026-09-14",
- "件数": 555,
+ "件数": 796,
  "items": [
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0000-0d0ded88cff944ab0c38061e7082decf.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260831/0d0ded88cff944ab0c38061e7082decf.jpg",
+   "容量": 1271702,
+   "寸法": "1600×900",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0001-ca1f01800baa34b8058313927ad5f764.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260901/ca1f01800baa34b8058313927ad5f764.jpg",
+   "容量": 1318386,
+   "寸法": "1600×900",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0002-a01127711bc002b4dff9706a53f1c5a0.png",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260901/a01127711bc002b4dff9706a53f1c5a0.png",
+   "容量": 1209297,
+   "寸法": "1600×900",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0003-2e95f910d5ae4d5c1afbef2a4c07a85f.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260831/2e95f910d5ae4d5c1afbef2a4c07a85f.jpg",
+   "容量": 993333,
+   "寸法": "1600×900",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0004-switcher-active.c8843bb5.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/switcher-active.c8843bb5.png",
+   "容量": 252,
+   "寸法": "25×13",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0005-subpage-title-pumper.86938bc4.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/subpage-title-pumper.86938bc4.png",
+   "容量": 32828,
+   "寸法": "448×430",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": "official/endfield/ui-parts/subpage-title-pumper.webp"
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0006-bg.9e174372.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/bg.9e174372.jpg",
+   "容量": 331663,
+   "寸法": "2560×1440",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0007-triangles.bcbd794a.svg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/triangles.bcbd794a.svg",
+   "容量": 261,
+   "寸法": "",
+   "形式": "svg",
+   "透過": false,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0008-deco.dbe18bea.svg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/deco.dbe18bea.svg",
+   "容量": 7845,
+   "寸法": "",
+   "形式": "svg",
+   "透過": false,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0009-2001a91d731153544a28cd9d7f295322.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260828/2001a91d731153544a28cd9d7f295322.jpg",
+   "容量": 1322014,
+   "寸法": "1600×900",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0010-b58b383e1cb78cd5a69cd57c20301e2b.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260821/b58b383e1cb78cd5a69cd57c20301e2b.jpg",
+   "容量": 342614,
+   "寸法": "1600×900",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0011-9a67bb7b0b4aacd5016687c573f4d30b.png",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260807/9a67bb7b0b4aacd5016687c573f4d30b.png",
+   "容量": 647615,
+   "寸法": "1600×900",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0012-afc64f5faba99bd025060c0f217fa2ed.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260804/afc64f5faba99bd025060c0f217fa2ed.jpg",
+   "容量": 823317,
+   "寸法": "1600×900",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0013-07789b2d380134b88b5028cf97227d85.png",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260811/07789b2d380134b88b5028cf97227d85.png",
+   "容量": 1670686,
+   "寸法": "1600×900",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0014-ce5e25aa87dc50d7a59ee1ccd2f6591b.png",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260825/ce5e25aa87dc50d7a59ee1ccd2f6591b.png",
+   "容量": 1603498,
+   "寸法": "1600×900",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0015-pag-button-texture.e4e732ad.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/pag-button-texture.e4e732ad.png",
+   "容量": 1871,
+   "寸法": "75×75",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0016-points-bg.f3b559e8.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/points-bg.f3b559e8.png",
+   "容量": 3007,
+   "寸法": "24×24",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0017-button-texture.63d91da2.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/button-texture.63d91da2.png",
+   "容量": 4530,
+   "寸法": "320×72",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0018-endministrator2.1ec20a16.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator2.1ec20a16.png",
+   "容量": 770802,
+   "寸法": "1530×1775",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0019-akekuri.3df4a3dc.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/akekuri.3df4a3dc.png",
+   "容量": 12577,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0020-kv-obt-pc.1d54f26f.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/kv-obt-pc.1d54f26f.jpg",
+   "容量": 1133153,
+   "寸法": "2780×1795",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0021-kv-obt-h5.6b03f2b9.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/kv-obt-h5.6b03f2b9.jpg",
+   "容量": 729134,
+   "寸法": "1920×1920",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0022-endministrator1.ec409283.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator1.ec409283.png",
+   "容量": 777373,
+   "寸法": "1530×1775",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0023-perlica.871dcf57.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/perlica.871dcf57.png",
+   "容量": 13097,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0024-wulfgard.b9d580b2.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/wulfgard.b9d580b2.png",
+   "容量": 12697,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0025-04.924992fa.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/04.924992fa.png",
+   "容量": 596744,
+   "寸法": "1600×900",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0026-alesh.ca99268b.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/alesh.ca99268b.png",
+   "容量": 12109,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0027-antal.78d45318.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/antal.78d45318.png",
+   "容量": 11354,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0028-arclight.0b402b3e.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/arclight.0b402b3e.png",
+   "容量": 11581,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0029-ardelia.b46cd31c.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ardelia.b46cd31c.png",
+   "容量": 11881,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0030-01.aae95e75.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/01.aae95e75.png",
+   "容量": 690429,
+   "寸法": "1600×900",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0031-chen.5c7b5e46.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/chen.5c7b5e46.png",
+   "容量": 11686,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0032-dapan.7b5afdec.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/dapan.7b5afdec.png",
+   "容量": 10517,
+   "寸法": "120×117",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0033-avywenna.36c72367.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/avywenna.36c72367.png",
+   "容量": 12732,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0034-catcher.68b395f9.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/catcher.68b395f9.png",
+   "容量": 10585,
+   "寸法": "119×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0035-endministrator2.f0bbf4fa.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator2.f0bbf4fa.png",
+   "容量": 12490,
+   "寸法": "119×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0036-ember.235ca9f1.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ember.235ca9f1.png",
+   "容量": 13217,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0037-fluorite.b83d45cf.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/fluorite.b83d45cf.png",
+   "容量": 12333,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0038-estella.b761d517.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/estella.b761d517.png",
+   "容量": 10339,
+   "寸法": "111×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0039-endministrator1.3efd4769.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator1.3efd4769.png",
+   "容量": 13011,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0040-lastrite.8560c002.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lastrite.8560c002.png",
+   "容量": 12835,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0041-pogranichnik.73f7bcf6.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/pogranichnik.73f7bcf6.png",
+   "容量": 12354,
+   "寸法": "118×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0042-gilberta.07ff3560.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/gilberta.07ff3560.png",
+   "容量": 13166,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0043-laevatain.20075757.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/laevatain.20075757.png",
+   "容量": 12429,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0044-lifeng.41ae5d06.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lifeng.41ae5d06.png",
+   "容量": 11947,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0045-yvonne.c93412e1.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/yvonne.c93412e1.png",
+   "容量": 13321,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0046-xaihi.9c949014.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/xaihi.9c949014.png",
+   "容量": 13629,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0047-03.722342c9.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/03.722342c9.png",
+   "容量": 770682,
+   "寸法": "1600×900",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0048-02.e58f9497.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/02.e58f9497.png",
+   "容量": 525138,
+   "寸法": "1600×900",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0049-snowshine.844ed0a4.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/snowshine.844ed0a4.png",
+   "容量": 12939,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0050-05.bc9f3f37.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/05.bc9f3f37.png",
+   "容量": 661122,
+   "寸法": "1600×900",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0051-copyright.160113cbd1f4597b075d.png",
+   "出どころ": "https://web-static.hg-cdn.com/gl_web_sdk/2.1.1/assets/copyright.160113cbd1f4597b075d.png",
+   "容量": 15521,
+   "寸法": "546×64",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0052-title.3fb557c17df762c4fbb1.svg",
+   "出どころ": "https://web-static.hg-cdn.com/gl_web_sdk/2.1.1/assets/title.3fb557c17df762c4fbb1.svg",
+   "容量": 2443,
+   "寸法": "",
+   "形式": "svg",
+   "透過": false,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0053-block-bg.f05eda37.svg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/block-bg.f05eda37.svg",
+   "容量": 163,
+   "寸法": "",
+   "形式": "svg",
+   "透過": false,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0054-subpage-title-pumper-h5.fa5fcf19.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/subpage-title-pumper-h5.fa5fcf19.png",
+   "容量": 16528,
+   "寸法": "256×260",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": "official/endfield/ui-parts/subpage-title-pumper-h5.webp"
+  },
+  {
+   "取得画面": "ef-news",
+   "ゲーム": "endfield",
+   "ファイル": "0055-bg_m.529c4e62.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/bg_m.529c4e62.jpg",
+   "容量": 162169,
+   "寸法": "1080×1920",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0000-switcher-active.c8843bb5.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/switcher-active.c8843bb5.png",
+   "容量": 252,
+   "寸法": "25×13",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0001-arrow.592963ed.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/arrow.592963ed.png",
+   "容量": 874,
+   "寸法": "97×96",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0002-block-bg.f05eda37.svg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/block-bg.f05eda37.svg",
+   "容量": 163,
+   "寸法": "",
+   "形式": "svg",
+   "透過": false,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0003-none.aa703403.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/none.aa703403.png",
+   "容量": 374,
+   "寸法": "93×93",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": "official/endfield/ui-parts/none.webp"
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0004-deco-right.0602d8cc.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/deco-right.0602d8cc.jpg",
+   "容量": 23932,
+   "寸法": "368×1440",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0005-prof-assault.2aeeaf48.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/prof-assault.2aeeaf48.jpg",
+   "容量": 6889,
+   "寸法": "139×139",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0006-prof-vanguard.b957cec2.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/prof-vanguard.b957cec2.jpg",
+   "容量": 7791,
+   "寸法": "139×139",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0007-prof-caster.d469c805.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/prof-caster.d469c805.jpg",
+   "容量": 6428,
+   "寸法": "139×139",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0008-prof-guard.78502de4.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/prof-guard.78502de4.jpg",
+   "容量": 6890,
+   "寸法": "139×139",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0009-prof-shielder.a3c6ffc9.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/prof-shielder.a3c6ffc9.jpg",
+   "容量": 8266,
+   "寸法": "139×139",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0010-ele-ice.134e8d15.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ele-ice.134e8d15.jpg",
+   "容量": 8100,
+   "寸法": "120×120",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0011-ele-physic.2c205b7a.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ele-physic.2c205b7a.jpg",
+   "容量": 5523,
+   "寸法": "120×120",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0012-ele-electric.a3874677.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ele-electric.a3874677.jpg",
+   "容量": 6864,
+   "寸法": "120×120",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0013-purrche.d6659019.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/purrche.d6659019.png",
+   "容量": 469978,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0014-card-bg.28c79684.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/card-bg.28c79684.jpg",
+   "容量": 31421,
+   "寸法": "304×386",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0015-ele-nature.0606ebde.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ele-nature.0606ebde.jpg",
+   "容量": 5868,
+   "寸法": "120×120",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0016-prof-support.532f02bd.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/prof-support.532f02bd.jpg",
+   "容量": 6898,
+   "寸法": "139×139",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0017-typhoea.87cfb4cd.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/typhoea.87cfb4cd.png",
+   "容量": 469978,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0018-prelica.d0bbdb53.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/prelica.d0bbdb53.png",
+   "容量": 79284,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0019-endministrator2.5ccb44a8.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator2.5ccb44a8.png",
+   "容量": 60264,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0020-ele-fire.97dcd67b.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ele-fire.97dcd67b.jpg",
+   "容量": 6822,
+   "寸法": "120×120",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0021-chen.b0afd1ba.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/chen.b0afd1ba.png",
+   "容量": 58102,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0022-banner.7b4f80c9.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/banner.7b4f80c9.jpg",
+   "容量": 8828,
+   "寸法": "400×91",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0023-endministrator1.c391b13d.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator1.c391b13d.png",
+   "容量": 68444,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0024-dapan.7cdb6a4e.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/dapan.7cdb6a4e.png",
+   "容量": 50759,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0025-liino.8d027d2a.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/liino.8d027d2a.png",
+   "容量": 70011,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0026-lizhiyan.7ada7b83.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lizhiyan.7ada7b83.png",
+   "容量": 70430,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0027-zhuangfy.50a608b8.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/zhuangfy.50a608b8.png",
+   "容量": 64327,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": "official/endfield/ui-parts/zhuangfy.webp"
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0028-camille.a26b2443.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/camille.a26b2443.png",
+   "容量": 52299,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0029-mifu.e1d79970.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/mifu.e1d79970.png",
+   "容量": 63874,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": "official/endfield/ui-parts/mifu.webp"
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0030-tangtang.b5cd99e9.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/tangtang.b5cd99e9.png",
+   "容量": 57103,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0031-yvonne.9695c304.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/yvonne.9695c304.png",
+   "容量": 74905,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0032-laevatain.edd103d4.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/laevatain.edd103d4.png",
+   "容量": 60117,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0033-gilberta.724f3503.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/gilberta.724f3503.png",
+   "容量": 79688,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0034-ember.6391acf9.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ember.6391acf9.png",
+   "容量": 70714,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0035-triangles.bcbd794a.svg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/triangles.bcbd794a.svg",
+   "容量": 261,
+   "寸法": "",
+   "形式": "svg",
+   "透過": false,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0036-lastrite.3860f541.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lastrite.3860f541.png",
+   "容量": 289865,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0037-arclight.e31580d7.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/arclight.e31580d7.png",
+   "容量": 54295,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0038-alesh.d7f457d2.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/alesh.d7f457d2.png",
+   "容量": 61545,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0039-ardelia.565c75af.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ardelia.565c75af.png",
+   "容量": 66656,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0040-rossi.c58b721b.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/rossi.c58b721b.png",
+   "容量": 67063,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0041-xaihi.9ba3eb36.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/xaihi.9ba3eb36.png",
+   "容量": 79438,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0042-catcher.bc6bcfaa.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/catcher.bc6bcfaa.png",
+   "容量": 47925,
+   "寸法": "281×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0043-bg.9e174372.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/bg.9e174372.jpg",
+   "容量": 331663,
+   "寸法": "2560×1440",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0044-wulfgard.609a252f.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/wulfgard.609a252f.png",
+   "容量": 63710,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0045-lifeng.ef41bc3a.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lifeng.ef41bc3a.png",
+   "容量": 53148,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0046-avywenna.2a592659.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/avywenna.2a592659.png",
+   "容量": 63329,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0047-fluorite.5a8add29.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/fluorite.5a8add29.png",
+   "容量": 60992,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0048-snowshine.bb2c0bdc.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/snowshine.bb2c0bdc.png",
+   "容量": 66692,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0049-akekuri.3603d013.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/akekuri.3603d013.png",
+   "容量": 61045,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0050-pogranichnik.80f2ddbb.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/pogranichnik.80f2ddbb.png",
+   "容量": 63445,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0051-deco.dbe18bea.svg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/deco.dbe18bea.svg",
+   "容量": 7845,
+   "寸法": "",
+   "形式": "svg",
+   "透過": false,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0052-antal.763c87e4.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/antal.763c87e4.png",
+   "容量": 53751,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0053-estella.38c423af.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/estella.38c423af.png",
+   "容量": 50117,
+   "寸法": "303×386",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0054-kv-obt-h5.6b03f2b9.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/kv-obt-h5.6b03f2b9.jpg",
+   "容量": 729134,
+   "寸法": "1920×1920",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0055-kv-obt-pc.1d54f26f.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/kv-obt-pc.1d54f26f.jpg",
+   "容量": 1133153,
+   "寸法": "2780×1795",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0056-endministrator2.1ec20a16.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator2.1ec20a16.png",
+   "容量": 770802,
+   "寸法": "1530×1775",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0057-akekuri.3df4a3dc.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/akekuri.3df4a3dc.png",
+   "容量": 12577,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0058-endministrator1.ec409283.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator1.ec409283.png",
+   "容量": 777373,
+   "寸法": "1530×1775",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0059-button-texture.63d91da2.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/button-texture.63d91da2.png",
+   "容量": 4530,
+   "寸法": "320×72",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0060-points-bg.f3b559e8.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/points-bg.f3b559e8.png",
+   "容量": 3007,
+   "寸法": "24×24",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0061-endministrator2.f0bbf4fa.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator2.f0bbf4fa.png",
+   "容量": 12490,
+   "寸法": "119×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0062-alesh.ca99268b.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/alesh.ca99268b.png",
+   "容量": 12109,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0063-pogranichnik.73f7bcf6.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/pogranichnik.73f7bcf6.png",
+   "容量": 12354,
+   "寸法": "118×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0064-estella.b761d517.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/estella.b761d517.png",
+   "容量": 10339,
+   "寸法": "111×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0065-snowshine.844ed0a4.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/snowshine.844ed0a4.png",
+   "容量": 12939,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0066-dapan.7b5afdec.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/dapan.7b5afdec.png",
+   "容量": 10517,
+   "寸法": "120×117",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0067-wulfgard.b9d580b2.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/wulfgard.b9d580b2.png",
+   "容量": 12697,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0068-01.aae95e75.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/01.aae95e75.png",
+   "容量": 690429,
+   "寸法": "1600×900",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0069-02.e58f9497.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/02.e58f9497.png",
+   "容量": 525138,
+   "寸法": "1600×900",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0070-03.722342c9.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/03.722342c9.png",
+   "容量": 770682,
+   "寸法": "1600×900",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0071-yvonne.c93412e1.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/yvonne.c93412e1.png",
+   "容量": 13321,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0072-xaihi.9c949014.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/xaihi.9c949014.png",
+   "容量": 13629,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0073-lifeng.41ae5d06.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lifeng.41ae5d06.png",
+   "容量": 11947,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0074-ardelia.b46cd31c.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ardelia.b46cd31c.png",
+   "容量": 11881,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0075-04.924992fa.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/04.924992fa.png",
+   "容量": 596744,
+   "寸法": "1600×900",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0076-arclight.0b402b3e.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/arclight.0b402b3e.png",
+   "容量": 11581,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0077-antal.78d45318.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/antal.78d45318.png",
+   "容量": 11354,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0078-05.bc9f3f37.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/05.bc9f3f37.png",
+   "容量": 661122,
+   "寸法": "1600×900",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0079-gilberta.07ff3560.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/gilberta.07ff3560.png",
+   "容量": 13166,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0080-perlica.871dcf57.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/perlica.871dcf57.png",
+   "容量": 13097,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0081-ember.235ca9f1.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ember.235ca9f1.png",
+   "容量": 13217,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0082-avywenna.36c72367.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/avywenna.36c72367.png",
+   "容量": 12732,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0083-catcher.68b395f9.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/catcher.68b395f9.png",
+   "容量": 10585,
+   "寸法": "119×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0084-endministrator1.3efd4769.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator1.3efd4769.png",
+   "容量": 13011,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0085-chen.5c7b5e46.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/chen.5c7b5e46.png",
+   "容量": 11686,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0086-fluorite.b83d45cf.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/fluorite.b83d45cf.png",
+   "容量": 12333,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0087-copyright.160113cbd1f4597b075d.png",
+   "出どころ": "https://web-static.hg-cdn.com/gl_web_sdk/2.1.1/assets/copyright.160113cbd1f4597b075d.png",
+   "容量": 15521,
+   "寸法": "546×64",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0088-title.3fb557c17df762c4fbb1.svg",
+   "出どころ": "https://web-static.hg-cdn.com/gl_web_sdk/2.1.1/assets/title.3fb557c17df762c4fbb1.svg",
+   "容量": 2443,
+   "寸法": "",
+   "形式": "svg",
+   "透過": false,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0089-laevatain.20075757.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/laevatain.20075757.png",
+   "容量": 12429,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0090-lastrite.8560c002.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lastrite.8560c002.png",
+   "容量": 12835,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-operator",
+   "ゲーム": "endfield",
+   "ファイル": "0091-bg_m.529c4e62.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/bg_m.529c4e62.jpg",
+   "容量": 162169,
+   "寸法": "1080×1920",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0000-b86326791c158172551177fd46018a53.png",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260902/b86326791c158172551177fd46018a53.png",
+   "容量": 1226118,
+   "寸法": "1280×720",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0001-switcher-active.c8843bb5.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/switcher-active.c8843bb5.png",
+   "容量": 252,
+   "寸法": "25×13",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0002-antal.78d45318.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/antal.78d45318.png",
+   "容量": 11354,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0003-en-us.234e7bc4.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/en-us.234e7bc4.png",
+   "容量": 85755,
+   "寸法": "667×426",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0004-wave-bg.8955885a.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/wave-bg.8955885a.png",
+   "容量": 17084,
+   "寸法": "627×461",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0005-tape-wave-bg.2bce9fc0.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/tape-wave-bg.2bce9fc0.png",
+   "容量": 37025,
+   "寸法": "946×216",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0006-lizhiyan.9b1b7f82.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lizhiyan.9b1b7f82.png",
+   "容量": 12815,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0007-fluorite.b83d45cf.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/fluorite.b83d45cf.png",
+   "容量": 12333,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0008-kv_v1d5.d98af17e.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/kv_v1d5.d98af17e.jpg",
+   "容量": 1221146,
+   "寸法": "3200×2560",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0009-catcher.68b395f9.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/catcher.68b395f9.png",
+   "容量": 10585,
+   "寸法": "119×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0010-liino.f1730ac7.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/liino.f1730ac7.png",
+   "容量": 12722,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0011-block-bg.f05eda37.svg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/block-bg.f05eda37.svg",
+   "容量": 163,
+   "寸法": "",
+   "形式": "svg",
+   "透過": false,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0012-purrche.d14c39f4.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/purrche.d14c39f4.png",
+   "容量": 61187,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0013-typhoea.c68596a8.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/typhoea.c68596a8.png",
+   "容量": 60859,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0014-ele-nature.0606ebde.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ele-nature.0606ebde.jpg",
+   "容量": 5868,
+   "寸法": "120×120",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0015-endministrator2.f0bbf4fa.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator2.f0bbf4fa.png",
+   "容量": 12490,
+   "寸法": "119×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0016-perlica.871dcf57.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/perlica.871dcf57.png",
+   "容量": 13097,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0017-section_divider_icon_lore.6968c414.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/section_divider_icon_lore.6968c414.png",
+   "容量": 93226,
+   "寸法": "452×228",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0018-endministrator1.3efd4769.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator1.3efd4769.png",
+   "容量": 13011,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0019-estella.b761d517.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/estella.b761d517.png",
+   "容量": 10339,
+   "寸法": "111×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0020-star.c078a0a7.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/star.c078a0a7.png",
+   "容量": 972,
+   "寸法": "61×67",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0021-chen.5c7b5e46.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/chen.5c7b5e46.png",
+   "容量": 11686,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0022-prof-assault.2aeeaf48.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/prof-assault.2aeeaf48.jpg",
+   "容量": 6889,
+   "寸法": "139×139",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0023-pag-button-texture.e4e732ad.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/pag-button-texture.e4e732ad.png",
+   "容量": 1871,
+   "寸法": "75×75",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0024-bg.51f75595.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/bg.51f75595.jpg",
+   "容量": 74262,
+   "寸法": "2560×1419",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0025-operator.875a6fbd.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/operator.875a6fbd.png",
+   "容量": 1144,
+   "寸法": "126×126",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0026-button-texture.63d91da2.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/button-texture.63d91da2.png",
+   "容量": 4530,
+   "寸法": "320×72",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0027-color-bar.1f0aa038.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/color-bar.1f0aa038.png",
+   "容量": 381,
+   "寸法": "18×113",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0028-triangles.bcbd794a.svg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/triangles.bcbd794a.svg",
+   "容量": 261,
+   "寸法": "",
+   "形式": "svg",
+   "透過": false,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0029-3e7ef5f35a199a9327a55d5a97c5bd1e.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260710/3e7ef5f35a199a9327a55d5a97c5bd1e.jpg",
+   "容量": 723354,
+   "寸法": "1280×720",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0030-ring.5ce6e2bd.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ring.5ce6e2bd.png",
+   "容量": 60259,
+   "寸法": "1110×1110",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0031-akekuri.3df4a3dc.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/akekuri.3df4a3dc.png",
+   "容量": 12577,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0032-windows.f03ec02f.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/windows.f03ec02f.png",
+   "容量": 22012,
+   "寸法": "2560×542",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0033-appStore.e038801b.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/appStore.e038801b.png",
+   "容量": 3437,
+   "寸法": "449×150",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0034-points-bg.f3b559e8.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/points-bg.f3b559e8.png",
+   "容量": 3007,
+   "寸法": "24×24",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0035-gpg.37836d7a.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/gpg.37836d7a.png",
+   "容量": 9188,
+   "寸法": "1008×137",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0036-882e9f228e9635399a69671a13cf272c.png",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260901/882e9f228e9635399a69671a13cf272c.png",
+   "容量": 1208304,
+   "寸法": "1600×900",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0037-681a4e54b3de3008e7c98297ac0bd9fa.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260411/681a4e54b3de3008e7c98297ac0bd9fa.jpg",
+   "容量": 445574,
+   "寸法": "1280×720",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0038-kv-obt-pc.1d54f26f.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/kv-obt-pc.1d54f26f.jpg",
+   "容量": 1133153,
+   "寸法": "2780×1795",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0039-endministrator1.ec409283.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator1.ec409283.png",
+   "容量": 777373,
+   "寸法": "1530×1775",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0040-kv-obt-h5.6b03f2b9.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/kv-obt-h5.6b03f2b9.jpg",
+   "容量": 729134,
+   "寸法": "1920×1920",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0041-9937940f4ed675d8a78f2c640f23819f.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260831/9937940f4ed675d8a78f2c640f23819f.jpg",
+   "容量": 1284618,
+   "寸法": "1600×900",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0042-bg.9e174372.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/bg.9e174372.jpg",
+   "容量": 331663,
+   "寸法": "2560×1440",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0043-121e71a2c9ea6036f6d06be488f9bf68.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260901/121e71a2c9ea6036f6d06be488f9bf68.jpg",
+   "容量": 1324042,
+   "寸法": "1600×900",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0044-blurred_logo.eccbe4f3.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/blurred_logo.eccbe4f3.png",
+   "容量": 101185,
+   "寸法": "755×656",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0045-9ad5ba1516db578d6900bda6fc9aed0e.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260831/9ad5ba1516db578d6900bda6fc9aed0e.jpg",
+   "容量": 997460,
+   "寸法": "1600×900",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0046-googlePlay.769131d6.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/googlePlay.769131d6.png",
+   "容量": 4222,
+   "寸法": "506×150",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0047-epic.7b9f0f97.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/epic.7b9f0f97.png",
+   "容量": 2819,
+   "寸法": "288×103",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0048-6e16ea162578fae87fe80a6eb12483e0.png",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260807/6e16ea162578fae87fe80a6eb12483e0.png",
+   "容量": 1238094,
+   "寸法": "1280×720",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0049-ps5.ff9ebc6a.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ps5.ff9ebc6a.png",
+   "容量": 2297,
+   "寸法": "491×108",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0050-timeline.e410e036.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/timeline.e410e036.png",
+   "容量": 36806,
+   "寸法": "1920×50",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0051-e83698dd203d70377ff6ec97ea359c06.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260828/e83698dd203d70377ff6ec97ea359c06.jpg",
+   "容量": 1340034,
+   "寸法": "1600×900",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0052-deco.dbe18bea.svg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/deco.dbe18bea.svg",
+   "容量": 7845,
+   "寸法": "",
+   "形式": "svg",
+   "透過": false,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0053-f194b6be2946d429891988df86610fec.png",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260525/f194b6be2946d429891988df86610fec.png",
+   "容量": 1864613,
+   "寸法": "1280×720",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0054-977a3b397c456bef29531bbd9e59222b.png",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260625/977a3b397c456bef29531bbd9e59222b.png",
+   "容量": 1267462,
+   "寸法": "1280×720",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0055-title.035c43cb.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/title.035c43cb.png",
+   "容量": 758410,
+   "寸法": "1920×414",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0056-endministrator2.1ec20a16.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/endministrator2.1ec20a16.png",
+   "容量": 770802,
+   "寸法": "1530×1775",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0057-fa6dd69e35fe88c1e8f13ba68311ec56.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260603/fa6dd69e35fe88c1e8f13ba68311ec56.jpg",
+   "容量": 388733,
+   "寸法": "1280×720",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0058-15f5e9bd0679cbe1fe3f51b440470493.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260821/15f5e9bd0679cbe1fe3f51b440470493.jpg",
+   "容量": 969000,
+   "寸法": "1280×720",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0059-b15b6f01601d449faf342d0ca4b7d8de.png",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260715/b15b6f01601d449faf342d0ca4b7d8de.png",
+   "容量": 1181829,
+   "寸法": "1280×720",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0060-01.aae95e75.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/01.aae95e75.png",
+   "容量": 690429,
+   "寸法": "1600×900",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0061-content.7229aa33.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/content.7229aa33.jpg",
+   "容量": 1784467,
+   "寸法": "1849×2320",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0062-641f0aa8ba13c941f71a36baaadc7f51.png",
+   "出どころ": "https://web-static.hg-cdn.com/upload/image/20260416/641f0aa8ba13c941f71a36baaadc7f51.png",
+   "容量": 1258662,
+   "寸法": "1280×720",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0063-typhoea.c4a79f82.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/typhoea.c4a79f82.png",
+   "容量": 12976706,
+   "寸法": "1836×1766",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0064-pogranichnik.73f7bcf6.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/pogranichnik.73f7bcf6.png",
+   "容量": 12354,
+   "寸法": "118×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0065-snowshine.844ed0a4.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/snowshine.844ed0a4.png",
+   "容量": 12939,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0066-wulfgard.b9d580b2.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/wulfgard.b9d580b2.png",
+   "容量": 12697,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0067-xaihi.9c949014.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/xaihi.9c949014.png",
+   "容量": 13629,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0068-dapan.7b5afdec.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/dapan.7b5afdec.png",
+   "容量": 10517,
+   "寸法": "120×117",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0069-yvonne.c93412e1.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/yvonne.c93412e1.png",
+   "容量": 13321,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0070-03.722342c9.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/03.722342c9.png",
+   "容量": 770682,
+   "寸法": "1600×900",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0071-05.bc9f3f37.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/05.bc9f3f37.png",
+   "容量": 661122,
+   "寸法": "1600×900",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0072-04.924992fa.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/04.924992fa.png",
+   "容量": 596744,
+   "寸法": "1600×900",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0073-02.e58f9497.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/02.e58f9497.png",
+   "容量": 525138,
+   "寸法": "1600×900",
+   "形式": "png",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0074-lastrite.8560c002.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lastrite.8560c002.png",
+   "容量": 12835,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0075-gilberta.07ff3560.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/gilberta.07ff3560.png",
+   "容量": 13166,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0076-alesh.ca99268b.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/alesh.ca99268b.png",
+   "容量": 12109,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0077-ardelia.b46cd31c.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ardelia.b46cd31c.png",
+   "容量": 11881,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0078-arclight.0b402b3e.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/arclight.0b402b3e.png",
+   "容量": 11581,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0079-avywenna.36c72367.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/avywenna.36c72367.png",
+   "容量": 12732,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0080-ember.235ca9f1.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/ember.235ca9f1.png",
+   "容量": 13217,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0081-laevatain.20075757.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/laevatain.20075757.png",
+   "容量": 12429,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0082-lifeng.41ae5d06.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/lifeng.41ae5d06.png",
+   "容量": 11947,
+   "寸法": "120×120",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0083-copyright.160113cbd1f4597b075d.png",
+   "出どころ": "https://web-static.hg-cdn.com/gl_web_sdk/2.1.1/assets/copyright.160113cbd1f4597b075d.png",
+   "容量": 15521,
+   "寸法": "546×64",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0084-ESRB.5a6a455503a8b3568bf3.svg",
+   "出どころ": "https://web-static.hg-cdn.com/gl_web_sdk/2.1.1/assets/ESRB.5a6a455503a8b3568bf3.svg",
+   "容量": 5001,
+   "寸法": "",
+   "形式": "svg",
+   "透過": false,
+   "UIのパーツ": true,
+   "同梱": "official/endfield/ui-parts/ESRB.5a6a455503a8b3568bf3.svg"
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0085-title.1457e7b3acf74f0a6213.svg",
+   "出どころ": "https://web-static.hg-cdn.com/gl_web_sdk/2.1.1/assets/title.1457e7b3acf74f0a6213.svg",
+   "容量": 3046,
+   "寸法": "",
+   "形式": "svg",
+   "透過": false,
+   "UIのパーツ": true,
+   "同梱": "official/endfield/ui-parts/title.1457e7b3acf74f0a6213.svg"
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0086-tower-top.768f88af.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/tower-top.768f88af.png",
+   "容量": 8781,
+   "寸法": "333×365",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0087-left-deco-text.3ef6b598.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/left-deco-text.3ef6b598.png",
+   "容量": 1692,
+   "寸法": "59×174",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0088-tower-bottom.eb021e6c.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/tower-bottom.eb021e6c.png",
+   "容量": 25017,
+   "寸法": "333×365",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0089-bg_m.2ac1c57d.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/bg_m.2ac1c57d.jpg",
+   "容量": 29277,
+   "寸法": "1080×1920",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0090-kv_v1d5_h5.0dccfb24.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/kv_v1d5_h5.0dccfb24.jpg",
+   "容量": 739788,
+   "寸法": "1920×1920",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0091-bg_m.529c4e62.jpg",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/bg_m.529c4e62.jpg",
+   "容量": 162169,
+   "寸法": "1080×1920",
+   "形式": "jpeg",
+   "透過": false,
+   "UIのパーツ": false,
+   "同梱": false
+  },
+  {
+   "取得画面": "ef-worldview",
+   "ゲーム": "endfield",
+   "ファイル": "0092-scroll_tip.351d44bc.png",
+   "出どころ": "https://web-static.hg-cdn.com/endfield/official-v4/_next/static/media/scroll_tip.351d44bc.png",
+   "容量": 4966,
+   "寸法": "95×74",
+   "形式": "png",
+   "透過": true,
+   "UIのパーツ": true,
+   "同梱": false
+  },
   {
    "取得画面": "endfield-official",
    "ゲーム": "endfield",
@@ -12,7 +2904,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/switcher-active.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-official",
@@ -108,7 +3000,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/chen.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-official",
@@ -156,7 +3048,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/operator.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-official",
@@ -180,7 +3072,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/lizhiyan.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-official",
@@ -192,7 +3084,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/endministrator1.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-official",
@@ -216,7 +3108,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/pag-button-texture.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-official",
@@ -240,7 +3132,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/button-texture.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-official",
@@ -288,7 +3180,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/purrche.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-official",
@@ -324,7 +3216,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/typhoea.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-official",
@@ -348,7 +3240,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/points-bg.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-official",
@@ -420,7 +3312,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/endministrator2.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-official",
@@ -492,7 +3384,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/ps5.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-official",
@@ -504,7 +3396,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/appStore.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-official",
@@ -528,7 +3420,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/googlePlay.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-official",
@@ -552,7 +3444,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/epic.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-official",
@@ -792,7 +3684,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/dapan.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-official",
@@ -912,7 +3804,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/lastrite.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-official",
@@ -1008,7 +3900,7 @@
    "形式": "svg",
    "透過": false,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/title.3fb557c17df762c4fbb1.svg"
+   "同梱": false
   },
   {
    "取得画面": "endfield-official",
@@ -1032,7 +3924,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/tower-top.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-official",
@@ -1044,7 +3936,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/left-deco-text.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-official",
@@ -1056,7 +3948,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/tower-bottom.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-official",
@@ -1104,7 +3996,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/scroll_tip.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-list",
@@ -1560,7 +4452,7 @@
    "形式": "webp",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/logo.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-list",
@@ -1632,7 +4524,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/6a980e4be6c4787f27a24532_13673ac9.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-operator",
@@ -1644,7 +4536,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/6a980e455e88149e6fd81600_f1525633.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-operator",
@@ -1656,7 +4548,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/6a980f8ae6c4787f27a24539_56331367.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-operator",
@@ -1668,7 +4560,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/6a98100c5e88149e6fd81608_13673ac9.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-operator",
@@ -1680,7 +4572,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/6a980e3b5e88149e6fd815ff_6ad0f152.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-operator",
@@ -1692,7 +4584,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/696267434b089c6bf8760623.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-operator",
@@ -1704,7 +4596,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/6a980ff65e88149e6fd81607_f1525633.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-operator",
@@ -1716,7 +4608,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/6a980fe9e6c4787f27a2453e_13673ac9.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-operator",
@@ -1740,7 +4632,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/69626746bc25979e22692538.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-operator",
@@ -1752,7 +4644,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/696267564823bf18f42e7c77.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-operator",
@@ -1764,7 +4656,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/69626758bc25979e22692539.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-operator",
@@ -1776,7 +4668,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/6a981001e6c4787f27a2453f_13673ac9.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-operator",
@@ -1788,7 +4680,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/69626753a3dc39acc046920e.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-operator",
@@ -1800,7 +4692,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/696267500920b30f43778cc0.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-operator",
@@ -1812,7 +4704,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/6962674d4b089c6bf8760624.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-operator",
@@ -1908,7 +4800,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/69626b4a6c326a83dea2e9e5.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-operator",
@@ -1920,7 +4812,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/69626b404823bf18f42e7c78.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-operator",
@@ -1932,7 +4824,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/69626b44bc25979e2269253a.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-operator",
@@ -1944,7 +4836,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/69626b4ca3dc39acc046920f.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-operator",
@@ -1956,7 +4848,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/69626b4fa1c4dd69df7d68fe.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-operator",
@@ -1968,7 +4860,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/endfield/ui-parts/366cb0176b5d804a89a67b42c0095a8b.webp"
+   "同梱": false
   },
   {
    "取得画面": "endfield-wiki-operator",
@@ -2472,7 +5364,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/plateTit1.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -2496,7 +5388,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-title.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -2544,7 +5436,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/plateTit3.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -2556,7 +5448,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/plateTit2.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -2580,7 +5472,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-name-ka.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -2628,7 +5520,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-name-zhen.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -2640,7 +5532,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-name-canhong.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -2784,7 +5676,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-name-zero.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -2796,7 +5688,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-name-jiuyuan.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -2880,7 +5772,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-name-baicang.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -2904,7 +5796,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-name-mint.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3000,7 +5892,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-name-nanally.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3024,7 +5916,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-name-zaowu.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3036,7 +5928,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/plateTit4.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3120,7 +6012,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-name-xun.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3168,7 +6060,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-name-hasuoer.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3348,7 +6240,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/plateTit5.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3396,7 +6288,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/iconLanguage.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3420,7 +6312,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/bgMusic.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3432,7 +6324,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/loginAfter.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3444,7 +6336,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/payBtn.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3456,7 +6348,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/languageArrow.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3468,7 +6360,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/nte-en-logo.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3480,7 +6372,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/loginIcon.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3528,7 +6420,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-tab-zero-male.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3540,7 +6432,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/nte-kr-logo.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3552,7 +6444,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/indexVideoBtn.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3564,7 +6456,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/pageNav1.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3576,7 +6468,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-tab-an.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3588,7 +6480,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/pageNav5.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3600,7 +6492,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/pageNav3.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3612,7 +6504,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/ornament.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3636,7 +6528,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-tab-zero-female.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3648,7 +6540,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/headMenuYY.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3660,7 +6552,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/pageNav4.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3684,7 +6576,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/headerYYBtn.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3696,7 +6588,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/pageNav2.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3708,7 +6600,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-tab-baicang.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3720,7 +6612,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-tab-hasuoer.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3732,7 +6624,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/menuWord.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3744,7 +6636,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-tab-ka.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3756,7 +6648,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-tab-xun.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3768,7 +6660,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-tab-zhen.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3804,7 +6696,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-tab-xiaozhi.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3816,7 +6708,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-tab-zaowu.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3828,7 +6720,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-tab-dfde.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3864,7 +6756,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/brandPrev.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3876,7 +6768,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/brandNext.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3912,7 +6804,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/newsMore.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3924,7 +6816,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/factionsPrev.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -3948,7 +6840,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/factionsNext.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -4008,7 +6900,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/icon-local.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -4032,7 +6924,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/icon-enlargement.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -4044,7 +6936,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/citySlidePrev.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -4308,7 +7200,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/downCodeBox.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -4332,7 +7224,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/citySlideNext.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -4356,7 +7248,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/galaxy.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -4380,7 +7272,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/downClose.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -4404,7 +7296,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/playOnPc.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -4488,7 +7380,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/win.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -4512,7 +7404,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/gamenews.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -4524,7 +7416,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/news.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -4548,7 +7440,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/gamebroad.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -4572,7 +7464,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/gameevent.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -4584,7 +7476,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/steam.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -4692,7 +7584,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/macTip.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -4716,7 +7608,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/hotta-logo.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -4872,7 +7764,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/icon-show.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -4884,7 +7776,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/NTE_logo.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -4896,7 +7788,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/cookieBannerClose.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -5160,7 +8052,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/header_menu.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -5220,7 +8112,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/pageArrow.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -5244,7 +8136,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/roleMoreDes.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -5412,7 +8304,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/newsSwiper.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -5448,7 +8340,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/indexDownBtn.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -5460,7 +8352,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/head_yy_btn.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-characters",
@@ -5664,7 +8556,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/community.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -5700,7 +8592,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/shareHref.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -5712,7 +8604,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/icon-time.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -5748,7 +8640,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/enter_btn.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -5760,7 +8652,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/pvBtn_k.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -5772,7 +8664,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/pvBtn_a.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -5796,7 +8688,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/time-down.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -5808,7 +8700,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/headMenuYYText-2.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -5832,7 +8724,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/indexDownBtnText-2.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -5892,7 +8784,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-tag6.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -5916,7 +8808,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-tag7.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -5928,7 +8820,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-tag8.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -6000,7 +8892,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-cv-lingke.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -6012,7 +8904,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-tag2.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -6024,7 +8916,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-info-more-text-2.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -6036,7 +8928,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-info-more.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -6048,7 +8940,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-tag3.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -6192,7 +9084,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-cv-canhong.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -6216,7 +9108,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/box3MoreNull.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -6228,7 +9120,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/role-tag9.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -6252,7 +9144,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/otherDownBtnText-2.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -6300,7 +9192,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/comingSoon.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -6492,7 +9384,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/box3More-coming-bg.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -6504,7 +9396,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/indexDownText-2.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",
@@ -6600,7 +9492,7 @@
    "形式": "png",
    "透過": true,
    "UIのパーツ": true,
-   "同梱": "official/nte/ui-parts/box3More-coming.webp"
+   "同梱": false
   },
   {
    "取得画面": "nte-official",

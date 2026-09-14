@@ -370,9 +370,16 @@ a:hover {
     width: var(--ef-rail);
     flex: none;
     padding: 8px 0;
-    /* 実画面どおり**白いレール**。本文との境は太い罫線で分ける。 */
-    background: var(--ef-bg);
-    border-right: var(--ef-bar) solid var(--ef-panel);
+    /* ★ 2026-09-14: **公式wikiのサイドバー**に合わせて暗くした。
+       公式wiki（`wiki.skport.com/endfield`）の実測は
+         `Endfield__Sidebar` 248×932 ／ 地 `rgba(18,18,18,.9)` ／ padding 16px 16px 24px
+         ／ 罫線 1px `rgba(255,255,255,.1)` ／ 項目 `Endfield__Menu` 216×40・角丸4px
+       幅と「触れると広がる」動きは**公式サイト**のレール（68px → 260px）のまま。
+       広がった状態が公式wikiの 248px にほぼ重なる。
+       利用者の決定「公式サイト × 公式wiki の完全再現」→ .claude/state/DECISIONS.md */
+    background: rgba(18, 18, 18, 0.9);
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.95);
     overflow: hidden auto;
     transition: width var(--ef-slow) ease;
     /* 公式は `::-webkit-scrollbar { display: none }` でスクロールバーを隠す。
@@ -391,8 +398,9 @@ a:hover {
     grid-template-columns: var(--ef-rail) 1fr;
     align-items: center;
     min-height: 48px;
-    /* 白地に**黒のピクトグラム**（実画面どおり）。薄いグレーではない。 */
-    color: var(--ef-ink);
+    /* 暗いサイドバーに合わせて**白のピクトグラム**。
+       公式wikiの項目は 216×40・角丸4px・名前 16px/19.2px/600。 */
+    color: rgba(255, 255, 255, 0.95);
     /* 現在地の帯。公式の太い罫線に合わせて 6px にする */
     border-left: var(--ef-bar) solid transparent;
     white-space: nowrap;
@@ -401,15 +409,15 @@ a:hover {
       color var(--ef-fast) ease;
   }
   .ef-rail-item:hover {
-    background: var(--ef-panel);
+    /* 公式wikiは薄い白を重ねる（`--ZhXi_white_text_icon_5` ＝ rgba(255,255,255,.05)） */
+    background: rgba(255, 255, 255, 0.08);
     text-decoration: none;
   }
-  /* 現在地は「色」「左の帯」「番号」の3つで示す（色覚に依らず分かるように） */
-  /* 現在地は**黒い面に白アイコン**（実画面どおり）。左の帯は黄色。
-     色・面の反転・帯の3つで示すので、色覚に依らず分かる。 */
+  /* 現在地は「色」「左の帯」「番号」の3つで示す（色覚に依らず分かるように）。
+     暗い地なので**黄色の面に黒い字**にすると、いちばん強く目立つ。 */
   .ef-rail-item[aria-current='page'] {
-    color: var(--ef-bg);
-    background: var(--ef-ink);
+    color: var(--ef-ink);
+    background: var(--ef-accent);
     border-left-color: var(--ef-accent);
   }
   .ef-rail-item[aria-current='page'] .ef-rail-no {
@@ -441,10 +449,11 @@ a:hover {
   .ef-rail-no {
     font-size: 0.68rem;
     font-variant-numeric: tabular-nums;
-    color: var(--ef-muted);
+    color: rgba(255, 255, 255, 0.45);
   }
   .ef-rail-item[aria-current='page'] .ef-rail-no {
-    color: var(--ef-accent);
+    color: var(--ef-ink);
+    opacity: 0.65;
   }
   .ef-rail-name {
     font-size: 0.86rem;
@@ -454,7 +463,8 @@ a:hover {
   .ef-rail-foot {
     margin-top: auto;
     padding: 10px 0;
-    border-top: 1px solid var(--ef-line-soft);
+    /* 暗い地なので、区切りは**薄い白**で引く（公式wiki `rgba(255,255,255,.1)`） */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
 }
 
@@ -1691,7 +1701,9 @@ html[data-ef-view='grid'] .ef-list.is-hairline {
 }
 @media (min-width: 640px) {
   html[data-ef-view='grid'] .ef-list.is-hairline {
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    /* 公式サイトのカードは **171×218**。同じ大きさになるよう 170px を下限にする
+       （240px にしていたときは1枚が269px になり、顔が画面いっぱいで迫力が出すぎていた）。 */
+    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
   }
 }
 html[data-ef-view='grid'] .ef-list.is-hairline .ef-row {
@@ -2737,4 +2749,192 @@ html[data-ef-view='grid'] .ef-list.is-hairline .ef-thumb-pic {
    罫線は `.ef-list.is-hairline` が中央寄せ90%で引くので、端に付いても窮屈に見えない。 */
 .ef-widget-body:has(> .ef-list) {
   padding: 0 0 4px;
+}
+
+/* ---- タイル表示を「公式サイトのオペレーターカード」にする（2026-09-14）----
+   公式サイト（`endfield.gryphline.com/ja-jp/operator`）のカードを実測した。
+
+   | 部品 | クラス（公式） | 実測 |
+   | --- | --- | --- |
+   | カード | `OperatorItem_operatorItem` | **171×218**・角丸 **1.6875px**・`transition: transform .2s` |
+   | 絵 | `OperatorItem_image` | **171×218**（カードいっぱい） |
+   | 下の帯 | `OperatorItem_contentBlock` | **171×46**・**白**（絵の下端に重なる） |
+   | 名前 | `OperatorItem_nameText` | **15.1875px** |
+   | 細い区切り | `OperatorItem_subTitle` | 101×7・**rgb(217,217,217)** |
+   | アイコン | `OperatorItem_icons` | 51×25（**25×25 が2つ**） |
+
+   ★ 公式wikiのカード（152×215・左上だけ直角の角丸・3層）とは**別物**。
+     利用者の決定「枠組みは公式サイト、中身の並べ方は公式wiki」に従い、
+     **形と動きは公式サイト**、**角と当たりの色は公式wiki**を採る。
+
+   ★ 絵の入れ方は中身で変える。
+     オペレーターは縦長の絵なので `cover` で全面。
+     武器・装備・アイテム・設備・脅威は**正方形のアイコン**なので、
+     全面に引き伸ばすと上下が切れる。`contain` で中に収める。 */
+html[data-ef-view='grid'] .ef-list.is-hairline .ef-row {
+  position: relative;
+  aspect-ratio: 171 / 218;
+  padding: 0;
+  /* 触れると少し持ち上がる。公式は `transform .2s` */
+  transition:
+    transform var(--ef-fast),
+    background-color var(--ef-wiki-ease);
+}
+@media (hover: hover) {
+  html[data-ef-view='grid'] .ef-list.is-hairline .ef-row:hover {
+    transform: translateY(-2px);
+  }
+}
+/* 絵はカードいっぱい。角丸はここで持たせる（外の罫線は `.ef-thumb` 側） */
+html[data-ef-view='grid'] .ef-list.is-hairline .ef-row .ef-thumb {
+  /* ★ `grid-area: auto` が要る。
+     グリッドの中の要素は、`position: absolute` にしても
+     **割り当てられたマス目が基準の枠になる**（`inset: 0` はそのマスの中だけ）。
+     `thumb` のマスは高さ83pxしかなく、絵が上のほうに潰れていた（実測で踏んだ）。
+     マスの割り当てを外すと、基準がカード全体に戻る。 */
+  grid-area: auto;
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  aspect-ratio: auto;
+  border: 0;
+  border-radius: 1.6875px;
+}
+html[data-ef-view='grid'] .ef-list.is-hairline .ef-row:hover .ef-thumb {
+  box-shadow: none;
+}
+html[data-ef-view='grid'] .ef-list.is-hairline .ef-thumb-pic {
+  border-radius: 1.6875px;
+}
+/* 正方形のアイコンは切らずに中へ収める。
+   ★ 下端 46px は名前の帯に隠れるので、**少し上に寄せる**（`center 32%`）。
+     真ん中に置くと、アイコンの下半分が帯の下に潜ってしまう。 */
+html[data-ef-view='grid'] .ef-list.is-hairline:not([data-dir='operators']) .ef-thumb-pic {
+  object-fit: contain;
+  object-position: center 32%;
+}
+/* 名前の帯。公式は絵の下端に**白い面**を重ね、その中に名前とアイコンを置く */
+html[data-ef-view='grid'] .ef-list.is-hairline .ef-row .ef-row-body {
+  /* 絵と同じ理由でマスの割り当てを外す（外さないと帯がカードの幅いっぱいにならない） */
+  grid-area: auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: block;
+  min-height: 46px;
+  padding: 7px 8px;
+  background: var(--ef-bg);
+  border-radius: 0 0 1.6875px 1.6875px;
+}
+html[data-ef-view='grid'] .ef-list.is-hairline .ef-row-name {
+  display: block;
+  font-size: 15.1875px;
+  line-height: 1.15;
+  font-weight: 700;
+  /* 長い名前は1行で切る。2行になると絵を隠しすぎる */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+/* 名前の下の細い区切り。公式の `subTitle`（101×7・rgb(217,217,217)）にあたる */
+html[data-ef-view='grid'] .ef-list.is-hairline .ef-row-name::after {
+  content: '';
+  display: block;
+  width: 60%;
+  height: 2px;
+  margin-top: 4px;
+  background: #d9d9d9;
+}
+/* 公式のカードには説明も更新日も無い。タイルでは隠す（「詳しく」表示で見られる） */
+html[data-ef-view='grid'] .ef-list.is-hairline .ef-row-desc,
+html[data-ef-view='grid'] .ef-list.is-hairline .ef-row-meta {
+  display: none;
+}
+/* 通し番号は左上に小さく重ねる（公式には無いが、この wiki の意匠なので残す） */
+html[data-ef-view='grid'] .ef-list.is-hairline .ef-row-no {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  padding: 1px 4px;
+  background: var(--ef-ink);
+  color: var(--ef-accent);
+  font-size: 0.6rem;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+/* レア度は名前の右に。帯の中で折り返さないよう小さく */
+html[data-ef-view='grid'] .ef-list.is-hairline .ef-rar {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  margin: 0;
+  font-size: 0.66rem;
+}
+/* 職業・属性のアイコンは絵の右上へ（下の帯は名前で埋まるため） */
+html[data-ef-view='grid'] .ef-list.is-hairline .ef-thumb-ic {
+  left: auto;
+  right: 2px;
+  top: 2px;
+  width: 25px;
+  height: 25px;
+}
+html[data-ef-view='grid'] .ef-list.is-hairline .ef-thumb-ic.is-el {
+  top: 29px;
+}
+
+/* 帯の右に置くバーコードの飾り。見出しと件数の間に入れても詰まらないよう、
+   先に伸びる余白を持たせる（件数が無いときは右端に寄る）。 */
+.ef-widget-head .ef-barcode-label {
+  margin-left: auto;
+}
+.ef-widget-head .ef-barcode {
+  margin-left: 6px;
+}
+/* 基本情報の表は、枠に入れたぶん行の余白を少し詰める */
+.ef-widget-body > .ef-defs {
+  margin: 0;
+}
+
+/* ---- 巨大な中抜き文字（公式サイトの `HallowText`）-------------------------
+   公式サイト（`/ja-jp/operator`）の実測:
+     `HallowText_hollowText` 1248×279 ／ **font-size 279px / line-height 279px**
+     ／ 文字色 `rgba(0,0,0,0)`（＝塗らない。輪郭だけ）
+   セクション名を**下敷きの大きな中抜き文字**として置き、見出しの後ろに透かす。
+
+   ★ はみ出さないようにする
+     `overflow: hidden` で帯の外へは出さない。`white-space: nowrap` と合わせて、
+     狭い画面では文字が切れるだけで**横スクロールは起きない**。
+   ★ 読みやすさを壊さない
+     輪郭は罫線の色（薄いグレー）。本文の黒とは重ならない濃さにする。 */
+.ef-subhead {
+  overflow: hidden;
+}
+.ef-subhead[data-hollow]::before {
+  content: attr(data-hollow);
+  position: absolute;
+  left: -0.04em;
+  /* 帯の**白い上半分**に置く。公式は 279px を専用の帯（1373×279）に置いているが、
+     こちらの見出し帯は100pxほどなので、収まる大きさに落として透かす。
+     下半分の黄色に重ねると文字が沈んで読めなくなる。 */
+  top: -0.12em;
+  z-index: 0;
+  font-size: clamp(40px, 7.5vw, 104px);
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--ef-line);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+/* 中身は下敷きより前に出す */
+.ef-subhead > * {
+  position: relative;
+  z-index: 1;
 }

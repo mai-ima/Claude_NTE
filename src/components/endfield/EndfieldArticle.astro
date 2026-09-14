@@ -197,23 +197,29 @@ const fmt = (d: Date) => d.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' 
 
   {
     rows.length > 0 && (
-      <div class="ef-block-head">
-        <span>基本情報</span>
-        <span class="ef-barcode-label" aria-hidden="true">Details</span>
-        <span class="ef-barcode" aria-hidden="true" />
-      </div>
-    )
-  }
-  {
-    rows.length > 0 && (
-      <div class="ef-list ef-defs" style="margin-bottom:24px;">
-        {rows.map((r) => (
-          <div class="ef-row" style="grid-template-columns:auto 1fr;">
-            <span class="ef-row-meta">{r.label}</span>
-            <span class="ef-row-body">{r.value}</span>
+      /* 公式wikiの記事は、中身が**すべて「かたまり」の連なり**になっている
+         （`widgets__Wrapper` の中に `WidgetWrapper` が縦に並ぶ）。
+         その帯（灰色44px・16px太字・左に小さな飾り）に、
+         公式**サイト**のバーコードの意匠を載せる。
+         → 利用者の決定「公式サイト × 公式wiki」／実測は docs/UI-RESEARCH.md */
+      <section class="ef-widget">
+        <header class="ef-widget-head">
+          <span class="ef-widget-tag" aria-hidden="true" />
+          <h2 class="ef-widget-title">基本情報</h2>
+          <span class="ef-barcode-label" aria-hidden="true">Details</span>
+          <span class="ef-barcode" aria-hidden="true" />
+        </header>
+        <div class="ef-widget-body">
+          <div class="ef-list ef-defs">
+            {rows.map((r) => (
+              <div class="ef-row" style="grid-template-columns:auto 1fr;">
+                <span class="ef-row-meta">{r.label}</span>
+                <span class="ef-row-body">{r.value}</span>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      </section>
     )
   }
 

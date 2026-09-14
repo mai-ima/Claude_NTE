@@ -95,7 +95,9 @@ const fmt = (d: unknown) =>
     太い灰色の罫線」で、その上に**黒い正方形に黄色のアイコン**を置いていた
     （実測 .SubpageHeader / .decoHeader .icon → docs/UI-RESEARCH.md）。
   */}
-  <div class="ef-subhead">
+  {/* `data-hollow` は、公式サイトの `HallowText`（279px の中抜き文字）を写した下敷き。
+      帯の後ろにセクション名を大きく透かす。→ `endfield.css` の同名の節 */}
+  <div class="ef-subhead" data-hollow={eyebrow}>
     <p class="ef-eyebrow">
       <span class="ef-sq-icon" aria-hidden="true">
         <Icon name={`lucide:${section.icon}`} />
@@ -236,7 +238,7 @@ const fmt = (d: unknown) =>
           </span>
         </header>
         <div class="ef-widget-body">
-      <div class="ef-list is-hairline ef-fade-b">
+      <div class="ef-list is-hairline ef-fade-b" data-dir={imgDir}>
         {sorted.map((e, i) => {
           const d = e.data;
           // 「いつ時点の情報か」は一覧でも分かるようにする（誠実性ルール）。

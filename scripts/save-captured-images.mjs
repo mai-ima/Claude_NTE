@@ -36,6 +36,11 @@ const GAME = {
   'endfield-official': 'endfield',
   'endfield-wiki-list': 'endfield',
   'endfield-wiki-operator': 'endfield',
+  /* 公式サイト（日本語版）の実ページ3つ。2026-09-14 に取り直した。
+     `/ja-jp/` のほかのパスは**トップに戻される**ので、取れるのはこの3つだけ。 */
+  'ef-operator': 'endfield',
+  'ef-news': 'endfield',
+  'ef-worldview': 'endfield',
   'nte-official': 'nte',
   'nte-characters': 'nte',
 };
